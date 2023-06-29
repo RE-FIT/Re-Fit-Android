@@ -9,7 +9,7 @@ import retrofit2.http.POST
 interface SignUpApi {
 
     @POST("auth/email")
-    suspend fun requestEmailCertification(
+    fun requestEmailCertification(
         @Body email: RequestEmailCertification
     ): Call<ResponseEmailCertification>
 }
