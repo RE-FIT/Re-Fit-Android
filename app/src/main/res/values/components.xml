@@ -8,6 +8,7 @@
         <item name="itemIconTint">@color/selector_bottom_nav</item>
         <item name="itemActiveIndicatorStyle">@android:color/transparent</item>
         <item name="backgroundTint">@color/white</item>
+        <item name="itemPaddingTop">22dp</item>
     </style>
 
 </resources>
