@@ -3,6 +3,12 @@
     <style name="Base.Theme.ReFit" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="bottomNavigationStyle">@style/CustomBottomNavigation</item>
+        <!-- Status Bar Default -->
+        <item name="android:statusBarColor">@color/default_dark</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.ReFit" parent="Base.Theme.ReFit" />

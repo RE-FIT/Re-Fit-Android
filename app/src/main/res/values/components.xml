@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bottom Navigation Style -->
+    <style name="CustomBottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemTextAppearanceInactive">@style/BoldFontKr</item>
+        <item name="itemTextAppearanceActive">@style/BoldFontKr</item>
+        <item name="itemTextColor">@color/selector_bottom_nav</item>
+        <item name="itemIconTint">@color/selector_bottom_nav</item>
+        <item name="itemActiveIndicatorStyle">@android:color/transparent</item>
+        <item name="backgroundTint">@color/white</item>
+    </style>
+
+</resources>
