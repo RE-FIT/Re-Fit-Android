@@ -16,7 +16,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="회원가입 페이지로 이동" />
+            android:text="회원가입 페이지로 이동하기" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
