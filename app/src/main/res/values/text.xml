@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="RegularFontKr">
+        <item name="fontFamily">@font/noto_sans_kr_regular</item>
+    </style>
+
+    <style name="RegularFont">
+        <item name="fontFamily">@font/noto_sans_regular</item>
+    </style>
+
+    <style name="MediumFontKr">
+        <item name="fontFamily">@font/noto_sans_kr_medium</item>
+    </style>
+
+    <style name="MediumFont">
+        <item name="fontFamily">@font/noto_sans_medium</item>
+    </style>
+
+    <style name="BoldFontKr">
+        <item name="fontFamily">@font/noto_sans_kr_bold</item>
+    </style>
+
+    <style name="BoldFont">
+        <item name="fontFamily">@font/noto_sans_bold</item>
+    </style>
+
+</resources>
