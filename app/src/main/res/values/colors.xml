@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <!-- MainColor -->
+    <color name="green1">#247535</color>
+    <color name="green2">#1CDA6C</color>
+
+    <!-- SubColor -->
+    <color name="default_dark">#F0F2F5</color>
+    <color name="dark1">#A8AFB8</color>
+    <color name="dark2">#5F666F</color>
+    <color name="light">#96D9D9D9</color>
+
+    <!-- etc -->
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#CE031B</color>
+    <color name="black">#000000</color>
+    <color name="yellow">#FFE500</color>
+    <color name="blue">#1C7D9C</color>
+
 </resources>
