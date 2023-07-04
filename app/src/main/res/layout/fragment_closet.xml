@@ -6,17 +6,73 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/default_dark">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Closet"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/tb_closet_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/green1"
+                    app:layout_scrollFlags="scroll"
+                    app:title="My Green Clothes"
+                    app:titleCentered="true"
+                    app:titleTextAppearance="@style/BoldFont.22"
+                    app:titleTextColor="@color/white">
+
+
+                </com.google.android.material.appbar.MaterialToolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_closet_list_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_closet_list"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fab_closet_add"
+                android:layout_width="96dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="17dp"
+                android:layout_marginBottom="13dp"
+                android:backgroundTint="@color/green1"
+                android:text="옷 등록"
+                app:iconPadding="0dp"
+                android:textAppearance="@style/RegularFontKr"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:icon="@drawable/ic_add_24"
+                app:iconTint="@color/white" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

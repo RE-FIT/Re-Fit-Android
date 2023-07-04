@@ -25,4 +25,9 @@
         <item name="fontFamily">@font/noto_sans_bold</item>
     </style>
 
+    <!-- Bold Style -->
+    <style name="BoldFont.22" parent="BoldFont">
+        <item name="android:textSize">22sp</item>
+    </style>
+
 </resources>
