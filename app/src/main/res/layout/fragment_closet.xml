@@ -4,6 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.closet.ClosetFragment">
 
+    <data>
+
+        <variable
+            name="onClickCardViewListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="selectedCategoryId"
+            type="int" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -70,14 +82,16 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_closet_category_container_top"
+                            style="@style/ClosetCategoryCardView.Common"
+                            setCardViewGroupSelected="@{selectedCategoryId}"
                             android:layout_width="@dimen/closet_category_card_view_length"
                             android:layout_height="@dimen/closet_category_card_view_length"
-                            app:cardBackgroundColor="@color/white"
-                            app:cardCornerRadius="@dimen/max_radius"
-                            app:strokeColor="@android:color/transparent">
+                            android:onClickListener="@{onClickCardViewListener}">
 
-                            <com.google.android.material.button.MaterialButton
-                                style="@style/ClosetCategory.Checked"
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_closet_category_top"
+                                style="@style/ClosetCategory.TextCommon"
+                                setTextGroupSelected="@{selectedCategoryId}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableTop="@drawable/ic_cloth_top_22"
@@ -87,14 +101,16 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_closet_category_container_bottom"
+                            style="@style/ClosetCategoryCardView.Common"
+                            setCardViewGroupSelected="@{selectedCategoryId}"
                             android:layout_width="@dimen/closet_category_card_view_length"
                             android:layout_height="@dimen/closet_category_card_view_length"
-                            app:cardBackgroundColor="@android:color/transparent"
-                            app:cardCornerRadius="@dimen/max_radius"
-                            app:strokeColor="@android:color/transparent">
+                            android:onClickListener="@{onClickCardViewListener}">
 
-                            <com.google.android.material.button.MaterialButton
-                                style="@style/ClosetCategory.UnChecked"
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_closet_category_bottom"
+                                style="@style/ClosetCategory.TextCommon"
+                                setTextGroupSelected="@{selectedCategoryId}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableTop="@drawable/ic_cloth_bottom_12"
@@ -104,14 +120,16 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_closet_category_container_outer"
+                            style="@style/ClosetCategoryCardView.Common"
+                            setCardViewGroupSelected="@{selectedCategoryId}"
                             android:layout_width="@dimen/closet_category_card_view_length"
                             android:layout_height="@dimen/closet_category_card_view_length"
-                            app:cardBackgroundColor="@android:color/transparent"
-                            app:cardCornerRadius="@dimen/max_radius"
-                            app:strokeColor="@android:color/transparent">
+                            android:onClickListener="@{onClickCardViewListener}">
 
-                            <com.google.android.material.button.MaterialButton
-                                style="@style/ClosetCategory.UnChecked"
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_closet_category_outer"
+                                style="@style/ClosetCategory.TextCommon"
+                                setTextGroupSelected="@{selectedCategoryId}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableTop="@drawable/ic_cloth_outer_24"
@@ -121,14 +139,16 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_closet_category_container_one_piece"
+                            style="@style/ClosetCategoryCardView.Common"
+                            setCardViewGroupSelected="@{selectedCategoryId}"
                             android:layout_width="@dimen/closet_category_card_view_length"
                             android:layout_height="@dimen/closet_category_card_view_length"
-                            app:cardBackgroundColor="@android:color/transparent"
-                            app:cardCornerRadius="@dimen/max_radius"
-                            app:strokeColor="@android:color/transparent">
+                            android:onClickListener="@{onClickCardViewListener}">
 
-                            <com.google.android.material.button.MaterialButton
-                                style="@style/ClosetCategory.UnChecked"
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_closet_category_one_piece"
+                                style="@style/ClosetCategory.TextCommon"
+                                setTextGroupSelected="@{selectedCategoryId}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableTop="@drawable/ic_cloth_one_piece_24"
@@ -138,14 +158,16 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_closet_category_container_shoes"
+                            style="@style/ClosetCategoryCardView.Common"
+                            setCardViewGroupSelected="@{selectedCategoryId}"
                             android:layout_width="@dimen/closet_category_card_view_length"
                             android:layout_height="@dimen/closet_category_card_view_length"
-                            app:cardBackgroundColor="@android:color/transparent"
-                            app:cardCornerRadius="@dimen/max_radius"
-                            app:strokeColor="@android:color/transparent">
+                            android:onClickListener="@{onClickCardViewListener}">
 
-                            <com.google.android.material.button.MaterialButton
-                                style="@style/ClosetCategory.UnChecked"
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_closet_category_shoes"
+                                style="@style/ClosetCategory.TextCommon"
+                                setTextGroupSelected="@{selectedCategoryId}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableTop="@drawable/ic_cloth_shoes_18"

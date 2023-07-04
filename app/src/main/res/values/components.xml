@@ -4,32 +4,34 @@
     <style name="CustomBottomNavigation" parent="Widget.Material3.BottomNavigationView">
         <item name="itemTextAppearanceInactive">@style/BoldFontKr</item>
         <item name="itemTextAppearanceActive">@style/BoldFontKr</item>
-        <item name="itemTextColor">@color/selector_bottom_nav</item>
-        <item name="itemIconTint">@color/selector_bottom_nav</item>
+        <item name="itemTextColor">@color/selector_green1_else_dark1</item>
+        <item name="itemIconTint">@color/selector_green1_else_dark1</item>
         <item name="itemActiveIndicatorStyle">@android:color/transparent</item>
         <item name="backgroundTint">@color/white</item>
         <item name="itemPaddingTop">22dp</item>
     </style>
 
-    <!-- Button -->
-        <!-- Closet (옷장 기능) -->
-        <style name="ClosetCategory.ButtonCommon" parent="Widget.Material3.Button">
+    <!-- Card View -->
+    <style name="ClosetCategoryCardView.Common" parent="Widget.Material3.CardView.Filled">
+        <item name="strokeColor">@android:color/transparent</item>
+        <item name="cardCornerRadius">@dimen/max_radius</item>
+        <item name="cardBackgroundColor">@color/selector_white_else_default</item>
+        <item name="android:checkable">true</item>
+        <item name="checkedIcon">@null</item>
+        <item name="rippleColor">@android:color/transparent</item>
+    </style>
+
+    <!-- TextView -->
+        <!-- Closet -->
+        <style name="ClosetCategory.TextCommon" parent="Widget.AppCompat.TextView">
+            <item name="android:textColor">@color/selector_selected_green1_else_dark1</item>
+            <item name="drawableTint">@color/selector_selected_green1_else_dark1</item>
             <item name="android:textSize">10sp</item>
-            <item name="iconPadding">4dp</item>
             <item name="android:textAppearance">@style/MediumFontKr</item>
             <item name="android:includeFontPadding">false</item>
-            <item name="android:background">@android:color/transparent</item>
-            <item name="android:layout_gravity">center_vertical</item>
+            <item name="android:drawablePadding">4dp</item>
+            <item name="android:layout_gravity">center_horizontal|center_vertical</item>
         </style>
-
-        <style name="ClosetCategory.UnChecked" parent="ClosetCategory.ButtonCommon">
-            <item name="android:textColor">@color/dark1</item>
-        </style>
-
-        <style name="ClosetCategory.Checked" parent="ClosetCategory.ButtonCommon">
-            <item name="android:textColor">@color/green1</item>
-        </style>
-
 
 
 </resources>

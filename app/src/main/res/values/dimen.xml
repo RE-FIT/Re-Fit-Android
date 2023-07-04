@@ -5,7 +5,7 @@
     <dimen name="max_radius">100dp</dimen>
 
     <!-- CardView -->
-    <dimen name="closet_category_card_view_length">80dp</dimen>
+    <dimen name="closet_category_card_view_length">60dp</dimen>
 
     <!-- Bottom Navigation -->
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>

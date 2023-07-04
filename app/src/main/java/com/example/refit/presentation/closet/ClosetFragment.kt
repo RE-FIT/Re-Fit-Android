@@ -1,24 +1,30 @@
 package com.example.refit.presentation.closet
 
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnScrollChangeListener
-import android.view.ViewGroup
-import android.view.WindowInsetsController
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
+import android.view.View.OnClickListener
 import com.example.refit.R
 import com.example.refit.databinding.FragmentClosetBinding
 import com.example.refit.presentation.common.BaseFragment
-import com.example.refit.presentation.common.WindowUtil.setStatusBarColor
+import com.google.android.material.card.MaterialCardView
 
 class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_closet) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initDefaultClothCategory(binding.cvClosetCategoryContainerTop)
+        handleClothesCategory()
+    }
+
+    private fun initDefaultClothCategory(cardView: MaterialCardView) {
+        binding.selectedCategoryId = cardView.getChildAt(0).id
+    }
+
+    private fun handleClothesCategory() {
+        binding.onClickCardViewListener = OnClickListener { view ->
+            val selectedView = view as MaterialCardView
+            binding.selectedCategoryId = selectedView.getChildAt(0).id
+        }
     }
 }
