@@ -11,4 +11,25 @@
         <item name="itemPaddingTop">22dp</item>
     </style>
 
+    <!-- Button -->
+        <!-- Closet (옷장 기능) -->
+        <style name="ClosetCategory.ButtonCommon" parent="Widget.Material3.Button">
+            <item name="android:textSize">10sp</item>
+            <item name="iconPadding">4dp</item>
+            <item name="android:textAppearance">@style/MediumFontKr</item>
+            <item name="android:includeFontPadding">false</item>
+            <item name="android:background">@android:color/transparent</item>
+            <item name="android:layout_gravity">center_vertical</item>
+        </style>
+
+        <style name="ClosetCategory.UnChecked" parent="ClosetCategory.ButtonCommon">
+            <item name="android:textColor">@color/dark1</item>
+        </style>
+
+        <style name="ClosetCategory.Checked" parent="ClosetCategory.ButtonCommon">
+            <item name="android:textColor">@color/green1</item>
+        </style>
+
+
+
 </resources>

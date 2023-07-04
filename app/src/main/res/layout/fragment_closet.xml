@@ -31,7 +31,6 @@
                     app:titleTextAppearance="@style/BoldFont.22"
                     app:titleTextColor="@color/white">
 
-
                 </com.google.android.material.appbar.MaterialToolbar>
 
             </com.google.android.material.appbar.AppBarLayout>
@@ -46,13 +45,118 @@
                     android:id="@+id/rv_closet_list"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/hsv_closet_category_container" />
+
+                <HorizontalScrollView
+                    android:id="@+id/hsv_closet_category_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingStart="27dp"
+                        android:paddingTop="15dp"
+                        android:paddingEnd="27dp">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cv_closet_category_container_top"
+                            android:layout_width="@dimen/closet_category_card_view_length"
+                            android:layout_height="@dimen/closet_category_card_view_length"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/max_radius"
+                            app:strokeColor="@android:color/transparent">
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/ClosetCategory.Checked"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableTop="@drawable/ic_cloth_top_22"
+                                android:text="상의" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cv_closet_category_container_bottom"
+                            android:layout_width="@dimen/closet_category_card_view_length"
+                            android:layout_height="@dimen/closet_category_card_view_length"
+                            app:cardBackgroundColor="@android:color/transparent"
+                            app:cardCornerRadius="@dimen/max_radius"
+                            app:strokeColor="@android:color/transparent">
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/ClosetCategory.UnChecked"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableTop="@drawable/ic_cloth_bottom_12"
+                                android:text="하의" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cv_closet_category_container_outer"
+                            android:layout_width="@dimen/closet_category_card_view_length"
+                            android:layout_height="@dimen/closet_category_card_view_length"
+                            app:cardBackgroundColor="@android:color/transparent"
+                            app:cardCornerRadius="@dimen/max_radius"
+                            app:strokeColor="@android:color/transparent">
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/ClosetCategory.UnChecked"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableTop="@drawable/ic_cloth_outer_24"
+                                android:text="아우터" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cv_closet_category_container_one_piece"
+                            android:layout_width="@dimen/closet_category_card_view_length"
+                            android:layout_height="@dimen/closet_category_card_view_length"
+                            app:cardBackgroundColor="@android:color/transparent"
+                            app:cardCornerRadius="@dimen/max_radius"
+                            app:strokeColor="@android:color/transparent">
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/ClosetCategory.UnChecked"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableTop="@drawable/ic_cloth_one_piece_24"
+                                android:text="원피스" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cv_closet_category_container_shoes"
+                            android:layout_width="@dimen/closet_category_card_view_length"
+                            android:layout_height="@dimen/closet_category_card_view_length"
+                            app:cardBackgroundColor="@android:color/transparent"
+                            app:cardCornerRadius="@dimen/max_radius"
+                            app:strokeColor="@android:color/transparent">
+
+                            <com.google.android.material.button.MaterialButton
+                                style="@style/ClosetCategory.UnChecked"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableTop="@drawable/ic_cloth_shoes_18"
+                                android:text="신발" />
+
+                        </com.google.android.material.card.MaterialCardView>
 
 
+                    </LinearLayout>
+
+                </HorizontalScrollView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -65,11 +169,11 @@
                 android:layout_marginBottom="13dp"
                 android:backgroundTint="@color/green1"
                 android:text="옷 등록"
-                app:iconPadding="0dp"
                 android:textAppearance="@style/RegularFontKr"
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 app:icon="@drawable/ic_add_24"
+                app:iconPadding="0dp"
                 app:iconTint="@color/white" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
