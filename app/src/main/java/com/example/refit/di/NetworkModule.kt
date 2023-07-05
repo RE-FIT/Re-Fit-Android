@@ -2,6 +2,7 @@ package com.example.refit.di
 
 import com.example.refit.BuildConfig
 import com.example.refit.data.network.NetworkInterceptor
+import com.example.refit.data.network.api.ClosetApi
 import com.example.refit.data.network.api.SignUpApi
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
@@ -35,6 +36,10 @@ val networkModule = module {
     //TODO(앞으로 생성할 API 인터페이스의 싱글톤 인스턴스는 여기서 생성해야 함)
     single<SignUpApi> {
         get<Retrofit>().create(SignUpApi::class.java)
+    }
+
+    single<ClosetApi> {
+        get<Retrofit>().create(ClosetApi::class.java)
     }
 
 }

@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">ReFit</string>
+
+    <!-- Closet -->
+    <string name="closet_category_first">상의</string>
+    <string name="closet_category_second">하의</string>
+    <string name="closet_category_third">아우터</string>
+    <string name="closet_category_fourth">원피스</string>
+    <string name="closet_category_fifth">신발</string>
+    <string name="closet_main_toolbar_title">My Green Clothes</string>
+    <string name="closet_main_fab_bottom_end">옷 등록</string>
+    <string name="closet_item_headline_first">FIT/GOAL</string>
+    <string name="closet_item_headline_second">권장 착용 횟수</string>
+    <string name="closet_search_option_first">계절</string>
+    <string name="closet_search_option_second">옷장 정렬</string>
+    <string name="closet_option_season_first">봄 · 가을</string>
+    <string name="closet_option_season_second">여름</string>
+    <string name="closet_option_season_third">겨울</string>
+    <string name="closet_option_sort_first">D-Day 순</string>
+    <string name="closet_option_sort_second">많이 입은 순</string>
+    <string name="closet_option_sort_third">적게 입은 순</string>
 </resources>

@@ -26,7 +26,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv_closet_item_d_day_container"
-                    style="@style/CustomCardCorners"
+                    style="@style/ClosetItemCardView.DDay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
@@ -70,7 +70,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
-                    android:text="FIT/GOAL"
+                    android:text="@string/closet_item_headline_first"
                     android:textColor="@color/green1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/iv_closet_item"
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
                     android:layout_marginTop="12dp"
-                    android:text="권장 착용 횟수"
+                    android:text="@string/closet_item_headline_second"
                     android:textColor="@color/green1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/iv_closet_item"

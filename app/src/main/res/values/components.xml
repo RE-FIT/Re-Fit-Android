@@ -21,8 +21,16 @@
         <item name="rippleColor">@android:color/transparent</item>
     </style>
 
+    <style name="ClosetOptionCardView.Common" parent="Widget.Material3.CardView.Filled">
+        <item name="strokeWidth">0dp</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="android:layout_marginStart">20dp</item>
+    </style>
+
     <style name="ClosetItemCardView.DDay" parent="@style/Widget.MaterialComponents.CardView">
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.ClosetItem.CardView.Corners</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.ClosetItem.CardView.Corners
+        </item>
     </style>
 
     <!-- TextView -->
@@ -36,10 +44,46 @@
         <item name="android:layout_gravity">center_horizontal|center_vertical</item>
     </style>
 
+    <style name="ClosetSearchOption.TextCommon" parent="Widget.AppCompat.TextView">
+        <item name="android:drawableEnd">@drawable/ic_arrow_bottom_14</item>
+        <item name="android:textAppearance">@style/RegularFontKr.10</item>
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:drawableTint">@color/green1</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:textColor">@color/green1</item>
+    </style>
+
+    <!-- Button -->
+    <!-- TODO(여기에 버튼 뷰에 대한 스타일 정의) -->
+
+    <!-- Popup -->
+    <style name="PopupTextAppearance.App.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/noto_sans_kr_regular</item>
+        <item name="android:fontFamily">@font/noto_sans_kr_regular</item>
+    </style>
+
+    <style name="PopupTextAppearance.ClosetOption" parent="PopupTextAppearance.App.BodyLarge">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="PopupMenu.ClosetOption" parent="Widget.Material3.PopupMenu">
+        <item name="textAppearanceLargePopupMenu">@style/PopupTextAppearance.ClosetOption</item>
+        <item name="textAppearanceSmallPopupMenu">@style/PopupTextAppearance.ClosetOption</item>
+        <item name="popupMenuBackground">@drawable/bg_popup_closet_option</item>
+    </style>
+
+
+
     <!-- ShapeAppearance -->
     <style name="ShapeAppearance.RoundedRadius.20" parent="ShapeAppearance.Material3.MediumComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">20dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Button" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="minHeight">20dp</item>
     </style>
 
     <style name="ShapeAppearance.ClosetItem.CardView.Corners" parent="">
