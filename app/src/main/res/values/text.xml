@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="RegularFontKr">
+    <style name="FontCommon">
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="RegularFontKr" parent="FontCommon">
         <item name="fontFamily">@font/noto_sans_kr_regular</item>
     </style>
     <!-- Font Definition -->
-    <style name="RegularFont">
+    <style name="RegularFont" parent="FontCommon">
         <item name="fontFamily">@font/noto_sans_regular</item>
     </style>
 
-    <style name="MediumFontKr">
+    <style name="MediumFontKr" parent="FontCommon">
         <item name="fontFamily">@font/noto_sans_kr_medium</item>
     </style>
 
-    <style name="MediumFont">
+    <style name="MediumFont" parent="FontCommon">
         <item name="fontFamily">@font/noto_sans_medium</item>
     </style>
 
-    <style name="BoldFontKr">
+    <style name="BoldFontKr" parent="FontCommon">
         <item name="fontFamily">@font/noto_sans_kr_bold</item>
     </style>
 
-    <style name="BoldFont">
+    <style name="BoldFont" parent="FontCommon">
         <item name="fontFamily">@font/noto_sans_bold</item>
     </style>
 

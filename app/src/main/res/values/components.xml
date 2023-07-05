@@ -21,17 +21,34 @@
         <item name="rippleColor">@android:color/transparent</item>
     </style>
 
+    <style name="ClosetItemCardView.DDay" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.ClosetItem.CardView.Corners</item>
+    </style>
+
     <!-- TextView -->
-        <!-- Closet -->
-        <style name="ClosetCategory.TextCommon" parent="Widget.AppCompat.TextView">
-            <item name="android:textColor">@color/selector_selected_green1_else_dark1</item>
-            <item name="drawableTint">@color/selector_selected_green1_else_dark1</item>
-            <item name="android:textSize">10sp</item>
-            <item name="android:textAppearance">@style/MediumFontKr</item>
-            <item name="android:includeFontPadding">false</item>
-            <item name="android:drawablePadding">4dp</item>
-            <item name="android:layout_gravity">center_horizontal|center_vertical</item>
-        </style>
+    <style name="ClosetCategory.TextCommon" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/selector_selected_green1_else_dark1</item>
+        <item name="drawableTint">@color/selector_selected_green1_else_dark1</item>
+        <item name="android:textAppearance">@style/MediumFontKr.10</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">center_horizontal|center_vertical</item>
+    </style>
+
+    <!-- ShapeAppearance -->
+    <style name="ShapeAppearance.RoundedRadius.20" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
+
+    <style name="ShapeAppearance.ClosetItem.CardView.Corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">12dp</item>
+        <item name="cornerSizeBottomRight">17dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
 
 
 </resources>

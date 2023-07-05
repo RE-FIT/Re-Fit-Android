@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/default_dark"
+        android:padding="10dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@android:color/transparent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingEnd="11dp"
+                android:paddingBottom="9dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_closet_item_d_day_container"
+                    style="@style/CustomCardCorners"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="3dp"
+                    app:cardBackgroundColor="@color/green1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeColor="@android:color/transparent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_closet_item_d_day"
+                        style="@style/BoldFont.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/green1"
+                        android:textColor="@color/white"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="D-2" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_closet_item"
+                    android:layout_width="67dp"
+                    android:layout_height="76dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/img_temp_67"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cv_closet_item_d_day_container"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.20" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_closet_item_goal_title"
+                    style="@style/MediumFont.10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:text="FIT/GOAL"
+                    android:textColor="@color/green1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_closet_item"
+                    app:layout_constraintTop_toTopOf="@id/iv_closet_item" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_closet_item_goal_statistics"
+                    style="@style/RegularFont.10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:text="80/100"
+                    android:textColor="@color/dark2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_closet_item"
+                    app:layout_constraintTop_toBottomOf="@id/tv_closet_item_goal_title" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_closet_item_recommend_wear_title"
+                    style="@style/MediumFontKr.10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="12dp"
+                    android:text="권장 착용 횟수"
+                    android:textColor="@color/green1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_closet_item"
+                    app:layout_constraintTop_toBottomOf="@id/tv_closet_item_goal_statistics" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_closet_item_recommend_wear_statistics"
+                    style="@style/RegularFontKr.10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:text="월 10회 / 주2 회"
+                    android:textColor="@color/dark2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_closet_item"
+                    app:layout_constraintTop_toBottomOf="@id/tv_closet_item_recommend_wear_title" />
+
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/pi_closet_item_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:progress="80"
+                    app:indicatorColor="@color/green1"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_closet_item_progress_percent"
+                    app:layout_constraintEnd_toEndOf="@id/tv_closet_item_progress_percent"
+                    app:layout_constraintStart_toStartOf="@id/tv_closet_item_progress_percent"
+                    app:layout_constraintTop_toTopOf="@id/tv_closet_item_progress_percent"
+                    app:trackCornerRadius="20dp"
+                    app:trackThickness="12dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_closet_item_progress_percent"
+                    style="@style/RegularFont.10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="80%"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_closet_item" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

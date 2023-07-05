@@ -3,6 +3,7 @@ package com.example.refit.presentation.closet
 import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.refit.R
 import com.example.refit.databinding.FragmentClosetBinding
 import com.example.refit.presentation.common.BaseFragment
@@ -15,6 +16,8 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
 
         initDefaultClothCategory(binding.cvClosetCategoryContainerTop)
         handleClothesCategory()
+
+        binding.rvClosetList.layoutManager = GridLayoutManager(requireActivity(), 2)
     }
 
     private fun initDefaultClothCategory(cardView: MaterialCardView) {

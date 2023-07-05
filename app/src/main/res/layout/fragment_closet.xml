@@ -57,16 +57,17 @@
                     android:id="@+id/rv_closet_list"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/hsv_closet_category_container" />
+                    app:layout_constraintTop_toBottomOf="@id/hsv_closet_category_container"
+                    tools:listitem="@layout/item_cloth" />
 
                 <HorizontalScrollView
                     android:id="@+id/hsv_closet_category_container"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@color/default_dark"
                     android:scrollbars="none"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -75,6 +76,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
                         android:orientation="horizontal"
                         android:paddingStart="27dp"
                         android:paddingTop="15dp"
@@ -174,7 +177,6 @@
                                 android:text="신발" />
 
                         </com.google.android.material.card.MaterialCardView>
-
 
                     </LinearLayout>
 
