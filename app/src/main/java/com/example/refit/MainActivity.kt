@@ -1,15 +1,17 @@
 package com.example.refit
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.refit.databinding.ActivityMainBinding
 import com.example.refit.presentation.common.BaseActivity
+import com.example.refit.presentation.common.WindowUtil.setStatusBarColor
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
+
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,8 +20,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         binding.bnvMain.setupWithNavController(getNavController())
         handleNavigationBarVisibility()
-
         initBottomNavigationBackground()
+
     }
 
     private fun getNavController(): NavController {
@@ -33,7 +35,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         getNavController().addOnDestinationChangedListener { _, destination, _ ->
             binding.bnvMain.visibility =
                 when (destination.id) {
-                    R.id.nav_community, R.id.nav_my_page, R.id.nav_closet -> View.VISIBLE
+                    R.id.nav_closet -> {
+                        setStatusBarColor(R.color.green1)
+                        View.VISIBLE
+                    }
+                    R.id.nav_community, R.id.nav_my_page  -> {
+                        setStatusBarColor(R.color.default_dark)
+                        View.VISIBLE
+                    }
                     else -> View.GONE
                 }
         }

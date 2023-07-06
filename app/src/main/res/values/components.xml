@@ -4,11 +4,95 @@
     <style name="CustomBottomNavigation" parent="Widget.Material3.BottomNavigationView">
         <item name="itemTextAppearanceInactive">@style/BoldFontKr</item>
         <item name="itemTextAppearanceActive">@style/BoldFontKr</item>
-        <item name="itemTextColor">@color/selector_bottom_nav</item>
-        <item name="itemIconTint">@color/selector_bottom_nav</item>
+        <item name="itemTextColor">@color/selector_green1_else_dark1</item>
+        <item name="itemIconTint">@color/selector_green1_else_dark1</item>
         <item name="itemActiveIndicatorStyle">@android:color/transparent</item>
         <item name="backgroundTint">@color/white</item>
         <item name="itemPaddingTop">22dp</item>
     </style>
+
+    <!-- Card View -->
+    <style name="ClosetCategoryCardView.Common" parent="Widget.Material3.CardView.Filled">
+        <item name="strokeColor">@android:color/transparent</item>
+        <item name="cardCornerRadius">@dimen/max_radius</item>
+        <item name="cardBackgroundColor">@color/selector_white_else_default</item>
+        <item name="android:checkable">true</item>
+        <item name="checkedIcon">@null</item>
+        <item name="rippleColor">@android:color/transparent</item>
+    </style>
+
+    <style name="ClosetOptionCardView.Common" parent="Widget.Material3.CardView.Filled">
+        <item name="strokeWidth">0dp</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="android:layout_marginStart">20dp</item>
+    </style>
+
+    <style name="ClosetItemCardView.DDay" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.ClosetItem.CardView.Corners
+        </item>
+    </style>
+
+    <!-- TextView -->
+    <style name="ClosetCategory.TextCommon" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/selector_selected_green1_else_dark1</item>
+        <item name="drawableTint">@color/selector_selected_green1_else_dark1</item>
+        <item name="android:textAppearance">@style/MediumFontKr.10</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_gravity">center_horizontal|center_vertical</item>
+    </style>
+
+    <style name="ClosetSearchOption.TextCommon" parent="Widget.AppCompat.TextView">
+        <item name="android:drawableEnd">@drawable/ic_arrow_bottom_14</item>
+        <item name="android:textAppearance">@style/RegularFontKr.10</item>
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:drawableTint">@color/green1</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:textColor">@color/green1</item>
+    </style>
+
+    <!-- Button -->
+    <!-- TODO(여기에 버튼 뷰에 대한 스타일 정의) -->
+
+    <!-- Popup -->
+    <style name="PopupTextAppearance.App.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/noto_sans_kr_regular</item>
+        <item name="android:fontFamily">@font/noto_sans_kr_regular</item>
+    </style>
+
+    <style name="PopupTextAppearance.ClosetOption" parent="PopupTextAppearance.App.BodyLarge">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="PopupMenu.ClosetOption" parent="Widget.Material3.PopupMenu">
+        <item name="textAppearanceLargePopupMenu">@style/PopupTextAppearance.ClosetOption</item>
+        <item name="textAppearanceSmallPopupMenu">@style/PopupTextAppearance.ClosetOption</item>
+        <item name="popupMenuBackground">@drawable/bg_popup_closet_option</item>
+    </style>
+
+
+
+    <!-- ShapeAppearance -->
+    <style name="ShapeAppearance.RoundedRadius.20" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Button" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="minHeight">20dp</item>
+    </style>
+
+    <style name="ShapeAppearance.ClosetItem.CardView.Corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">12dp</item>
+        <item name="cornerSizeBottomRight">17dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
 
 </resources>

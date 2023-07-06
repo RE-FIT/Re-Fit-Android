@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/option_closet_season_first"
+        android:title="@string/closet_option_season_first" />
+    <item android:id="@+id/option_closet_season_second"
+        android:title="@string/closet_option_season_second"/>
+    <item android:id="@+id/option_closet_season_third"
+        android:title="@string/closet_option_season_third"/>
+</menu>
