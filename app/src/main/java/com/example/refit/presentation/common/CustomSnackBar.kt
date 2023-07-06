@@ -8,17 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
+import androidx.annotation.AnimRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.example.refit.R
 import com.example.refit.databinding.CustomSnackBarBasicBinding
 import com.google.android.material.snackbar.Snackbar
 
-class CustomSnackBar(view: View, private val message: String) {
+class CustomSnackBar(view: View, private val message: String, @AnimRes private val animationId: Int) {
 
     companion object {
-        fun make(view: View, message: String) =
-            CustomSnackBar(view, message)
+        fun make(view: View, message: String, animationId: Int) =
+            CustomSnackBar(view, message, animationId)
     }
 
     private val context = view.context
@@ -38,7 +39,7 @@ class CustomSnackBar(view: View, private val message: String) {
         with(snackBarLayout) {
             val layoutParams = layoutParams as FrameLayout.LayoutParams
 
-            val snackBarShowAnim = AnimationUtils.loadAnimation(context, R.anim.anim_show_snack_bar_from_bottom)
+            val snackBarShowAnim = AnimationUtils.loadAnimation(context, animationId)
             val snackBarHideAnim = AnimationUtils.loadAnimation(context, R.anim.anim_hide_snack_bar)
             this.startAnimation(snackBarShowAnim)
 
@@ -46,7 +47,10 @@ class CustomSnackBar(view: View, private val message: String) {
                 this.startAnimation(snackBarHideAnim)
             }, 80000L)
 
-            layoutParams.gravity = Gravity.BOTTOM
+            layoutParams.gravity = when(animationId) {
+                R.anim.anim_show_snack_bar_from_bottom -> Gravity.BOTTOM
+                else -> Gravity.TOP
+            }
             removeAllViews()
             setPadding(0, 0, 0, 50)
             setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
