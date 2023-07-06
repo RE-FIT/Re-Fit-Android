@@ -24,9 +24,7 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         initClosetOptionPopupMenu()
         handleClothesCategory()
         binding.rvClosetList.layoutManager = GridLayoutManager(requireActivity(), 2)
-        binding.fabClosetAdd.setOnClickListener {
-            CustomSnackBar.make(binding.root, "안녕하세요", R.anim.anim_show_snack_bar_from_top).show()
-        }
+
     }
     private fun initDefaultClothCategory(cardView: MaterialCardView) {
         binding.selectedCategoryId = cardView.getChildAt(0).id
