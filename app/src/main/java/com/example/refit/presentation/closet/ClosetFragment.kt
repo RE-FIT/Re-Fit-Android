@@ -1,11 +1,9 @@
 package com.example.refit.presentation.closet
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.view.View.OnClickListener
-import androidx.annotation.GravityInt
 import androidx.annotation.MenuRes
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.PopupMenu
@@ -29,12 +27,14 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
     private fun initDefaultClothCategory(cardView: MaterialCardView) {
         binding.selectedCategoryId = cardView.getChildAt(0).id
     }
+
     private fun handleClothesCategory() {
         binding.onClickCardViewListener = OnClickListener { view ->
             val selectedView = view as MaterialCardView
             binding.selectedCategoryId = selectedView.getChildAt(0).id
         }
     }
+
     private fun showMenu(v: View, @MenuRes menuRes: Int) {
         val wrapper = ContextThemeWrapper(requireActivity(), R.style.PopupMenu_ClosetOption)
         val popup = PopupMenu(wrapper, v)
@@ -56,6 +56,7 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         }
         popup.show()
     }
+
     private fun initClosetOptionPopupMenu() {
         binding.cvClosetOptionSeason.setOnClickListener {
             showMenu(it, R.menu.menu_closet_search_option_season)
