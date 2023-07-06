@@ -7,11 +7,15 @@ import android.view.View.OnClickListener
 import androidx.annotation.MenuRes
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.refit.R
 import com.example.refit.databinding.FragmentClosetBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.CustomSnackBar
+import com.example.refit.presentation.common.binding.DialogUtil.showDeleteClothConfirmDialog
+import com.example.refit.presentation.dialog.AlertBasicDialog
+import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.google.android.material.card.MaterialCardView
 import timber.log.Timber
 
@@ -24,6 +28,18 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         initClosetOptionPopupMenu()
         handleClothesCategory()
         binding.rvClosetList.layoutManager = GridLayoutManager(requireActivity(), 2)
+
+        binding.fabClosetAdd.setOnClickListener {
+            showDeleteClothConfirmDialog(object: AlertBasicDialogListener {
+                override fun onClickPositive() {
+
+                }
+
+                override fun onClickNegative() {
+                }
+
+            })
+        }
 
     }
     private fun initDefaultClothCategory(cardView: MaterialCardView) {
@@ -67,4 +83,5 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
             showMenu(it, R.menu.menu_closet_search_option_sort)
         }
     }
+
 }

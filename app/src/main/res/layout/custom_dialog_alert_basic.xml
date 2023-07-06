@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_alert_basic"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="20dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_dialog_alert_basic_caution"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:src="@drawable/ic_alert_circle_24" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_dialog_alert_title"
+        style="@style/MediumFontKr.14"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:textAlignment="center"
+        android:textColor="@color/dark2"
+        tools:text="title text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_dialog_alert_basic_positive"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAppearance="@style/MediumFontKr.14"
+            app:backgroundTint="@color/green1"
+            app:cornerRadius="10dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_dialog_alert_basic_negative"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/transparent"
+            android:textAppearance="@style/MediumFontKr.14"
+            android:textColor="@color/dark1"
+            app:cornerRadius="10dp"
+            app:strokeColor="@color/dark1"
+            app:strokeWidth="1dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

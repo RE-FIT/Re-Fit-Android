@@ -19,4 +19,7 @@
     <string name="closet_option_sort_first">D-Day 순</string>
     <string name="closet_option_sort_second">많이 입은 순</string>
     <string name="closet_option_sort_third">적게 입은 순</string>
+    <string name="closet_dialog_cloth_delete_title">삭제 시 그동안 심은 나무와 입력한 정보들이 다 삭제돼요! 해당 옷을 삭제하시겠어요?</string>
+    <string name="closet_dialog_cloth_delete_positive">네, 삭제할래요</string>
+    <string name="closet_dialog_cloth_delete_negative">아니오</string>
 </resources>
