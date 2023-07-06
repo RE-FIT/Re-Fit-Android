@@ -1,4 +1,4 @@
-package com.example.refit.presentation.common.binding
+package com.example.refit.presentation.common
 
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
