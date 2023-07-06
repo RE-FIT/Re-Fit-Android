@@ -25,19 +25,6 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         initClosetOptionPopupMenu()
         handleClothesCategory()
         binding.rvClosetList.layoutManager = GridLayoutManager(requireActivity(), 2)
-
-        binding.fabClosetAdd.setOnClickListener {
-            showDeleteClothConfirmDialog(object: AlertBasicDialogListener {
-                override fun onClickPositive() {
-
-                }
-
-                override fun onClickNegative() {
-                }
-
-            })
-        }
-
     }
     private fun initDefaultClothCategory(cardView: MaterialCardView) {
         binding.selectedCategoryId = cardView.getChildAt(0).id
