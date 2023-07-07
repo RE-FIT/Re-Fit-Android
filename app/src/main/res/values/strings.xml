@@ -19,7 +19,22 @@
     <string name="closet_option_sort_first">D-Day 순</string>
     <string name="closet_option_sort_second">많이 입은 순</string>
     <string name="closet_option_sort_third">적게 입은 순</string>
+
+    <!-- dialog -->
     <string name="closet_dialog_cloth_delete_title">삭제 시 그동안 심은 나무와 입력한 정보들이 다 삭제돼요! 해당 옷을 삭제하시겠어요?</string>
     <string name="closet_dialog_cloth_delete_positive">네, 삭제할래요</string>
     <string name="closet_dialog_cloth_delete_negative">아니오</string>
+    <string name="closet_dialog_cloth_selection_title">옷 선택</string>
+
+    <string name="closet_dialog_cloth_selection_option_recheck">목표 재설정</string>
+    <string name="closet_dialog_cloth_selection_option_delete">옷 삭제</string>
+    <string name="closet_dialog_cloth_selection_option_wear">오늘 입기</string>
+    <string name="closet_dialog_cloth_selection_option_fix">정보 수정</string>
+
+    <string name="closet_dialog_alert_limit_wearing">하나의 카테고리에서는 하루에 2번 이상 입기가 불가능해요!</string>
+    <string name="closet_dialog_alert_limit_wearing_sub_version">* 하나의 카테고리에는 하루에 2번 이상 입기가 불가능해요! *</string>
+    <string name="closet_dialog_alert_season_spring">봄이 왔네요! 아직 목표를 설정하지 않은 봄 카테고리에 있는 옷들의 목표를 설정해 숲을 꾸며가는 건 어때요?</string>
+    <string name="closet_dialog_alert_season_summer">여름이 왔네요! 아직 목표를 설정하지 않은 여름 카테고리에 있는 옷들의 목표를 설정해 숲을 꾸며가는 건 어때요?</string>
+    <string name="closet_dialog_alert_season_fall">가을이 왔네요! 아직 목표를 설정하지 않은 가을 카테고리에 있는 옷들의 목표를 설정해 숲을 꾸며가는 건 어때요?</string>
+    <string name="closet_dialog_alert_season_winter">겨울이 왔네요! 아직 목표를 설정하지 않은 겨울 카테고리에 있는 옷들의 목표를 설정해 숲을 꾸며가는 건 어때요?</string>
 </resources>
