@@ -1,18 +1,17 @@
 package com.example.refit.presentation.closet
 
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.view.View.OnClickListener
-import androidx.annotation.MenuRes
-import androidx.appcompat.view.ContextThemeWrapper
-import androidx.appcompat.widget.PopupMenu
+import android.widget.AdapterView.OnItemClickListener
+import android.widget.TextView
+import androidx.annotation.ArrayRes
+import androidx.appcompat.widget.ListPopupWindow
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.refit.R
 import com.example.refit.databinding.FragmentClosetBinding
 import com.example.refit.presentation.common.BaseFragment
-import com.example.refit.presentation.common.DialogUtil.showDeleteClothConfirmDialog
-import com.example.refit.presentation.dialog.AlertBasicDialogListener
+import com.example.refit.presentation.common.DropdownMenuManager
 import com.google.android.material.card.MaterialCardView
 import timber.log.Timber
 
@@ -26,6 +25,7 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         handleClothesCategory()
         binding.rvClosetList.layoutManager = GridLayoutManager(requireActivity(), 2)
     }
+
     private fun initDefaultClothCategory(cardView: MaterialCardView) {
         binding.selectedCategoryId = cardView.getChildAt(0).id
     }
@@ -37,35 +37,49 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         }
     }
 
-    private fun showMenu(v: View, @MenuRes menuRes: Int) {
-        val wrapper = ContextThemeWrapper(requireActivity(), R.style.PopupMenu_ClosetOption)
-        val popup = PopupMenu(wrapper, v)
-        popup.menuInflater.inflate(menuRes, popup.menu)
-        popup.setOnMenuItemClickListener { menuItem: MenuItem ->
-            Timber.d(" 옵션 ${menuItem.title}")
-            when (menuItem.itemId) {
-                R.id.option_closet_season_first,
-                R.id.option_closet_season_second,
-                R.id.option_closet_season_third -> Timber.d("${menuItem.title}")
-
-                R.id.option_closet_sort_first,
-                R.id.option_closet_sort_second,
-                R.id.option_closet_sort_third -> Timber.d("${menuItem.title}")
-            }
-            true
-        }
-        popup.setOnDismissListener {
-        }
-        popup.show()
-    }
-
     private fun initClosetOptionPopupMenu() {
         binding.cvClosetOptionSeason.setOnClickListener {
-            showMenu(it, R.menu.menu_closet_search_option_season)
+            val listPopupWindow = getPopupMenu(it, R.array.closet_item_search_option_season)
+            setPopupItemClickListener(it.id, listPopupWindow)
+            listPopupWindow.show()
         }
+
         binding.cvClosetOptionSort.setOnClickListener {
-            showMenu(it, R.menu.menu_closet_search_option_sort)
+            val listPopupWindow = getPopupMenu(it, R.array.closet_item_search_option_sort)
+            setPopupItemClickListener(it.id, listPopupWindow)
+            listPopupWindow.show()
         }
     }
 
+    private fun setPopupItemClickListener(viewId: Int, popupMenu: ListPopupWindow) {
+        popupMenu.setOnItemClickListener { _, view, _, _ ->
+            val itemDescription = (view as TextView).text.toString()
+            when (viewId) {
+                // TODO(기능 구현 때 뷰모델과 연동)
+                binding.cvClosetOptionSeason.id -> {
+                    binding.tvClosetOptionSeason.text = itemDescription
+                    Timber.d(itemDescription)
+                }
+
+                binding.cvClosetOptionSort.id -> {
+                    binding.tvClosetOptionSort.text = itemDescription
+                    Timber.d(itemDescription)
+                }
+            }
+            popupMenu.dismiss()
+        }
+    }
+
+    private fun getPopupMenu(
+        anchorView: View,
+        @ArrayRes items: Int,
+    ): ListPopupWindow {
+        return DropdownMenuManager.createPopupMenu(
+            requireActivity(),
+            anchorView,
+            R.style.ListPopupMenuWindow_ClosetOption,
+            R.layout.list_popup_window_item_white,
+            items
+        )
+    }
 }
