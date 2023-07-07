@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/option_closet_sort_first"
+        android:title="@string/closet_option_sort_first"/>
+    <item android:id="@+id/option_closet_sort_second"
+        android:title="@string/closet_option_sort_second"/>
+    <item android:id="@+id/option_closet_sort_third"
+        android:title="@string/closet_option_sort_third"/>
+</menu>

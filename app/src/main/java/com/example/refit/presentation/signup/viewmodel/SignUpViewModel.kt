@@ -26,7 +26,6 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     val emailCode: LiveData<ResponseEmailCertification>
         get() = _emailCode
 
-
     fun certificateEmail(email: String) {
         viewModelScope.launch {
             try {
