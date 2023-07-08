@@ -43,6 +43,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                         setStatusBarColor(R.color.default_dark)
                         View.VISIBLE
                     }
+                    R.id.clothRegistrationFragment -> {
+                        setStatusBarColor(R.color.default_dark)
+                        View.GONE
+                    }
                     else -> View.GONE
                 }
         }

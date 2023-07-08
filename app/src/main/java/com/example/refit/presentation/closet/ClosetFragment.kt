@@ -12,6 +12,7 @@ import com.example.refit.R
 import com.example.refit.databinding.FragmentClosetBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DropdownMenuManager
+import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.google.android.material.card.MaterialCardView
 import timber.log.Timber
 
@@ -24,6 +25,9 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         initClosetOptionPopupMenu()
         handleClothesCategory()
         binding.rvClosetList.layoutManager = GridLayoutManager(requireActivity(), 2)
+        binding.fabClosetAdd.setOnClickListener {
+            navigate(R.id.action_nav_closet_to_clothRegistrationFragment)
+        }
     }
 
     private fun initDefaultClothCategory(cardView: MaterialCardView) {

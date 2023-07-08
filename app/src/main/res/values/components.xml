@@ -33,6 +33,12 @@
         </item>
     </style>
 
+    <style name="ClothRegistrationCardView.Common" parent="Widget.Material3.CardView.Filled">
+        <item name="strokeWidth">0dp</item>
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+    </style>
+
     <!-- TextView -->
     <style name="ClosetCategory.TextCommon" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/selector_selected_green1_else_dark1</item>
@@ -71,6 +77,37 @@
         <item name="popupMenuBackground">@drawable/bg_popup_closet_option</item>
         <item name="textAppearanceLargePopupMenu">@style/PopupTextAppearance.ClosetOption</item>
         <item name="textAppearanceSmallPopupMenu">@style/PopupTextAppearance.ClosetOption</item>
+    </style>
+
+    <!-- Chip -->
+    <style name="ClothRegistrationChip.Category.Common" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="checkedIconVisible">false</item>
+        <item name="chipBackgroundColor">@color/white</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipMinHeight">40dp</item>
+        <item name="chipCornerRadius">10dp</item>
+        <item name="chipStrokeColor">@color/selector_selected_green1_else_dark1</item>
+        <item name="android:textColor">@color/selector_selected_green1_else_dark1</item>
+        <item name="android:textAppearance">@style/RegularFontKr.10</item>
+        <item name="rippleColor">@android:color/transparent</item>
+    </style>
+
+    <style name="ClothRegistrationChip.WearingSeason.Common" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="checkedIconVisible">false</item>
+        <item name="chipBackgroundColor">@color/white</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipMinHeight">40dp</item>
+        <item name="chipCornerRadius">10dp</item>
+        <item name="chipStrokeColor">@color/selector_selected_green1_else_dark1</item>
+        <item name="android:textColor">@color/selector_selected_green1_else_dark1</item>
+        <item name="android:textAppearance">@style/RegularFontKr.12</item>
+        <item name="rippleColor">@android:color/transparent</item>
+        <item name="chipIcon">@drawable/ic_circle_24</item>
+        <item name="chipIconVisible">true</item>
+        <item name="chipIconTint">@color/selector_selected_green1_else_dark1</item>
+        <item name="chipIconSize">10dp</item>
+        <item name="chipStartPadding">14dp</item>
+        <item name="chipEndPadding">14dp</item>
     </style>
 
 
