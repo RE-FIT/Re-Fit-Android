@@ -94,7 +94,7 @@
                                 style="@style/ClothRegistrationChip.Category.Common"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginTop="10dp"
                                 app:chipSpacingHorizontal="@dimen/cloth_register_category_chip_spacing"
                                 app:selectionRequired="true"
                                 app:singleLine="true"
@@ -165,44 +165,300 @@
                             style="@style/BoldFontKr.14"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/cloth_register_category_wearing_season"
+                            android:text="@string/cloth_register_category_wearing_season_title"
                             android:textColor="@color/green1" />
 
-                            <com.google.android.material.chip.ChipGroup
-                                android:id="@+id/cg_cloth_register_wearing_season"
-                                style="@style/ClothRegistrationChip.Category.Common"
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/cg_cloth_register_wearing_season"
+                            style="@style/ClothRegistrationChip.Category.Common"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            app:selectionRequired="true"
+                            app:singleSelection="true">
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/c_cloth_register_category_wearing_season_spring"
+                                style="@style/ClothRegistrationChip.WearingSeason.Common"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                app:chipSpacingHorizontal="@dimen/cloth_register_category_chip_spacing"
-                                app:selectionRequired="true"
-                                app:singleSelection="true">
+                                android:text="@string/cloth_register_category_wearing_season_spring" />
 
-                                <com.google.android.material.chip.Chip
-                                    style="@style/ClothRegistrationChip.WearingSeason.Common"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:checked="true"
-                                    android:text="@string/cloth_register_category_wearing_season_spring" />
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/c_cloth_register_category_wearing_season_summer"
+                                style="@style/ClothRegistrationChip.WearingSeason.Common"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/cloth_register_category_wearing_season_summer" />
 
-                                <com.google.android.material.chip.Chip
-                                    style="@style/ClothRegistrationChip.WearingSeason.Common"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/cloth_register_category_wearing_season_summer" />
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/c_cloth_register_category_wearing_season_winter"
+                                style="@style/ClothRegistrationChip.WearingSeason.Common"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/cloth_register_category_wearing_season_winter" />
 
-                                <com.google.android.material.chip.Chip
-                                    style="@style/ClothRegistrationChip.WearingSeason.Common"
-                                    android:layout_width="match_parent"
-
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/cloth_register_category_wearing_season_winter" />
-
-                            </com.google.android.material.chip.ChipGroup>
+                        </com.google.android.material.chip.ChipGroup>
 
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_cloth_register_season_confirm_container"
+                    style="@style/ClothRegistrationCardView.Common"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cv_cloth_register_wearing_season_container">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_cloth_register_season_confirm_title"
+                            style="@style/BoldFontKr.14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cloth_register_wearing_season_confirm_title"
+                            android:textColor="@color/green1" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/cg_cloth_register_season_confirm"
+                            style="@style/ClothRegistrationChip.Category.Common"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            app:selectionRequired="true"
+                            app:singleSelection="true">
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/c_cloth_register_wearing_season_confirm_positive"
+                                style="@style/ClothRegistrationChip.WearingSeason.Common"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/cloth_register_wearing_season_confirm_positive" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/c_cloth_register_wearing_season_confirm_negative"
+                                style="@style/ClothRegistrationChip.WearingSeason.Common"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/cloth_register_wearing_season_confirm_negative" />
+
+                        </com.google.android.material.chip.ChipGroup>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_cloth_register_not_wearing_response_container"
+                    style="@style/ClothRegistrationCardView.Common"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cv_cloth_register_season_confirm_container">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="40dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_cloth_register_not_wearing_response"
+                            style="@style/BoldFontKr.14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:textColor="@color/dark2"
+                            tools:text="네 알겠어요!\n겨울이 오면 다시 목표 착용 횟수를 \n설정할 수 있는 알림을 보내드릴게요!" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_cloth_register_wearing_goal_container"
+                    style="@style/ClothRegistrationCardView.Common"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cv_cloth_register_not_wearing_response_container">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_cloth_register_wearing_goal_title"
+                            style="@style/BoldFontKr.14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cloth_register_wearing_goal_title"
+                            android:textColor="@color/green1" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/cv_cloth_register_wearing_goal_option_first_container"
+                                style="@style/ClothRegistrationCardView.WearingOption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/tv_cloth_register_wearing_goal_option_first"
+                                    style="@style/ClothRegistrationGoalOption.TextCommon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/cloth_register_wearing_goal_option_second_hint" />
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/RegularFontKr.14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="@string/cloth_register_wearing_goal_select_option_first"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/cv_cloth_register_wearing_goal_option_second_container"
+                                style="@style/ClothRegistrationCardView.WearingOption"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <androidx.appcompat.widget.AppCompatEditText
+                                    android:id="@+id/et_cloth_register_wearing_goal_option_second"
+                                    style="@style/RegularFontKr.12"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:background="@android:color/transparent"
+                                    android:hint="착용 횟수"
+                                    android:minWidth="70dp"
+                                    android:minHeight="36dp"
+                                    android:textColor="@color/green1"
+                                    android:textColorHint="@color/dark1" />
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/RegularFontKr.14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:text="@string/cloth_register_wearing_goal_select_option_second"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_cloth_register_recommend_wearing_container"
+                    style="@style/ClothRegistrationCardView.Common"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cv_cloth_register_wearing_goal_container">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_cloth_register_recommend_wearing_title"
+                            style="@style/BoldFontKr.14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/cloth_register_recommend_wearing_title"
+                            android:textColor="@color/green1" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_cloth_register_recommend_wearing_summary_first"
+                            style="@style/RegularFontKr.14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/black"
+                            tools:text="1개월 안에 20번 입으려면" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_cloth_register_recommend_wearing_summary_second"
+                            style="@style/RegularFontKr.14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/green1"
+                            tools:text="한 달에 20번\n일주일에 5번" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/RegularFontKr.14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/cloth_register_recommend_wearing_summary_third"
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_cloth_register_complete"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:backgroundTint="@color/green1"
+                    android:text="@string/cloth_register_complete"
+                    android:textAppearance="@style/RegularFontKr.14"
+                    app:cornerRadius="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cv_cloth_register_recommend_wearing_container" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -28,6 +28,13 @@
         <item name="android:layout_marginStart">20dp</item>
     </style>
 
+    <style name="ClothRegistrationCardView.WearingOption" parent="Widget.Material3.CardView.Filled">
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">@color/dark1</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+    </style>
+
     <style name="ClosetItemCardView.DDay" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.ClosetItem.CardView.Corners
         </item>
@@ -59,6 +66,17 @@
         <item name="android:layout_marginStart">10dp</item>
         <item name="android:layout_marginEnd">10dp</item>
         <item name="android:textColor">@color/green1</item>
+    </style>
+
+    <style name="ClothRegistrationGoalOption.TextCommon" parent="Widget.AppCompat.TextView">
+        <item name="android:drawableEnd">@drawable/ic_arrow_bottom_14</item>
+        <item name="android:textAppearance">@style/RegularFontKr.12</item>
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:drawableTint">@color/dark1</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:minWidth">70dp</item>
+        <item name="android:textColor">@color/dark1</item>
     </style>
 
     <!-- Button -->

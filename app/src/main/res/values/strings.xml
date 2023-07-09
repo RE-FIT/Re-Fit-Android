@@ -40,14 +40,30 @@
 
     <string name="cloth_register_title">옷 등록</string>
     <string name="cloth_register_request_photo">옷 사진을\n등록해 주세요 :)</string>
+
     <string name="cloth_register_category_title">카테고리</string>
-    <string name="cloth_register_category_wearing_season">주 착용 계절</string>
     <string name="cloth_register_category_top">상의</string>
     <string name="cloth_register_category_bottom">하의</string>
     <string name="cloth_register_category_outer">아우터</string>
     <string name="cloth_register_category_one_piece">원피스</string>
     <string name="cloth_register_category_shoes">신발</string>
+
+    <string name="cloth_register_category_wearing_season_title">주 착용 계절</string>
     <string name="cloth_register_category_wearing_season_spring">봄 (3-5월) / 가을 (9-11월)</string>
     <string name="cloth_register_category_wearing_season_summer">여름 (6-8월)</string>
     <string name="cloth_register_category_wearing_season_winter">겨울 (12-2월)</string>
+
+    <string name="cloth_register_wearing_season_confirm_title">지금은 이 옷을 입기에 적절한 계절이 아니네요!\n당분간 (1-3개월) 이 옷을 입을 계획이 있나요?</string>
+    <string name="cloth_register_wearing_season_confirm_positive">네, 입을래요!</string>
+    <string name="cloth_register_wearing_season_confirm_negative">아뇨, 당분간 안 입어요!</string>
+
+    <string name="cloth_register_wearing_goal_title">목표 착용 횟수</string>
+    <string name="cloth_register_wearing_goal_select_option_first">안에</string>
+    <string name="cloth_register_wearing_goal_select_option_second">번 입을거에요!</string>
+    <string name="cloth_register_wearing_goal_option_second_hint">개월</string>
+
+    <string name="cloth_register_recommend_wearing_title">권장 착용 횟수</string>
+    <string name="cloth_register_recommend_wearing_summary_third">입는 걸 권장드려요!</string>
+    <string name="cloth_register_complete">등록 완료!</string>
+
 </resources>
