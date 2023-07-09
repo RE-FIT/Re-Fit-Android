@@ -30,8 +30,8 @@ class ClothRegisterPhotoDialog(
 
     private fun handleNegativeConfirm() {
         binding.btnDialogClothRegisterPhotoFromGallery.setOnClickListener {
-            confirmDialogInterface.onClickGallery()
             dismiss()
+            confirmDialogInterface.onClickGallery()
         }
     }
 

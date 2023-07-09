@@ -1,10 +1,15 @@
 package com.example.refit.util
 
+import android.content.ContentValues
 import android.content.Context
+import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Environment
+import android.provider.MediaStore
 import java.io.File
 import java.io.FileOutputStream
+import java.util.Date
+import java.util.Locale
 
 object FileUtil {
 
@@ -41,5 +46,14 @@ object FileUtil {
         copyToFile(context, uri, file)
 
         return File(file.absolutePath)
+    }
+
+    fun createImageFile(context: Context): Uri? {
+        val now = SimpleDateFormat.getDateInstance().format(Date())
+        val content = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, "refit_${now}jpg")
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
+        }
+        return context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, content)
     }
 }
