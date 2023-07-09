@@ -17,31 +17,15 @@ class AlertBasicDialog(
     private val positiveConfirm: String,
     private val negativeConfirm: String,
     private val confirmDialogInterface: AlertBasicDialogListener
-) : DialogFragment() {
+) : BaseDialog<CustomDialogAlertBasicBinding>(R.layout.custom_dialog_alert_basic) {
 
-    private var _binding: CustomDialogAlertBasicBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = CustomDialogAlertBasicBinding.inflate(inflater, container, false)
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         handlePositiveConfirm()
         handleNegativeConfirm()
         build()
-
-        return binding.root
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun build() {
         binding.tvDialogAlertTitle.text = this.title
         binding.btnDialogAlertBasicPositive.text = this.positiveConfirm

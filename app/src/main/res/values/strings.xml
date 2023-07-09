@@ -6,6 +6,9 @@
     <string name="closet_dialog_cloth_delete_positive">네, 삭제할래요</string>
     <string name="closet_dialog_cloth_delete_negative">아니오</string>
     <string name="closet_dialog_cloth_selection_title">옷 선택</string>
+    <string name="closet_dialog_cloth_register_photo_title">옷 등록</string>
+    <string name="closet_dialog_cloth_register_photo_from_camera">카메라로 찍기</string>
+    <string name="closet_dialog_cloth_register_photo_from_gallery">앨범에서 가져오기</string>
 
     <string name="closet_dialog_cloth_selection_option_recheck">목표 재설정</string>
     <string name="closet_dialog_cloth_selection_option_delete">옷 삭제</string>
