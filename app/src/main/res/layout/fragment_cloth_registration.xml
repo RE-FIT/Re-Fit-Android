@@ -9,6 +9,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="context"
+            type="com.example.refit.MainActivity" />
+
+        <variable
             name="photoUri"
             type="String" />
 
@@ -286,10 +290,10 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv_cloth_register_not_wearing_response_container"
                     style="@style/ClothRegistrationCardView.Common"
+                    setVisibility="@{vm.isNegativeInvalidSeasonConfirm}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
-                    setVisibility="@{vm.isNegativeInvalidSeasonConfirm}"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -352,14 +356,16 @@
                                 android:id="@+id/cv_cloth_register_wearing_goal_option_first_container"
                                 style="@style/ClothRegistrationCardView.WearingOption"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                app:strokeColor="@{vm.isFocusPopup() ? @color/green1 : @color/dark1}">
 
                                 <com.google.android.material.textview.MaterialTextView
                                     android:id="@+id/tv_cloth_register_wearing_goal_option_first"
                                     style="@style/ClothRegistrationGoalOption.TextCommon"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/cloth_register_wearing_goal_option_second_hint" />
+                                    android:textColor="@{vm.isFocusPopup() ? @color/green1 : @color/dark1}"
+                                    android:text="@{vm.isFocusPopup() ? vm.selectedMonthOption : @string/cloth_register_wearing_goal_option_second_hint}" />
 
                             </com.google.android.material.card.MaterialCardView>
 
@@ -384,7 +390,8 @@
                                 android:id="@+id/cv_cloth_register_wearing_goal_option_second_container"
                                 style="@style/ClothRegistrationCardView.WearingOption"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                app:strokeColor="@{vm.isFocusEditText ? @color/green1 : @color/dark1}">
 
                                 <androidx.appcompat.widget.AppCompatEditText
                                     android:id="@+id/et_cloth_register_wearing_goal_option_second"
@@ -395,6 +402,8 @@
                                     android:layout_marginEnd="10dp"
                                     android:background="@android:color/transparent"
                                     android:hint="착용 횟수"
+                                    android:text="@{!vm.isValidShowingWearingGoal() ? @string/empty : @string/empty}"
+                                    clearEditTextFocusByStatus="@{!vm.isFocusEditText}"
                                     android:minWidth="70dp"
                                     android:minHeight="36dp"
                                     android:textColor="@color/green1"

@@ -22,6 +22,19 @@ class ClosetViewModel(private val repository: ClosetRepository): ViewModel() {
     val isNegativeInvalidSeasonConfirm: LiveData<Boolean>
         get() = _isNegativeInvalidSeasonConfirm
 
+    private val _isFocusPopup: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFocusPopup: LiveData<Boolean>
+        get() = _isFocusPopup
+
+    private val _isFocusEditText: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFocusEditText: LiveData<Boolean>
+        get() = _isFocusEditText
+
+    private val _selectedMonthOption: MutableLiveData<String> = MutableLiveData<String>()
+    val selectedMonthOption: LiveData<String>
+        get() = _selectedMonthOption
+
+
 
 
     fun checkSeasonValidation(selectedSeason: String, resources: Resources) {
@@ -40,7 +53,7 @@ class ClosetViewModel(private val repository: ClosetRepository): ViewModel() {
                     currentMonth in 1..2 || currentMonth == 12
                 }
             }
-        _isValidShowingWearingGoal.value = isValidSeason
+        initClothWearingGoalOptionStatus(isValidSeason)
         _isValidInvalidSeasonConfirm.value = !isValidSeason
         _isNegativeInvalidSeasonConfirm.value = false
     }
@@ -50,14 +63,22 @@ class ClosetViewModel(private val repository: ClosetRepository): ViewModel() {
             resources.getString(R.string.cloth_register_wearing_season_confirm_positive) -> true
             else -> false
         }
-        _isValidShowingWearingGoal.value = isPositive
+        initClothWearingGoalOptionStatus(isPositive)
         _isNegativeInvalidSeasonConfirm.value = !isPositive
     }
 
-    private fun initContainerStatus() {
-        _isValidInvalidSeasonConfirm.value = false
-        _isValidShowingWearingGoal.value = false
-        _isNegativeInvalidSeasonConfirm.value = false
+    fun setWearingGoalMonthOptionStatus(status: Boolean, option: String) {
+        _isFocusPopup.value = status
+        _selectedMonthOption.value = option
     }
 
+    fun setWearingGoalNumberOptionStatus(status: Boolean) {
+        _isFocusEditText.value = status
+    }
+
+    private fun initClothWearingGoalOptionStatus(status: Boolean) {
+        _isValidShowingWearingGoal.value = status
+        _isFocusPopup.value = false
+        _isFocusEditText.value = false
+    }
 }

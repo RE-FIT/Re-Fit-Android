@@ -1,12 +1,12 @@
 package com.example.refit.presentation.common.binding
 
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
-import com.google.android.material.chip.Chip
 
 object CommonBindingAdapter {
 
@@ -46,4 +46,20 @@ object CommonBindingAdapter {
             view.isSelected = (selectedId == view.id)
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("clearEditTextFocusByStatus")
+    fun clearEditTextFocusByStatus(view: EditText, status: Boolean?) {
+        status?.let {
+            if(status) {
+                view.clearFocus()
+            }
+        }
+    }
+
+
+
+
+
+
 }

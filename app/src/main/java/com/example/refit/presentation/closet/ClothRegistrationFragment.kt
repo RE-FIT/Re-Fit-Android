@@ -1,37 +1,23 @@
 package com.example.refit.presentation.closet
 
-import android.content.ActivityNotFoundException
-import android.content.ContentValues
-import android.content.Intent
-import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import com.bumptech.glide.Glide
 import com.example.refit.R
 import com.example.refit.databinding.FragmentClothRegistrationBinding
 import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DialogUtil.showsClothRegisterPhotoDialog
 import com.example.refit.presentation.common.DropdownMenuManager
-import com.example.refit.presentation.common.NavigationUtil.popBackStack
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialogListener
 import com.example.refit.util.FileUtil
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
-import java.lang.ref.Cleaner
-import java.util.Calendar
-import java.util.Date
 
 class ClothRegistrationFragment :
     BaseFragment<FragmentClothRegistrationBinding>(R.layout.fragment_cloth_registration) {
@@ -51,6 +37,13 @@ class ClothRegistrationFragment :
         handleSelectSeasonCategory()
         handleClickWearingMonthOption()
         handleClickInvalidSeasonConfirm()
+        handleClickWearingGoalOptionSecond()
+    }
+
+    private fun handleClickWearingGoalOptionSecond() {
+        binding.etClothRegisterWearingGoalOptionSecond.setOnFocusChangeListener { _, isFocus ->
+            closetViewModel.setWearingGoalNumberOptionStatus(isFocus)
+        }
     }
 
     private fun handleSelectSeasonCategory() {
@@ -63,7 +56,7 @@ class ClothRegistrationFragment :
     }
 
     private fun handleClickInvalidSeasonConfirm() {
-        binding.cgClothRegisterSeasonConfirm.setOnCheckedStateChangeListener { _group, checkedIds ->
+        binding.cgClothRegisterSeasonConfirm.setOnCheckedStateChangeListener { _, checkedIds ->
             if (checkedIds.size > 0) {
                 val checkedResponse = binding.root.findViewById<Chip>(checkedIds[0])
                 closetViewModel.checkInvalidSeasonConfirmResponse(
@@ -85,7 +78,7 @@ class ClothRegistrationFragment :
             )
             popupMenu.setOnItemClickListener { _, view, _, _ ->
                 val itemDescription = (view as TextView).text.toString()
-                binding.tvClothRegisterWearingGoalOptionFirst.text = itemDescription
+                closetViewModel.setWearingGoalMonthOptionStatus(true, itemDescription)
                 popupMenu.dismiss()
             }
             popupMenu.show()

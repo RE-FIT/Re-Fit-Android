@@ -30,7 +30,6 @@
 
     <style name="ClothRegistrationCardView.WearingOption" parent="Widget.Material3.CardView.Filled">
         <item name="strokeWidth">1dp</item>
-        <item name="strokeColor">@color/dark1</item>
         <item name="cardCornerRadius">8dp</item>
         <item name="cardBackgroundColor">@color/white</item>
     </style>

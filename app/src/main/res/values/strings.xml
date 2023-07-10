@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">ReFit</string>
-
+    <string name="empty"/>
     <!-- dialog -->
     <string name="closet_dialog_cloth_delete_title">삭제 시 그동안 심은 나무와 입력한 정보들이 다 삭제돼요! 해당 옷을 삭제하시겠어요?</string>
     <string name="closet_dialog_cloth_delete_positive">네, 삭제할래요</string>
