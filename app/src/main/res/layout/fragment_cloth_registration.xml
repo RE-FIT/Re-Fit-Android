@@ -6,9 +6,15 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="photoUri"
             type="String" />
+
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.closet.viewmodel.ClosetViewModel" />
 
     </data>
 
@@ -69,9 +75,9 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_cloth_register_selected_cloth"
+                        setImage="@{photoUri}"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        setImage="@{photoUri}"
                         android:scaleType="centerCrop"
                         android:visibility="gone" />
 
@@ -224,6 +230,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv_cloth_register_season_confirm_container"
                     style="@style/ClothRegistrationCardView.Common"
+                    setVisibility="@{vm.isValidInvalidSeasonConfirm}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
@@ -252,7 +259,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            app:selectionRequired="true"
                             app:singleSelection="true">
 
                             <com.google.android.material.chip.Chip
@@ -260,7 +266,7 @@
                                 style="@style/ClothRegistrationChip.WearingSeason.Common"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:checked="true"
+                                android:checked="@{vm.isValidInvalidSeasonConfirm ? false : false}"
                                 android:text="@string/cloth_register_wearing_season_confirm_positive" />
 
                             <com.google.android.material.chip.Chip
@@ -268,6 +274,7 @@
                                 style="@style/ClothRegistrationChip.WearingSeason.Common"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:checked="@{vm.isValidInvalidSeasonConfirm ? false : false}"
                                 android:text="@string/cloth_register_wearing_season_confirm_negative" />
 
                         </com.google.android.material.chip.ChipGroup>
@@ -282,6 +289,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
+                    setVisibility="@{vm.isNegativeInvalidSeasonConfirm}"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -310,6 +318,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv_cloth_register_wearing_goal_container"
                     style="@style/ClothRegistrationCardView.Common"
+                    setVisibility="@{vm.isValidShowingWearingGoal}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
@@ -410,6 +419,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv_cloth_register_recommend_wearing_container"
                     style="@style/ClothRegistrationCardView.Common"
+                    setVisibility="@{vm.isValidShowingWearingGoal()}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"

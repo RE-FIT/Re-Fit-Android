@@ -14,13 +14,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_dialog_cloth_register_photo_cancel"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="-10dp"
             android:backgroundTint="@android:color/transparent"
             app:icon="@drawable/ic_close_24"
             app:iconGravity="end"
             app:iconSize="24dp"
-            android:layout_marginEnd="-10dp"
             app:iconTint="@color/dark2" />
 
         <androidx.appcompat.widget.AppCompatTextView
