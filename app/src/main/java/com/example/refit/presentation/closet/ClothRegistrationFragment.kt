@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import com.example.refit.R
 import com.example.refit.databinding.FragmentClothRegistrationBinding
 import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
@@ -50,7 +51,10 @@ class ClothRegistrationFragment :
         binding.cgClothRegisterWearingSeason.setOnCheckedStateChangeListener { _, checkedIds ->
             if (checkedIds.size > 0) {
                 val checkedSeason = binding.root.findViewById<Chip>(checkedIds[0])
-                closetViewModel.checkSeasonValidation(checkedSeason.text.toString(), resources)
+                closetViewModel.checkSeasonValidation(
+                    checkedSeason.text.toString(),
+                    resources.getStringArray(R.array.cloth_register_wearing_season).toList()
+                )
             }
         }
     }
@@ -61,7 +65,7 @@ class ClothRegistrationFragment :
                 val checkedResponse = binding.root.findViewById<Chip>(checkedIds[0])
                 closetViewModel.checkInvalidSeasonConfirmResponse(
                     checkedResponse.text.toString(),
-                    resources
+                    resources.getStringArray(R.array.cloth_register_invalid_season_confirm).toList()
                 )
             }
         }
@@ -89,11 +93,12 @@ class ClothRegistrationFragment :
         binding.cvClothRegisterPhotoContainer.setOnClickListener {
             showsClothRegisterPhotoDialog(object : ClothRegisterPhotoDialogListener {
                 override fun onClickTakePhoto() {
-                    openCamera()
+                    photoUri = FileUtil.createImageFile(requireActivity())
+                    takePicture.launch(photoUri)
                 }
 
                 override fun onClickGallery() {
-                    openGallery()
+                    pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                 }
             })
         }
@@ -111,10 +116,6 @@ class ClothRegistrationFragment :
             }
     }
 
-    private fun openGallery() {
-        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-    }
-
     private fun initCameraLauncher() {
         takePicture =
             registerForActivityResult(ActivityResultContracts.TakePicture()) {
@@ -127,10 +128,5 @@ class ClothRegistrationFragment :
                     Timber.d("사진 가져오기 실패")
                 }
             }
-    }
-
-    private fun openCamera() {
-        photoUri = FileUtil.createImageFile(requireActivity())
-        takePicture.launch(photoUri)
     }
 }

@@ -68,5 +68,6 @@
     <string name="cloth_register_recommend_wearing_title">권장 착용 횟수</string>
     <string name="cloth_register_recommend_wearing_summary_third">입는 걸 권장드려요!</string>
     <string name="cloth_register_complete">등록 완료!</string>
+    <string name="cloth_register_not_wearing_response">네 알겠어요!\n%1$s이 오면 다시 목표 착용 횟수를 \n설정할 수 있는 알림을 보내드릴게요!</string>
 
 </resources>

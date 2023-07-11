@@ -8,6 +8,8 @@
 
         <import type="android.view.View" />
 
+        <import type="com.example.refit.R" />
+
         <variable
             name="context"
             type="com.example.refit.MainActivity" />
@@ -308,11 +310,14 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_cloth_register_not_wearing_response"
                             style="@style/BoldFontKr.14"
+                            setPartOfTextColor="@{@color/blue}"
+                            startIndex="@{8}"
+                            endIndex="@{8 + vm.selectedSeason.length()}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:text="@{@string/cloth_register_not_wearing_response(vm.selectedSeason)}"
                             android:textAlignment="center"
-                            android:textColor="@color/dark2"
-                            tools:text="네 알겠어요!\n겨울이 오면 다시 목표 착용 횟수를 \n설정할 수 있는 알림을 보내드릴게요!" />
+                            android:textColor="@color/dark2" />
 
                     </LinearLayout>
 
@@ -359,13 +364,14 @@
                                 android:layout_height="wrap_content"
                                 app:strokeColor="@{vm.isFocusPopup() ? @color/green1 : @color/dark1}">
 
-                                <com.google.android.material.textview.MaterialTextView
+                                <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tv_cloth_register_wearing_goal_option_first"
                                     style="@style/ClothRegistrationGoalOption.TextCommon"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="@{vm.isFocusPopup() ? @color/green1 : @color/dark1}"
-                                    android:text="@{vm.isFocusPopup() ? vm.selectedMonthOption : @string/cloth_register_wearing_goal_option_second_hint}" />
+                                    android:drawableTint="@color/green1"
+                                    android:text="@{vm.isFocusPopup() ? vm.selectedMonthOption : @string/cloth_register_wearing_goal_option_second_hint}"
+                                    android:textColor="@{vm.isFocusPopup() ? @color/green1 : @color/dark1}" />
 
                             </com.google.android.material.card.MaterialCardView>
 
@@ -396,16 +402,16 @@
                                 <androidx.appcompat.widget.AppCompatEditText
                                     android:id="@+id/et_cloth_register_wearing_goal_option_second"
                                     style="@style/RegularFontKr.12"
+                                    clearEditTextFocusByStatus="@{!vm.isFocusEditText}"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="10dp"
                                     android:layout_marginEnd="10dp"
                                     android:background="@android:color/transparent"
                                     android:hint="착용 횟수"
-                                    android:text="@{!vm.isValidShowingWearingGoal() ? @string/empty : @string/empty}"
-                                    clearEditTextFocusByStatus="@{!vm.isFocusEditText}"
                                     android:minWidth="70dp"
                                     android:minHeight="36dp"
+                                    android:text="@{!vm.isValidShowingWearingGoal() ? @string/empty : @string/empty}"
                                     android:textColor="@color/green1"
                                     android:textColorHint="@color/dark1" />
 

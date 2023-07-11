@@ -34,22 +34,28 @@ class ClosetViewModel(private val repository: ClosetRepository): ViewModel() {
     val selectedMonthOption: LiveData<String>
         get() = _selectedMonthOption
 
+    private val _selectedSeason: MutableLiveData<String> = MutableLiveData<String>()
+    val selectedSeason: LiveData<String>
+        get() = _selectedSeason
 
 
 
-    fun checkSeasonValidation(selectedSeason: String, resources: Resources) {
+    fun checkSeasonValidation(selectedSeason: String, seasonList: List<String>) {
         val currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
         val isValidSeason: Boolean =
             when (selectedSeason) {
-                resources.getString(R.string.cloth_register_category_wearing_season_spring) -> {
+                seasonList[0] -> {
+                    _selectedSeason.value = "봄 · 가을"
                     currentMonth in 3..5 || currentMonth in 9..11
                 }
 
-                resources.getString(R.string.cloth_register_category_wearing_season_summer) -> {
+                seasonList[1] -> {
+                    _selectedSeason.value = "여름"
                     currentMonth in 6..8
                 }
 
                 else -> {
+                    _selectedSeason.value = "겨울"
                     currentMonth in 1..2 || currentMonth == 12
                 }
             }
@@ -58,9 +64,9 @@ class ClosetViewModel(private val repository: ClosetRepository): ViewModel() {
         _isNegativeInvalidSeasonConfirm.value = false
     }
 
-    fun checkInvalidSeasonConfirmResponse(selectedResponse: String, resources: Resources) {
+    fun checkInvalidSeasonConfirmResponse(selectedResponse: String, confirmResponse: List<String>) {
         val isPositive = when(selectedResponse) {
-            resources.getString(R.string.cloth_register_wearing_season_confirm_positive) -> true
+            confirmResponse[0] -> true
             else -> false
         }
         initClothWearingGoalOptionStatus(isPositive)
@@ -81,4 +87,6 @@ class ClosetViewModel(private val repository: ClosetRepository): ViewModel() {
         _isFocusPopup.value = false
         _isFocusEditText.value = false
     }
+
+
 }

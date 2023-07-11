@@ -1,11 +1,15 @@
 package com.example.refit.presentation.common.binding
 
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.example.refit.R
 import com.google.android.material.card.MaterialCardView
 
 object CommonBindingAdapter {
@@ -57,9 +61,14 @@ object CommonBindingAdapter {
         }
     }
 
-
-
-
-
-
+    @JvmStatic
+    @BindingAdapter("setPartOfTextColor", "startIndex", "endIndex")
+    fun setPartOfTextColor(view: TextView, color: Int?, startIndex: Int, endIndex: Int) {
+        color?.let {
+            val spannableString = SpannableString(view.text.toString())
+            val highlightColor = ForegroundColorSpan(color)
+            spannableString.setSpan(highlightColor, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            view.text = spannableString
+        }
+    }
 }
