@@ -11,15 +11,14 @@ import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialogList
 object DialogUtil {
     // TODO(모든 종류의 다이얼로그 메세지는 여기에 정의)
     // Closet
-    fun Fragment.showDeleteClothConfirmDialog(listener: AlertBasicDialogListener) {
+    fun Fragment.showAlertBasicDialog(
+        title: String,
+        positive: String,
+        negative: String,
+        listener: AlertBasicDialogListener
+    ) {
         val icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_alert_circle_24)
-        val dialog = AlertBasicDialog(
-            icon!!,
-            resources.getString(R.string.closet_dialog_cloth_delete_title),
-            resources.getString(R.string.closet_dialog_cloth_delete_positive),
-            resources.getString(R.string.closet_dialog_cloth_delete_negative),
-            listener
-        )
+        val dialog = AlertBasicDialog(icon!!, title, positive, negative, listener)
         dialog.show(requireActivity().supportFragmentManager, "AlertDialog")
     }
 

@@ -1,22 +1,25 @@
 package com.example.refit.presentation.closet
 
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.ViewModel
 import com.example.refit.R
 import com.example.refit.databinding.FragmentClothRegistrationBinding
 import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.CustomSnackBar
+import com.example.refit.presentation.common.DialogUtil.showAlertBasicDialog
 import com.example.refit.presentation.common.DialogUtil.showsClothRegisterPhotoDialog
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
+import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialogListener
 import com.example.refit.util.FileUtil
 import com.google.android.material.chip.Chip
@@ -31,6 +34,29 @@ class ClothRegistrationFragment :
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
     private lateinit var takePicture: ActivityResultLauncher<Uri>
     private var photoUri: Uri? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    showAlertBasicDialog(
+                        resources.getString(R.string.cloth_register_cancel_title),
+                        resources.getString(R.string.cloth_register_cancel_positive),
+                        resources.getString(R.string.cloth_register_cancel_negative),
+                        object : AlertBasicDialogListener {
+                            override fun onClickPositive() {
+                                closetViewModel.initAllStatus()
+                                navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
+                            }
+
+                            override fun onClickNegative() {
+                            }
+                        })
+                }
+            })
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -151,6 +177,7 @@ class ClothRegistrationFragment :
                 }
             }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         closetViewModel.initAllStatus()

@@ -2,6 +2,7 @@ package com.example.refit
 
 import android.os.Bundle
 import android.view.View
+import android.window.OnBackInvokedDispatcher
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -60,5 +61,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             .setTopLeftCorner(CornerFamily.ROUNDED, radius)
             .setTopRightCorner(CornerFamily.ROUNDED, radius)
             .build()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
     }
 }
