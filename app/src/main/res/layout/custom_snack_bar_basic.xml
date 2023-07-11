@@ -2,17 +2,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             app:cardBackgroundColor="@color/dark2"
-            app:cardCornerRadius="1000dp"
+            app:cardCornerRadius="@dimen/max_radius"
             app:cardElevation="0dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout

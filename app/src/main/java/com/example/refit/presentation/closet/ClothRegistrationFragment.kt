@@ -3,17 +3,20 @@ package com.example.refit.presentation.closet
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModel
 import com.example.refit.R
 import com.example.refit.databinding.FragmentClothRegistrationBinding
 import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.DialogUtil.showsClothRegisterPhotoDialog
 import com.example.refit.presentation.common.DropdownMenuManager
+import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialogListener
 import com.example.refit.util.FileUtil
 import com.google.android.material.chip.Chip
@@ -39,11 +42,30 @@ class ClothRegistrationFragment :
         handleClickWearingMonthOption()
         handleClickInvalidSeasonConfirm()
         handleClickWearingGoalOptionSecond()
+        handleCompleteInputWearingGoalOptionSecond()
+        handleClickAddCompleteButton()
+    }
+
+    private fun handleClickAddCompleteButton() {
+        binding.btnClothRegisterComplete.setOnClickListener {
+            //TODO(추후 기능 구현 때 서버 등록 요청이 정상적으로 되면 스낵 알림 호출할 것)
+            CustomSnackBar.make(it, "옷 등록을 완료하였습니다!", R.anim.anim_show_snack_bar_from_bottom).show()
+            navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
+        }
     }
 
     private fun handleClickWearingGoalOptionSecond() {
         binding.etClothRegisterWearingGoalOptionSecond.setOnFocusChangeListener { _, isFocus ->
             closetViewModel.setWearingGoalNumberOptionStatus(isFocus)
+        }
+    }
+
+    private fun handleCompleteInputWearingGoalOptionSecond() {
+        binding.etClothRegisterWearingGoalOptionSecond.setOnEditorActionListener { _, i, _ ->
+            if (i == EditorInfo.IME_ACTION_DONE) {
+                closetViewModel.handleInputCompleteWearingGoalNumberOption(binding.etClothRegisterWearingGoalOptionSecond.text.toString())
+            }
+            true
         }
     }
 
@@ -128,5 +150,9 @@ class ClothRegistrationFragment :
                     Timber.d("사진 가져오기 실패")
                 }
             }
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        closetViewModel.initAllStatus()
     }
 }

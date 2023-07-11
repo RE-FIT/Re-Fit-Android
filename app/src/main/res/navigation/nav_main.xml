@@ -64,5 +64,15 @@
         android:id="@+id/clothRegistrationFragment"
         android:name="com.example.refit.presentation.closet.ClothRegistrationFragment"
         android:label="fragment_cloth_registration"
-        tools:layout="@layout/fragment_cloth_registration" />
+        tools:layout="@layout/fragment_cloth_registration" >
+        <action
+            android:id="@+id/action_clothRegistrationFragment_to_nav_closet"
+            app:destination="@id/nav_closet"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/nav_closet"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

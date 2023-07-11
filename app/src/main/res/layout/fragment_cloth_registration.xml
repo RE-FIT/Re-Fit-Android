@@ -310,9 +310,9 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_cloth_register_not_wearing_response"
                             style="@style/BoldFontKr.14"
+                            endIndex="@{8 + vm.selectedSeason.length()}"
                             setPartOfTextColor="@{@color/blue}"
                             startIndex="@{8}"
-                            endIndex="@{8 + vm.selectedSeason.length()}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@{@string/cloth_register_not_wearing_response(vm.selectedSeason)}"
@@ -370,7 +370,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:drawableTint="@color/green1"
-                                    android:text="@{vm.isFocusPopup() ? vm.selectedMonthOption : @string/cloth_register_wearing_goal_option_second_hint}"
+                                    android:text="@{vm.isFocusPopup() ? vm.selectedMonthOption.toString() + `개월` : @string/cloth_register_wearing_goal_option_second_hint}"
                                     android:textColor="@{vm.isFocusPopup() ? @color/green1 : @color/dark1}" />
 
                             </com.google.android.material.card.MaterialCardView>
@@ -409,6 +409,7 @@
                                     android:layout_marginEnd="10dp"
                                     android:background="@android:color/transparent"
                                     android:hint="착용 횟수"
+                                    android:inputType="number"
                                     android:minWidth="70dp"
                                     android:minHeight="36dp"
                                     android:text="@{!vm.isValidShowingWearingGoal() ? @string/empty : @string/empty}"
@@ -434,7 +435,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv_cloth_register_recommend_wearing_container"
                     style="@style/ClothRegistrationCardView.Common"
-                    setVisibility="@{vm.isValidShowingWearingGoal()}"
+                    setVisibility="@{vm.isValidShowingRecommendWearing()}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
@@ -463,8 +464,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:textColor="@color/black"
-                            tools:text="1개월 안에 20번 입으려면" />
+                            android:text="@{vm.selectedMonthOption.toString() + `개월 안에 ` + vm.selectedWearingNumberOption.toString() + `번 입으려면` }"
+                            android:textColor="@color/black" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_cloth_register_recommend_wearing_summary_second"
@@ -472,6 +473,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
+                            setTextRecommendWearing="@{vm.isValidShowingRecommendWearing()}"
+                            goalOfMonth="@{vm.selectedMonthOption}"
+                            goalOfNumber="@{vm.selectedWearingNumberOption}"
                             android:textColor="@color/green1"
                             tools:text="한 달에 20번\n일주일에 5번" />
 
@@ -493,10 +497,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="24dp"
-                    android:backgroundTint="@color/green1"
+                    android:backgroundTint="@{vm.isValidShowingRecommendWearing() || vm.isNegativeInvalidSeasonConfirm() ? @color/green1 : @color/dark1}"
                     android:text="@string/cloth_register_complete"
                     android:textAppearance="@style/RegularFontKr.14"
                     app:cornerRadius="16dp"
+                    android:clickable="@{vm.isValidShowingRecommendWearing() || vm.isNegativeInvalidSeasonConfirm() ? true : false, default=false}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
