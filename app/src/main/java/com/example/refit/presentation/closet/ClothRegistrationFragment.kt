@@ -15,16 +15,18 @@ import com.example.refit.databinding.FragmentClothRegistrationBinding
 import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.CustomSnackBar
-import com.example.refit.presentation.common.DialogUtil.showAlertBasicDialog
+import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
 import com.example.refit.presentation.common.DialogUtil.showsClothRegisterPhotoDialog
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
+import com.example.refit.presentation.common.WindowUtil.hideKeyboard
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialogListener
 import com.example.refit.util.FileUtil
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
+
 
 class ClothRegistrationFragment :
     BaseFragment<FragmentClothRegistrationBinding>(R.layout.fragment_cloth_registration) {
@@ -41,7 +43,7 @@ class ClothRegistrationFragment :
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    showAlertBasicDialog(
+                    createAlertBasicDialog(
                         resources.getString(R.string.cloth_register_cancel_title),
                         resources.getString(R.string.cloth_register_cancel_positive),
                         resources.getString(R.string.cloth_register_cancel_negative),
@@ -53,7 +55,7 @@ class ClothRegistrationFragment :
 
                             override fun onClickNegative() {
                             }
-                        })
+                        }).show(requireActivity().supportFragmentManager, null)
                 }
             })
     }
@@ -90,6 +92,7 @@ class ClothRegistrationFragment :
         binding.etClothRegisterWearingGoalOptionSecond.setOnEditorActionListener { _, i, _ ->
             if (i == EditorInfo.IME_ACTION_DONE) {
                 closetViewModel.handleInputCompleteWearingGoalNumberOption(binding.etClothRegisterWearingGoalOptionSecond.text.toString())
+                hideKeyboard()
             }
             true
         }
@@ -182,4 +185,5 @@ class ClothRegistrationFragment :
         super.onDestroy()
         closetViewModel.initAllStatus()
     }
+
 }

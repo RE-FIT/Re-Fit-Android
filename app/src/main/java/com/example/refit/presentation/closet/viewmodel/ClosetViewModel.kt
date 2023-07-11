@@ -1,10 +1,8 @@
 package com.example.refit.presentation.closet.viewmodel
 
-import android.content.res.Resources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.refit.R
 import com.example.refit.data.repository.colset.ClosetRepository
 import java.util.Calendar
 
@@ -143,6 +141,5 @@ class ClosetViewModel(private val repository: ClosetRepository): ViewModel() {
         initRecommendWearingStatus(false)
         initNegativeInvalidSeasonConfirmStatus(false)
     }
-
 
 }
