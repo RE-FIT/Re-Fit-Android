@@ -37,10 +37,18 @@
         tools:layout="@layout/fragment_community" >
         <action
             android:id="@+id/action_communityFragment_to_closetFragment"
-            app:destination="@id/nav_closet" />
+            app:destination="@id/nav_closet"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_communityFragment_to_myPageFragment"
-            app:destination="@id/nav_my_page" />
+            app:destination="@id/nav_my_page"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/nav_closet"

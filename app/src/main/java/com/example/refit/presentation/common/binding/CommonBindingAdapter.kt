@@ -1,6 +1,5 @@
 package com.example.refit.presentation.common.binding
 
-import android.content.Context
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -9,10 +8,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
-import com.example.refit.R
-import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
 import com.google.android.material.card.MaterialCardView
 
 object CommonBindingAdapter {

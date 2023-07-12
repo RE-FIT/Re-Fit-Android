@@ -20,7 +20,7 @@
 
         <variable
             name="vm"
-            type="com.example.refit.presentation.closet.viewmodel.ClosetViewModel" />
+            type="com.example.refit.presentation.closet.viewmodel.ClothAddViewModel" />
 
     </data>
 

@@ -12,11 +12,11 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.refit.R
 import com.example.refit.databinding.FragmentClothRegistrationBinding
-import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
+import com.example.refit.presentation.closet.viewmodel.ClothAddViewModel
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
-import com.example.refit.presentation.common.DialogUtil.showsClothRegisterPhotoDialog
+import com.example.refit.presentation.common.DialogUtil.showClothRegisterPhotoDialog
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.common.WindowUtil.hideKeyboard
@@ -31,7 +31,7 @@ import timber.log.Timber
 class ClothRegistrationFragment :
     BaseFragment<FragmentClothRegistrationBinding>(R.layout.fragment_cloth_registration) {
 
-    private val closetViewModel: ClosetViewModel by sharedViewModel()
+    private val clothAddViewModel: ClothAddViewModel by sharedViewModel()
 
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
     private lateinit var takePicture: ActivityResultLauncher<Uri>
@@ -49,7 +49,7 @@ class ClothRegistrationFragment :
                         resources.getString(R.string.cloth_register_cancel_negative),
                         object : AlertBasicDialogListener {
                             override fun onClickPositive() {
-                                closetViewModel.initAllStatus()
+                                clothAddViewModel.initAllStatus()
                                 navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
                             }
 
@@ -62,7 +62,7 @@ class ClothRegistrationFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.vm = closetViewModel
+        binding.vm = clothAddViewModel
         initGalleryLauncher()
         initCameraLauncher()
         handleAddClothPhoto()
@@ -84,14 +84,14 @@ class ClothRegistrationFragment :
 
     private fun handleClickWearingGoalOptionSecond() {
         binding.etClothRegisterWearingGoalOptionSecond.setOnFocusChangeListener { _, isFocus ->
-            closetViewModel.setWearingGoalNumberOptionStatus(isFocus)
+            clothAddViewModel.setWearingGoalNumberOptionStatus(isFocus)
         }
     }
 
     private fun handleCompleteInputWearingGoalOptionSecond() {
         binding.etClothRegisterWearingGoalOptionSecond.setOnEditorActionListener { _, i, _ ->
             if (i == EditorInfo.IME_ACTION_DONE) {
-                closetViewModel.handleInputCompleteWearingGoalNumberOption(binding.etClothRegisterWearingGoalOptionSecond.text.toString())
+                clothAddViewModel.handleInputCompleteWearingGoalNumberOption(binding.etClothRegisterWearingGoalOptionSecond.text.toString())
                 hideKeyboard()
             }
             true
@@ -102,7 +102,7 @@ class ClothRegistrationFragment :
         binding.cgClothRegisterWearingSeason.setOnCheckedStateChangeListener { _, checkedIds ->
             if (checkedIds.size > 0) {
                 val checkedSeason = binding.root.findViewById<Chip>(checkedIds[0])
-                closetViewModel.checkSeasonValidation(
+                clothAddViewModel.checkSeasonValidation(
                     checkedSeason.text.toString(),
                     resources.getStringArray(R.array.cloth_register_wearing_season).toList()
                 )
@@ -114,7 +114,7 @@ class ClothRegistrationFragment :
         binding.cgClothRegisterSeasonConfirm.setOnCheckedStateChangeListener { _, checkedIds ->
             if (checkedIds.size > 0) {
                 val checkedResponse = binding.root.findViewById<Chip>(checkedIds[0])
-                closetViewModel.checkInvalidSeasonConfirmResponse(
+                clothAddViewModel.checkInvalidSeasonConfirmResponse(
                     checkedResponse.text.toString(),
                     resources.getStringArray(R.array.cloth_register_invalid_season_confirm).toList()
                 )
@@ -133,7 +133,7 @@ class ClothRegistrationFragment :
             )
             popupMenu.setOnItemClickListener { _, view, _, _ ->
                 val itemDescription = (view as TextView).text.toString()
-                closetViewModel.setWearingGoalMonthOptionStatus(true, itemDescription)
+                clothAddViewModel.setWearingGoalMonthOptionStatus(true, itemDescription)
                 popupMenu.dismiss()
             }
             popupMenu.show()
@@ -142,7 +142,7 @@ class ClothRegistrationFragment :
 
     private fun handleAddClothPhoto() {
         binding.cvClothRegisterPhotoContainer.setOnClickListener {
-            showsClothRegisterPhotoDialog(object : ClothRegisterPhotoDialogListener {
+            showClothRegisterPhotoDialog(object : ClothRegisterPhotoDialogListener {
                 override fun onClickTakePhoto() {
                     photoUri = FileUtil.createImageFile(requireActivity())
                     takePicture.launch(photoUri)
@@ -151,7 +151,7 @@ class ClothRegistrationFragment :
                 override fun onClickGallery() {
                     pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                 }
-            })
+            }).show(requireActivity().supportFragmentManager, "ClothRegisterPhotoDialog")
         }
     }
 
@@ -183,7 +183,7 @@ class ClothRegistrationFragment :
 
     override fun onDestroy() {
         super.onDestroy()
-        closetViewModel.initAllStatus()
+        clothAddViewModel.initAllStatus()
     }
 
 }

@@ -1,65 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/bg_dialog_alert_basic"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:paddingStart="20dp"
-    android:paddingTop="20dp"
-    android:paddingEnd="20dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_dialog_cloth_selection_close"
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="isNotCompleteGoal"
+            type="Boolean" />
+
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/transparent"
-        app:icon="@drawable/ic_close_24"
-        app:iconGravity="end"
-        app:iconSize="24dp"
-        app:iconTint="@color/dark2" />
+        android:background="@drawable/bg_dialog_alert_basic"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="20dp">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_dialog_alert_title"
-        style="@style/BoldFontKr.18"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="@string/closet_dialog_cloth_selection_title"
-        android:textAlignment="center"
-        android:textColor="@color/black" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_dialog_cloth_selection_close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            app:icon="@drawable/ic_close_24"
+            app:iconGravity="end"
+            app:iconSize="24dp"
+            app:iconTint="@color/dark2" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_dialog_cloth_selection_option_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
-        android:textAppearance="@style/MediumFontKr.14"
-        app:backgroundTint="@color/green1"
-        app:cornerRadius="10dp" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_dialog_alert_title"
+            style="@style/BoldFontKr.18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="@string/closet_dialog_cloth_selection_title"
+            android:textAlignment="center"
+            android:textColor="@color/black" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_dialog_cloth_selection_option_fix"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
-        android:backgroundTint="@android:color/transparent"
-        android:textAppearance="@style/MediumFontKr.14"
-        android:textColor="@color/dark1"
-        app:cornerRadius="10dp"
-        app:strokeColor="@color/dark1"
-        app:strokeWidth="1dp" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_dialog_cloth_selection_option_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:clickable="@{isNotCompleteGoal}"
+            android:textAppearance="@style/MediumFontKr.14"
+            app:backgroundTint="@color/green1"
+            app:cornerRadius="10dp"
+            tools:text="@{isNotCompleteGoal ? @string/cloth_item_selection_dialog_wear_today : @string/cloth_item_selection_dialog_re_update_goal}" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_dialog_cloth_selection_option_delete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/transparent"
-        android:textAppearance="@style/MediumFontKr.14"
-        android:textColor="@color/dark1"
-        app:cornerRadius="10dp"
-        app:strokeColor="@color/dark1"
-        app:strokeWidth="1dp" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_dialog_cloth_selection_option_fix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:backgroundTint="@android:color/transparent"
+            android:text="@string/cloth_item_selection_dialog_fix_info"
+            android:textAppearance="@style/MediumFontKr.14"
+            android:textColor="@color/dark1"
+            android:visibility="@{isNotCompleteGoal ? View.VISIBLE : View.GONE}"
+            app:cornerRadius="10dp"
+            app:strokeColor="@color/dark1"
+            app:strokeWidth="1dp" />
 
-</LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_dialog_cloth_selection_option_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
+            android:text="@string/cloth_item_selection_dialog_deletion"
+            android:textAppearance="@style/MediumFontKr.14"
+            android:textColor="@color/dark1"
+            app:cornerRadius="10dp"
+            app:strokeColor="@color/dark1"
+            app:strokeWidth="1dp" />
+
+    </LinearLayout>
+
+</layout>
