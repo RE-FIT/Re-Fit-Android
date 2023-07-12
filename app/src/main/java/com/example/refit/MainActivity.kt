@@ -2,13 +2,16 @@ package com.example.refit
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.refit.databinding.ActivityMainBinding
 import com.example.refit.presentation.common.BaseActivity
 import com.example.refit.presentation.common.WindowUtil.setStatusBarColor
+import com.example.refit.presentation.mypage.MyFeedFragment
+import com.example.refit.presentation.mypage.MyInfoFragment
+import com.example.refit.presentation.mypage.ScrapFragment
+import com.example.refit.presentation.mypage.SettingFragment
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 
@@ -56,5 +59,28 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             .setTopLeftCorner(CornerFamily.ROUNDED, radius)
             .setTopRightCorner(CornerFamily.ROUNDED, radius)
             .build()
+    }
+
+    fun changeFragment(index: Int) {
+        val transaction = supportFragmentManager.beginTransaction()
+
+        when(index) {
+            1 -> {
+                transaction.replace(R.id.layout, MyInfoFragment())
+                transaction.commitAllowingStateLoss()
+            }
+            2 -> {
+                transaction.replace(R.id.layout, MyFeedFragment())
+                transaction.commitAllowingStateLoss()
+            }
+            3 -> {
+                transaction.replace(R.id.layout, ScrapFragment())
+                transaction.commitAllowingStateLoss()
+            }
+            4 -> {
+                transaction.replace(R.id.layout, SettingFragment())
+                transaction.commitAllowingStateLoss()
+            }
+        }
     }
 }

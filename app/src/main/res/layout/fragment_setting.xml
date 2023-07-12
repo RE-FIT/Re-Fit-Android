@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/default_dark"
+        tools:context=".presentation.mypage.SettingFragment">
+
+        <TextView
+            style="@style/BoldFontKr.18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="55dp"
+            android:text="@string/setting_title"
+            android:textColor="@color/green1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="165dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/BoldFontKr.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:text="@string/my_setting_stringTxt"
+                android:textColor="@color/green1" />
+
+            <android.widget.Button
+                android:id="@+id/btn_string"
+                style="@style/RegularFont.12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/btn_setting_round_10"
+                android:backgroundTint="@color/white"
+                android:drawableEnd="@drawable/ic_mypage_setting"
+                android:gravity="center_vertical"
+                android:paddingStart="11dp"
+                android:paddingEnd="20dp"
+                android:text="@string/my_setting_string"
+                android:textColor="@color/dark2" />
+
+            <android.widget.Button
+                android:id="@+id/btn_string2"
+                style="@style/RegularFont.12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/btn_setting_round_10"
+                android:backgroundTint="@color/white"
+                android:drawableEnd="@drawable/ic_mypage_setting"
+                android:gravity="center_vertical"
+                android:paddingStart="11dp"
+                android:paddingEnd="20dp"
+                android:text="@string/my_setting_string2"
+                android:textColor="@color/dark2" />
+
+            <TextView
+                style="@style/BoldFontKr.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="31dp"
+                android:text="@string/my_setting_logoutTxt"
+                android:textColor="@color/green1" />
+
+            <android.widget.Button
+                android:id="@+id/btn_logout"
+                style="@style/RegularFont.12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/btn_setting_round_10"
+                android:backgroundTint="@color/white"
+                android:drawableEnd="@drawable/ic_mypage_setting"
+                android:gravity="center_vertical"
+                android:paddingStart="11dp"
+                android:paddingEnd="20dp"
+                android:text="@string/my_setting_logout"
+                android:textColor="@color/dark2" />
+
+            <TextView
+                style="@style/BoldFontKr.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="31dp"
+                android:text="@string/setting_account_delete"
+                android:textColor="@color/green1" />
+
+            <android.widget.Button
+                android:id="@+id/btn_delete"
+                style="@style/RegularFont.12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:background="@drawable/btn_setting_round_10"
+                android:backgroundTint="@color/white"
+                android:gravity="center_vertical"
+                android:drawableEnd="@drawable/ic_mypage_setting"
+                android:paddingStart="11dp"
+                android:paddingEnd="20dp"
+                android:text="@string/setting_account_delete"
+                android:textColor="@color/dark2" />
+
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

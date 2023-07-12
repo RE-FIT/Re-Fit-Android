@@ -1,22 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.mypage.MyInfoPwUpdateFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="myInfo_pwUpdate" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/tab_layout"
+            android:background="@color/default_dark"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/MediumFont.10"
+                android:layout_width="300dp"
+                android:layout_height="100dp"
+                android:paddingTop="14dp"
+                android:drawableTop="@drawable/ic_myinfo_warning"
+                android:drawablePadding="14dp"
+                android:layout_marginStart="31dp"
+                android:layout_marginTop="61dp"
+                android:layout_marginEnd="31dp"
+                android:background="@drawable/btn_setting_round_10"
+                android:gravity="center_horizontal"
+                android:text="비밀번호는 8-16자의 영문,숫자,특수문자를 사용할 수 있습니다.\n비밀번호는 주기적(최소6개월) 으로 변경해주시기 바랍니다."
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editText2"
+                style="@style/RegularFont.12"
+                android:layout_width="300dp"
+                android:layout_height="37dp"
+                android:layout_marginTop="22dp"
+                android:autofillHints="birth"
+                android:background="@drawable/et_mypage_round_10"
+                android:paddingStart="11dp"
+                android:paddingEnd="0dp"
+                android:hint="현재 비밀번호"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <EditText
+                android:id="@+id/editText"
+                style="@style/RegularFont.12"
+                android:layout_width="300dp"
+                android:layout_height="37dp"
+                android:layout_marginTop="22dp"
+                android:autofillHints="birth"
+                android:background="@drawable/et_mypage_round_10"
+                android:paddingStart="11dp"
+                android:paddingEnd="0dp"
+                android:hint="새로운 비밀번호"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText2" />
+
+            <android.widget.Button
+                style="@style/RegularFont.14"
+                android:layout_width="296dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="95dp"
+                android:background="@drawable/btn_my_info_round"
+                android:text="@string/my_info_btn_update"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </layout>

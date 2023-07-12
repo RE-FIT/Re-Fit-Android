@@ -15,20 +15,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
-            android:text="@string/my_page_myInfo"
+            android:text="@string/my_page_myFeed"
             android:textColor="@color/green1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
-            style="@style/BoldFontKr.14"
-            android:layout_width="match_parent"
+            style="@style/BoldFontKr.16"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="23dp"
-            android:background="@color/default_dark"
+            android:background="@drawable/tab_my_page_20"
             android:contentDescription="@string/my_info_string"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +35,7 @@
             app:tabGravity="center"
             app:tabIndicatorColor="@color/green1"
             app:tabMode="scrollable"
-            app:tabRippleColor="@color/white"
+            app:tabRippleColor="@color/green1"
             app:tabSelectedTextColor="@color/green1" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

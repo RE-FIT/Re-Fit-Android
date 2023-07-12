@@ -4,19 +4,148 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.mypage.MyInfoUpdateFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/start_button">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="myInfo_update" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <!-- 캐릭터 -->
+                <FrameLayout
+                    android:id="@+id/myPage_white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:background="@drawable/ic_white_100"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_mypage_woman" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/myInfo_name"
+                    style="@style/RegularFont.14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_page_name"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/myPage_white" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginEnd="24dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/myInfo_name">
+
+                    <TextView
+                        style="@style/BoldFontKr.14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/my_info_emailTxt"
+                        android:textColor="@color/green1" />
+
+                    <TextView
+                        style="@style/RegularFont.12"
+                        android:layout_width="300dp"
+                        android:layout_height="37dp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/et_mypage_round_10"
+                        android:paddingStart="11dp"
+                        android:paddingEnd="0dp"
+                        android:text="@string/my_info_email"
+                        android:textColor="@color/dark1"
+                        android:autofillHints="emailAddress" />
+
+                    <TextView
+                        style="@style/BoldFontKr.14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/my_info_idTxt"
+                        android:textColor="@color/green1" />
+
+                    <TextView
+                        style="@style/RegularFont.12"
+                        android:layout_width="300dp"
+                        android:layout_height="37dp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/et_mypage_round_10"
+                        android:paddingStart="11dp"
+                        android:paddingEnd="0dp"
+                        android:text="@string/my_info_id"
+                        android:textColor="@color/dark1"
+                        android:autofillHints="username" />
+
+                    <TextView
+                        style="@style/BoldFontKr.14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/my_info_nameTxt"
+                        android:textColor="@color/green1" />
+
+                    <EditText
+                        style="@style/RegularFont.12"
+                        android:layout_width="300dp"
+                        android:layout_height="37dp"
+                        android:background="@drawable/et_mypage_round_10"
+                        android:paddingStart="11dp"
+                        android:paddingEnd="0dp"
+                        android:text="@string/my_info_name"
+                        android:textColor="@color/black"
+                        android:autofillHints="name" />
+
+                    <TextView
+                        style="@style/BoldFontKr.14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/my_info_dateTxt"
+                        android:textColor="@color/green1" />
+
+                    <EditText
+                        style="@style/RegularFont.12"
+                        android:layout_width="300dp"
+                        android:layout_height="37dp"
+                        android:background="@drawable/et_mypage_round_10"
+                        android:paddingStart="11dp"
+                        android:paddingEnd="0dp"
+                        android:text="@string/my_info_date"
+                        android:textColor="@color/black"
+                        android:autofillHints="birth" />
+
+                    <android.widget.Button
+                        style="@style/RegularFont.14"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="50dp"
+                        android:background="@drawable/btn_my_info_round"
+                        android:text="@string/my_info_btn_update"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </layout>

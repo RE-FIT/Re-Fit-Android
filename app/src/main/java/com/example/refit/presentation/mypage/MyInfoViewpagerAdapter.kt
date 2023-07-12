@@ -3,15 +3,26 @@ package com.example.refit.presentation.mypage
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class MyInfoViewpagerAdapter(fragment: MyInfoFragment): FragmentStateAdapter(fragment) {
-    val list = listOf<Fragment>(MyInfoUpdateFragment(), MyInfoPwUpdateFragment())
+class MyInfoViewpagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
+    // 페이지 갯수 설정
+
+    val fragmentList : MutableList<Fragment> = arrayListOf()
 
     override fun getItemCount(): Int {
-        return list.size
+        return fragmentList.size
     }
 
     override fun createFragment(position: Int): Fragment {
-        return list[position]
+        return fragmentList[position]
     }
 
+    fun addFragment(fragment: Fragment){
+        fragmentList.add(fragment)
+        notifyItemInserted(fragmentList.size - 1)
+    }
+
+    fun removeFragment(){
+        fragmentList.removeLast()
+        notifyItemRemoved(fragmentList.size)
+    }
 }
