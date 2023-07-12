@@ -13,4 +13,21 @@
         <item>적게 입은 순</item>
     </string-array>
     
+    <string-array name="cloth_register_wearing_month_option">
+        <item>1개월</item>
+        <item>2개월</item>
+        <item>3개월</item>
+    </string-array>
+    
+    <string-array name="cloth_register_wearing_season">
+        <item>@string/cloth_register_category_wearing_season_spring</item>
+        <item>@string/cloth_register_category_wearing_season_summer</item>
+        <item>@string/cloth_register_category_wearing_season_winter</item>
+    </string-array>
+
+    <string-array name="cloth_register_invalid_season_confirm">
+        <item>@string/cloth_register_wearing_season_confirm_positive</item>
+        <item>@string/cloth_register_wearing_season_confirm_negative</item>
+    </string-array>
+
 </resources>

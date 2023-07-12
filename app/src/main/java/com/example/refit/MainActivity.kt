@@ -2,7 +2,6 @@ package com.example.refit
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -21,7 +20,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         binding.bnvMain.setupWithNavController(getNavController())
         handleNavigationBarVisibility()
         initBottomNavigationBackground()
-
     }
 
     private fun getNavController(): NavController {
@@ -39,10 +37,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                         setStatusBarColor(R.color.green1)
                         View.VISIBLE
                     }
-                    R.id.nav_community, R.id.nav_my_page  -> {
+
+                    R.id.nav_community, R.id.nav_my_page -> {
                         setStatusBarColor(R.color.default_dark)
                         View.VISIBLE
                     }
+
+                    R.id.clothRegistrationFragment -> {
+                        setStatusBarColor(R.color.default_dark)
+                        View.GONE
+                    }
+
                     else -> View.GONE
                 }
         }
@@ -50,7 +55,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     private fun initBottomNavigationBackground() {
         val radius = resources.getDimension(R.dimen.big_radius)
-        val bottomNavBackground: MaterialShapeDrawable = binding.bnvMain.background as MaterialShapeDrawable
+        val bottomNavBackground: MaterialShapeDrawable =
+            binding.bnvMain.background as MaterialShapeDrawable
         bottomNavBackground.shapeAppearanceModel = bottomNavBackground.shapeAppearanceModel
             .toBuilder()
             .setTopLeftCorner(CornerFamily.ROUNDED, radius)

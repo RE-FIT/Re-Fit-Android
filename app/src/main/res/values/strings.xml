@@ -1,5 +1,34 @@
 <resources>
     <string name="app_name">ReFit</string>
+    <string name="empty"/>
+    <string name="percent">%</string>
+    <!-- dialog -->
+    <string name="closet_dialog_cloth_delete_title">삭제 시 그동안 심은 나무와\n입력한 정보들이 다 삭제돼요!\n해당 옷을 삭제하시겠어요?</string>
+    <string name="closet_dialog_cloth_delete_positive">네, 삭제할래요</string>
+    <string name="closet_dialog_cloth_delete_negative">아니오</string>
+
+    <string name="closet_dialog_cloth_selection_title">옷 선택</string>
+    <string name="closet_dialog_cloth_register_photo_title">옷 등록</string>
+    <string name="closet_dialog_cloth_register_photo_from_camera">카메라로 찍기</string>
+    <string name="closet_dialog_cloth_register_photo_from_gallery">앨범에서 가져오기</string>
+
+    <string name="cloth_register_cancel_title">지금 취소하면\n입력한 정보들이 전부 삭제돼요!\n옷 등록을 취소하시겠어요?</string>
+    <string name="cloth_register_cancel_positive">네, 취소할래요</string>
+    <string name="cloth_register_cancel_negative">아니오</string>
+
+    <string name="closet_dialog_cloth_selection_option_recheck">목표 재설정</string>
+    <string name="closet_dialog_cloth_selection_option_delete">옷 삭제</string>
+    <string name="closet_dialog_cloth_selection_option_wear">오늘 입기</string>
+    <string name="closet_dialog_cloth_selection_option_fix">정보 수정</string>
+
+    <string name="closet_dialog_alert_limit_wearing">하나의 카테고리에서는 하루에 2번 이상 입기가 불가능해요!</string>
+    <string name="closet_dialog_alert_limit_wearing_sub_version">* 하나의 카테고리에는 하루에 2번 이상 입기가 불가능해요! *</string>
+    <string name="closet_dialog_alert_season">%1$s이 왔네요! 아직 목표를 설정하지 않은 %2%s 카테고리에 있는 옷들의 목표를 설정해 숲을 꾸며가는 건 어때요?</string>
+
+    <string name="cloth_item_selection_dialog_wear_today">오늘 입기</string>
+    <string name="cloth_item_selection_dialog_re_update_goal">목표 재설정</string>
+    <string name="cloth_item_selection_dialog_fix_info">정보 수정</string>
+    <string name="cloth_item_selection_dialog_deletion">옷 삭제</string>
 
     <!-- Closet -->
     <string name="closet_category_first">상의</string>
@@ -20,21 +49,41 @@
     <string name="closet_option_sort_second">많이 입은 순</string>
     <string name="closet_option_sort_third">적게 입은 순</string>
 
-    <!-- dialog -->
-    <string name="closet_dialog_cloth_delete_title">삭제 시 그동안 심은 나무와 입력한 정보들이 다 삭제돼요! 해당 옷을 삭제하시겠어요?</string>
-    <string name="closet_dialog_cloth_delete_positive">네, 삭제할래요</string>
-    <string name="closet_dialog_cloth_delete_negative">아니오</string>
-    <string name="closet_dialog_cloth_selection_title">옷 선택</string>
+    <string name="registered_cloth_info_d_day">D-%d</string>
+    <string name="registered_cloth_info_fit_and_goal">%d/%d</string>
+    <string name="registered_cloth_info_recommend_wearing">월 %d회 / 주 %d회</string>
+    <string name="registered_cloth_info_progress">%d%s</string>
 
-    <string name="closet_dialog_cloth_selection_option_recheck">목표 재설정</string>
-    <string name="closet_dialog_cloth_selection_option_delete">옷 삭제</string>
-    <string name="closet_dialog_cloth_selection_option_wear">오늘 입기</string>
-    <string name="closet_dialog_cloth_selection_option_fix">정보 수정</string>
+    <string name="cloth_register_title">옷 등록</string>
+    <string name="cloth_register_request_photo">옷 사진을\n등록해 주세요 :)</string>
 
-    <string name="closet_dialog_alert_limit_wearing">하나의 카테고리에서는 하루에 2번 이상 입기가 불가능해요!</string>
-    <string name="closet_dialog_alert_limit_wearing_sub_version">* 하나의 카테고리에는 하루에 2번 이상 입기가 불가능해요! *</string>
-    <string name="closet_dialog_alert_season_spring">봄이 왔네요! 아직 목표를 설정하지 않은 봄 카테고리에 있는 옷들의 목표를 설정해 숲을 꾸며가는 건 어때요?</string>
-    <string name="closet_dialog_alert_season_summer">여름이 왔네요! 아직 목표를 설정하지 않은 여름 카테고리에 있는 옷들의 목표를 설정해 숲을 꾸며가는 건 어때요?</string>
-    <string name="closet_dialog_alert_season_fall">가을이 왔네요! 아직 목표를 설정하지 않은 가을 카테고리에 있는 옷들의 목표를 설정해 숲을 꾸며가는 건 어때요?</string>
-    <string name="closet_dialog_alert_season_winter">겨울이 왔네요! 아직 목표를 설정하지 않은 겨울 카테고리에 있는 옷들의 목표를 설정해 숲을 꾸며가는 건 어때요?</string>
+    <string name="cloth_register_category_title">카테고리</string>
+    <string name="cloth_register_category_top">상의</string>
+    <string name="cloth_register_category_bottom">하의</string>
+    <string name="cloth_register_category_outer">아우터</string>
+    <string name="cloth_register_category_one_piece">원피스</string>
+    <string name="cloth_register_category_shoes">신발</string>
+
+    <string name="cloth_register_category_wearing_season_title">주 착용 계절</string>
+    <string name="cloth_register_category_wearing_season_spring">봄 (3-5월) / 가을 (9-11월)</string>
+    <string name="cloth_register_category_wearing_season_summer">여름 (6-8월)</string>
+    <string name="cloth_register_category_wearing_season_winter">겨울 (12-2월)</string>
+
+    <string name="cloth_register_wearing_season_confirm_title">지금은 이 옷을 입기에 적절한 계절이 아니네요!\n당분간 (1-3개월) 이 옷을 입을 계획이 있나요?</string>
+    <string name="cloth_register_wearing_season_confirm_positive">네, 입을래요!</string>
+    <string name="cloth_register_wearing_season_confirm_negative">아뇨, 당분간 안 입어요!</string>
+
+    <string name="cloth_register_wearing_goal_title">목표 착용 횟수</string>
+    <string name="cloth_register_wearing_goal_select_option_first">안에</string>
+    <string name="cloth_register_wearing_goal_select_option_second">번 입을거에요!</string>
+    <string name="cloth_register_wearing_goal_option_second_hint">개월</string>
+
+    <string name="cloth_register_recommend_wearing_title">권장 착용 횟수</string>
+    <string name="cloth_register_recommend_wearing_summary_third">입는 걸 권장드려요!</string>
+    <string name="cloth_register_complete">등록 완료!</string>
+    <string name="cloth_register_not_wearing_response">네 알겠어요!\n%1$s이 오면 다시 목표 착용 횟수를 \n설정할 수 있는 알림을 보내드릴게요!</string>
+    <string name="cloth_register_recommend_wearing">"한 달에 %1$d번\n일주일에 %2$d번</string>
+
+
+
 </resources>
