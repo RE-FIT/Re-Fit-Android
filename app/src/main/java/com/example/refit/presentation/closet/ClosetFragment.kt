@@ -50,6 +50,7 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
                 showClothItemSelectionDialog(item, object : ClothItemSelectionDialogListener {
                     override fun onClickMainButton(isNotCompleteGoal: Boolean) {
                         //TODO(목표 달성 상태에 따라 다르게 처리)
+
                     }
 
                     override fun onClickFixInfo(clothInfo: RegisteredClothInfoResponse) {
