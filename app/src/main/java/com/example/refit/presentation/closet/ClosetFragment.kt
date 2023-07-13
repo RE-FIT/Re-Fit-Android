@@ -47,10 +47,10 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         closetViewModel.selectedRegisteredClothItem.observe(
             viewLifecycleOwner,
             EventObserver { item ->
+                //TODO(이미 옷 입기가 된 아이템인지 확인 필요 -> 입었다면 옷 입기 막기 처리)
                 showClothItemSelectionDialog(item, object : ClothItemSelectionDialogListener {
                     override fun onClickMainButton(isNotCompleteGoal: Boolean) {
                         //TODO(목표 달성 상태에 따라 다르게 처리)
-
                     }
 
                     override fun onClickFixInfo(clothInfo: RegisteredClothInfoResponse) {
