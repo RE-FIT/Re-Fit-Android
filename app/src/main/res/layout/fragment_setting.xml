@@ -113,7 +113,7 @@
                 android:drawableEnd="@drawable/ic_mypage_setting"
                 android:paddingStart="11dp"
                 android:paddingEnd="20dp"
-                android:text="@string/setting_account_delete"
+                android:text="@string/setting_account_deleteTxt"
                 android:textColor="@color/dark2" />
 
 

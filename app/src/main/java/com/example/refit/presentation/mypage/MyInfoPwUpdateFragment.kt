@@ -11,6 +11,8 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.btnPwUpdate.isClickable = binding.currentPw != null && binding.newPw != null
     }
 
 }

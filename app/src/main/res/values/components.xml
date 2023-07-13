@@ -49,6 +49,7 @@
         <item name="android:textAppearance">@style/RegularFontKr.10</item>
         <item name="android:drawablePadding">6dp</item>
         <item name="android:drawableTint">@color/green1</item>
+        <item name="android:minWidth">80dp</item>
         <item name="android:layout_marginStart">10dp</item>
         <item name="android:layout_marginEnd">10dp</item>
         <item name="android:textColor">@color/green1</item>
@@ -58,22 +59,19 @@
     <!-- TODO(여기에 버튼 뷰에 대한 스타일 정의) -->
 
     <!-- Popup -->
-    <style name="PopupTextAppearance.App.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
-        <item name="fontFamily">@font/noto_sans_kr_regular</item>
-        <item name="android:fontFamily">@font/noto_sans_kr_regular</item>
+    <style name="PopupTextAppearance.App.BodyLarge" parent="TextAppearance.AppCompat.Widget.PopupMenu.Small">
+        <item name="android:textAppearance">@style/RegularFontKr</item>
     </style>
 
     <style name="PopupTextAppearance.ClosetOption" parent="PopupTextAppearance.App.BodyLarge">
-        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="PopupMenu.ClosetOption" parent="Widget.Material3.PopupMenu">
+    <style name="ListPopupMenuWindow.ClosetOption" parent="Widget.AppCompat.ListPopupWindow">
+        <item name="popupMenuBackground">@drawable/bg_popup_closet_option</item>
         <item name="textAppearanceLargePopupMenu">@style/PopupTextAppearance.ClosetOption</item>
         <item name="textAppearanceSmallPopupMenu">@style/PopupTextAppearance.ClosetOption</item>
-        <item name="popupMenuBackground">@drawable/bg_popup_closet_option</item>
     </style>
-
 
 
     <!-- ShapeAppearance -->

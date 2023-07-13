@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/btn_setting_round_10"
+        android:state_enabled="true">
+    </item>
+    <item android:drawable="@drawable/btn_my_info_pw_enabled"/>
+</selector>

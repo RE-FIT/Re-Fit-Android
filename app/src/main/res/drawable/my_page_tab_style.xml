@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 선택 되었을 떄 -->
+    <item android:drawable="@drawable/my_page_tab_selected"
+        android:state_selected="true">
+        <vector android:height="22dp"/>
+    </item>
+
+    <!-- 기본 -->
+    <item android:drawable="@drawable/my_page_tab"/>
+</selector>

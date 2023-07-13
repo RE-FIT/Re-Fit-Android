@@ -13,7 +13,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <!-- 캐릭터 -->
                 <FrameLayout
@@ -30,7 +30,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_mypage_woman" />
+                        android:src="@drawable/ic_mypage_woman"
+                        android:contentDescription="" />
 
                 </FrameLayout>
 
@@ -61,6 +62,7 @@
                         style="@style/BoldFontKr.14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
                         android:text="@string/my_info_emailTxt"
                         android:textColor="@color/green1" />
 
@@ -81,6 +83,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:text="@string/my_info_idTxt"
                         android:textColor="@color/green1" />
 
@@ -101,6 +104,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:text="@string/my_info_nameTxt"
                         android:textColor="@color/green1" />
 
@@ -111,15 +115,18 @@
                         android:background="@drawable/et_mypage_round_10"
                         android:paddingStart="11dp"
                         android:paddingEnd="0dp"
+                        android:hint="@string/my_info_name"
                         android:text="@string/my_info_name"
                         android:textColor="@color/black"
-                        android:autofillHints="name" />
+                        android:autofillHints="name"
+                        android:inputType="textPersonName" />
 
                     <TextView
                         style="@style/BoldFontKr.14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:text="@string/my_info_dateTxt"
                         android:textColor="@color/green1" />
 
@@ -132,14 +139,24 @@
                         android:paddingEnd="0dp"
                         android:text="@string/my_info_date"
                         android:textColor="@color/black"
-                        android:autofillHints="birth" />
+                        android:autofillHints="birth"
+                        android:inputType="date" />
+
+                    <TextView
+                        style="@style/BoldFontKr.14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/my_page_genderTxt"
+                        android:textColor="@color/green1" />
 
                     <android.widget.Button
                         style="@style/RegularFont.14"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="50dp"
-                        android:background="@drawable/btn_my_info_round"
+                        android:background="@drawable/btn_my_info_pw"
                         android:text="@string/my_info_btn_update"
                         android:textColor="@color/white" />
                 </LinearLayout>
