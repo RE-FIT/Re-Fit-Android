@@ -31,7 +31,7 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.vm = closetViewModel
         closetViewModel.getUserRegisteredClothes()
         initRegisteredCloth()
         initDefaultClothCategory(binding.cvClosetCategoryContainerTop)
