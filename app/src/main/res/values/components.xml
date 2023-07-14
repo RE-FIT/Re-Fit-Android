@@ -45,6 +45,30 @@
         <item name="cardBackgroundColor">@color/white</item>
     </style>
 
+    <style name="CommunityOptionCardView.Common" parent="Widget.Material3.CardView.Filled">
+        <item name="strokeWidth">0dp</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="android:layout_marginStart">10dp</item>
+    </style>
+
+    <style name="CommunityAddPostCardView.Common" parent="Widget.Material3.CardView.Filled">
+        <item name="strokeWidth">0.7dp</item>
+        <item name="strokeColor">@color/selector_green1_else_dark1</item>
+        <item name="cardCornerRadius">10dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+    </style>
+
+    <style name="CommunityAddPostPriceCardView.Common" parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">10dp</item>
+        <item name="cardBackgroundColor">@color/dark1</item>
+    </style>
+
+    <style name="CommunityAddPostRegionCardView.Common." parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">10dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+    </style>
+
     <!-- TextView -->
     <style name="ClosetCategory.TextCommon" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/selector_selected_green1_else_dark1</item>
@@ -78,6 +102,44 @@
         <item name="android:textColor">@color/dark1</item>
     </style>
 
+    <style name="CommunitySearchOption.TextCommon" parent="Widget.AppCompat.TextView">
+        <item name="android:drawableRight">@drawable/ic_arrow_bottom_14</item>
+        <item name="android:textAppearance">@style/RegularFontKr.10</item>
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:drawableTint">@color/green1</item>
+        <item name="android:minWidth">65dp</item>
+        <item name="android:layout_marginStart">6dp</item>
+        <item name="android:layout_marginEnd">6dp</item>
+        <item name="android:textColor">@color/green1</item>
+    </style>
+
+    <style name="CommunityAddPostOption.TextCommon" parent="Widget.AppCompat.TextView">
+        <item name="android:drawableRight">@drawable/ic_arrow_bottom_14</item>
+        <item name="android:textAppearance">@style/RegularFontKr.12</item>
+        <item name="android:drawableTint">@color/dark2</item>
+        <item name="android:minWidth">65dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:textColor">@color/dark2</item>
+    </style>
+
+    <style name="CommunityAddPostSearchOption.TextCommon" parent="Widget.AppCompat.TextView">
+        <item name="android:drawableRight">@drawable/ic_arrow_bottom_14</item>
+        <item name="android:textAppearance">@style/RegularFontKr.12</item>
+        <item name="android:drawableTint">@color/dark2</item>
+        <item name="android:minWidth">65dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:textColor">@color/dark2</item>
+    </style>
+
+    <style name="CommunityAddPostPrice.TextCommon" parent="Widget.AppCompat.TextView">
+        <item name="android:textAppearance">@style/RegularFontKr.12</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+
     <!-- Button -->
     <!-- TODO(여기에 버튼 뷰에 대한 스타일 정의) -->
 
@@ -101,6 +163,26 @@
 
     <style name="ListPopupMenuWindow.ClothRegister" parent="ListPopupMenuWindow.Common">
         <item name="popupMenuBackground">@drawable/bg_solid_white_radius_20</item>
+    </style>
+
+    <style name="ListPopupMenuWindow.CommunityOption" parent="ListPopupMenuWindow.Common">
+        <item name="popupMenuBackground">@drawable/bg_popup_community_option</item>
+        <item name="textAppearanceLargePopupMenu">@style/PopupTextAppearance.CommunityOption</item>
+        <item name="textAppearanceSmallPopupMenu">@style/PopupTextAppearance.CommunityOption</item>
+    </style>
+
+    <style name="PopupTextAppearance.CommunityOption" parent="PopupTextAppearance.App.BodyLarge">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="ListPopupMenuWindow.CommunityAddPostOption" parent="ListPopupMenuWindow.Common">
+        <item name="popupMenuBackground">@drawable/bg_solid_white_radius_10</item>
+        <item name="textAppearanceLargePopupMenu">@style/PopupTextAppearance.CommunityAddPostOption</item>
+        <item name="textAppearanceSmallPopupMenu">@style/PopupTextAppearance.CommunityAddPostOption</item>
+    </style>
+
+    <style name="PopupTextAppearance.CommunityAddPostOption" parent="PopupTextAppearance.App.BodyLarge">
+        <item name="android:textSize">12sp</item>
     </style>
 
 
@@ -135,11 +217,27 @@
         <item name="chipEndPadding">14dp</item>
     </style>
 
+    <style name="CommunityAddPostChip.Transaction.Common" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="checkedIconVisible">false</item>
+        <item name="chipBackgroundColor">@color/selector_selected_green1_else_white</item>
+        <item name="chipMinHeight">35dp</item>
+        <item name="chipCornerRadius">30dp</item>
+        <item name="android:textColor">@color/selector_selected_white_else_dark2</item>
+        <item name="android:textAppearance">@style/RegularFontKr.12</item>
+        <item name="rippleColor">@android:color/transparent</item>
+        <item name="chipStartPadding">10dp</item>
+        <item name="chipEndPadding">10dp</item>
+    </style>
 
     <!-- ShapeAppearance -->
     <style name="ShapeAppearance.RoundedRadius.20" parent="ShapeAppearance.Material3.MediumComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">20dp</item>
+    </style>
+
+    <style name="ShapeAppearance.RoundedRadius.10" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
     </style>
 
     <style name="ShapeAppearance.Button" parent="ShapeAppearance.Material3.SmallComponent">
@@ -152,6 +250,36 @@
         <item name="cornerSizeBottomRight">17dp</item>
         <item name="cornerSizeTopRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <style name="ShapeAppearance.CommunityItem.CardView.Corners" parent="">
+        <item name="cornerFamilyTopLeft">cut</item>
+        <item name="cornerFamilyTopRight">cut</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomRight">12dp</item>
+        <item name="cornerSizeBottomLeft">12dp</item>
+    </style>
+
+    <style name="Layout.CommunityItem.Margin.Common" parent="">
+        <item name="android:layout_marginBottom">15dp</item>
+    </style>
+
+    <!-- Theme -->
+    <style name="CommunityToolbar.MenuColor" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="srcCompat">@drawable/ic_community_etc_4</item>
+    </style>
+
+    <!-- Radio -->
+    <style name="CommunityAddPostRadio.InputPrice.Common" parent="Widget.Material3.CompoundButton.RadioButton">
+        <item name="checkedIconVisible">true</item>
+        <item name="chipBackgroundColor">@color/default_dark</item>
+        <item name="android:textColor">@color/dark2</item>
+        <item name="android:textAppearance">@style/RegularFontKr.12</item>
+        <item name="android:button">@drawable/bg_radiobuttion_circle_option</item>
+        <item name="itemIconPadding">5dp</item>
     </style>
 
 

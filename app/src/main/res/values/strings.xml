@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">ReFit</string>
-    <string name="empty"/>
+    <string name="empty" />
     <string name="percent">%</string>
     <!-- dialog -->
     <string name="closet_dialog_cloth_delete_title">삭제 시 그동안 심은 나무와\n입력한 정보들이 다 삭제돼요!\n해당 옷을 삭제하시겠어요?</string>
@@ -48,7 +48,6 @@
     <string name="closet_option_sort_first">D-Day 순</string>
     <string name="closet_option_sort_second">많이 입은 순</string>
     <string name="closet_option_sort_third">적게 입은 순</string>
-    <string name="closet_empty_item">아직 등록된 옷이 없어요!\n옷 등록 버튼을 클릭해\n첫번째 목표를 설정해보세요 :)</string>
 
     <string name="registered_cloth_info_d_day">D-%d</string>
     <string name="registered_cloth_info_fit_and_goal">%d/%d</string>
@@ -89,5 +88,56 @@
     <string name="cloth_register_complete">등록 완료!</string>
     <string name="cloth_register_not_wearing_response">네 알겠어요!\n%1$s이 오면 다시 목표 착용 횟수를 \n설정할 수 있는 알림을 보내드릴게요!</string>
     <string name="cloth_register_recommend_wearing">"한 달에 %1$d번\n일주일에 %2$d번</string>
+
+    <!--Community-->
+    <string name="community_main_toolbar_title">Green Community</string>
+    <string name="community_search_option_first">카테고리</string>
+    <string name="community_search_option_second">종류</string>
+    <string name="community_search_option_third">성별</string>
+    <string name="community_main_fab_bottom_end">글쓰기</string>
+    <string name="community_item_text_first">사이즈</string>
+    <string name="community_item_text_second">거래방식</string>
+    <string name="community_item_text_third">거래지역</string>
+
+    <string name="community_info_toolbar_title">나눔</string>
+    <string name="community_info_toolbar_title2">판매</string>
+    <string name="community_info_fab_bottom_end">채팅하기</string>
+    <string name="community_info_text_first">Info</string>
+    <string name="community_info_text_second">상세 설명</string>
+    <string name="community_info_type_giveaway_ing">나눔 진행중</string>
+    <string name="community_info_type_giveaway_end">나눔 완료</string>
+    <string name="community_info_type_sale_ing">판매 진행중</string>
+    <string name="community_info_type_sale_end">판매 완료</string>
+    <string name="community_info_contents_first">사이즈 : </string>
+    <string name="community_info_contents_second">거래방식 : </string>
+    <string name="community_info_contents_third">배송비 : </string>
+    <string name="community_info_contents_fourth">거래지역 : </string>
+    <string name="community_info_contents_fifth">가격 : </string>
+    <string name="community_info_overflow_writer_first">수정하기</string>
+    <string name="community_info_overflow_writer_second">삭제하기</string>
+    <string name="community_info_overflow_writer_third">나눔중</string>
+
+    <string name="community_addpost_toolbar_title">글 작성</string>
+    <string name="community_addpost_contents_first">사진</string>
+    <string name="community_addpost_contents_second">제목 (상품명)</string>
+    <string name="community_addpost_contents_third">추천 착용 성별</string>
+    <string name="community_addpost_contents_fourth">카테고리</string>
+    <string name="community_addpost_contents_fifth">사이즈</string>
+    <string name="community_addpost_contents_sixth">거래 방식</string>
+    <string name="community_addpost_contents_seventh">상세 설명</string>
+    <string name="community_addpost_contents_detail_first">제목 (상품명)을 입력해주세요</string>
+    <string name="community_addpost_contents_detail_second">옷의 추천 착용 성별을 선택해주세요</string>
+    <string name="community_addpost_contents_detail_third">옷의 카테고리를 선택해주세요</string>
+    <string name="community_addpost_contents_detail_fourth">사이즈를 선택해주세요</string>
+    <string name="community_addpost_contents_detail_fourth_method">거래 희망 방식</string>
+    <string name="community_addpost_contents_detail_fourth_price">가격</string>
+    <string name="community_addpost_contents_detail_fourth_include_price">배송비 포함</string>
+    <string name="community_addpost_contents_detail_fourth_exclude_price">배송비 별도</string>
+    <string name="community_addpost_contents_detail_fourth_input">입력</string>
+    <string name="communtiy_addpost_contents_detail_fourth_region">거래 희망 장소를 선택해주세요</string>
+    <string name="community_addpost_contents_detail_fifth">옷과 자신의 키 등에 대한 정보를 상세하게\n적을수록 많은 분들이 관심을 가지니,
+        \n최대한 자세하게 작성 부탁드려요 :)\n\n(판매 금지 물품은 게시가 제한될 수 있음을 알립니다)</string>
+    <string name="community_addpost_contents_done">작성 완료</string>
+
 
 </resources>
