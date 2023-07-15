@@ -148,15 +148,15 @@
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_community_addpost_recommend_gender"
                             style="@style/CommunityAddPostCardView.Common"
-                            StrokeColor="@{cmviewmodel.isClickedOptionRG}"
+                            CStrokeColor="@{cmviewmodel.isClickedOptionRG}"
                             android:layout_width="match_parent"
                             android:layout_height="40dp">
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/tv_community_addpost_recommend_gender"
                                 style="@style/CommunityAddPostOption.TextCommon"
-                                DrawableTint="@{cmviewmodel.isClickedOptionRG}"
-                                TextColor="@{cmviewmodel.isClickedOptionRG}"
+                                CDrawableTint="@{cmviewmodel.isClickedOptionRG}"
+                                CTextColor="@{cmviewmodel.isClickedOptionRG}"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:gravity="center_vertical"
@@ -182,15 +182,15 @@
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_community_addpost_clothes_category"
                             style="@style/CommunityAddPostCardView.Common"
-                            StrokeColor="@{cmviewmodel.isClickedOptionCategory}"
+                            CStrokeColor="@{cmviewmodel.isClickedOptionCategory}"
                             android:layout_width="match_parent"
                             android:layout_height="40dp">
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/tv_community_addpost_clothes_category"
                                 style="@style/CommunityAddPostOption.TextCommon"
-                                DrawableTint="@{cmviewmodel.isClickedOptionCategory}"
-                                TextColor="@{cmviewmodel.isClickedOptionCategory}"
+                                CDrawableTint="@{cmviewmodel.isClickedOptionCategory}"
+                                CTextColor="@{cmviewmodel.isClickedOptionCategory}"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:gravity="center_vertical"
@@ -217,15 +217,15 @@
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_communtiy_addpost_size"
                             style="@style/CommunityAddPostCardView.Common"
-                            StrokeColor="@{cmviewmodel.isClickedOptionSize}"
+                            CStrokeColor="@{cmviewmodel.isClickedOptionSize}"
                             android:layout_width="match_parent"
                             android:layout_height="40dp">
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/tv_communtiy_addpost_size"
                                 style="@style/CommunityAddPostOption.TextCommon"
-                                DrawableTint="@{cmviewmodel.isClickedOptionSize}"
-                                TextColor="@{cmviewmodel.isClickedOptionSize}"
+                                CDrawableTint="@{cmviewmodel.isClickedOptionSize}"
+                                CTextColor="@{cmviewmodel.isClickedOptionSize}"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:gravity="center_vertical"
@@ -251,6 +251,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             app:chipSpacingHorizontal="10dp"
+                            android:layout_marginBottom="10dp"
                             app:selectionRequired="true"
                             app:singleSelection="true">
 
@@ -277,20 +278,20 @@
                             android:orientation="vertical"
                             android:layout_marginBottom="5dp"
                             setVisibility="@{cmviewmodel.isTransactionMethodChip}"
-                            >
+                            android:visibility="gone" >
 
                             <com.google.android.material.card.MaterialCardView
                                 android:id="@+id/cv_community_addpost_transaction_method"
                                 style="@style/CommunityAddPostCardView.Common"
-                                StrokeColor="@{cmviewmodel.isClickedOptionTM}"
+                                app:strokeColor="@{cmviewmodel.isClickedOptionTM ? @color/green1 : @color/white}"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp">
 
                                 <com.google.android.material.textview.MaterialTextView
                                     android:id="@+id/tv_community_addpost_transaction_method"
                                     style="@style/CommunityAddPostOption.TextCommon"
-                                    DrawableTint="@{cmviewmodel.isClickedOptionTM}"
-                                    TextColor="@{cmviewmodel.isClickedOptionTM}"
+                                    CDrawableTint="@{cmviewmodel.isClickedOptionTM}"
+                                    CTextColor="@{cmviewmodel.isClickedOptionTM}"
                                     android:layout_width="match_parent"
                                     android:layout_height="40dp"
                                     android:gravity="center_vertical"
@@ -298,95 +299,110 @@
                             </com.google.android.material.card.MaterialCardView>
                         </LinearLayout>
 
-                        <LinearLayout
+                        <FrameLayout
                             style="@style/Layout.CommunityItem.Margin.Common"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:layout_marginBottom="5dp"
-                            setVisibility="@{cmviewmodel.isVisiblePriceStatus}"
-                             >
+                            android:visibility="gone"
+                            setVisibility="@{cmviewmodel.isVisiblePriceStatus}" >
 
                             <androidx.appcompat.widget.AppCompatEditText
                                 style="@style/RegularFontKr.12"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
-                                android:background="@drawable/bg_solid_white_radius_10"
-                                android:hint="@string/community_addpost_contents_detail_first"
-                                android:focusableInTouchMode="false"
+                                android:background="@{cmviewmodel.isPriceInputEnabled ? @drawable/bg_solid_white_radius_10 : @drawable/bg_solid_dark1_radius_10}"
+                                android:hint="@{cmviewmodel.isPriceInputEnabled ? @string/community_addpost_contents_detail_fourth_price_2 : ``}"
+                                android:enabled="@{cmviewmodel.isPriceInputEnabled()}"
                                 android:paddingHorizontal="15dp"
                                 android:textColor="@color/black"
                                 android:textColorHint="@color/dark2" />
 
-                            <androidx.appcompat.widget.AppCompatEditText
-                                style="@style/RegularFontKr.12"
-                                android:layout_width="match_parent"
+                            <androidx.appcompat.widget.AppCompatTextView
+                                setVisibility="@{cmviewmodel.isPriceInputEnabled() ? false : true}"
+                                android:layout_width="wrap_content"
                                 android:layout_height="40dp"
-                                android:background="@drawable/bg_solid_white_radius_10"
-                                android:hint="@string/community_addpost_contents_detail_first"
-                                android:focusableInTouchMode="true"
-                                android:paddingHorizontal="15dp"
-                                android:textColor="@color/black"
-                                android:textColorHint="@color/dark2" />
+                                style="@style/CommunityAddPostPrice.TextCommon"
+                                android:layout_marginLeft="15dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/community_addpost_contents_detail_fourth_price" />
 
-                            <com.google.android.material.card.MaterialCardView
-                                android:id="@+id/cv_community_addpost_transaction_price"
-                                style="@style/CommunityAddPostPriceCardView.Common"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp" >
+                            <androidx.appcompat.widget.AppCompatTextView
+                                setVisibility="@{cmviewmodel.isPriceInputEnabled() ? false : true}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                style="@style/CommunityAddPostPrice.TextCommon"
+                                android:layout_marginRight="15dp"
+                                android:layout_gravity="right"
+                                android:gravity="center_vertical"
+                                android:text="0원" />
 
-                                <com.google.android.material.textview.MaterialTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="40dp"
-                                    android:layout_marginLeft="15dp"
-                                    android:gravity="center_vertical"
-                                    style="@style/CommunityAddPostPrice.TextCommon"
-                                    android:text="@string/community_addpost_contents_detail_fourth_price" />
-
-                                <com.google.android.material.textview.MaterialTextView
-                                    android:id="@+id/tv_community_addpost_transaction_price"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="40dp"
-                                    android:layout_marginRight="15dp"
-                                    android:layout_gravity="right"
-                                    android:gravity="center_vertical"
-                                    style="@style/CommunityAddPostPrice.TextCommon"
-                                    android:text="₩ 0원" />
-                            </com.google.android.material.card.MaterialCardView>
-                        </LinearLayout>
+                        </FrameLayout>
 
                         <LinearLayout
                             style="@style/Layout.CommunityItem.Margin.Common"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:visibility="gone" >
+                            android:layout_marginBottom="15dp"
+                            setVisibility="@{cmviewmodel.isVisibleFeeStatus}"
+                            android:visibility="gone"
+                            android:paddingHorizontal="15dp" >
 
                             <RadioGroup
-                                android:id="@+id/cg_community_addpost_input_price"
+                                android:id="@+id/rg_community_addpost_input_fee"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="20dp"
                                 android:orientation="horizontal"
                                 app:selectionRequired="true"
-                                app:singleSelection="true">
+                                app:singleSelection="true" >
 
-                                <com.google.android.material.radiobutton.MaterialRadioButton
-                                    android:id="@+id/ch_community_addpost_input_include_price"
-                                    style="@style/CommunityAddPostRadio.InputPrice.Common"
+                                <androidx.appcompat.widget.AppCompatRadioButton
+                                    style="@style/RegularFontKr.12"
+                                    android:id="@+id/rb_community_addpost_input_include_fee"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:button="@drawable/bg_radiobuttion_circle_option"
+                                    android:layout_marginRight="30dp"
+                                    android:button="@null"
+                                    android:drawableLeft="@drawable/bg_radiobuttion_circle_option"
+                                    android:drawablePadding="5dp"
+                                    android:textColor="@color/dark2"
                                     android:text="@string/community_addpost_contents_detail_fourth_include_price" />
 
-                                <com.google.android.material.radiobutton.MaterialRadioButton
-                                    android:id="@+id/ch_community_addpost_input_exclude_price"
-                                    style="@style/CommunityAddPostRadio.InputPrice.Common"
+                                <androidx.appcompat.widget.AppCompatRadioButton
+                                    style="@style/RegularFontKr.12"
+                                    android:id="@+id/rb_community_addpost_input_exclude_fee"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:button="@null"
+                                    android:drawableLeft="@drawable/bg_radiobuttion_circle_option"
+                                    android:drawablePadding="5dp"
+                                    android:textColor="@color/dark2"
                                     android:text="@string/community_addpost_contents_detail_fourth_exclude_price" />
 
                             </RadioGroup>
 
+                            <androidx.appcompat.widget.AppCompatTextView
+                                setVisibility="@{cmviewmodel.isFilledFee}"
+                                android:id="@+id/tv_community_addpost_sf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text=""
+                                style="@style/RegularFontKr.12"
+                                android:layout_marginLeft="5dp"
+                                android:textColor="@color/green1"
+                                android:gravity="center_vertical" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_community_addpost_fee_input"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="@{cmviewmodel.isFilledFee ? @string/community_addpost_contents_detail_fourth_input_2 : @string/community_addpost_contents_detail_fourth_input}"
+                                android:enabled="@{cmviewmodel.isSFExclude()}"
+                                style="@style/MediumFontKr.12"
+                                android:layout_marginLeft="5dp"
+                                android:textColor="@color/dark2"
+                                android:gravity="center_vertical" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -394,8 +410,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:layout_marginBottom="5dp"
-                            setVisibility="@{cmviewmodel.isVisiblePriceStatus}"
+                            android:layout_marginBottom="15dp"
+                            setVisibility="@{cmviewmodel.isVisibleRegionStatus}"
                             android:visibility="gone" >
 
                             <com.google.android.material.card.MaterialCardView
@@ -408,8 +424,8 @@
                                     android:id="@+id/tv_community_addpost_region"
                                     style="@style/CommunityAddPostOption.TextCommon"
                                     android:drawableRight="@drawable/ic_search_13"
-                                    DrawableTint="@{cmviewmodel.isVisibleRegionStatus()}"
-                                    TextColor="@{cmviewmodel.isVisibleRegionStatus}"
+                                    CDrawableTint="@{cmviewmodel.isFilledRG()}"
+                                    android:textColor="@{cmviewmodel.isFilledRG() ? @color/black : @color/dark2}"
                                     android:layout_width="match_parent"
                                     android:layout_height="40dp"
                                     android:gravity="center_vertical"

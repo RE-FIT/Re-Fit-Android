@@ -1,9 +1,11 @@
 package com.example.refit.presentation.community.viewmodel
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.refit.data.repository.community.CommunityRepository
+import timber.log.Timber
 
 class CommunityAddPostViewModel (
     private val communityRepository: CommunityRepository
@@ -45,7 +47,7 @@ class CommunityAddPostViewModel (
         get() = _isVisibleRegionStatus
 
 
-    // 거래 방식-1 나눔(1), 판매(2)
+    // 거래 방식-1 나눔(0), 판매(1)
     private val _selectedType: MutableLiveData<Int> = MutableLiveData<Int>()
     val selectedType: LiveData<Int>
         get() = _selectedType
@@ -60,38 +62,99 @@ class CommunityAddPostViewModel (
     val priceCategory: LiveData<Boolean>
         get() = _priceCategory
 
+    // 가격 입력창 활성/비활성 여부 (나눔 - false, 판매 - true)
+    private val _isPriceInputEnabled: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isPriceInputEnabled: LiveData<Boolean>
+        get() = _isPriceInputEnabled
+
+    // 다이얼로그 내부 배송비 입력 완료 여부
+    private val _isPriceInputCompleted: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isPriceInputCompleted: LiveData<Boolean>
+        get() = _isPriceInputCompleted
+
+    // 배송비 특성 (포함 false / 별도 true)
+    private val _isSFExclude: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isSFExclude: LiveData<Boolean>
+        get() = _isSFExclude
+
+    // 배송비 가격
+    private val _shippingFee: MutableLiveData<Int> = MutableLiveData<Int>()
+    val shippingFee: LiveData<Int>
+        get() = _shippingFee
+
+    // 필수 입력 항목들 값 채워짐 여부
+    private val _isFilledImage: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFilledImage: LiveData<Boolean>
+        get() = _isFilledImage
+
+    private val _isFilledTitle: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFilledTitle: LiveData<Boolean>
+        get() = _isFilledTitle
+
+    private val _isFilledRG: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFilledRG: LiveData<Boolean>
+        get() = _isFilledRG
+
+    private val _isFilledCategory: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFilledCategory: LiveData<Boolean>
+        get() = _isFilledCategory
+
+    private val _isFilledSize: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFilledSize: LiveData<Boolean>
+        get() = _isFilledSize
+
+    private val _isFilledTMChip: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFilledTMChip: LiveData<Boolean>
+        get() = _isFilledTMChip
+
+    private val _isFilledTM: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFilledTM: LiveData<Boolean>
+        get() = _isFilledTM
+
+    private val _isFilledPrice: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFilledPrice: LiveData<Boolean>
+        get() = _isFilledPrice
+
+    private val _isFilledFee: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFilledFee: LiveData<Boolean>
+        get() = _isFilledFee
+
+    private val _isFilledDialogEditSF: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFilledDialogEditSF: LiveData<Boolean>
+        get() = _isFilledDialogEditSF
+
+// TODO 배송비 옵션 까지만 설정해둔 상태 밑으로 더 추가해줘야 함
 
     fun checkTransactionType(selectedType: String, typeList: List<String>) {
         when (selectedType) {
             typeList[0] -> {
-                _selectedType.value = 1
+                _selectedType.value = 0
             }
             else -> {
-                _selectedType.value = 2
+                _selectedType.value = 1
             }
         }
         _isTransactionMethodChip.value = true
-        setVisiblePriceStatus(false)
+        setVisiblePriceStatus(false, 2)
         setVisibleFeeStatus(false)
         setVisibleRegionStatus(false)
     }
 
 
     fun selectTransactionMethod(itemType: String) {
+        setFilledStatus(6, true)
         when (itemType) {
             "배송" -> {
                 _selectedTMType.value = 1
-                setVisiblePriceStatus(true)
+                selectedType.value?.let { setVisiblePriceStatus(true, it) }
                 setVisibleFeeStatus(true)
                 setVisibleRegionStatus(false)
-                // TODO 나눔 판매 구분에 따라 가격 창 열어줘야 함
             }
             "직거래" -> {
                 _selectedTMType.value = 2
                 setVisibleRegionStatus(true)
-                // TODO 나눔일 경우에는 가격 창 열면 안 됨 전체적으로 여기 처리 다시 하기
                 // TODO 판매 - 직거래는 가격 입력 받아야 함
-                setVisiblePriceStatus(false)
+                selectedType.value?.let { setVisiblePriceStatus(true, it) }
                 setVisibleFeeStatus(false)
             }
         }
@@ -113,17 +176,47 @@ class CommunityAddPostViewModel (
         _isClickedOptionTM.value = clicked
     }
 
-    fun setVisiblePriceStatus(status: Boolean) {
+    fun setVisiblePriceStatus(status: Boolean, type: Int) {
         _isVisiblePriceStatus.value = status
-        _isVisibleRegionStatus.value = status
+        when (type) {
+            0 -> _isPriceInputEnabled.value = false
+            1 -> _isPriceInputEnabled.value = true
+        }
     }
 
     fun setVisibleFeeStatus(status: Boolean) {
         _isVisibleFeeStatus.value = status
     }
 
+    fun setPriceInputCompleted(status: Boolean) {
+        _isPriceInputCompleted.value = status
+    }
+
+    @SuppressLint("TimberArgCount")
     fun setVisibleRegionStatus(status: Boolean) {
         _isVisibleRegionStatus.value = status
+        if(status) Timber.d("직거래 체크")
+        else Timber.d("false")
+    }
+
+    fun setFilledStatus(type: Int, status: Boolean) {
+        when (type) {
+            0 -> _isFilledImage.value = status
+            1 -> _isFilledTitle.value = status
+            2 -> _isFilledRG.value = status
+            3 -> _isFilledCategory.value = status
+            4 -> _isFilledSize.value = status
+            5 -> _isFilledTMChip.value = status
+            6 -> _isFilledTM.value = status
+            7 -> _isFilledPrice.value = status
+            8 -> _isFilledFee.value = status
+            9 -> _isFilledDialogEditSF.value = status
+            10 -> _isSFExclude.value = status
+        }
+    }
+
+    fun setShippingFee(value: Int) {
+        _shippingFee.value = value
     }
 
     fun initAllStatus() {
@@ -131,5 +224,11 @@ class CommunityAddPostViewModel (
         _isClickedOptionRG.value = false
         _isClickedOptionCategory.value = false
         _isClickedOptionSize.value = false
+    }
+
+    fun initTransactionStatus() {
+        _isVisibleRegionStatus.value = false
+        _isVisiblePriceStatus.value = false
+        _isVisibleFeeStatus.value = false
     }
 }

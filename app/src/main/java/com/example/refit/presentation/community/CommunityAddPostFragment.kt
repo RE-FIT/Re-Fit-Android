@@ -5,14 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
+import androidx.core.content.ContextCompat
 import com.example.refit.R
 import com.example.refit.databinding.FragmentCommunityAddPostBinding
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.DialogUtil.showCommunityAddShippingFeeDiaglog
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
+import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialogListener
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
@@ -27,7 +31,9 @@ class CommunityAddPostFragment :
         super.onViewCreated(view, savedInstanceState)
         binding.cmviewmodel = communityAddPostViewModel
         CommunityAddContentsOptionDropdown()
-        selectTransactionType()
+        selectTransactionChipType()
+        handledAddShippingFee()
+        selectShippingFeeType()
     }
 
 
@@ -64,22 +70,35 @@ class CommunityAddPostFragment :
     }
 
     private fun setPopupItemClickListener(viewId: Int, popupMenu: ListPopupWindow) {
-        val textView: TextView = when (viewId) {
-            binding.cvCommunityAddpostRecommendGender.id -> binding.tvCommunityAddpostRecommendGender
-            binding.cvCommunityAddpostClothesCategory.id -> binding.tvCommunityAddpostClothesCategory
-            binding.cvCommuntiyAddpostSize.id -> binding.tvCommuntiyAddpostSize
-            binding.cvCommunityAddpostTransactionMethod.id -> binding.tvCommunityAddpostTransactionMethod
-            else -> return
-        }
-
         popupMenu.setOnItemClickListener { _, view, _, _ ->
             val itemDescription = (view as TextView).text.toString()
-            textView.text = itemDescription
-            Timber.d(itemDescription)
-            communityAddPostViewModel.selectTransactionMethod(itemDescription)
+            when (viewId) {
+                binding.cvCommunityAddpostRecommendGender.id -> {
+                    binding.tvCommunityAddpostRecommendGender.text = itemDescription
+                    binding.cvCommunityAddpostRecommendGender.strokeColor = ContextCompat.getColor(requireContext(), R.color.white)
+                    communityAddPostViewModel.setFilledStatus(2, true)
+                }
+                binding.cvCommunityAddpostClothesCategory.id -> {
+                    binding.tvCommunityAddpostClothesCategory.text = itemDescription
+                    binding.cvCommunityAddpostClothesCategory.strokeColor = ContextCompat.getColor(requireContext(), R.color.white)
+                    communityAddPostViewModel.setFilledStatus(3, true)
+                }
+                binding.cvCommuntiyAddpostSize.id -> {
+                    binding.tvCommuntiyAddpostSize.text = itemDescription
+                    binding.cvCommuntiyAddpostSize.strokeColor = ContextCompat.getColor(requireContext(), R.color.white)
+                    communityAddPostViewModel.setFilledStatus(4, true)
+                }
+                binding.cvCommunityAddpostTransactionMethod.id -> {
+                    binding.tvCommunityAddpostTransactionMethod.text = itemDescription
+                    communityAddPostViewModel.setFilledStatus(5, true)
+                    binding.cvCommunityAddpostTransactionMethod.strokeColor = ContextCompat.getColor(requireContext(), R.color.white)
+                    communityAddPostViewModel.selectTransactionMethod(itemDescription)
+                }
+            }
             popupMenu.dismiss()
         }
     }
+
 
     private fun getPopupMenu(
         anchorView: View,
@@ -95,17 +114,45 @@ class CommunityAddPostFragment :
     }
 
 
-    private fun selectTransactionType() {
+    private fun selectTransactionChipType() {
         binding.cgCommunityAddpostMethod.setOnCheckedStateChangeListener { _, checkedIds ->
             if (checkedIds.size > 0) {
+                communityAddPostViewModel.setClickedOptionTM(clicked = false)
+                binding.tvCommunityAddpostTransactionMethod.text = "거래 희망 방식"
                 val checkedMethodType = binding.root.findViewById<Chip>(checkedIds[0])
-
                 communityAddPostViewModel.checkTransactionType(
                     checkedMethodType.text.toString(),
                     resources.getStringArray(R.array.community_item_search_option_type).toList()
                 )
             }
 
+        }
+    }
+
+    private fun selectShippingFeeType() {
+         binding.rgCommunityAddpostInputFee.setOnCheckedChangeListener { _, id ->
+            val type: Boolean = when (id) {
+                R.id.rb_community_addpost_input_include_fee -> {
+                    binding.tvCommunityAddpostSf.text = ""
+                    binding.tvCommunityAddpostFeeInput.text = getString(R.string.community_addpost_contents_detail_fourth_input)
+                    false
+                }
+                R.id.rb_community_addpost_input_exclude_fee -> true
+                else -> false
+            }
+             communityAddPostViewModel.setFilledStatus(10, type)
+        }
+    }
+
+    private fun handledAddShippingFee() {
+        binding.tvCommunityAddpostFeeInput.setOnClickListener {
+            showCommunityAddShippingFeeDiaglog(object : CommunityAddShippingFeeDialogListener {
+                override fun onClickDone(fee: Int) {
+                    communityAddPostViewModel.setFilledStatus(8, status = true)
+                    communityAddPostViewModel.setShippingFee(fee)
+                    binding.tvCommunityAddpostSf.text = fee.toString() + "원"
+                }
+            }, communityAddPostViewModel).show(requireActivity().supportFragmentManager, "CommunityAddShippingFeeDialog")
         }
     }
 

@@ -131,13 +131,19 @@
     <string name="community_addpost_contents_detail_fourth">사이즈를 선택해주세요</string>
     <string name="community_addpost_contents_detail_fourth_method">거래 희망 방식</string>
     <string name="community_addpost_contents_detail_fourth_price">가격</string>
+    <string name="community_addpost_contents_detail_fourth_price_2">가격을 입력해주세요.</string>
     <string name="community_addpost_contents_detail_fourth_include_price">배송비 포함</string>
     <string name="community_addpost_contents_detail_fourth_exclude_price">배송비 별도</string>
-    <string name="community_addpost_contents_detail_fourth_input">입력</string>
+    <string name="community_addpost_contents_detail_fourth_shipping_fee">배송비</string>
+    <string name="community_addpost_contents_detail_fourth_shipping_fee_2">₩ 배송비를 입력해주세요.</string>
+    <string name="community_addpost_contents_detail_fourth_input"><u>입력</u></string>
+    <string name="community_addpost_contents_detail_fourth_input_2"><u>수정</u></string>
     <string name="communtiy_addpost_contents_detail_fourth_region">거래 희망 장소를 선택해주세요</string>
     <string name="community_addpost_contents_detail_fifth">옷과 자신의 키 등에 대한 정보를 상세하게\n적을수록 많은 분들이 관심을 가지니,
         \n최대한 자세하게 작성 부탁드려요 :)\n\n(판매 금지 물품은 게시가 제한될 수 있음을 알립니다)</string>
     <string name="community_addpost_contents_done">작성 완료</string>
+    <string name="community_addpost_contents_done2">완료</string>
+
 
 
 </resources>

@@ -53,7 +53,7 @@
     </style>
 
     <style name="CommunityAddPostCardView.Common" parent="Widget.Material3.CardView.Filled">
-        <item name="strokeWidth">0.7dp</item>
+        <item name="strokeWidth">1dp</item>
         <item name="strokeColor">@color/selector_green1_else_dark1</item>
         <item name="cardCornerRadius">10dp</item>
         <item name="cardBackgroundColor">@color/white</item>
@@ -278,7 +278,10 @@
         <item name="chipBackgroundColor">@color/default_dark</item>
         <item name="android:textColor">@color/dark2</item>
         <item name="android:textAppearance">@style/RegularFontKr.12</item>
-        <item name="android:button">@drawable/bg_radiobuttion_circle_option</item>
+        <item name="rippleColor">@android:color/transparent</item>
+        <item name="chipIcon">@drawable/ic_blank_circle_10</item>
+        <item name="chipIconVisible">true</item>
+        <item name="chipIconSize">10dp</item>
         <item name="itemIconPadding">5dp</item>
     </style>
 

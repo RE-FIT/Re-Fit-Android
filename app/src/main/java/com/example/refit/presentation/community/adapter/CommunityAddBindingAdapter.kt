@@ -8,24 +8,27 @@ import androidx.lifecycle.LiveData
 import com.example.refit.R
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
+import timber.log.Timber
 
-@BindingAdapter("DrawableTint")
+@BindingAdapter("CDrawableTint")
 fun setDrawableTint(view: MaterialTextView, isClicked: LiveData<Boolean>?) {
     val colorResId = if (isClicked?.value == true) R.color.green1 else R.color.dark2
     val color = ContextCompat.getColor(view.context, colorResId)
     view.compoundDrawableTintList = ColorStateList.valueOf(color)
 }
 
-@BindingAdapter("StrokeColor")
+@BindingAdapter("CStrokeColor")
 fun setStrokeColor(view: MaterialCardView, isClicked: LiveData<Boolean>?) {
     val colorResId = if (isClicked?.value == true) R.color.green1 else R.color.dark1
     val color = ContextCompat.getColor(view.context, colorResId)
+    Timber.d("strokecolor: $colorResId")
     view.strokeColor = color
 }
 
-@BindingAdapter("TextColor")
+@BindingAdapter("CTextColor")
 fun setTextColor(view: TextView, isClicked: Boolean) {
     val colorResId = if (isClicked) R.color.green1 else R.color.dark2
     val color = ContextCompat.getColor(view.context, colorResId)
     view.setTextColor(color)
 }
+
