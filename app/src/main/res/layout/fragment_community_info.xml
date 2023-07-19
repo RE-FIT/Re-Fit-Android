@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="favToggleState"
-            type="Boolean" />
+            name="vm"
+            type="com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fillViewport="true"
+                android:scrollbars="none"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -131,8 +132,7 @@
                                 android:layout_width="31dp"
                                 android:layout_height="31dp"
                                 android:layout_marginTop="7dp"
-                                android:checked="@={favToggleState}"
-                                android:background="@{favToggleState ? @drawable/ic_community_info_heart_62 : @drawable/ic_community_info_blank_heart_62}"
+                                android:background="@{vm.isScrapState ? @drawable/ic_community_info_heart_31 : @drawable/ic_community_info_blank_heart_31}"
                                 android:textOff=""
                                 android:textOn=""
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -213,6 +213,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
+                                android:layout_marginLeft="5dp"
                                 android:text="XS"
                                 android:textColor="@color/black"
                                 app:layout_constraintStart_toEndOf="@id/tv_community_info_item_size_txt"
@@ -235,6 +236,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
+                                android:layout_marginLeft="5dp"
                                 android:text="직거래"
                                 android:textColor="@color/black"
                                 app:layout_constraintStart_toEndOf="@id/tv_community_info_item_method_txt"
@@ -286,6 +288,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
+                                android:layout_marginLeft="5dp"
                                 android:text="0원"
                                 android:textColor="@color/black"
                                 app:layout_constraintStart_toEndOf="@id/tv_community_info_item_deliveryfee_txt"
@@ -308,6 +311,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
+                                android:layout_marginLeft="5dp"
                                 android:text="서울특별시 서대문구 신촌동"
                                 android:textColor="@color/black"
                                 app:layout_constraintStart_toEndOf="@id/tv_community_info_item_region_txt"
@@ -386,7 +390,7 @@
                 android:text="@string/community_info_fab_bottom_end"
                 android:textAppearance="@style/RegularFontKr.12"
                 android:textColor="@color/white"
-                app:icon="@drawable/ic_community_mail_24"
+                app:icon="@drawable/ic_community_mail_18"
                 app:iconSize="15dp"
                 app:iconPadding="5dp"
                 app:iconTint="@color/white" />

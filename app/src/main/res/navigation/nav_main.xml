@@ -101,10 +101,34 @@
         android:id="@+id/communityInfoFragment"
         android:name="com.example.refit.presentation.community.CommunityInfoFragment"
         android:label="fragment_community_info"
-        tools:layout="@layout/fragment_community_info" />
+        tools:layout="@layout/fragment_community_info" >
+        <action
+            android:id="@+id/action_communityInfoFragment_to_postReportFragment"
+            app:destination="@id/postReportFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/communityAddPostFragment"
         android:name="com.example.refit.presentation.community.CommunityAddPostFragment"
         android:label="fragment_community_add_post"
         tools:layout="@layout/fragment_community_add_post" />
+    <fragment
+        android:id="@+id/postReportFragment"
+        android:name="com.example.refit.presentation.community.PostReportFragment"
+        android:label="PostReportFragment" >
+        <action
+            android:id="@+id/action_postReportFragment_to_postReportDetailFrament"
+            app:destination="@id/postReportDetailFrament"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/postReportDetailFrament"
+        android:name="com.example.refit.presentation.community.PostReportDetailFrament"
+        android:label="PostReportDetailFrament" />
 </navigation>

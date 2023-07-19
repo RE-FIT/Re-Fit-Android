@@ -44,11 +44,11 @@
                 android:paddingHorizontal="15dp"
                 android:textCursorDrawable="@null"
                 android:inputType="number"
-                android:textColor="@{cmdviewmodel.isPriceInputCompleted ? @android:color/transparent : @color/black}"
+                android:textColor="@{cmdviewmodel.isSFPriceInputCompleted ? @android:color/transparent : @color/black}"
                 android:textColorHint="@color/dark2" />
 
             <LinearLayout
-                setVisibility="@{cmdviewmodel.isPriceInputCompleted()}"
+                setVisibility="@{cmdviewmodel.isSFPriceInputCompleted}"
                 android:id="@+id/ll_dialog_community_fee_to_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

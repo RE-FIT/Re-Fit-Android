@@ -108,11 +108,11 @@
     <string name="community_info_type_giveaway_end">나눔 완료</string>
     <string name="community_info_type_sale_ing">판매 진행중</string>
     <string name="community_info_type_sale_end">판매 완료</string>
-    <string name="community_info_contents_first">사이즈 : </string>
-    <string name="community_info_contents_second">거래방식 : </string>
-    <string name="community_info_contents_third">배송비 : </string>
-    <string name="community_info_contents_fourth">거래지역 : </string>
-    <string name="community_info_contents_fifth">가격 : </string>
+    <string name="community_info_contents_first">사이즈 :</string>
+    <string name="community_info_contents_second">거래방식 :</string>
+    <string name="community_info_contents_third">배송비 :</string>
+    <string name="community_info_contents_fourth">거래지역 :</string>
+    <string name="community_info_contents_fifth">가격 :</string>
     <string name="community_info_overflow_writer_first">수정하기</string>
     <string name="community_info_overflow_writer_second">삭제하기</string>
     <string name="community_info_overflow_writer_third">나눔중</string>
@@ -143,6 +143,26 @@
         \n최대한 자세하게 작성 부탁드려요 :)\n\n(판매 금지 물품은 게시가 제한될 수 있음을 알립니다)</string>
     <string name="community_addpost_contents_done">작성 완료</string>
     <string name="community_addpost_contents_done2">완료</string>
+
+    <string name="community_post_report_toolbar_title">게시글 신고</string>
+    <string name="community_post_report_contents_text">이 게시물을 신고하려는 이유를 선택해주세요.\n(항목을 꼭 읽고 선택해주세요!)</string>
+    <string name="community_post_report_contents_first">판매 금지 물품이에요</string>
+    <string name="community_post_report_contents_second">중고거래 게시글이 아니에요</string>
+    <string name="community_post_report_contents_third">전문 판매업자 같아요</string>
+    <string name="community_post_report_contents_fourth">사기가 의심돼요</string>
+    <string name="community_post_report_contents_fifth">기타</string>
+    <string name="community_post_report_ban_on_sales_titles">판매 금지 물품</string>
+    <string name="community_post_report_ban_on_sales_contents">· 음란물 (청소년 유해 매체물)\n· 청소년 유해 상품 (청소년 유해 매체물)\n· 게임 아이템 거래 (청소년 유해 매체물)\n· 렌탈 제품\n· 개인정보\n· 경찰용품 (경찰제복, 경찰기동화, 경찰장구류 등)\n· 군용품 (군복, 군화, 군용장구류 등), 군마트용품\n· 나라미, 정부 지원 생필품, 지역 상품권, 문화누리카드, 에너지바우처 등 법률에 의해 재판매 할 수 없는 물품\n· 국가기관 인증을 받지 않고 친환경, 무농약, 유기농, 오가닉, 무공해 라는 표현을 사용하여 판매하는 행위 \n· 100만 원 이상 금 제품 (골드바, 금괴, 금으로 제작된 목걸이, 팔찌, 귀걸이 등)\n· 현금을 거래하는 행위 (돈을 빌리거나, 빌려주는 행위)\n· 이외 법률을 위반하는 모든 물품 \n· 모든 홍보 / 광고 </string>
+    <string name="community_post_report_next">다음</string>
+    <string name="community_post_report_ban_on_sales_contents_second">한 번 신고하면 취소가 불가능하니,\n신고 사유를 다시 한 번 확인해주세요!</string>
+    <string name="community_post_report_ban_on_sales_contents_third">[신고 사유]</string>
+    <string name="community_post_report_ban_on_sales_contents_fourth">이 사용자의 글 보지 않기</string>
+    <string name="community_post_report_ban_on_sales_contents_fifth">신고하기</string>
+    <string name="community_post_report_ban_on_sales_etc_first">예) 부적절한 사진이 올라와있고, 협의되지 않은 무리한 요구를 했습니다.</string>
+    <string name="community_post_report_ban_on_sales_etc_second">글자수 제한 (0/200)</string>
+    <string name="community_post_report_ban_on_sales_etc_third">이 회원이 신고 대상에 해당하는지 다시 한번 확인하여 주시길 바랍니다.</string>
+    <string name="community_post_report_ban_on_sales_etc_fourth">신고자 정보 및 신고 내용은 신고 대상에게 공개되지 않으나, 사실 관계 확인에 꼭 필요한 신고 내용의 일부는 언급될 수 있습니다.</string>
+
 
 
 

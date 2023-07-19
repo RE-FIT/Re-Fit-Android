@@ -50,14 +50,34 @@
                     app:layout_constraintStart_toEndOf="@id/iv_community_item"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_community_item_list_title"
-                        style="@style/BoldFontKr.12"
+                    <LinearLayout
+                        android:id="@+id/ll_community_item"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="항공 점퍼 새 옷"
-                        android:textColor="@color/green1"
-                        tools:ignore="MissingConstraints" />
+                        android:gravity="bottom"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" >
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_community_item_list_title"
+                            style="@style/BoldFontKr.12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="항공 점퍼 새 옷"
+                            android:textColor="@color/green1" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_community_item_list_price"
+                            style="@style/MediumFont.10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="50000원"
+                            android:textColor="@color/dark2"
+                            android:layout_marginLeft="15dp" />
+
+                    </LinearLayout>
+
+
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_size_txt"
@@ -69,7 +89,7 @@
                         android:text="@string/community_item_text_first"
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_title" />
+                        app:layout_constraintTop_toBottomOf="@id/ll_community_item" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_size"
@@ -81,7 +101,7 @@
                         android:text="M"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_size_txt"
-                        app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_title" />
+                        app:layout_constraintTop_toBottomOf="@id/ll_community_item" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_method_txt"

@@ -1,6 +1,7 @@
 package com.example.refit.presentation.community.viewmodel
 
 import android.annotation.SuppressLint
+import android.icu.text.DecimalFormat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -68,16 +69,21 @@ class CommunityAddPostViewModel (
         get() = _isPriceInputEnabled
 
     // 다이얼로그 내부 배송비 입력 완료 여부
+    private val _isSFPriceInputCompleted: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isSFPriceInputCompleted: LiveData<Boolean>
+        get() = _isSFPriceInputCompleted
+
     private val _isPriceInputCompleted: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isPriceInputCompleted: LiveData<Boolean>
         get() = _isPriceInputCompleted
+
 
     // 배송비 특성 (포함 false / 별도 true)
     private val _isSFExclude: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isSFExclude: LiveData<Boolean>
         get() = _isSFExclude
 
-    // 배송비 가격
+    // 배송비 별도 시 배송비
     private val _shippingFee: MutableLiveData<Int> = MutableLiveData<Int>()
     val shippingFee: LiveData<Int>
         get() = _shippingFee
@@ -188,8 +194,12 @@ class CommunityAddPostViewModel (
         _isVisibleFeeStatus.value = status
     }
 
-    fun setPriceInputCompleted(status: Boolean) {
-        _isPriceInputCompleted.value = status
+    fun setSFPriceInputCompleted(value: String) {
+        _isSFPriceInputCompleted.value = value.isNotEmpty()
+    }
+
+    fun setPriceInputCompleted(value: String) {
+        _isPriceInputCompleted.value = value.isNotEmpty()
     }
 
     @SuppressLint("TimberArgCount")
@@ -219,6 +229,12 @@ class CommunityAddPostViewModel (
         _shippingFee.value = value
     }
 
+    fun getDecimalFormat(number: String): String {
+        val intNumber = number.toIntOrNull() ?: 0
+        val decimalFormat = DecimalFormat("#,###")
+        return decimalFormat.format(intNumber)
+    }
+
     fun initAllStatus() {
         _isTransactionMethodChip.value = false
         _isClickedOptionRG.value = false
@@ -230,5 +246,21 @@ class CommunityAddPostViewModel (
         _isVisibleRegionStatus.value = false
         _isVisiblePriceStatus.value = false
         _isVisibleFeeStatus.value = false
+    }
+
+    fun initFilledState() {
+        _isFilledImage.value = false
+        _isFilledTitle.value = false
+        _isFilledRG.value = false
+        _isFilledCategory.value = false
+        _isFilledSize.value = false
+        _isFilledTMChip.value = false
+        _isFilledTM.value = false
+        _isFilledPrice.value = false
+        _isFilledFee.value = false
+        _isFilledDialogEditSF.value = false
+        _isSFExclude.value = false
+        _isSFPriceInputCompleted.value = false
+        _isSFPriceInputCompleted.value = false
     }
 }

@@ -1,6 +1,9 @@
 package com.example.refit.presentation.community
 
+import android.icu.text.DecimalFormat
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,10 +33,13 @@ class CommunityAddPostFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.cmviewmodel = communityAddPostViewModel
+        communityAddPostViewModel.setPriceInputCompleted("")
         CommunityAddContentsOptionDropdown()
         selectTransactionChipType()
+        handleAfterInputPrice()
         handledAddShippingFee()
         selectShippingFeeType()
+        observeEditTextChanges()
     }
 
 
@@ -150,11 +156,44 @@ class CommunityAddPostFragment :
                 override fun onClickDone(fee: Int) {
                     communityAddPostViewModel.setFilledStatus(8, status = true)
                     communityAddPostViewModel.setShippingFee(fee)
-                    binding.tvCommunityAddpostSf.text = fee.toString() + "원"
+                    val feeText = communityAddPostViewModel.getDecimalFormat(fee.toString())
+                    binding.tvCommunityAddpostSf.text = feeText + "원"
                 }
             }, communityAddPostViewModel).show(requireActivity().supportFragmentManager, "CommunityAddShippingFeeDialog")
         }
     }
 
+    private fun observeEditTextChanges() {
+        Timber.d("옵서버 호출")
+
+        binding.etCommunityAddpostPrice.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                communityAddPostViewModel.setPriceInputCompleted("")
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val isFilled = s?.isNotEmpty() == true
+                communityAddPostViewModel.setFilledStatus(7, isFilled)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+    }
+
+    private fun handleAfterInputPrice() {
+        binding.llCommunityAddpostView.setOnClickListener {
+            val inputPriceText = binding.etCommunityAddpostPrice.text.toString()
+            binding.tvCommunityAddpostPrice.text = "₩ " + communityAddPostViewModel.getDecimalFormat(inputPriceText) + "원"
+            communityAddPostViewModel.setPriceInputCompleted(inputPriceText)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        communityAddPostViewModel.initAllStatus()
+        communityAddPostViewModel.initTransactionStatus()
+        communityAddPostViewModel.initFilledState()
+    }
 
 }

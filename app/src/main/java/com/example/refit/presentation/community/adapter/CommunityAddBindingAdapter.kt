@@ -32,3 +32,9 @@ fun setTextColor(view: TextView, isClicked: Boolean) {
     view.setTextColor(color)
 }
 
+@BindingAdapter("app:restrictText")
+fun setRestrictedText(view: TextView, text: CharSequence?) {
+    val maxLength = 200
+    val restrictedText = text?.take(maxLength)
+    view.text = restrictedText
+}

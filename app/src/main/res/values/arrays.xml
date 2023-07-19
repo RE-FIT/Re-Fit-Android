@@ -91,5 +91,27 @@
         <item>직거래</item>
         <item>배송</item>
     </string-array>
+    
+    <string-array name="community_info_overflow_ing_writer">
+        <item>수정하기</item>
+        <item>삭제하기</item>
+    </string-array>
+
+    <string-array name="community_info_overflow_end_giveaway_writer">
+        <item>수정하기</item>
+        <item>삭제하기</item>
+        <item>나눔중</item>
+    </string-array>
+
+    <string-array name="community_info_overflow_end_sale_writer">
+        <item>수정하기</item>
+        <item>삭제하기</item>
+        <item>판매중</item>
+    </string-array>
+
+    <string-array name="community_info_overflow_user">
+        <item>신고하기</item>
+        <item>이 사용자의 글 보지 ㅇ낳기</item>
+    </string-array>
 
 </resources>

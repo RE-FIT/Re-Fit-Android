@@ -16,7 +16,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_community_info"
+        android:id="@+id/cl_community_addpost"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/default_dark" >
@@ -49,9 +49,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fillViewport="true"
+                android:scrollbars="none"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <LinearLayout
+                    android:id="@+id/ll_community_addpost_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
@@ -309,14 +311,17 @@
                             setVisibility="@{cmviewmodel.isVisiblePriceStatus}" >
 
                             <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/et_community_addpost_price"
                                 style="@style/RegularFontKr.12"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@{cmviewmodel.isPriceInputEnabled ? @drawable/bg_solid_white_radius_10 : @drawable/bg_solid_dark1_radius_10}"
                                 android:hint="@{cmviewmodel.isPriceInputEnabled ? @string/community_addpost_contents_detail_fourth_price_2 : ``}"
-                                android:enabled="@{cmviewmodel.isPriceInputEnabled()}"
+                                android:enabled="@{cmviewmodel.isPriceInputEnabled}"
                                 android:paddingHorizontal="15dp"
-                                android:textColor="@color/black"
+                                android:inputType="number"
+                                android:textCursorDrawable="@null"
+                                android:textColor="@{cmviewmodel.isPriceInputCompleted ? @android:color/transparent : @color/black}"
                                 android:textColorHint="@color/dark2" />
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -329,7 +334,7 @@
                                 android:text="@string/community_addpost_contents_detail_fourth_price" />
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                setVisibility="@{cmviewmodel.isPriceInputEnabled() ? false : true}"
+                                setVisibility="@{cmviewmodel.isPriceInputEnabled ? false : true}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 style="@style/CommunityAddPostPrice.TextCommon"
@@ -337,6 +342,40 @@
                                 android:layout_gravity="right"
                                 android:gravity="center_vertical"
                                 android:text="0원" />
+
+                            <LinearLayout
+                                setVisibility="@{cmviewmodel.isPriceInputEnabled ? true : false}"
+                                android:id="@+id/ll_community_addpost_price_to_textview"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    setVisibility="@{cmviewmodel.isPriceInputCompleted}"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_weight="1"
+                                    style="@style/RegularFontKr.12"
+                                    android:layout_marginLeft="15dp"
+                                    android:gravity="center|left"
+                                    android:text="가격"
+                                    android:textColor="@color/green1"/>
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    setVisibility="@{cmviewmodel.isPriceInputCompleted}"
+                                    android:id="@+id/tv_community_addpost_price"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_weight="1"
+                                    style="@style/RegularFontKr.12"
+                                    android:layout_marginRight="15dp"
+                                    android:gravity="center|end"
+                                    android:text="0원"
+                                    android:textColor="@color/green1"/>
+
+                            </LinearLayout>
+
 
                         </FrameLayout>
 
@@ -347,7 +386,7 @@
                             android:layout_marginBottom="15dp"
                             setVisibility="@{cmviewmodel.isVisibleFeeStatus}"
                             android:visibility="gone"
-                            android:paddingHorizontal="15dp" >
+                            android:paddingHorizontal="20dp" >
 
                             <RadioGroup
                                 android:id="@+id/rg_community_addpost_input_fee"
@@ -362,7 +401,7 @@
                                     android:id="@+id/rb_community_addpost_input_include_fee"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginRight="30dp"
+                                    android:layout_marginRight="40dp"
                                     android:button="@null"
                                     android:drawableLeft="@drawable/bg_radiobuttion_circle_option"
                                     android:drawablePadding="5dp"
@@ -423,7 +462,7 @@
                                 <com.google.android.material.textview.MaterialTextView
                                     android:id="@+id/tv_community_addpost_region"
                                     style="@style/CommunityAddPostOption.TextCommon"
-                                    android:drawableRight="@drawable/ic_search_13"
+                                    android:drawableRight="@drawable/ic_search_dark_13"
                                     CDrawableTint="@{cmviewmodel.isFilledRG()}"
                                     android:textColor="@{cmviewmodel.isFilledRG() ? @color/black : @color/dark2}"
                                     android:layout_width="match_parent"

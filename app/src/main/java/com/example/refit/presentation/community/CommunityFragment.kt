@@ -15,31 +15,21 @@ import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.common.WindowUtil.setStatusBarColor
+import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
 class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragment_community) {
 
-    private lateinit var viewModel: CommunityViewModel
+    private val communityViewModel: CommunityViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        //viewModel = ViewModelProvider(activity as FragmentActivity)[CommunityViewModel::class.java]
-
-        // 페이지 이동 임시 코드
-        binding.ibCommunitySearch.setOnClickListener {
-            //navigateToCommunityInfo()
-            navigate(R.id.action_nav_community_to_communityInfoFragment)
-        }
-
-        binding.fabCommunityAdd.setOnClickListener {
-            navigate(R.id.action_nav_community_to_communityAddPostFragment)
-        }
+        binding.vm = communityViewModel
 
         initCommunityOptionDropdown()
-
-        //viewModel.navigateToCommunityInfo.observe(viewLifecycleOwner) { navigateToCommunityInfo() }
+        setClickedButton()
     }
 
     private fun initCommunityOptionDropdown() {
@@ -88,5 +78,21 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
             R.layout.list_popup_window_item_white,
             items
         )
+    }
+
+    fun setClickedButton() {
+        binding.ibCommunityMail.setOnClickListener {
+            // TODO (새로운 채팅이 있으면 N)
+        }
+
+        // 페이지 이동 임시 코드
+        binding.ibCommunitySearch.setOnClickListener {
+            navigate(R.id.action_nav_community_to_communityInfoFragment)
+        }
+
+        binding.fabCommunityAdd.setOnClickListener {
+            navigate(R.id.action_nav_community_to_communityAddPostFragment)
+        }
+
     }
 }

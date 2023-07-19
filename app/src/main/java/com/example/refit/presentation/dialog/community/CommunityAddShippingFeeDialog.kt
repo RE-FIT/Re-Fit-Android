@@ -1,19 +1,15 @@
 package com.example.refit.presentation.dialog.community
 
-import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.databinding.DataBindingUtil
 import com.example.refit.R
 import com.example.refit.databinding.CustomDialogCommunityShippingFeeBinding
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
-import com.example.refit.presentation.dialog.BaseDialog
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import timber.log.Timber
 
@@ -42,7 +38,7 @@ class CommunityAddShippingFeeDialog(
         super.onViewCreated(view, savedInstanceState)
 
         Timber.d("onViewCreated")
-        communityAddPostViewModel.setPriceInputCompleted(false)
+        communityAddPostViewModel.setSFPriceInputCompleted("")
         handlePositiveConfirm()
         handleAfterInputFee()
         observeEditTextChanges()
@@ -61,8 +57,9 @@ class CommunityAddShippingFeeDialog(
     private fun handleAfterInputFee() {
         binding.llDialogShippingFee.setOnClickListener {
             shippingFeeText = binding.etDialogCommunityShippingFee.text.toString()
-            binding.tvDialogCommunityFee.text = shippingFeeText + "원"
-            communityAddPostViewModel.setPriceInputCompleted(true)
+            val sfText = communityAddPostViewModel.getDecimalFormat(shippingFeeText)
+            binding.tvDialogCommunityFee.text = sfText + "원"
+            communityAddPostViewModel.setSFPriceInputCompleted(shippingFeeText)
         }
     }
 
@@ -71,7 +68,7 @@ class CommunityAddShippingFeeDialog(
 
         binding.etDialogCommunityShippingFee.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                communityAddPostViewModel.setPriceInputCompleted(false)
+                communityAddPostViewModel.setSFPriceInputCompleted("")
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
