@@ -1,10 +1,15 @@
 package com.example.refit
 
 import android.app.Application
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.example.refit.di.dataSourceModule
+import com.example.refit.di.dataStoreModule
 import com.example.refit.di.networkModule
 import com.example.refit.di.repositoryModule
 import com.example.refit.di.viewModelModule
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
@@ -14,7 +19,8 @@ class MyApplication: Application() {
         super.onCreate()
 
         startKoin {
-            modules(networkModule,  viewModelModule, repositoryModule, dataSourceModule)
+            androidContext(this@MyApplication)
+            modules(networkModule, viewModelModule, repositoryModule, dataSourceModule, dataStoreModule)
         }
 
         setUpTimber()
