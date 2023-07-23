@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.refit.data.repository.colset.ClosetRepository
 import java.util.Calendar
 
-class ClothAddViewModel(private val repository: ClosetRepository): ViewModel() {
+class ClothAddViewModel(private val repository: ClosetRepository) : ViewModel() {
 
     // 항목별 컨테이너 상태 값
 
@@ -18,23 +18,25 @@ class ClothAddViewModel(private val repository: ClosetRepository): ViewModel() {
     val isValidShowingWearingGoal: LiveData<Boolean>
         get() = _isValidShowingWearingGoal
 
-    private val _isNegativeInvalidSeasonConfirm: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private val _isNegativeInvalidSeasonConfirm: MutableLiveData<Boolean> =
+        MutableLiveData<Boolean>()
     val isNegativeInvalidSeasonConfirm: LiveData<Boolean>
         get() = _isNegativeInvalidSeasonConfirm
 
-    private val _isValidShowingRecommendWearing: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private val _isValidShowingRecommendWearing: MutableLiveData<Boolean> =
+        MutableLiveData<Boolean>()
     val isValidShowingRecommendWearing: LiveData<Boolean>
         get() = _isValidShowingRecommendWearing
 
     // 컨테이너 내 뷰 상태 값
 
-    private val _isFocusPopup: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isFocusPopup: LiveData<Boolean>
-        get() = _isFocusPopup
+    private val _isFocusMonthPopup: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFocusMonthPopup: LiveData<Boolean>
+        get() = _isFocusMonthPopup
 
-    private val _isFocusEditText: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isFocusEditText: LiveData<Boolean>
-        get() = _isFocusEditText
+    private val _isFocusWearingNumberPopup: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFocusWearingNumberPopup: LiveData<Boolean>
+        get() = _isFocusWearingNumberPopup
 
     private val _selectedMonthOption: MutableLiveData<Int> = MutableLiveData<Int>()
     val selectedMonthOption: LiveData<Int>
@@ -51,7 +53,6 @@ class ClothAddViewModel(private val repository: ClosetRepository): ViewModel() {
     private val _selectedSeason: MutableLiveData<String> = MutableLiveData<String>()
     val selectedSeason: LiveData<String>
         get() = _selectedSeason
-
 
 
     fun checkSeasonValidation(selectedSeason: String, seasonList: List<String>) {
@@ -80,7 +81,7 @@ class ClothAddViewModel(private val repository: ClosetRepository): ViewModel() {
     }
 
     fun checkInvalidSeasonConfirmResponse(selectedResponse: String, confirmResponse: List<String>) {
-        val isPositive = when(selectedResponse) {
+        val isPositive = when (selectedResponse) {
             confirmResponse[0] -> true
             else -> false
         }
@@ -90,37 +91,39 @@ class ClothAddViewModel(private val repository: ClosetRepository): ViewModel() {
     }
 
     fun setWearingGoalMonthOptionStatus(status: Boolean, option: String) {
-        _isFocusPopup.value = status
+        _isFocusMonthPopup.value = status
         _selectedMonthOption.value = option[0].toString().toInt()
-        if(_selectedWearingNumberOption.value != null && _selectedWearingNumberOption.value!! > 0) {
+        if (status) {
+            initWearingGoalNumberOption()
+            initRecommendWearingStatus(false)
+        }
+        if (_selectedWearingNumberOption.value != null && _selectedWearingNumberOption.value!! > 0) {
             initRecommendWearingStatus(true)
         }
     }
 
-    fun setWearingGoalNumberOptionStatus(status: Boolean) {
-        _isFocusEditText.value = status
+    fun setWearingGoalNumberOptionStatus(status: Boolean, option: String) {
+        _isFocusWearingNumberPopup.value = status
+        _selectedWearingNumberOption.value = option.toInt()
+        if (_selectedMonthOption.value != null && _selectedMonthOption.value!! > 0) {
+            initRecommendWearingStatus(true)
+        }
     }
 
-    fun handleInputCompleteWearingGoalNumberOption(text: String) {
-        if(text.isEmpty()) {
-            if(_isValidShowingRecommendWearing.value == true) {
-                initRecommendWearingStatus(false)
-                _selectedWearingNumberOption.value = 0
-            }
-        } else {
-            _selectedWearingNumberOption.value = text.toInt()
-            if(_selectedMonthOption.value != null && _selectedMonthOption.value!! > 0) {
-                initRecommendWearingStatus(true)
-            }
-        }
+    private fun initWearingGoalNumberOption() {
+        _isFocusWearingNumberPopup.value = false
+        _selectedWearingNumberOption.value = 0
+    }
+
+    private fun initWearingGoalMonthOption() {
+        _selectedMonthOption.value = 0
+        _isFocusMonthPopup.value = false
     }
 
     private fun initClothWearingGoalOptionStatus(status: Boolean) {
         _isValidShowingWearingGoal.value = status
-        _selectedWearingNumberOption.value = 0
-        _selectedMonthOption.value = 0
-        _isFocusPopup.value = false
-        _isFocusEditText.value = false
+        initWearingGoalMonthOption()
+        initWearingGoalNumberOption()
     }
 
     private fun initRecommendWearingStatus(status: Boolean) {

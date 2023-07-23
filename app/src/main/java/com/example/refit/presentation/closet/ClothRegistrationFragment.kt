@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -19,7 +18,6 @@ import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
 import com.example.refit.presentation.common.DialogUtil.showClothRegisterPhotoDialog
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
-import com.example.refit.presentation.common.WindowUtil.hideKeyboard
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialogListener
 import com.example.refit.util.FileUtil
@@ -69,8 +67,7 @@ class ClothRegistrationFragment :
         handleSelectSeasonCategory()
         handleClickWearingMonthOption()
         handleClickInvalidSeasonConfirm()
-        handleClickWearingGoalOptionSecond()
-        handleCompleteInputWearingGoalOptionSecond()
+        handleClickWearingNumberOption()
         handleClickAddCompleteButton()
     }
 
@@ -79,22 +76,6 @@ class ClothRegistrationFragment :
             //TODO(추후 기능 구현 때 서버 등록 요청이 정상적으로 되면 스낵 알림 호출할 것)
             CustomSnackBar.make(it, "옷 등록을 완료하였습니다!", R.anim.anim_show_snack_bar_from_bottom).show()
             navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
-        }
-    }
-
-    private fun handleClickWearingGoalOptionSecond() {
-        binding.etClothRegisterWearingGoalOptionSecond.setOnFocusChangeListener { _, isFocus ->
-            clothAddViewModel.setWearingGoalNumberOptionStatus(isFocus)
-        }
-    }
-
-    private fun handleCompleteInputWearingGoalOptionSecond() {
-        binding.etClothRegisterWearingGoalOptionSecond.setOnEditorActionListener { _, i, _ ->
-            if (i == EditorInfo.IME_ACTION_DONE) {
-                clothAddViewModel.handleInputCompleteWearingGoalNumberOption(binding.etClothRegisterWearingGoalOptionSecond.text.toString())
-                hideKeyboard()
-            }
-            true
         }
     }
 
@@ -122,6 +103,8 @@ class ClothRegistrationFragment :
         }
     }
 
+    // ----------------------- 목표 착용 횟수 -----------------------
+
     private fun handleClickWearingMonthOption() {
         binding.cvClothRegisterWearingGoalOptionFirstContainer.setOnClickListener {
             val popupMenu = DropdownMenuManager.createPopupMenu(
@@ -139,6 +122,43 @@ class ClothRegistrationFragment :
             popupMenu.show()
         }
     }
+
+    private fun handleClickWearingNumberOption() {
+        binding.cvClothRegisterWearingGoalOptionSecondContainer.setOnClickListener {
+            val popupMenu = DropdownMenuManager.createPopupMenu(
+                requireActivity(),
+                it,
+                R.style.ListPopupMenuWindow_ClothRegister,
+                R.layout.list_popup_window_item_window_dark,
+                getWearingGoalNumberList()
+            )
+            popupMenu.setOnItemClickListener { _, view, _, _ ->
+                val itemDescription = (view as TextView).text.toString()
+                clothAddViewModel.setWearingGoalNumberOptionStatus(true, itemDescription)
+                popupMenu.dismiss()
+            }
+            popupMenu.show()
+        }
+    }
+
+    private fun getWearingGoalNumberList(): Int {
+        return when (binding.tvClothRegisterWearingGoalOptionFirst.text.toString()) {
+            resources.getString(R.string.cloth_register_wearing_goal_one_month) -> {
+                R.array.cloth_register_wearing_number_by_one_month
+            }
+
+            resources.getString(R.string.cloth_register_wearing_goal_two_month) -> {
+                R.array.cloth_register_wearing_number_by_two_month
+            }
+
+            else -> {
+                R.array.cloth_register_wearing_number_by_three_month
+            }
+        }
+    }
+
+
+    // ----------------------- 사진 및 카메라 통한 옷 이미지 등록 -----------------------
 
     private fun handleAddClothPhoto() {
         binding.cvClothRegisterPhotoContainer.setOnClickListener {

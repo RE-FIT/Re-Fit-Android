@@ -54,10 +54,6 @@ class ClosetViewModel(private val repository: ClosetRepository) : ViewModel() {
         }
     }
 
-    fun handleClickItem(clothInfo: RegisteredClothInfoResponse) {
-        _selectedRegisteredClothItem.value = Event(clothInfo)
-    }
-
     fun requestRegisteredItemsByClothCategory(selectedCategory: String, selectedId: Int) {
         _selectedCategory.value = selectedCategory
         _selectedCategoryId.value = selectedId
@@ -72,5 +68,9 @@ class ClosetViewModel(private val repository: ClosetRepository) : ViewModel() {
     fun requestSortingByClosetSorting(selectedOption: String) {
         _selectedSortingOption.value = selectedOption
         Timber.d("옷장 정렬 옵션에 따른 정렬 요청 -> ${_selectedSeason.value} ${_selectedSortingOption.value}")
+    }
+
+    fun handleClickItem(clothInfo: RegisteredClothInfoResponse) {
+        _selectedRegisteredClothItem.value = Event(clothInfo)
     }
 }

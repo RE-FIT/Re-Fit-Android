@@ -50,7 +50,6 @@
     <string name="closet_option_sort_third">적게 입은 순</string>
     <string name="closet_empty_item">아직 등록된 옷이 없어요!\n옷 등록 버튼을 클릭해\n첫번째 목표를 설정해보세요 :)</string>
 
-
     <string name="registered_cloth_info_d_day">D-%d</string>
     <string name="registered_cloth_info_fit_and_goal">%d/%d</string>
     <string name="registered_cloth_info_recommend_wearing">월 %d회 / 주 %d회</string>
@@ -76,6 +75,11 @@
     <string name="cloth_register_wearing_season_confirm_negative">아뇨, 당분간 안 입어요!</string>
 
     <string name="cloth_register_wearing_goal_title">목표 착용 횟수</string>
+
+    <string name="cloth_register_wearing_goal_one_month">1개월</string>
+    <string name="cloth_register_wearing_goal_two_month">2개월</string>
+    <string name="cloth_register_wearing_goal_three_month">3개월</string>
+
     <string name="cloth_register_wearing_goal_select_option_first">안에</string>
     <string name="cloth_register_wearing_goal_select_option_second">번 입을거에요!</string>
     <string name="cloth_register_wearing_goal_option_second_hint">개월</string>
