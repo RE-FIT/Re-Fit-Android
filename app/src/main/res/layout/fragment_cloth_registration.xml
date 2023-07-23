@@ -362,7 +362,7 @@
                                 style="@style/ClothRegistrationCardView.WearingOption"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:strokeColor="@{vm.isFocusPopup() ? @color/green1 : @color/dark1}">
+                                app:strokeColor="@{vm.isFocusMonthPopup() ? @color/green1 : @color/dark1}">
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tv_cloth_register_wearing_goal_option_first"
@@ -370,8 +370,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:drawableTint="@color/green1"
-                                    android:text="@{vm.isFocusPopup() ? vm.selectedMonthOption.toString() + `개월` : @string/cloth_register_wearing_goal_option_second_hint}"
-                                    android:textColor="@{vm.isFocusPopup() ? @color/green1 : @color/dark1}" />
+                                    android:text="@{vm.isFocusMonthPopup() ? vm.selectedMonthOption.toString() + `개월` : @string/cloth_register_wearing_goal_option_second_hint}"
+                                    android:textColor="@{vm.isFocusMonthPopup() ? @color/green1 : @color/dark1}" />
 
                             </com.google.android.material.card.MaterialCardView>
 
@@ -397,24 +397,18 @@
                                 style="@style/ClothRegistrationCardView.WearingOption"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:strokeColor="@{vm.isFocusEditText || vm.isValidShowingRecommendWearing ? @color/green1 : @color/dark1}">
+                                android:clickable="@{vm.isFocusMonthPopup() ? true : false}"
+                                app:strokeColor="@{vm.isFocusWearingNumberPopup() ? @color/green1 : @color/dark1}">
 
-                                <androidx.appcompat.widget.AppCompatEditText
-                                    android:id="@+id/et_cloth_register_wearing_goal_option_second"
-                                    style="@style/RegularFontKr.12"
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tv_cloth_register_wearing_goal_option_second"
+                                    style="@style/ClothRegistrationGoalOption.TextCommon"
                                     android:layout_width="wrap_content"
-                                    clearEditTextFocusByStatus="@{vm.isValidShowingRecommendWearing() ? true : true}"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_marginEnd="10dp"
-                                    android:background="@android:color/transparent"
-                                    android:hint="착용 횟수"
-                                    android:inputType="number"
-                                    android:minWidth="70dp"
-                                    android:minHeight="36dp"
-                                    android:text="@{!vm.isValidShowingWearingGoal() ? @string/empty : @string/empty}"
-                                    android:textColor="@color/green1"
-                                    android:textColorHint="@color/dark1" />
+                                    android:drawableEnd="@drawable/ic_arrow_bottom_14"
+                                    android:drawableTint="@color/green1"
+                                    android:textColor="@{vm.isFocusWearingNumberPopup() ? @color/green1 : @color/dark1}"
+                                    android:text="@{vm.isFocusWearingNumberPopup() ? vm.selectedWearingNumberOption.toString() : `착용 횟수` }" />
 
                             </com.google.android.material.card.MaterialCardView>
 
@@ -470,12 +464,12 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_cloth_register_recommend_wearing_summary_second"
                             style="@style/RegularFontKr.14"
+                            goalOfMonth="@{vm.selectedMonthOption}"
+                            goalOfNumber="@{vm.selectedWearingNumberOption}"
+                            setTextRecommendWearing="@{vm.isValidShowingRecommendWearing()}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            setTextRecommendWearing="@{vm.isValidShowingRecommendWearing()}"
-                            goalOfMonth="@{vm.selectedMonthOption}"
-                            goalOfNumber="@{vm.selectedWearingNumberOption}"
                             android:textColor="@color/green1"
                             tools:text="한 달에 20번\n일주일에 5번" />
 
@@ -498,10 +492,10 @@
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="24dp"
                     android:backgroundTint="@{vm.isValidShowingRecommendWearing() || vm.isNegativeInvalidSeasonConfirm() ? @color/green1 : @color/dark1}"
+                    android:clickable="@{vm.isValidShowingRecommendWearing() || vm.isNegativeInvalidSeasonConfirm() ? true : false, default=false}"
                     android:text="@string/cloth_register_complete"
                     android:textAppearance="@style/RegularFontKr.14"
                     app:cornerRadius="16dp"
-                    android:clickable="@{vm.isValidShowingRecommendWearing() || vm.isNegativeInvalidSeasonConfirm() ? true : false, default=false}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

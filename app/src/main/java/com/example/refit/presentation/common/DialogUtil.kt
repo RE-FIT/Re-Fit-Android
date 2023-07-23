@@ -16,8 +16,8 @@ object DialogUtil {
     // Closet
     fun Fragment.createAlertBasicDialog(
         title: String,
-        positive: String,
-        negative: String,
+        positive: String?,
+        negative: String?,
         listener: AlertBasicDialogListener
     ): AlertBasicDialog {
         val icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_alert_circle_24)
