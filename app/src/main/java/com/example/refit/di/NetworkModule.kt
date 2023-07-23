@@ -1,6 +1,5 @@
 package com.example.refit.di
 
-import com.example.refit.BuildConfig
 import com.example.refit.data.network.NetworkInterceptor
 import com.example.refit.data.network.api.ClosetApi
 import com.example.refit.data.network.api.SignUpApi
@@ -29,7 +28,7 @@ val networkModule = module {
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .client(get())
-            .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl("http://www.umc-refit.com/")
             .build()
     }
 
