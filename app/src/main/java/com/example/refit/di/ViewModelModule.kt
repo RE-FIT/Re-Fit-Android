@@ -3,6 +3,7 @@ package com.example.refit.di
 import com.example.refit.presentation.AccessTokenViewModel
 import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
 import com.example.refit.presentation.closet.viewmodel.ClothAddViewModel
+import com.example.refit.presentation.closet.viewmodel.ForestViewModel
 import com.example.refit.presentation.signin.viewmodel.SignInViewModel
 import com.example.refit.presentation.signup.viewmodel.SignUpViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -14,4 +15,5 @@ val viewModelModule = module{
     viewModel { SignUpViewModel(get()) }
     viewModel { ClothAddViewModel(get()) }
     viewModel { ClosetViewModel(get()) }
+    viewModel { ForestViewModel(get()) }
 }
