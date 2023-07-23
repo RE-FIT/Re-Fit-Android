@@ -74,7 +74,11 @@ class ClothRegistrationFragment :
     private fun handleClickAddCompleteButton() {
         binding.btnClothRegisterComplete.setOnClickListener {
             //TODO(추후 기능 구현 때 서버 등록 요청이 정상적으로 되면 스낵 알림 호출할 것)
-            CustomSnackBar.make(it, "옷 등록을 완료하였습니다!", R.anim.anim_show_snack_bar_from_bottom).show()
+            CustomSnackBar.make(
+                it,
+                R.layout.custom_snack_bar_basic,
+                R.anim.anim_show_snack_bar_from_bottom
+            ).setTitle("옷 등록을 완료하였습니다!", null).show()
             navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
         }
     }
