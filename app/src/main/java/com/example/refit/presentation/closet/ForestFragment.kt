@@ -12,6 +12,7 @@ import com.example.refit.presentation.closet.adapter.ForestStampAdapter
 import com.example.refit.presentation.closet.adapter.UserRegisteredClothesAdapter
 import com.example.refit.presentation.closet.viewmodel.ForestViewModel
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.DialogUtil
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.common.WindowUtil.setStatusBarColor
 import com.example.refit.util.EventObserver
@@ -25,6 +26,7 @@ class ForestFragment : BaseFragment<FragmentForestBinding>(R.layout.fragment_for
         super.onViewCreated(view, savedInstanceState)
         setStatusBarColor(R.color.green1)
         forestViewModel.getForestStampStatus()
+        DialogUtil.showForestStampDialog().show(childFragmentManager, null)
         initForestStampStatus()
         handleClickReturnButton()
         handleClickItem()

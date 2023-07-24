@@ -97,5 +97,11 @@
     <string name="forest_top_wearin_goal">목표 횟수</string>
     <string name="forest_top_percent">달성률</string>
     <string name="forest_button_return_to_cloth">옷장으로 돌아가기</string>
+    <string name="forest_dialog_registered_tree">그루</string>
+    <string name="forest_dialog_title_first">나무 심기 완료!</string>
+    <string name="forest_dialog_title_second">오늘도 환경을 위해\n힘써주셔서 감사해요 :)</string>
+    <string name="forest_dialog_title_require_tree_title">숲 완성까지 남은 나무</string>
+    <string name="forest_dialog_title_require_tree_number">7그루</string>
+    <string name="forest_dialog_confirm_button">확인</string>
 
 </resources>

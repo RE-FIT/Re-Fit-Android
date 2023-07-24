@@ -9,6 +9,7 @@ import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.signin.viewmodel.SignInViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import timber.log.Timber
 
 class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sign_in) {
 
@@ -27,6 +28,18 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
             }
         }
 
+        tokenViewModel.error.observe(viewLifecycleOwner) {
+            it?.let {
+                Timber.d(it.toString())
+            }
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) {
+            it?.let{
+                Timber.d(it.toString())
+            }
+        }
+
         //로그인
         //id: admin1234
         //password: AAaa1234!!
@@ -38,5 +51,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         viewModel.accessToken.observe(viewLifecycleOwner) {
             navigate(R.id.action_signInFragment_to_signUpFragment)
         }
+
+
     }
 }

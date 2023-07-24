@@ -19,8 +19,10 @@ interface SignUpApi {
     ): Call<ResponseEmailCertification>
 
     @POST("/auth/login")
-    fun requestLoginCertification(@Query("loginId") loginId: String,
-                    @Query("password") password: String):Call<ResponseBody>
+    fun requestLoginCertification(
+        @Query("loginId") loginId: String,
+        @Query("password") password: String
+    ): Call<ResponseBody>
 
     @GET("auth/token/check")
     fun checkAccessToken(

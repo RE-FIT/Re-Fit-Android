@@ -10,6 +10,7 @@ import com.example.refit.presentation.dialog.closet.ClothItemSelectionDialog
 import com.example.refit.presentation.dialog.closet.ClothItemSelectionDialogListener
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialog
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialogListener
+import com.example.refit.presentation.dialog.closet.ForestStampDialog
 
 object DialogUtil {
     // TODO(모든 종류의 다이얼로그 메세지는 여기에 정의)
@@ -33,5 +34,9 @@ object DialogUtil {
         listener: ClothItemSelectionDialogListener
     ): ClothItemSelectionDialog {
         return ClothItemSelectionDialog(clothInfo, listener)
+    }
+
+    fun showForestStampDialog(): ForestStampDialog {
+        return ForestStampDialog()
     }
 }
