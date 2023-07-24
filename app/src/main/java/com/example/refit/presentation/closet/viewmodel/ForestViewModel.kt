@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.refit.data.model.closet.ForestStampResponse
 import com.example.refit.data.repository.colset.ClosetRepository
+import com.example.refit.util.Event
 import timber.log.Timber
 
 class ForestViewModel(private val repository: ClosetRepository): ViewModel() {
@@ -13,6 +14,11 @@ class ForestViewModel(private val repository: ClosetRepository): ViewModel() {
         MutableLiveData<List<ForestStampResponse>>()
     val forestStamp: LiveData<List<ForestStampResponse>>
         get() = _forestStamp
+
+    private val _selectedItem: MutableLiveData<Event<ForestStampResponse>> =
+        MutableLiveData<Event<ForestStampResponse>>()
+    val selectedItem: LiveData<Event<ForestStampResponse>>
+        get() = _selectedItem
 
     fun getForestStampStatus() {
         try {
@@ -38,4 +44,9 @@ class ForestViewModel(private val repository: ClosetRepository): ViewModel() {
             Timber.d("숲 현황 데이터 불러오기 실패 : $e")
         }
     }
+
+    fun handleClickItem(stampInfo: ForestStampResponse) {
+        _selectedItem.value = Event(stampInfo)
+    }
+
 }

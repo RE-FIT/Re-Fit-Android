@@ -13,6 +13,8 @@ import com.example.refit.presentation.closet.adapter.UserRegisteredClothesAdapte
 import com.example.refit.presentation.closet.viewmodel.ForestViewModel
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.NavigationUtil.navigate
+import com.example.refit.presentation.common.WindowUtil.setStatusBarColor
+import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ForestFragment : BaseFragment<FragmentForestBinding>(R.layout.fragment_forest) {
@@ -21,9 +23,11 @@ class ForestFragment : BaseFragment<FragmentForestBinding>(R.layout.fragment_for
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setStatusBarColor(R.color.green1)
         forestViewModel.getForestStampStatus()
         initForestStampStatus()
         handleClickReturnButton()
+        handleClickItem()
     }
 
     private fun initForestStampStatus() {
@@ -39,5 +43,11 @@ class ForestFragment : BaseFragment<FragmentForestBinding>(R.layout.fragment_for
         binding.btnForestReturnToCloth.setOnClickListener {
             navigate(R.id.action_forestFragment_to_nav_closet)
         }
+    }
+
+    private fun handleClickItem() {
+        forestViewModel.selectedItem.observe(viewLifecycleOwner, EventObserver {slectedItem ->
+            navigate(R.id.action_forestFragment_to_quizFragment)
+        })
     }
 }
