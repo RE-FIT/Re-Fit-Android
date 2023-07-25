@@ -5,8 +5,8 @@ import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.example.refit.R
 import com.example.refit.databinding.FragmentMyFeedBinding
-import com.example.refit.databinding.FragmentMyInfoBinding
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.mypage.adapter.MyInfoViewpagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 

@@ -1,4 +1,4 @@
-package com.example.refit.presentation.mypage
+package com.example.refit.presentation.mypage.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter

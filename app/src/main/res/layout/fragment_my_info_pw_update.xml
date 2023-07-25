@@ -3,33 +3,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.mypage.MyInfoPwUpdateFragment">
-
+<!--
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical">-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/default_dark">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/tab_layout"
-            android:background="@color/default_dark"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="31dp"
+            android:layout_marginEnd="31dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <!-- warning -->
             <TextView
                 android:id="@+id/warning"
                 style="@style/MediumFont.10"
                 android:layout_width="300dp"
                 android:layout_height="100dp"
-                android:paddingTop="14dp"
-                android:drawableTop="@drawable/ic_myinfo_warning"
-                android:drawablePadding="14dp"
                 android:layout_marginStart="31dp"
-                android:layout_marginTop="61dp"
+                android:layout_marginTop="54dp"
                 android:layout_marginEnd="31dp"
                 android:background="@drawable/btn_setting_round_10"
+                android:drawablePadding="14dp"
                 android:gravity="center_horizontal"
+                android:paddingTop="14dp"
                 android:text="@string/my_info_warning"
                 android:textColor="@color/black"
+                app:drawableTopCompat="@drawable/ic_myinfo_warning"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -42,9 +51,9 @@
                 android:layout_marginTop="22dp"
                 android:autofillHints="birth"
                 android:background="@drawable/et_mypage_round_10"
+                android:hint="@string/my_info_current_pw"
                 android:paddingStart="11dp"
                 android:paddingEnd="0dp"
-                android:hint="@string/my_info_current_pw"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -58,9 +67,9 @@
                 android:layout_marginTop="22dp"
                 android:autofillHints="birth"
                 android:background="@drawable/et_mypage_round_10"
+                android:hint="@string/my_info_new_pw"
                 android:paddingStart="11dp"
                 android:paddingEnd="0dp"
-                android:hint="@string/my_info_new_pw"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
@@ -73,15 +82,20 @@
                 android:layout_width="296dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="95dp"
+                android:layout_marginBottom="165dp"
                 android:background="@drawable/btn_my_info_pw"
                 android:text="@string/my_info_btn_update"
                 android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/new_pw" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--
+    </ScrollView>-->
 
 </layout>

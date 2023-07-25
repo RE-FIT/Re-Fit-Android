@@ -23,7 +23,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+                <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -71,7 +71,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
+                <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -82,16 +82,53 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <!-- 환경 지키기 D-day -->
-                <TextView
-                    style="@style/MediumFont.12"
-                    android:textColor="@color/black"
-                    android:layout_width="227dp"
-                    android:layout_height="91dp"
+                <!-- 환경 지키기 D+day -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:layout_gravity="center"
+                    android:paddingStart="33dp"
+                    android:paddingEnd="33dp"
                     android:gravity="center"
-                    android:text="환경 지키기"
-                    android:background="@drawable/ic_white_rectangle_90" />
+                    android:background="@drawable/ic_white_rectangle_90">
+
+                    <TextView
+                        style="@style/MediumFont.12"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="19dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="환경 지키기"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="D + "
+                            android:textColor="@color/green1"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="10"
+                            android:textColor="@color/green1"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="일째 되는 날이에요!"
+                            android:textColor="@color/dark2"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <android.widget.Button
                     android:id="@+id/myPage_btn_myInfo"
@@ -157,7 +194,7 @@
 
             </LinearLayout>
 
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         </ScrollView>
 

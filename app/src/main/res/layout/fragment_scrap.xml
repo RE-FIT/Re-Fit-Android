@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.mypage.ScrapFragment">
+    tools:context=".presentation.mypage.MyScrapFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,13 +14,13 @@
             style="@style/BoldFontKr.18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="53dp"
             android:text="@string/my_page_scrap"
             android:textColor="@color/green1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
+<!--
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             style="@style/BoldFontKr.16"
@@ -35,8 +35,36 @@
             app:layout_constraintTop_toBottomOf="@+id/my_feed_title"
             app:tabBackground="@drawable/my_page_tab_style"
             app:tabGravity="fill"
+            app:tabIndicatorAnimationMode="elastic"
             app:tabIndicatorHeight="0dp"
             app:tabMode="fixed"
+            app:tabRippleColor="@android:color/transparent"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/dark2" />
+            -->
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            style="@style/BoldFontKr.16"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginStart="74dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="74dp"
+            android:background="@drawable/my_page_tab"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/my_feed_title"
+            app:tabGravity="fill"
+            app:tabPaddingStart="10dp"
+            app:tabPaddingEnd="10dp"
+            app:tabIndicator="@drawable/my_page_tab_selected"
+            app:tabIndicatorAnimationMode="elastic"
+            app:tabIndicatorColor="@color/green1"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorGravity="center"
+            app:tabMode="fixed"
+            app:tabRippleColor="@android:color/transparent"
             app:tabSelectedTextColor="@color/white"
             app:tabTextColor="@color/dark2" />
 

@@ -28,9 +28,21 @@
         <item name="android:layout_marginStart">20dp</item>
     </style>
 
+    <style name="ClothRegistrationCardView.WearingOption" parent="Widget.Material3.CardView.Filled">
+        <item name="strokeWidth">1dp</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+    </style>
+
     <style name="ClosetItemCardView.DDay" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearance.ClosetItem.CardView.Corners
         </item>
+    </style>
+
+    <style name="ClothRegistrationCardView.Common" parent="Widget.Material3.CardView.Filled">
+        <item name="strokeWidth">0dp</item>
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
     </style>
 
     <!-- TextView -->
@@ -55,6 +67,27 @@
         <item name="android:textColor">@color/green1</item>
     </style>
 
+    <style name="ClothRegistrationGoalOption.TextCommon" parent="Widget.AppCompat.TextView">
+        <item name="android:drawableEnd">@drawable/ic_arrow_bottom_14</item>
+        <item name="android:textAppearance">@style/RegularFontKr.12</item>
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:drawableTint">@color/dark1</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:minWidth">70dp</item>
+        <item name="android:textColor">@color/dark1</item>
+    </style>
+
+    <style name="MyPageGenderOption.TextCommon" parent="Widget.AppCompat.TextView">
+        <item name="android:drawableEnd">@drawable/ic_arrow_bottom_14</item>
+        <item name="android:textAppearance">@style/RegularFontKr.12</item>
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:minWidth">80dp</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <!-- Button -->
     <!-- TODO(여기에 버튼 뷰에 대한 스타일 정의) -->
 
@@ -67,10 +100,49 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="ListPopupMenuWindow.ClosetOption" parent="Widget.AppCompat.ListPopupWindow">
-        <item name="popupMenuBackground">@drawable/bg_popup_closet_option</item>
+    <style name="ListPopupMenuWindow.Common" parent="Widget.AppCompat.ListPopupWindow">
         <item name="textAppearanceLargePopupMenu">@style/PopupTextAppearance.ClosetOption</item>
         <item name="textAppearanceSmallPopupMenu">@style/PopupTextAppearance.ClosetOption</item>
+    </style>
+
+    <style name="ListPopupMenuWindow.ClosetOption" parent="ListPopupMenuWindow.Common">
+        <item name="popupMenuBackground">@drawable/bg_solid_green_radius_20</item>
+    </style>
+
+    <style name="ListPopupMenuWindow.ClothRegister" parent="ListPopupMenuWindow.Common">
+        <item name="popupMenuBackground">@drawable/bg_solid_white_radius_20</item>
+    </style>
+
+
+    <!-- Chip -->
+    <style name="ClothRegistrationChip.Category.Common" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="checkedIconVisible">false</item>
+        <item name="chipBackgroundColor">@color/white</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipMinHeight">40dp</item>
+        <item name="chipCornerRadius">10dp</item>
+        <item name="chipStrokeColor">@color/selector_selected_green1_else_dark1</item>
+        <item name="android:textColor">@color/selector_selected_green1_else_dark1</item>
+        <item name="android:textAppearance">@style/RegularFontKr.10</item>
+        <item name="rippleColor">@android:color/transparent</item>
+    </style>
+
+    <style name="ClothRegistrationChip.WearingSeason.Common" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="checkedIconVisible">false</item>
+        <item name="chipBackgroundColor">@color/white</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipMinHeight">40dp</item>
+        <item name="chipCornerRadius">10dp</item>
+        <item name="chipStrokeColor">@color/selector_selected_green1_else_dark1</item>
+        <item name="android:textColor">@color/selector_selected_green1_else_dark1</item>
+        <item name="android:textAppearance">@style/RegularFontKr.12</item>
+        <item name="rippleColor">@android:color/transparent</item>
+        <item name="chipIcon">@drawable/ic_circle_24</item>
+        <item name="chipIconVisible">true</item>
+        <item name="chipIconTint">@color/selector_selected_green1_else_dark1</item>
+        <item name="chipIconSize">10dp</item>
+        <item name="chipStartPadding">14dp</item>
+        <item name="chipEndPadding">14dp</item>
     </style>
 
 
