@@ -19,10 +19,10 @@ object DropdownMenuManager {
         @LayoutRes itemLayout: Int,
         @ArrayRes menuItems: Int,
     ): ListPopupWindow {
-        val popupTheme = ContextThemeWrapper(context, style)
+        val popupTheme = ContextThemeWrapper(anchorView.context, style)
         val listPopupWindow = ListPopupWindow(popupTheme, null, attr.listPopupWindowStyle)
-        val items = context.resources.getStringArray(menuItems)
-        val adapter = ArrayAdapter(context, itemLayout, items)
+        val items = anchorView.context.resources.getStringArray(menuItems)
+        val adapter = ArrayAdapter(anchorView.context, itemLayout, items)
         listPopupWindow.setAdapter(adapter)
         listPopupWindow.anchorView = anchorView
 

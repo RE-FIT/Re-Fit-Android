@@ -48,6 +48,7 @@
     <string name="closet_option_sort_first">D-Day 순</string>
     <string name="closet_option_sort_second">많이 입은 순</string>
     <string name="closet_option_sort_third">적게 입은 순</string>
+    <string name="closet_empty_item">아직 등록된 옷이 없어요!\n옷 등록 버튼을 클릭해\n첫번째 목표를 설정해보세요 :)</string>
 
     <string name="registered_cloth_info_d_day">D-%d</string>
     <string name="registered_cloth_info_fit_and_goal">%d/%d</string>
@@ -83,10 +84,6 @@
     <string name="cloth_register_complete">등록 완료!</string>
     <string name="cloth_register_not_wearing_response">네 알겠어요!\n%1$s이 오면 다시 목표 착용 횟수를 \n설정할 수 있는 알림을 보내드릴게요!</string>
     <string name="cloth_register_recommend_wearing">"한 달에 %1$d번\n일주일에 %2$d번</string>
-
-
-
-
 
 
 
@@ -135,4 +132,5 @@
     <string name="setting_account_delete_positive">네, 탈퇴할래요</string>
 
     <string name="my_info_nickname_check">닉네임의 중복확인이 필요합니다!</string>
+
 </resources>

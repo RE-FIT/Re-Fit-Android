@@ -14,9 +14,39 @@
     </string-array>
     
     <string-array name="cloth_register_wearing_month_option">
-        <item>1개월</item>
-        <item>2개월</item>
-        <item>3개월</item>
+        <item>@string/cloth_register_wearing_goal_one_month</item>
+        <item>@string/cloth_register_wearing_goal_two_month</item>
+        <item>@string/cloth_register_wearing_goal_three_month</item>
+    </string-array>
+
+    <string-array name="cloth_register_wearing_number_by_one_month">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+    </string-array>
+
+    <string-array name="cloth_register_wearing_number_by_two_month">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+    </string-array>
+
+    <string-array name="cloth_register_wearing_number_by_three_month">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+        <item>70</item>
+        <item>80</item>
+        <item>90</item>
     </string-array>
     
     <string-array name="cloth_register_wearing_season">

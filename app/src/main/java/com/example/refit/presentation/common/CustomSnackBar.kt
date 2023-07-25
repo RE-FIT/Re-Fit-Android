@@ -9,17 +9,19 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import androidx.annotation.AnimRes
+import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import com.example.refit.R
 import com.example.refit.databinding.CustomSnackBarBasicBinding
 import com.google.android.material.snackbar.Snackbar
 
-class CustomSnackBar(view: View, private val message: String, @AnimRes private val animationId: Int) {
+class CustomSnackBar(view: View, @LayoutRes private val  layout: Int, @AnimRes private val animationId: Int) {
 
     companion object {
-        fun make(view: View, message: String, animationId: Int) =
-            CustomSnackBar(view, message, animationId)
+        fun make(view: View, layout: Int, animationId: Int) =
+            CustomSnackBar(view, layout, animationId)
     }
 
     private val context = view.context
@@ -27,12 +29,11 @@ class CustomSnackBar(view: View, private val message: String, @AnimRes private v
     private val snackBarLayout = snackBar.view as Snackbar.SnackbarLayout
 
     private val inflater = LayoutInflater.from(context)
-    private val snackBarBinding: CustomSnackBarBasicBinding =
-        DataBindingUtil.inflate(inflater, R.layout.custom_snack_bar_basic, null, false)
+    private val snackBarBinding: ViewDataBinding =
+        DataBindingUtil.inflate(inflater, layout, null, false)
 
     init {
         initView()
-        initData()
     }
 
     private fun initView() {
@@ -58,8 +59,13 @@ class CustomSnackBar(view: View, private val message: String, @AnimRes private v
         }
     }
 
-    private fun initData() {
-        snackBarBinding.tvText.text = message
+    fun setTitle(title: String, subtitle: String?): CustomSnackBar {
+        when(layout) {
+            R.layout.custom_snack_bar_basic -> {
+                (snackBarBinding as CustomSnackBarBasicBinding).title = title
+            }
+        }
+        return this
     }
 
     fun show() {

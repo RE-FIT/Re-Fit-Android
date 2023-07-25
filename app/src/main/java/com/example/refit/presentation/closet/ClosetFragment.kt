@@ -3,7 +3,6 @@ package com.example.refit.presentation.closet
 import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
@@ -31,10 +30,13 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.vm = closetViewModel
+        initDefaultClothCategory(
+            binding.tvClosetCategoryTop.text.toString(),
+            binding.tvClosetCategoryTop.id
+        )
         closetViewModel.getUserRegisteredClothes()
         initRegisteredCloth()
-        initDefaultClothCategory(binding.cvClosetCategoryContainerTop)
         initClosetOptionPopupMenu()
         handleClothesCategory()
         handleClickAddClothButton()
@@ -45,6 +47,7 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         closetViewModel.selectedRegisteredClothItem.observe(
             viewLifecycleOwner,
             EventObserver { item ->
+                //TODO(이미 옷 입기가 된 아이템인지 확인 필요 -> 입었다면 옷 입기 막기 처리)
                 showClothItemSelectionDialog(item, object : ClothItemSelectionDialogListener {
                     override fun onClickMainButton(isNotCompleteGoal: Boolean) {
                         //TODO(목표 달성 상태에 따라 다르게 처리)
@@ -94,14 +97,17 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         }
     }
 
-    private fun initDefaultClothCategory(cardView: MaterialCardView) {
-        binding.selectedCategoryId = cardView.getChildAt(0).id
+    private fun initDefaultClothCategory(initCategory: String, initCategoryId: Int) {
+        closetViewModel.requestRegisteredItemsByClothCategory(initCategory, initCategoryId)
     }
 
     private fun handleClothesCategory() {
         binding.onClickCardViewListener = OnClickListener { view ->
-            val selectedView = view as MaterialCardView
-            binding.selectedCategoryId = selectedView.getChildAt(0).id
+            val selectedView = (view as MaterialCardView).getChildAt(0) as TextView
+            closetViewModel.requestRegisteredItemsByClothCategory(
+                selectedView.text.toString(),
+                selectedView.id
+            )
         }
     }
 
@@ -125,13 +131,11 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
             when (viewId) {
                 // TODO(기능 구현 때 뷰모델과 연동)
                 binding.cvClosetOptionSeason.id -> {
-                    binding.tvClosetOptionSeason.text = itemDescription
-                    Timber.d(itemDescription)
+                    closetViewModel.requestSortingBySeason(itemDescription)
                 }
 
                 binding.cvClosetOptionSort.id -> {
-                    binding.tvClosetOptionSort.text = itemDescription
-                    Timber.d(itemDescription)
+                    closetViewModel.requestSortingByClosetSorting(itemDescription)
                 }
             }
             popupMenu.dismiss()

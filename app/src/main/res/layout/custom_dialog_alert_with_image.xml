@@ -9,13 +9,14 @@
     android:orientation="vertical"
     android:paddingStart="20dp"
     android:paddingTop="20dp"
-    android:paddingEnd="20dp">
+    android:paddingEnd="20dp"
+    android:paddingBottom="20dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_dialog_alert_with_image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="fitStart"
+        android:scaleType="fitCenter"
         tools:src="@drawable/img_temp_67" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -33,8 +34,8 @@
         style="@style/MediumFontKr.10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
         android:layout_marginTop="18dp"
+        android:textAlignment="center"
         android:textColor="@color/dark2"
         tools:text="subtitle text" />
 
