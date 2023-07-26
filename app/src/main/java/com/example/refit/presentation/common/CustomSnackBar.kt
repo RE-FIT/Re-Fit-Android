@@ -15,6 +15,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.example.refit.R
 import com.example.refit.databinding.CustomSnackBarBasicBinding
+import com.example.refit.databinding.CustomSnackbarCommunityBasicBinding
 import com.google.android.material.snackbar.Snackbar
 
 class CustomSnackBar(view: View, @LayoutRes private val  layout: Int, @AnimRes private val animationId: Int) {
@@ -63,6 +64,11 @@ class CustomSnackBar(view: View, @LayoutRes private val  layout: Int, @AnimRes p
         when(layout) {
             R.layout.custom_snack_bar_basic -> {
                 (snackBarBinding as CustomSnackBarBasicBinding).title = title
+            }
+            R.layout.custom_snackbar_community_basic -> {
+                (snackBarBinding as CustomSnackbarCommunityBasicBinding).title = title
+                if (subtitle != null) snackBarBinding.subtitle = subtitle
+                else snackBarBinding.tvSnackbarCommunitySecond.visibility = View.GONE
             }
         }
         return this

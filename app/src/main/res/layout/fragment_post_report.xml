@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.community.PostReportFragment">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.community.viewmodel.PostReportViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/default_dark">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/col_post_report_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/ab_post_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/tb_post_report_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/default_dark"
+                    app:title="@string/community_post_report_toolbar_title"
+                    app:titleCentered="true"
+                    app:titleMarginTop="25dp"
+                    app:titleTextAppearance="@style/BoldFont.18"
+                    app:titleTextColor="@color/green1" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/dark1" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_post_report_contents_first"
+                            style="@style/RegularFontKr.14"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:text="@string/community_post_report_ban_on_sales_contents_second"
+                            android:textColor="@color/black"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/view"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/dark1"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_post_report_contents_first" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tv_post_report_reason_first"
+                                style="@style/RegularFontKr.12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:drawableLeft="@{vm.isSelectReasonFirst ? @drawable/ic_check_green1_18 : @drawable/ic_check_dark1_18}"
+                                android:drawablePadding="15dp"
+                                android:layout_marginVertical="5dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/community_post_report_contents_first" />
+
+                            <androidx.appcompat.widget.AppCompatImageButton
+                                android:id="@+id/ib_community_report_post_help"
+                                android:layout_width="13dp"
+                                android:layout_height="13dp"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:background="@drawable/ic_question_13" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/dark1" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tv_post_report_reason_second"
+                            style="@style/RegularFontKr.12"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:drawableLeft="@{vm.isSelectReasonSecond ? @drawable/ic_check_green1_18 : @drawable/ic_check_dark1_18}"
+                            android:drawablePadding="15dp"
+                            android:layout_marginVertical="5dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/community_post_report_contents_second" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/dark1" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tv_post_report_reason_third"
+                            style="@style/RegularFontKr.12"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:drawableLeft="@{vm.isSelectReasonThird ? @drawable/ic_check_green1_18 : @drawable/ic_check_dark1_18}"
+                            android:drawablePadding="15dp"
+                            android:layout_marginVertical="5dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/community_post_report_contents_third" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/dark1" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tv_post_report_reason_fourth"
+                            style="@style/RegularFontKr.12"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:drawableLeft="@{vm.isSelectReasonFourth ? @drawable/ic_check_green1_18 : @drawable/ic_check_dark1_18}"
+                            android:drawablePadding="15dp"
+                            android:layout_marginVertical="5dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/community_post_report_contents_fourth" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/dark1" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tv_post_report_reason_fifth"
+                            style="@style/RegularFontKr.12"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:drawableLeft="@{vm.isSelectReasonFifth ? @drawable/ic_check_green1_18 : @drawable/ic_check_dark1_18}"
+                            android:drawablePadding="15dp"
+                            android:layout_marginVertical="5dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/community_post_report_contents_fifth" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/dark1" />
+
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_post_report_next"
+                        style="@style/MediumFontKr.14"
+                        android:layout_width="250dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="40dp"
+                        android:background="@{vm.isSelectReason ? @drawable/bg_solid_green_radius_10 : @drawable/bg_solid_dark1_radius_10}"
+                        android:text="@string/community_post_report_next"
+                        android:textColor="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </ScrollView>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

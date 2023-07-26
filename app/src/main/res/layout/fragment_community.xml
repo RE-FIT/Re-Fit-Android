@@ -4,19 +4,168 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.community.CommunityFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <data>
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.community.viewmodel.CommunityViewModel" />
+    </data>
 
-        <TextView
-            android:id="@+id/tv_community_temp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="community"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_community_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/default_dark">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/tb_community_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/default_dark"
+                    app:title="@string/community_main_toolbar_title"
+                    app:titleTextColor="@color/green1"
+                    app:titleTextAppearance="@style/BoldFont.22"
+                    app:titleCentered="true"
+                    app:layout_scrollFlags="scroll">
+
+                </com.google.android.material.appbar.MaterialToolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_community_list_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <HorizontalScrollView
+                    android:id="@+id/hsv_community_search_option"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@color/default_dark"
+                    android:scrollbars="none"
+                    app:layout_constraintBottom_toTopOf="@id/rv_community_list"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cv_community_option_category"
+                            style="@style/CommunityOptionCardView.Common"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tv_community_option_category"
+                                style="@style/CommunitySearchOption.TextCommon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/community_search_option_first" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cv_community_option_type"
+                            style="@style/CommunityOptionCardView.Common"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_community_option_type"
+                                style="@style/CommunitySearchOption.TextCommon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/community_search_option_second" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cv_community_option_gender"
+                            style="@style/CommunityOptionCardView.Common"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_community_option_gender"
+                                style="@style/CommunitySearchOption.TextCommon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/community_search_option_third" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/ib_community_search"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/ib_community_mail"
+                    app:layout_constraintBottom_toTopOf="@id/rv_community_list"
+                    android:background="@drawable/ic_community_search_24" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/ib_community_mail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/rv_community_list"
+                    android:background="@{vm.isNewChat ? @drawable/ic_community_mail_up_20 : @drawable/ic_community_mail_18}" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_community_list"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/hsv_community_search_option"
+                    tools:listitem="@layout/item_community" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fab_community_add"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="17dp"
+                android:layout_marginBottom="13dp"
+                android:backgroundTint="@color/green1"
+                android:text="@string/community_main_fab_bottom_end"
+                android:textAppearance="@style/RegularFontKr"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:icon="@drawable/ic_add_24"
+                app:iconPadding="0dp"
+                app:iconTint="@color/white" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
