@@ -187,7 +187,5 @@
     <string name="community_post_report_ban_on_sales_etc_second">글자수 제한 (0/200)</string>
     <string name="community_post_report_ban_on_sales_etc_third">이 회원이 신고 대상에 해당하는지 다시 한번 확인하여 주시길 바랍니다.</string>
     <string name="community_post_report_ban_on_sales_etc_fourth">신고자 정보 및 신고 내용은 신고 대상에게 공개되지 않으나, 사실 관계 확인에 꼭 필요한 신고 내용의 일부는 언급될 수 있습니다.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
