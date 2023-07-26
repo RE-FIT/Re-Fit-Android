@@ -9,12 +9,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.refit.R
 import com.example.refit.databinding.FragmentCommunityBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.common.WindowUtil.setStatusBarColor
+import com.example.refit.presentation.community.adapter.CommunityListAdapter
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -28,6 +30,8 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         super.onViewCreated(view, savedInstanceState)
         binding.vm = communityViewModel
 
+        communityViewModel.getCommunityList()
+        initCommunityList()
         initCommunityOptionDropdown()
         setClickedButton()
     }
@@ -67,6 +71,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
             popupMenu.dismiss()
         }
     }
+
     private fun getPopupMenu(
         anchorView: View,
         @ArrayRes items: Int,
@@ -80,7 +85,16 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         )
     }
 
-    fun setClickedButton() {
+    private fun initCommunityList() {
+        binding.rvCommunityList.layoutManager = LinearLayoutManager(requireActivity())
+        binding.rvCommunityList.adapter = CommunityListAdapter(communityViewModel).apply {
+            communityViewModel.communityList.observe(viewLifecycleOwner) { list ->
+                submitList(list)
+            }
+        }
+    }
+
+    private fun setClickedButton() {
         binding.ibCommunityMail.setOnClickListener {
             // TODO (새로운 채팅이 있으면 N)
         }

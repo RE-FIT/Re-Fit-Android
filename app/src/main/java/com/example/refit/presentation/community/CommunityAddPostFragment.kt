@@ -1,25 +1,33 @@
 package com.example.refit.presentation.community
 
 import android.icu.text.DecimalFormat
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.content.ContextCompat
 import com.example.refit.R
 import com.example.refit.databinding.FragmentCommunityAddPostBinding
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.DialogUtil
 import com.example.refit.presentation.common.DialogUtil.showCommunityAddShippingFeeDiaglog
 import com.example.refit.presentation.common.DropdownMenuManager
+import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialogListener
+import com.example.refit.util.FileUtil
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
@@ -29,6 +37,10 @@ class CommunityAddPostFragment :
     BaseFragment<FragmentCommunityAddPostBinding>(R.layout.fragment_community_add_post) {
 
     private val communityAddPostViewModel: CommunityAddPostViewModel by sharedViewModel()
+    private lateinit var pickMultipleMedia: ActivityResultLauncher<PickVisualMediaRequest>
+
+    private var photoUris: List<String>? = null
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,8 +50,11 @@ class CommunityAddPostFragment :
         selectTransactionChipType()
         handleAfterInputPrice()
         handledAddShippingFee()
+        handlePostcodeSetting()
+        handleAddCommunityPhoto()
         selectShippingFeeType()
         observeEditTextChanges()
+        initGalleryLauncher()
     }
 
 
@@ -164,8 +179,6 @@ class CommunityAddPostFragment :
     }
 
     private fun observeEditTextChanges() {
-        Timber.d("옵서버 호출")
-
         binding.etCommunityAddpostPrice.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 communityAddPostViewModel.setPriceInputCompleted("")
@@ -186,6 +199,44 @@ class CommunityAddPostFragment :
             val inputPriceText = binding.etCommunityAddpostPrice.text.toString()
             binding.tvCommunityAddpostPrice.text = "₩ " + communityAddPostViewModel.getDecimalFormat(inputPriceText) + "원"
             communityAddPostViewModel.setPriceInputCompleted(inputPriceText)
+        }
+    }
+
+    private fun handlePostcodeSetting() {
+        binding.cvCommunityAddpostRegion.setOnClickListener {
+            navigate(R.id.action_communityAddPostFragment_to_postcodeFragment)
+        }
+    }
+
+    private fun handleAddCommunityPhoto() {
+        binding.photolen = "0/5"
+        binding.ivCommunityImageContainer.setOnClickListener {
+            pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
+        }
+    }
+
+    private fun initGalleryLauncher() {
+        pickMultipleMedia = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) { uris ->
+            photoUris = null
+            if (uris != null) {
+                // 몇몇 기종에서는 5개 선택 제한이 안 되는 이슈 발생 -> 5개 초과로 받아와도 5개까지만 보여주도록 추가 설정
+                val selectedUris = uris.take(5)
+                photoUris = selectedUris.map { uri -> uri.toString() }
+                val len = photoUris!!.size
+                binding.photolen = "$len/5"
+                communityAddPostViewModel.setFilledStatus(0, status = true)
+                if (selectedUris.isNotEmpty()) {
+                    for (uri in selectedUris) {
+                        communityAddPostViewModel.setFilledImage(len)
+                        binding.photoUris = photoUris
+                    }
+                } else {
+                    Log.d("PhotoPicker", "No media selected")
+                }
+            } else {
+                photoUris = null
+                Log.d("PhotoPicker", "No media selected")
+            }
         }
     }
 

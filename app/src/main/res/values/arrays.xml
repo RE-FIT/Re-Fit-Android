@@ -111,7 +111,7 @@
 
     <string-array name="community_info_overflow_user">
         <item>신고하기</item>
-        <item>이 사용자의 글 보지 ㅇ낳기</item>
+        <item>이 사용자의 글 보지 않기</item>
     </string-array>
 
 </resources>

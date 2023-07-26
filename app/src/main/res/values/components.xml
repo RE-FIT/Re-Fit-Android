@@ -69,6 +69,11 @@
         <item name="cardBackgroundColor">@color/white</item>
     </style>
 
+    <style name="CommunityInfoETCCardView.Common." parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">0dp</item>
+        <item name="cardBackgroundColor">@color/default_dark</item>
+    </style>
+
     <!-- TextView -->
     <style name="ClosetCategory.TextCommon" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/selector_selected_green1_else_dark1</item>
@@ -183,6 +188,17 @@
 
     <style name="PopupTextAppearance.CommunityAddPostOption" parent="PopupTextAppearance.App.BodyLarge">
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="ListPopupMenuWindow.CommunityInfoOption" parent="ListPopupMenuWindow.Common">
+        <item name="popupMenuBackground">@drawable/bg_solid_dark2_radius_10</item>
+        <item name="textAppearanceLargePopupMenu">@style/PopupTextAppearance.CommunityInfoOption</item>
+        <item name="textAppearanceSmallPopupMenu">@style/PopupTextAppearance.CommunityInfoOption</item>
+    </style>
+
+    <style name="PopupTextAppearance.CommunityInfoOption" parent="PopupTextAppearance.App.BodyLarge">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
 

@@ -7,9 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.refit.R
 import com.example.refit.databinding.FragmentPostReportDetailBinding
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.CustomSnackBar
+import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.community.viewmodel.PostReportViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
@@ -36,7 +39,10 @@ class PostReportDetailFrament :
     private fun clickedBtnReportDone() {
         binding.btnPostReportNext.setOnClickListener {
             val etcReason = binding.etEtcPostReportReason.text
-            // TODO 신고하기 버튼 클릭 -> 각 상황에 맞는 다이얼로그 띄우기
+            navigateUp()
+            navigateUp()
+            CustomSnackBar.make(requireView(), R.layout.custom_snackbar_community_basic, R.anim.anim_show_snack_bar_from_top)
+                .setTitle(resources.getString(R.string.community_info_snackbar_second), resources.getString(R.string.community_info_snackbar_third)).show()
         }
     }
 

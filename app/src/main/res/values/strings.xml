@@ -48,6 +48,7 @@
     <string name="closet_option_sort_first">D-Day 순</string>
     <string name="closet_option_sort_second">많이 입은 순</string>
     <string name="closet_option_sort_third">적게 입은 순</string>
+    <string name="closet_empty_item">아직 등록된 옷이 없어요!\n옷 등록 버튼을 클릭해\n첫번째 목표를 설정해보세요 :)</string>
 
     <string name="registered_cloth_info_d_day">D-%d</string>
     <string name="registered_cloth_info_fit_and_goal">%d/%d</string>
@@ -109,13 +110,23 @@
     <string name="community_info_type_sale_ing">판매 진행중</string>
     <string name="community_info_type_sale_end">판매 완료</string>
     <string name="community_info_contents_first">사이즈 :</string>
-    <string name="community_info_contents_second">거래방식 :</string>
+    <string name="community_info_contents_second">거래 방식 :</string>
     <string name="community_info_contents_third">배송비 :</string>
-    <string name="community_info_contents_fourth">거래지역 :</string>
+    <string name="community_info_contents_fourth">거래 희망 지역 :</string>
     <string name="community_info_contents_fifth">가격 :</string>
     <string name="community_info_overflow_writer_first">수정하기</string>
     <string name="community_info_overflow_writer_second">삭제하기</string>
     <string name="community_info_overflow_writer_third">나눔중</string>
+    <string name="community_info_dialog_title">글을 삭제하시겠어요?</string>
+    <string name="community_info_dialog_positive">네, 삭제할래요</string>
+    <string name="community_info_dialog_negative">아니오</string>
+    <string name="community_info_dialog_title_second">이 사용자를 신고하시겠어요?</string>
+    <string name="community_info_dialog_positive_second">네, 신고할래요</string>
+    <string name="community_info_dialog_title_third">님의 글을 보고 싶지 않으신가요?</string>
+    <string name="community_info_dialog_positive_third">네, 안볼래요</string>
+    <string name="community_info_snackbar_first">이 사용자의 글을 더 이상 목록에서 볼 수 없어요.</string>
+    <string name="community_info_snackbar_second">신고가 접수되었습니다.</string>
+    <string name="community_info_snackbar_third">신고하는 일이 없도록 RE-FIT에서 더 노력할게요!</string>
 
     <string name="community_addpost_toolbar_title">글 작성</string>
     <string name="community_addpost_contents_first">사진</string>
@@ -162,8 +173,7 @@
     <string name="community_post_report_ban_on_sales_etc_second">글자수 제한 (0/200)</string>
     <string name="community_post_report_ban_on_sales_etc_third">이 회원이 신고 대상에 해당하는지 다시 한번 확인하여 주시길 바랍니다.</string>
     <string name="community_post_report_ban_on_sales_etc_fourth">신고자 정보 및 신고 내용은 신고 대상에게 공개되지 않으나, 사실 관계 확인에 꼭 필요한 신고 내용의 일부는 언급될 수 있습니다.</string>
-
-
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

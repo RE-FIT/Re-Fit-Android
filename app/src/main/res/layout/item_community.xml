@@ -7,13 +7,22 @@
         <variable
             name="favToggleState"
             type="Boolean" />
+
+        <variable
+            name="communityList"
+            type="com.example.refit.data.model.community.CommunityListItemResponse" />
+
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.community.viewmodel.CommunityViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/default_dark"
-        android:padding="10dp">
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/mcv_community_item_holder"
@@ -63,7 +72,7 @@
                             style="@style/BoldFontKr.12"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="항공 점퍼 새 옷"
+                            android:text="@{communityList.component2()}"
                             android:textColor="@color/green1" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -143,7 +152,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="bottom"
-                        android:text="서울특별시 서대문구 신촌동"
+                        android:text="@{communityList.component5}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_method_txt"
                         app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_method"

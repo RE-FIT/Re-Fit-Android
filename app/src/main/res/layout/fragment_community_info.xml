@@ -28,16 +28,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/tb_community_info_title"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/default_dark"
-                    app:title="@string/community_info_toolbar_title"
-                    app:titleTextColor="@color/green1"
-                    app:titleTextAppearance="@style/BoldFont.20"
-                    app:titleCentered="true"
-                    app:menu="@menu/menu_community_info_overflow" />
+                    android:layout_height="wrap_content" >
+
+                    <com.google.android.material.appbar.MaterialToolbar
+                        android:id="@+id/tb_community_info_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/default_dark"
+                        app:title="@string/community_info_toolbar_title"
+                        app:titleCentered="true"
+                        app:titleTextAppearance="@style/BoldFont.20"
+                        app:titleTextColor="@color/green1"/>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cv_etc_overflow"
+                        style="@style/CommunityInfoETCCardView.Common."
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|center"
+                        android:layout_marginRight="20dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/ic_community_etc_4"
+                            android:drawablePadding="10dp"
+                            android:backgroundTint="@android:color/transparent"
+                            android:gravity="center_vertical"
+                            android:minWidth="80dp"
+                            android:text="@{vm.userStatusMainText}"
+                            android:textColor="@android:color/transparent"/>
+                    </com.google.android.material.card.MaterialCardView>
+                </FrameLayout>
+
+
+
 
             </com.google.android.material.appbar.AppBarLayout>
 

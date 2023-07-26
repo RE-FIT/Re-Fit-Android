@@ -109,12 +109,27 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_communityInfoFragment_to_communityAddPostFragment"
+            app:destination="@id/communityAddPostFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/communityAddPostFragment"
         android:name="com.example.refit.presentation.community.CommunityAddPostFragment"
         android:label="fragment_community_add_post"
-        tools:layout="@layout/fragment_community_add_post" />
+        tools:layout="@layout/fragment_community_add_post" >
+        <action
+            android:id="@+id/action_communityAddPostFragment_to_postcodeFragment"
+            app:destination="@id/postcodeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/postReportFragment"
         android:name="com.example.refit.presentation.community.PostReportFragment"
@@ -131,4 +146,9 @@
         android:id="@+id/postReportDetailFrament"
         android:name="com.example.refit.presentation.community.PostReportDetailFrament"
         android:label="PostReportDetailFrament" />
+    <fragment
+        android:id="@+id/postcodeFragment"
+        android:name="com.example.refit.presentation.community.PostcodeFragment"
+        android:label="fragment_postcode"
+        tools:layout="@layout/fragment_postcode" />
 </navigation>

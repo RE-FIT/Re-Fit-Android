@@ -32,6 +32,11 @@ class CommunityAddPostViewModel (
     val isClickedOptionTM: LiveData<Boolean>
         get() = _isClickedOptionTM
 
+    // 이미지 개수별 가시성
+    private val _isFilledImageValues: List<MutableLiveData<Boolean>> = (0 until 5).map { MutableLiveData<Boolean>() }
+    val isFilledImageValues: List<LiveData<Boolean>>
+        get() = _isFilledImageValues
+
     // 가격 정보 카드뷰 가시성
     private val _isVisiblePriceStatus: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isVisiblePriceStatus: LiveData<Boolean>
@@ -77,6 +82,10 @@ class CommunityAddPostViewModel (
     val isPriceInputCompleted: LiveData<Boolean>
         get() = _isPriceInputCompleted
 
+    // 사용자 주소 처리
+    private val _postCode: MutableLiveData<String> = MutableLiveData<String>()
+    val postCode: LiveData<String>
+        get() = _postCode
 
     // 배송비 특성 (포함 false / 별도 true)
     private val _isSFExclude: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
@@ -209,6 +218,11 @@ class CommunityAddPostViewModel (
         else Timber.d("false")
     }
 
+    fun setPostCode(data: String) {
+        _postCode.value = data
+        Timber.d("우편 API 동작 테스트 : $data")
+    }
+
     fun setFilledStatus(type: Int, status: Boolean) {
         when (type) {
             0 -> _isFilledImage.value = status
@@ -227,6 +241,15 @@ class CommunityAddPostViewModel (
 
     fun setShippingFee(value: Int) {
         _shippingFee.value = value
+    }
+
+    fun setFilledImage(num: Int) {
+        for (i in 0 until 5) {
+            when {
+                i < num -> _isFilledImageValues[i].value = true
+                else -> _isFilledImageValues[i].value = false
+            }
+        }
     }
 
     fun getDecimalFormat(number: String): String {
