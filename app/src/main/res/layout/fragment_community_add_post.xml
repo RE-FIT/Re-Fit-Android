@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.community.CommunityAddPostFragment">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.example.refit.R" />
+
+        <variable
+            name="photoUris"
+            type="java.util.List&lt;java.lang.String&gt;" />
+
+        <variable
+            name="photolen"
+            type="String" />
+
+        <variable
+            name="cmviewmodel"
+            type="com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_community_addpost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/default_dark">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/col_community_info_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/tb_community_info_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/default_dark"
+                    app:title="@string/community_addpost_toolbar_title"
+                    app:titleCentered="true"
+                    app:titleTextAppearance="@style/BoldFont.20"
+                    app:titleTextColor="@color/green1" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:scrollbars="none"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <LinearLayout
+                    android:id="@+id/ll_community_addpost_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        style="@style/Layout.CommunityItem.Margin.Common"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/BoldFontKr.12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="@string/community_addpost_contents_first"
+                            android:textColor="@color/green1" />
+
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scrollbars="none">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal" >
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    setImage="@{photoUris[0]}"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:adjustViewBounds="true"
+                                    android:background="@color/white"
+                                    android:padding="1dp"
+                                    android:layout_marginRight="5dp"
+                                    android:visibility="gone"
+                                    setVisibility="@{cmviewmodel.isFilledImageValues[0]}"
+                                    android:scaleType="centerCrop"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.10" />
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    setImage="@{photoUris[1]}"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:adjustViewBounds="true"
+                                    android:background="@color/white"
+                                    android:padding="1dp"
+                                    android:visibility="gone"
+                                    setVisibility="@{cmviewmodel.isFilledImageValues[1]}"
+                                    android:layout_marginRight="5dp"
+                                    android:scaleType="centerCrop"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.10" />
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    setImage="@{photoUris[2]}"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:adjustViewBounds="true"
+                                    android:background="@color/white"
+                                    android:padding="1dp"
+                                    android:visibility="gone"
+                                    setVisibility="@{cmviewmodel.isFilledImageValues[2]}"
+                                    android:layout_marginRight="5dp"
+                                    android:scaleType="centerCrop"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.10" />
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    setImage="@{photoUris[3]}"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:adjustViewBounds="true"
+                                    android:background="@color/white"
+                                    android:padding="1dp"
+                                    android:visibility="gone"
+                                    setVisibility="@{cmviewmodel.isFilledImageValues[3]}"
+                                    android:layout_marginRight="5dp"
+                                    android:scaleType="centerCrop"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.10" />
+
+                                <FrameLayout
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp" >
+
+                                    <com.google.android.material.imageview.ShapeableImageView
+                                        android:id="@+id/iv_community_image_container"
+                                        setImage="@{photoUris[4]}"
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:adjustViewBounds="true"
+                                        android:background="@color/white"
+                                        android:padding="1dp"
+                                        setVisibility="@{cmviewmodel.isFilledImageValues[5]}"
+                                        android:scaleType="centerCrop"
+                                        app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.10" />
+
+                                    <LinearLayout
+                                        android:id="@+id/ll_image_container_fifth"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        setVisibility="@{cmviewmodel.isFilledImageValues[4] ? false : true}"
+                                        android:orientation="vertical">
+
+                                        <com.google.android.material.imageview.ShapeableImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="15dp"
+                                            android:src="@drawable/ic_camera_24" />
+
+                                        <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/tv_community_addpost_image_cnt"
+                                            style="@style/RegularFontKr.10"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@{photolen}" />
+                                    </LinearLayout>
+
+                                </FrameLayout>
+                            </LinearLayout>
+
+
+                        </HorizontalScrollView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/Layout.CommunityItem.Margin.Common"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/BoldFontKr.12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="@string/community_addpost_contents_second"
+                            android:textColor="@color/green1" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            style="@style/RegularFontKr.12"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_solid_white_radius_10"
+                            android:hint="@string/community_addpost_contents_detail_first"
+                            android:paddingHorizontal="15dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/dark2" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/Layout.CommunityItem.Margin.Common"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/BoldFontKr.12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="@string/community_addpost_contents_third"
+                            android:textColor="@color/green1" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cv_community_addpost_recommend_gender"
+                            style="@style/CommunityAddPostCardView.Common"
+                            CStrokeColor="@{cmviewmodel.isClickedOptionRG}"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tv_community_addpost_recommend_gender"
+                                style="@style/CommunityAddPostOption.TextCommon"
+                                CDrawableTint="@{cmviewmodel.isClickedOptionRG}"
+                                CTextColor="@{cmviewmodel.isClickedOptionRG}"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/community_addpost_contents_detail_second" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/Layout.CommunityItem.Margin.Common"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/BoldFontKr.12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="@string/community_addpost_contents_fourth"
+                            android:textColor="@color/green1" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cv_community_addpost_clothes_category"
+                            style="@style/CommunityAddPostCardView.Common"
+                            CStrokeColor="@{cmviewmodel.isClickedOptionCategory}"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tv_community_addpost_clothes_category"
+                                style="@style/CommunityAddPostOption.TextCommon"
+                                CDrawableTint="@{cmviewmodel.isClickedOptionCategory}"
+                                CTextColor="@{cmviewmodel.isClickedOptionCategory}"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/community_addpost_contents_detail_third" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/Layout.CommunityItem.Margin.Common"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/BoldFontKr.12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="@string/community_addpost_contents_fifth"
+                            android:textColor="@color/green1" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cv_communtiy_addpost_size"
+                            style="@style/CommunityAddPostCardView.Common"
+                            CStrokeColor="@{cmviewmodel.isClickedOptionSize}"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/tv_communtiy_addpost_size"
+                                style="@style/CommunityAddPostOption.TextCommon"
+                                CDrawableTint="@{cmviewmodel.isClickedOptionSize}"
+                                CTextColor="@{cmviewmodel.isClickedOptionSize}"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/community_addpost_contents_detail_fourth" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/BoldFontKr.12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/community_addpost_contents_sixth"
+                            android:textColor="@color/green1" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/cg_community_addpost_method"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginBottom="10dp"
+                            app:chipSpacingHorizontal="10dp"
+                            app:selectionRequired="true"
+                            app:singleSelection="true">
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/cg_community_addpost_method_giveaway"
+                                style="@style/CommunityAddPostChip.Transaction.Common"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/community_info_toolbar_title" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/cg_community_addpost_method_sale"
+                                style="@style/CommunityAddPostChip.Transaction.Common"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/community_info_toolbar_title2" />
+
+                        </com.google.android.material.chip.ChipGroup>
+
+                        <LinearLayout
+                            style="@style/Layout.CommunityItem.Margin.Common"
+                            setVisibility="@{cmviewmodel.isTransactionMethodChip}"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/cv_community_addpost_transaction_method"
+                                style="@style/CommunityAddPostCardView.Common"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                app:strokeColor="@{cmviewmodel.isClickedOptionTM ? @color/green1 : @color/white}">
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/tv_community_addpost_transaction_method"
+                                    style="@style/CommunityAddPostOption.TextCommon"
+                                    CDrawableTint="@{cmviewmodel.isClickedOptionTM}"
+                                    CTextColor="@{cmviewmodel.isClickedOptionTM}"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/community_addpost_contents_detail_fourth_method" />
+                            </com.google.android.material.card.MaterialCardView>
+                        </LinearLayout>
+
+                        <FrameLayout
+                            style="@style/Layout.CommunityItem.Margin.Common"
+                            setVisibility="@{cmviewmodel.isVisiblePriceStatus}"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/et_community_addpost_price"
+                                style="@style/RegularFontKr.12"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:background="@{cmviewmodel.isPriceInputEnabled ? @drawable/bg_solid_white_radius_10 : @drawable/bg_solid_dark1_radius_10}"
+                                android:enabled="@{cmviewmodel.isPriceInputEnabled}"
+                                android:hint="@{cmviewmodel.isPriceInputEnabled ? @string/community_addpost_contents_detail_fourth_price_2 : ``}"
+                                android:inputType="number"
+                                android:paddingHorizontal="15dp"
+                                android:textColor="@{cmviewmodel.isPriceInputCompleted ? @android:color/transparent : @color/black}"
+                                android:textColorHint="@color/dark2"
+                                android:textCursorDrawable="@null" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/CommunityAddPostPrice.TextCommon"
+                                setVisibility="@{cmviewmodel.isPriceInputEnabled() ? false : true}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_marginLeft="15dp"
+                                android:gravity="center_vertical"
+                                android:text="@string/community_addpost_contents_detail_fourth_price" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/CommunityAddPostPrice.TextCommon"
+                                setVisibility="@{cmviewmodel.isPriceInputEnabled ? false : true}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_gravity="right"
+                                android:layout_marginRight="15dp"
+                                android:gravity="center_vertical"
+                                android:text="0원" />
+
+                            <LinearLayout
+                                android:id="@+id/ll_community_addpost_price_to_textview"
+                                setVisibility="@{cmviewmodel.isPriceInputEnabled ? true : false}"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/RegularFontKr.12"
+                                    setVisibility="@{cmviewmodel.isPriceInputCompleted}"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center|left"
+                                    android:text="가격"
+                                    android:textColor="@color/green1" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tv_community_addpost_price"
+                                    style="@style/RegularFontKr.12"
+                                    setVisibility="@{cmviewmodel.isPriceInputCompleted}"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:layout_marginRight="15dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center|end"
+                                    android:text="0원"
+                                    android:textColor="@color/green1" />
+
+                            </LinearLayout>
+
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            style="@style/Layout.CommunityItem.Margin.Common"
+                            setVisibility="@{cmviewmodel.isVisibleFeeStatus}"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:paddingHorizontal="20dp"
+                            android:visibility="gone">
+
+                            <RadioGroup
+                                android:id="@+id/rg_community_addpost_input_fee"
+                                android:layout_width="wrap_content"
+                                android:layout_height="20dp"
+                                android:orientation="horizontal"
+                                app:selectionRequired="true"
+                                app:singleSelection="true">
+
+                                <androidx.appcompat.widget.AppCompatRadioButton
+                                    android:id="@+id/rb_community_addpost_input_include_fee"
+                                    style="@style/RegularFontKr.12"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="40dp"
+                                    android:button="@null"
+                                    android:drawableLeft="@drawable/bg_radiobuttion_circle_option"
+                                    android:drawablePadding="5dp"
+                                    android:text="@string/community_addpost_contents_detail_fourth_include_price"
+                                    android:textColor="@color/dark2" />
+
+                                <androidx.appcompat.widget.AppCompatRadioButton
+                                    android:id="@+id/rb_community_addpost_input_exclude_fee"
+                                    style="@style/RegularFontKr.12"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:button="@null"
+                                    android:drawableLeft="@drawable/bg_radiobuttion_circle_option"
+                                    android:drawablePadding="5dp"
+                                    android:text="@string/community_addpost_contents_detail_fourth_exclude_price"
+                                    android:textColor="@color/dark2" />
+
+                            </RadioGroup>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_community_addpost_sf"
+                                style="@style/RegularFontKr.12"
+                                setVisibility="@{cmviewmodel.isFilledFee}"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:gravity="center_vertical"
+                                android:text=""
+                                android:textColor="@color/green1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_community_addpost_fee_input"
+                                style="@style/MediumFontKr.12"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="5dp"
+                                android:enabled="@{cmviewmodel.isSFExclude()}"
+                                android:gravity="center_vertical"
+                                android:text="@{cmviewmodel.isFilledFee ? @string/community_addpost_contents_detail_fourth_input_2 : @string/community_addpost_contents_detail_fourth_input}"
+                                android:textColor="@color/dark2" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            style="@style/Layout.CommunityItem.Margin.Common"
+                            setVisibility="@{cmviewmodel.isVisibleRegionStatus}"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/cv_community_addpost_region"
+                                style="@style/CommunityAddPostRegionCardView.Common."
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp">
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/tv_community_addpost_region"
+                                    style="@style/CommunityAddPostOption.TextCommon"
+                                    CDrawableTint="@{cmviewmodel.isFilledRG()}"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:drawableRight="@drawable/ic_search_dark_13"
+                                    android:gravity="center_vertical"
+                                    android:text="@string/communtiy_addpost_contents_detail_fourth_region"
+                                    android:textColor="@{cmviewmodel.isFilledRG() ? @color/black : @color/dark2}" />
+
+                            </com.google.android.material.card.MaterialCardView>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/Layout.CommunityItem.Margin.Common"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/BoldFontKr.12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="@string/community_addpost_contents_seventh"
+                            android:textColor="@color/green1" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            style="@style/RegularFontKr.12"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:background="@drawable/bg_solid_white_radius_10"
+                            android:gravity="top"
+                            android:hint="@string/community_addpost_contents_detail_fifth"
+                            android:padding="15dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/dark2" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/Layout.CommunityItem.Margin.Common"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            style="@style/MediumFontKr.14"
+                            android:layout_width="200dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_solid_dark1_radius_10"
+                            android:text="@string/community_addpost_contents_done"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

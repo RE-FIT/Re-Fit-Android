@@ -176,6 +176,10 @@
         <item name="android:textSize">10sp</item>
     </style>
 
+    <style name="RegularFontKr.9" parent="RegularFontKr">
+        <item name="android:textSize">9sp</item>
+    </style>
+
     <style name="RegularFont.22" parent="RegularFont">
         <item name="android:textSize">22sp</item>
     </style>
