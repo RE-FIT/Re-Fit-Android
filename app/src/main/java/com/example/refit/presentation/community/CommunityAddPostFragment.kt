@@ -204,7 +204,7 @@ class CommunityAddPostFragment :
 
     private fun handlePostcodeSetting() {
         binding.cvCommunityAddpostRegion.setOnClickListener {
-            navigate(R.id.action_communityAddPostFragment_to_postcodeFragment)
+            // navigate(R.id.action_communityAddPostFragment_to_postcodeFragment)
         }
     }
 

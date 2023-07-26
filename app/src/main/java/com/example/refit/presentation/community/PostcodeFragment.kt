@@ -51,8 +51,7 @@ class PostcodeFragment : BaseFragment<FragmentPostcodeBinding>(R.layout.fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 위에서 작성한 블로거 페이지의 url
-        val blogspot = "https://billcoreatech.blogspot.com/2022/06/blog-post.html"
+        val blogspot = ""
 
         binding.wvPostcode.settings.javaScriptEnabled = true
         binding.wvPostcode.addJavascriptInterface(MyJavaScriptInterface(), "Android")
@@ -62,10 +61,8 @@ class PostcodeFragment : BaseFragment<FragmentPostcodeBinding>(R.layout.fragment
             }
             /*override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 if (url != null && url.startsWith("android-app://")) {
-                    // 앱으로 전달할 데이터를 추출합니다.
                     val data = Uri.parse(url).getQueryParameter("data")
                     isAddressSelected = true
-                    // 상세주소를 가져온 뒤 앱으로 데이터를 전달합니다.
                     view?.loadUrl("javascript:window.Android.processAddress('$data');")
                     return true
                 }
