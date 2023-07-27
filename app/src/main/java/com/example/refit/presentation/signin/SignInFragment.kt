@@ -30,13 +30,24 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         //로그인
         //id: admin1234
         //password: AAaa1234!!
-        binding.btnMoveSignInToNextPage.setOnClickListener {
+        binding.existingLogin.setOnClickListener {
             viewModel.basicLogin("admin1234", "AAaa1234!!")
         }
 
         //로그인 시 이동
         viewModel.accessToken.observe(viewLifecycleOwner) {
+            navigate(R.id.action_signInFragment_to_communityFragment)
+        }
+
+        //회원가입 이동
+        binding.join.setOnClickListener(){
             navigate(R.id.action_signInFragment_to_signUpFragment)
         }
+
+        //아이디 비밀번호 찾기 이동
+        binding.findIdPassword.setOnClickListener(){
+            navigate(R.id.action_signInFragment_to_findIdPasswordFragment)
+        }
+
     }
 }
