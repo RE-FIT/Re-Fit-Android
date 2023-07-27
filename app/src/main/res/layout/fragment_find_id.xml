@@ -5,16 +5,82 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="20dp">
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/find_id_name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:text="이름"
+            android:textStyle="bold"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="83dp" />
+            tools:layout_editor_absoluteY="83dp"
+            tools:ignore="MissingConstraints" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/find_id_edit_name"
+            android:layout_width="360dp"
+            android:layout_height="52dp"
+            android:background="@drawable/border_gray"
+            android:color="@color/white"
+            android:hint="이름를 입력해주세요."
+            android:padding="10dp"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.181"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/find_id_email"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="이메일"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteY="212dp" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/find_id_edit_email"
+            android:layout_width="360dp"
+            android:layout_height="52dp"
+            android:background="@drawable/border_gray"
+            android:color="@color/white"
+            android:hint="회원가입 시 입력한 이메일을 입력해주세요."
+            android:padding="10dp"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.385"
+            tools:ignore="MissingConstraints" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/find_id_button"
+            android:layout_width="360dp"
+            android:layout_height="52dp"
+            android:backgroundTint="@color/selector_green1_else_dark1"
+            android:text="아이디 찾기"
+            app:shapeAppearance="@color/selector_green1_else_dark1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.694" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
