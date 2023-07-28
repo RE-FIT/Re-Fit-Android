@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_dialog_alert_basic_red_line"
+        android:gravity="center"
+        android:paddingStart="20dp"
+        android:paddingTop="19dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="19dp"
+        android:orientation="horizontal">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_dialog_alert_only_text_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_alert_circle_24" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_dialog_alert_title"
+                style="@style/MediumFontKr.14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/black"
+                tools:text="입력하신 비밀번호가 일치하지 않습니다." />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_dialog_alert_content"
+                style="@style/MediumFontKr.14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/dark2"
+                tools:text="기존 비밀번호 혹은 새로운 비밀번호를 다시 확인해주세요!" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</layout>

@@ -11,6 +11,7 @@ import com.example.refit.presentation.dialog.closet.ClothItemSelectionDialog
 import com.example.refit.presentation.dialog.closet.ClothItemSelectionDialogListener
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialog
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialogListener
+import com.example.refit.presentation.dialog.mypage.MyPagePwCheckDialog
 import com.example.refit.presentation.dialog.mypage.MypageNickNameCheckDialog
 
 object DialogUtil {
@@ -53,4 +54,11 @@ object DialogUtil {
         return MypageNickNameCheckDialog(icon!!, title)
     }
 
+    fun Fragment.checkPwDialog(
+        title: String,
+        content: String
+    ): MyPagePwCheckDialog {
+        val icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_alert_circle_24)
+        return MyPagePwCheckDialog(icon!!, title, content)
+    }
 }

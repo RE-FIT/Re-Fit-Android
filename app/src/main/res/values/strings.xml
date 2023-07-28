@@ -77,6 +77,9 @@
     <string name="cloth_register_wearing_goal_title">목표 착용 횟수</string>
     <string name="cloth_register_wearing_goal_select_option_first">안에</string>
     <string name="cloth_register_wearing_goal_select_option_second">번 입을거에요!</string>
+    <string name="cloth_register_wearing_goal_one_month">1개월</string>
+    <string name="cloth_register_wearing_goal_two_month">2개월</string>
+    <string name="cloth_register_wearing_goal_three_month">3개월</string>
     <string name="cloth_register_wearing_goal_option_second_hint">개월</string>
 
     <string name="cloth_register_recommend_wearing_title">권장 착용 횟수</string>
@@ -132,5 +135,12 @@
     <string name="setting_account_delete_positive">네, 탈퇴할래요</string>
 
     <string name="my_info_nickname_check">닉네임의 중복확인이 필요합니다!</string>
+
+    <string name="pw_change_delete_title">이 페이지에서 나가시면\n수정 중인 정보들이 다 삭제돼요!\n수정을 그만하시겠어요?</string>
+    <string name="pw_change_delete_positive">네, 그만할래요</string>
+    <string name="pw_change_delete_negative">아니오</string>
+
+    <string name="pw_incorrect_title">입력하신 비밀번호가 일치하지 않습니다.</string>
+    <string name="pw_incorrect_content">기존 비밀번호 혹은 새로운 비밀번호를 다시 확인해주세요!</string>
 
 </resources>
