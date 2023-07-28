@@ -26,8 +26,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
             signUpViewModel.certificateEmail("yoonmin0113@naver.com")
         }
 
-        binding.btnMoveSignUpToNextPage.setOnClickListener {
+        binding.signUp.setOnClickListener {
             navigate(R.id.action_signUpFragment_to_communityFragment)
+        }
+
+        binding.back.setOnClickListener{
+            navigate(R.id.action_signUpFragment_to_signInFragment)
         }
 
         binding.logout.setOnClickListener {

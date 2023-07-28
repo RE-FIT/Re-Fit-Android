@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/option_community_info_overflow_first"
+        android:title="@string/community_info_overflow_writer_first"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/option_community_info_overflow_second"
+        android:title="@string/community_info_overflow_writer_second"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/option_community_info_overflow_third"
+        android:title="@string/community_info_overflow_writer_third"
+        app:showAsAction="never" />
+</menu>
