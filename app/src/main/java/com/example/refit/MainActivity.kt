@@ -72,4 +72,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             .setTopRightCorner(CornerFamily.ROUNDED, radius)
             .build()
     }
+
+    private fun myPageNavigate() {
+
+    }
+
+
 }
