@@ -1,19 +1,23 @@
 package com.example.refit.presentation.signup.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.model.common.ResponseError
+import com.example.refit.data.model.signup.RegisterUserRequest
 import com.example.refit.data.model.signup.RequestEmailCertification
 import com.example.refit.data.model.signup.ResponseEmailCertification
 import com.example.refit.data.repository.signup.SignUpRepository
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Callback
 import timber.log.Timber
+import java.lang.Exception
 
 
 class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
@@ -53,6 +57,43 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                 })
             } catch (e: Throwable) {
                 Timber.d("이메일 인증 코드 요청에서 오류 발생 : $e")
+            }
+        }
+    }
+
+    fun signUpUser(loginId: String, password: String, email: String, name: String, birth: String, gender: Int) {
+        val requestBody = RegisterUserRequest(loginId, password, email, name, birth, gender)
+
+        viewModelScope.launch {
+            try {
+                val response = repository.requestJoinUser(requestBody)
+                response.enqueue(object : Callback<ResponseBody> {
+                    override fun onResponse(
+                        call: Call<ResponseBody>,
+                        response: Response<ResponseBody>
+                    ) {
+                        if (response.isSuccessful) {
+                            Timber.d("API 호출 성공")
+                        } else {
+                            val errorBody = response.errorBody()
+                            val errorCode = response.code()
+
+                            if (errorBody != null) {
+                                val errorJson = JSONObject(errorBody.string())
+                                val errorMessage = errorJson.optString("errorMessage")
+                                val errorCodeFromJson = errorJson.optInt("code")
+
+                                Timber.d("API 호출 실패: $errorCodeFromJson")
+                            } else Timber.d("API 호출 실패: $errorCode")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        Timber.d("RESPONSE FAILURE")
+                    }
+                })
+            } catch (e: Exception) {
+                Timber.d("회원가입 과정 오류 발생: $e")
             }
         }
     }

@@ -88,9 +88,9 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
     private fun initCommunityList() {
         binding.rvCommunityList.layoutManager = LinearLayoutManager(requireActivity())
         binding.rvCommunityList.adapter = CommunityListAdapter(communityViewModel).apply {
-            communityViewModel.communityList.observe(viewLifecycleOwner) { list ->
+           /* communityViewModel.communityList.observe(viewLifecycleOwner) { list ->
                 submitList(list)
-            }
+            }*/
         }
     }
 
