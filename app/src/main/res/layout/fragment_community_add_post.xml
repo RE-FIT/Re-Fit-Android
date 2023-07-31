@@ -204,6 +204,7 @@
                             android:textColor="@color/green1" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_community_addpost_title"
                             style="@style/RegularFontKr.12"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
@@ -543,13 +544,13 @@
                                 <com.google.android.material.textview.MaterialTextView
                                     android:id="@+id/tv_community_addpost_region"
                                     style="@style/CommunityAddPostOption.TextCommon"
-                                    CDrawableTint="@{cmviewmodel.isFilledRG()}"
+                                    CDrawableTint="@{cmviewmodel.isFilledValue[2]}"
                                     android:layout_width="match_parent"
                                     android:layout_height="40dp"
                                     android:drawableRight="@drawable/ic_search_dark_13"
                                     android:gravity="center_vertical"
                                     android:text="@string/communtiy_addpost_contents_detail_fourth_region"
-                                    android:textColor="@{cmviewmodel.isFilledRG() ? @color/black : @color/dark2}" />
+                                    android:textColor="@{cmviewmodel.isFilledValue[2] ? @color/black : @color/dark2}" />
 
                             </com.google.android.material.card.MaterialCardView>
                         </LinearLayout>
@@ -570,6 +571,7 @@
                             android:textColor="@color/green1" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_community_addpost_detail"
                             style="@style/RegularFontKr.12"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
@@ -590,6 +592,7 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_community_add_post_register"
                             style="@style/MediumFontKr.14"
                             android:layout_width="200dp"
                             android:layout_height="40dp"
