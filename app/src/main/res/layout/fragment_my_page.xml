@@ -4,6 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.mypage.MyPageFragment">
 
+    <data>
+
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.mypage.viewmodel.MyPageViewModel" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
@@ -17,7 +25,7 @@
 
             <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
-                    android:text="@string/my_info_name"/>
+                    android:text="@string/my_info_name" />
 
             </LinearLayout>
 
@@ -101,29 +109,32 @@
                         android:paddingBottom="19dp"
                         android:gravity="center"
                         android:layout_gravity="center"
-                        android:text="환경 지키기"/>
+                        android:text="@string/my_page_d_day_title"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
-
+<!--
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="D + "
-                            android:textColor="@color/green1"/>
+                            android:textColor="@color/green1"/>-->
 
                         <TextView
+                            android:id="@+id/dDay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="10"
+                            android:background="@drawable/bg_solid_gray_radius_6"
+                            android:text="@string/my_page_dDay"
+                            android:padding="8dp"
                             android:textColor="@color/green1"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="일째 되는 날이에요!"
+                            android:text="@string/my_page_d_day_content"
                             android:textColor="@color/dark2"/>
 
                     </LinearLayout>

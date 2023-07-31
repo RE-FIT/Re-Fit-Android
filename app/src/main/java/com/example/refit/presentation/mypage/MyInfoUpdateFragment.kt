@@ -1,37 +1,42 @@
 package com.example.refit.presentation.mypage
 
+import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.core.view.isVisible
-import com.example.refit.BuildConfig.BASE_URL
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.refit.R
-import com.example.refit.data.model.mypage.CheckNicknameResponse
-import com.example.refit.data.model.mypage.NicknameCheckRequest
-import com.example.refit.data.network.api.MypageApi
 import com.example.refit.databinding.FragmentMyInfoUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.DialogUtil
 import com.example.refit.presentation.common.DialogUtil.checkNickNameDialog
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.refit.presentation.dialog.mypage.ProfileRegisterPhotoDialogListener
+import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
+import com.example.refit.util.FileUtil
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import timber.log.Timber
 
 class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.fragment_my_info_update) {
 
+    private val vm: MyInfoViewModel by sharedViewModel()
+
+    private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
+    private lateinit var takePicture: ActivityResultLauncher<Uri>
+    private var photoUri: Uri? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val spinner = binding.spinnerGender
-        var message = ""
 
-        val updateBtn = binding.btnMyInfoUpdate
-        val checkBtn = binding.btnNickNameCheck
+        binding.vm = vm
+        binding.lifecycleOwner = this
+
+        vm.userNickname.observe(viewLifecycleOwner) { newName ->
+            binding.etNickname.setText(newName)
+        }
 
         // 성별 선택
         spinner.adapter = ArrayAdapter.createFromResource(this.requireContext(), R.array.my_page_myInfo_gender, R.layout.mypage_spinner_gender)
@@ -60,79 +65,15 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
             }
         }
 
-        // 수정하기 버튼 비활성화
-        updateBtn.isEnabled = false
+        // 앨범에서 사진 가져오기
+        initGalleryLauncher()
+        handleAddProfilePhoto()
 
-        // 중복확인 버튼 비활성화
-        checkBtn.isEnabled = false
-
-        // 이름(닉네임) 수정
-        binding.etNickname.addTextChangedListener(object : TextWatcher{
-            // 입력 전
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                message = binding.etNickname.text.toString()
-            }
-
-            // 값 변경 시 실행
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // 중복확인, 수정하기 버튼 활성화 --> 색깔 바뀜
-                if (binding.etNickname.text.toString() != message) {
-                    checkBtn.isEnabled = true
-                    updateBtn.isEnabled = true
-                }
-            }
-
-            // 값 변경 후
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-
-        // 중복 확인 눌렀을 때
-        checkBtn.setOnClickListener {
-            val nickname = binding.etNickname.text.toString()
-
-            val isNicknameAvailable = checkNicknameAvailability(nickname)
-
-            if (isNicknameAvailable) {
-                binding.ableName.isVisible = true // * 사용 가능한 이름입니다.
-                checkBtn.isEnabled = false // 중복 확인 됨 --> 버튼색 dark
-                updateBtn.isEnabled = false // 수정됨 --> 버튼색 dark
-
-            } else {
-                binding.enableName.isVisible = true // * 이미 사용 중인 이름입니다.
-            }
+        vm.isInfoModified.observe(viewLifecycleOwner) { isModified ->
+            binding.btnMyInfoUpdate.isEnabled = isModified
         }
 
-        // 중복확인 안 누르고 수정하기 버튼 눌렀을 때
-        updateBtn.setOnClickListener {
-            if (!binding.ableName.isVisible) {
-                showMyPageNickNameCheckDialog()
-            } else {
-                updateBtn.isEnabled = false // 수정됨 --> 다시 색깔 바꾸기
-            }
-        }
-
-        // 생일
-        binding.etBirthday.addTextChangedListener(object : TextWatcher{
-            // 입력 전
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                message = binding.etNickname.text.toString()
-            }
-
-            // 값 변경 시 실행
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // 수정하기 버튼 활성화 > 색깔 바뀜
-                if (binding.etNickname.text.toString() != message) {
-                    checkBtn.isEnabled = true
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-
+        vm.initAllStatus()
     }
 
     private fun showMyPageNickNameCheckDialog() {
@@ -141,54 +82,36 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         ).show(requireActivity().supportFragmentManager, null)
     }
 
-    private fun checkNicknameAvailability(nickname: String): Boolean {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val apiService = retrofit.create(MypageApi::class.java)
-
-        val request = NicknameCheckRequest(nickname)
-        val call = apiService.checkNicknameAvailability(request)
-
-        call.enqueue(object : Callback<CheckNicknameResponse> {
-            override fun onResponse(
-                call: Call<CheckNicknameResponse>,
-                response: Response<CheckNicknameResponse>
-            ) {
-                if (response.isSuccessful) {
-                    val serverResponse = response.body()
-
-                    if (serverResponse != null && serverResponse.success) {
-                        // TODO("사용 가능")
-                    } else {
-                        // TODO("이미 사용 중")
-                    }
-                } else {
-                    // TODO("서버 응답 실패")
+    // ----------------------- 사진 및 카메라 통한 옷 이미지 등록 -----------------------
+    private fun handleAddProfilePhoto() {
+        binding.cameraImage.setOnClickListener {
+            DialogUtil.showProfileRegisterPhotoDialog(object : ProfileRegisterPhotoDialogListener {
+                override fun onClickTakePhoto() {
+                    photoUri = FileUtil.createImageFile(requireActivity())
+                    takePicture.launch(photoUri)
                 }
-            }
 
-            override fun onFailure(call: Call<CheckNicknameResponse>, t: Throwable) {
-                showToast("서버 응답 실패")
-            }
-        })
-        return TODO("Provide the return value")
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-    }
-
-/*
-    // 수정 버튼을 눌렀을 때
-    updateBtn.setOnClickListener {
-        if (!checkBtn.isPressed) { // 중복 버튼이 눌리지 않았다면
-            showMyPageNickNameCheckDialog() // 다이얼로그 띄우기
-        } else {
-            // TODO("중복 확인 했으면 정보 수정")
+                override fun onClickGallery() {
+                    pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                }
+            }).show(requireActivity().supportFragmentManager, "ProfileRegisterPhotoDialog")
         }
     }
-*/
+
+    private fun initGalleryLauncher() {
+        pickMedia =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                if (uri != null) {
+                    binding.photoUri = uri.toString()
+                    binding.profileImage.visibility = View.VISIBLE
+                } else {
+                    Timber.d("선택된 사진이 없음")
+                }
+            }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+//        vm.initAllStatus()
+    }
 }

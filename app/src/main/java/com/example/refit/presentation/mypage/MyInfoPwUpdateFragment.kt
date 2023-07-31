@@ -15,8 +15,12 @@ import com.example.refit.presentation.common.DialogUtil.checkPwDialog
 import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
+import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.layout.fragment_my_info_pw_update) {
+
+    private val vm: MyInfoViewModel by sharedViewModel()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -30,8 +34,8 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
                         resources.getString(R.string.pw_change_delete_negative),
                         object : AlertBasicDialogListener {
                             override fun onClickPositive() {
-                                //clothAddViewModel.initAllStatus()
-                                navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
+                                //vm.initAllStatus()
+                                navigate(R.id.action_myInfo_to_nav_my_page)
                             }
 
                             override fun onClickNegative() {
@@ -44,34 +48,6 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var message = "000"
-
-        // 수정 버튼 비활성화
-        binding.btnPwUpdate.isEnabled = false
-
-        if (binding.currentPw.text.equals(message)) {
-            if (binding.newPw.text.length in 8..16)
-                binding.btnPwUpdate.isEnabled = true
-        }
-        else {
-            notifyPwIncorrectDialog()
-        }
-
-        binding.currentPw.addTextChangedListener(object : TextWatcher {
-            // 입력 전
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            // 값 변경 시 실행
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
     }
 
     private fun notifyPwIncorrectDialog() {

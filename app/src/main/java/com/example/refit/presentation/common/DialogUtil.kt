@@ -19,6 +19,8 @@ import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDi
 import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialogListener
 import com.example.refit.presentation.dialog.mypage.MyPagePwCheckDialog
 import com.example.refit.presentation.dialog.mypage.MypageNickNameCheckDialog
+import com.example.refit.presentation.dialog.mypage.ProfileRegisterPhotoDialog
+import com.example.refit.presentation.dialog.mypage.ProfileRegisterPhotoDialogListener
 
 object DialogUtil {
     // TODO(모든 종류의 다이얼로그 메세지는 여기에 정의)
@@ -94,5 +96,9 @@ object DialogUtil {
     ): MyPagePwCheckDialog {
         val icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_alert_circle_24)
         return MyPagePwCheckDialog(icon!!, title, content)
+    }
+
+    fun showProfileRegisterPhotoDialog(listener: ProfileRegisterPhotoDialogListener): ProfileRegisterPhotoDialog {
+        return ProfileRegisterPhotoDialog(listener)
     }
 }

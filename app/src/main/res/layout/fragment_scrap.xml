@@ -4,6 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.mypage.MyScrapFragment">
 
+    <data>
+
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,71 +28,60 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-<!--
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            style="@style/BoldFontKr.16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="74dp"
-            android:layout_marginTop="23dp"
-            android:layout_marginEnd="74dp"
-            android:background="@drawable/my_page_tab"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_feed_title"
-            app:tabBackground="@drawable/my_page_tab_style"
-            app:tabGravity="fill"
-            app:tabIndicatorAnimationMode="elastic"
-            app:tabIndicatorHeight="0dp"
-            app:tabMode="fixed"
-            app:tabRippleColor="@android:color/transparent"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextColor="@color/dark2" />
-            -->
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            style="@style/BoldFontKr.16"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginStart="74dp"
-            android:layout_marginTop="23dp"
-            android:layout_marginEnd="74dp"
-            android:background="@drawable/my_page_tab"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/my_feed_title"
-            app:tabGravity="fill"
-            app:tabPaddingStart="10dp"
-            app:tabPaddingEnd="10dp"
-            app:tabIndicator="@drawable/my_page_tab_selected"
-            app:tabIndicatorAnimationMode="elastic"
-            app:tabIndicatorColor="@color/green1"
-            app:tabIndicatorFullWidth="true"
-            app:tabIndicatorGravity="center"
-            app:tabMode="fixed"
-            app:tabRippleColor="@android:color/transparent"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextColor="@color/dark2" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="27dp"
+            android:background="@drawable/bg_solid_white_radius_20"
+            android:maxHeight="30dp"
+            app:checkedChip="@+id/chip_sell"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabLayout">
+            app:layout_constraintTop_toBottomOf="@+id/my_feed_title"
+            app:selectionRequired="true"
+            app:singleSelection="true">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPager"
-                android:layout_width="407dp"
-                android:layout_height="646dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_sell"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:text="@string/my_page_sell_text"
+                android:textColor="@color/selector_selected_white_else_dark2"
+                android:textSize="14sp"
+                app:chipBackgroundColor="@color/selector_selected_green1_else_white"
+                app:chipEndPadding="35dp"
+                app:chipStartPadding="35dp" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_share"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_page_share_text"
+                android:textColor="@color/selector_selected_white_else_dark2"
+                android:textSize="14sp"
+                app:chipBackgroundColor="@color/selector_selected_green1_else_white"
+                app:chipEndPadding="35dp"
+                app:chipStartPadding="35dp" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_scrap_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chipGroup"
+            tools:listitem="@layout/item_feed" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

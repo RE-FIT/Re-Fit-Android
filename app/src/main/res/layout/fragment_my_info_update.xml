@@ -4,32 +4,58 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.mypage.MyInfoUpdateFragment">
 
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="photoUri"
+            type="String" />
+
+        <variable
+            name="onClickCardViewListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel" />
+
+    </data>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!-- 캐릭터 -->
-                <FrameLayout
-                    android:id="@+id/myPage_white_round"
+                <LinearLayout
+                    android:id="@+id/profile_image_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="65dp"
-                    android:layout_marginTop="13dp"
-                    android:layout_marginEnd="65dp"
-                    android:background="@drawable/ic_white_100"
+                    app:layout_constraintBottom_toTopOf="@+id/myInfo_name"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintStart_toStartOf="parent">
 
-                    <ImageView
-                        android:id="@+id/gender_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <!-- 캐릭터 -->
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/profile_image"
+                        setImage="@{photoUri}"
+                        android:layout_width="109dp"
+                        android:layout_height="109dp"
                         android:layout_gravity="center"
-                        android:contentDescription=""
-                        android:src="@drawable/ic_mypage_woman" />
+                        android:background="@drawable/ic_white_100"
+                        android:scaleType="centerCrop" />
 
-                </FrameLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/camera_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="229dp"
+                    android:layout_marginBottom="27dp"
+                    android:src="@drawable/ic_myinfo_camera"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                    app:layout_constraintStart_toStartOf="parent" />
 
                 <!-- 이름(닉네임) -->
                 <TextView
@@ -42,10 +68,11 @@
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/myPage_white_round" />
+                    app:layout_constraintTop_toBottomOf="@+id/profile_image_layout" />
 
                 <!-- 이메일 ~ 성별 -->
                 <LinearLayout
+                    android:id="@+id/linearLayout"
                     android:layout_width="296dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="26dp"
@@ -70,15 +97,15 @@
                         android:layout_height="wrap_content"
                         android:autofillHints="emailAddress"
                         android:background="@drawable/et_mypage_round_10"
-                        android:gravity="center_vertical"
-                        android:paddingStart="11dp"
-                        android:paddingEnd="0dp"
-                        android:paddingTop="13dp"
-                        android:paddingBottom="13dp"
                         android:focusableInTouchMode="false"
+                        android:gravity="center_vertical"
+                        android:inputType="textEmailAddress"
+                        android:paddingStart="11dp"
+                        android:paddingTop="13dp"
+                        android:paddingEnd="0dp"
+                        android:paddingBottom="13dp"
                         android:text="@string/my_info_email"
-                        android:textColor="@color/dark1"
-                        android:inputType="textEmailAddress" />
+                        android:textColor="@color/dark1" />
 
                     <TextView
                         style="@style/BoldFontKr.14"
@@ -95,12 +122,12 @@
                         android:layout_height="wrap_content"
                         android:autofillHints="username"
                         android:background="@drawable/et_mypage_round_10"
+                        android:focusableInTouchMode="false"
                         android:gravity="center_vertical"
                         android:paddingStart="11dp"
-                        android:paddingEnd="0dp"
                         android:paddingTop="13dp"
+                        android:paddingEnd="0dp"
                         android:paddingBottom="13dp"
-                        android:focusableInTouchMode="false"
                         android:text="@string/my_info_id"
                         android:textColor="@color/dark1" />
 
@@ -140,9 +167,11 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="26dp"
                             android:background="@drawable/btn_my_info_check"
+                            android:backgroundTint="@{vm.isCheckNicknameAvailable() ? @color/green1 : @color/dark1}"
+                            android:clickable="@{vm.isCheckNicknameAvailable() == true ? true : false, default = false}"
                             android:padding="0dp"
                             android:shadowColor="@android:color/transparent"
-                            android:text="중복확인"
+                            android:text="@string/my_info_isCheck_nickname"
                             android:textColor="@color/white" />
 
                     </FrameLayout>
@@ -150,22 +179,23 @@
                     <TextView
                         android:id="@+id/able_name"
                         style="@style/MediumFont.10"
-                        android:textColor="@color/green1"
+                        setVisibility="@{vm.isCheckNicknameAvailable() == true ? View.VISIBLE : View.GONE}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:visibility="gone"
-                        android:text="* 사용 가능한 이름(닉네임)입니다."/>
+                        android:text="@string/my_info_available_nickname"
+                        android:textColor="@color/green1"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/enable_name"
                         style="@style/MediumFont.10"
-                        android:textColor="@color/red"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:layout_marginTop="8dp"
-                        android:text="* 이미 존재하는 이름(닉네임)입니다."/>
+                        android:text="@string/my_info_unavailable_nickname"
+                        android:textColor="@color/red"
+                        android:visibility="gone" />
 
                     <TextView
                         style="@style/BoldFontKr.14"
@@ -185,8 +215,8 @@
                         android:background="@drawable/et_mypage_round_10"
                         android:inputType="date"
                         android:paddingStart="11dp"
-                        android:paddingEnd="0dp"
                         android:paddingTop="13dp"
+                        android:paddingEnd="0dp"
                         android:paddingBottom="13dp"
                         android:text="@string/my_info_date"
                         android:textColor="@color/black" />
@@ -205,8 +235,8 @@
                         style="@style/RegularFont.12"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/ic_arrow_bottom_14"
                         android:background="@drawable/et_mypage_round_10"
+                        android:drawableEnd="@drawable/ic_arrow_bottom_14"
                         android:textSize="12sp" />
 
                     <android.widget.Button
@@ -217,7 +247,9 @@
                         android:layout_marginTop="33dp"
                         android:layout_marginBottom="32dp"
                         android:background="@drawable/btn_my_info_pw"
-                        android:clickable="true"
+                        android:backgroundTint="@{vm.isInfoModified() == true ? @color/green1 : @color/dark1}"
+                        android:clickable="@{vm.isInfoModified() == true ? true : false, default = false}"
+                        android:enabled="false"
                         android:text="@string/my_info_btn_update"
                         android:textColor="@color/white" />
 

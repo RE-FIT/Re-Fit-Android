@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.mypage.MyInfoPwUpdateFragment">
-<!--
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">-->
+
+    <data>
+
+
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,6 +54,7 @@
                 android:autofillHints="birth"
                 android:background="@drawable/et_mypage_round_10"
                 android:hint="@string/my_info_current_pw"
+                android:inputType="textPassword"
                 android:paddingStart="11dp"
                 android:paddingEnd="0dp"
                 android:textColor="@color/black"
@@ -68,7 +71,8 @@
                 android:autofillHints="birth"
                 android:background="@drawable/et_mypage_round_10"
                 android:digits="0123456789_qwertzuiopasdfghjklyxcvbnm_~!@#$%^*"
-            android:hint="@string/my_info_new_pw"
+                android:hint="@string/my_info_new_pw"
+                android:inputType="textPassword"
                 android:paddingStart="11dp"
                 android:paddingEnd="0dp"
                 android:textColor="@color/black"

@@ -8,6 +8,10 @@ import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewMo
 import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import com.example.refit.presentation.community.viewmodel.PostReportViewModel
+import com.example.refit.presentation.mypage.viewmodel.MyFeedViewModel
+import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
+import com.example.refit.presentation.mypage.viewmodel.MyPageViewModel
+import com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel
 import com.example.refit.presentation.signup.viewmodel.SignUpViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -22,4 +26,9 @@ val viewModelModule = module{
     viewModel { CommunityInfoViewModel(get()) }
     viewModel { CommunityAddPostViewModel(get()) }
     viewModel { PostReportViewModel(get()) }
+    viewModel { MyScrapViewModel(get()) }
+    viewModel { MyFeedViewModel(get()) }
+    viewModel { MyPageViewModel(get()) }
+    viewModel { MyInfoViewModel(get()) }
+
 }

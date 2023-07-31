@@ -6,40 +6,40 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.refit.data.model.community.CommunityListItemResponse
-import com.example.refit.databinding.ItemCommunityBinding
-import com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel
+import com.example.refit.databinding.ItemFeedBinding
+import com.example.refit.presentation.mypage.viewmodel.MyFeedViewModel
 
-class MyScrapListAdapter(private val viewModel: MyScrapViewModel) :
-    ListAdapter<CommunityListItemResponse, MyScrapListAdapter.MatchingListViewHolder>(
-        MyScrapItemListDiffCallback()
+class MyFeedListAdapter(private val viewModel: MyFeedViewModel) :
+    ListAdapter<CommunityListItemResponse, MyFeedListAdapter.MatchingListViewHolder>(
+        MyFeedItemListDiffCallback()
     ) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): MyScrapListAdapter.MatchingListViewHolder {
+    ): MyFeedListAdapter.MatchingListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ItemCommunityBinding.inflate(layoutInflater, parent, false)
+        val binding = ItemFeedBinding.inflate(layoutInflater, parent, false)
         return MatchingListViewHolder(binding)
     }
 
     override fun onBindViewHolder(
-        holder: MyScrapListAdapter.MatchingListViewHolder,
+        holder: MyFeedListAdapter.MatchingListViewHolder,
         position: Int
     ) {
         holder.bindItems(getItem(position))
     }
 
-    inner class MatchingListViewHolder(private val binding: ItemCommunityBinding) :
+    inner class MatchingListViewHolder(private val binding: ItemFeedBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindItems(scrapList: CommunityListItemResponse) {
-            binding.communityList = scrapList
-            binding.vmScrap = viewModel
+        fun bindItems(feedList: CommunityListItemResponse) {
+            binding.communityList = feedList
+            binding.vmFeed = viewModel
             binding.executePendingBindings()
         }
     }
 
-    class MyScrapItemListDiffCallback() : DiffUtil.ItemCallback<CommunityListItemResponse>() {
+    class MyFeedItemListDiffCallback() : DiffUtil.ItemCallback<CommunityListItemResponse>() {
         override fun areItemsTheSame(
             oldItem: CommunityListItemResponse,
             newItem: CommunityListItemResponse
