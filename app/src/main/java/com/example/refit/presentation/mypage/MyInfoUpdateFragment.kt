@@ -73,7 +73,16 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
             binding.btnMyInfoUpdate.isEnabled = isModified
         }
 
+
         vm.initAllStatus()
+    }
+
+    // ----------------------- 이름(닉네임) 중복 확인 -----------------------
+    private fun handleClickAddCompleteButton() {
+
+        binding.btnMyInfoUpdate.setOnClickListener {
+
+        }
     }
 
     private fun showMyPageNickNameCheckDialog() {
