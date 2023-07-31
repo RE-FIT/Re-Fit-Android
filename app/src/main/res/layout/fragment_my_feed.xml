@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.mypage.MyScrapFragment">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.mypage.viewmodel.MyFeedViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/default_dark">
+
+        <TextView
+            android:id="@+id/my_feed_title"
+            style="@style/BoldFontKr.18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="53dp"
+            android:text="@string/my_page_myFeed"
+            android:textColor="@color/green1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="27dp"
+            android:background="@drawable/bg_solid_white_radius_20"
+            android:maxHeight="30dp"
+            app:checkedChip="@+id/chip_sell"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/my_feed_title"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+                android:id="@+id/chip_sell"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:text="@string/my_page_sell_text"
+                android:textColor="@color/selector_selected_white_else_dark2"
+                android:textSize="14sp"
+                app:chipBackgroundColor="@color/selector_selected_green1_else_white"
+                app:chipEndPadding="35dp"
+                app:chipStartPadding="35dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_share"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_page_share_text"
+                android:textColor="@color/selector_selected_white_else_dark2"
+                android:textSize="14sp"
+                app:chipBackgroundColor="@color/selector_selected_green1_else_white"
+                app:chipEndPadding="35dp"
+                app:chipStartPadding="35dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_buy"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_page_buy_text"
+                android:textColor="@color/selector_selected_white_else_dark2"
+                android:textSize="14sp"
+                app:chipBackgroundColor="@color/selector_selected_green1_else_white"
+                app:chipEndPadding="35dp"
+                app:chipStartPadding="35dp" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_scrap_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chipGroup"
+            tools:listitem="@layout/item_community" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

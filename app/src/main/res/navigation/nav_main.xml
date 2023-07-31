@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/nav_closet">
 
     <fragment
         android:id="@+id/signInFragment"
@@ -93,7 +93,44 @@
         android:id="@+id/nav_my_page"
         android:name="com.example.refit.presentation.mypage.MyPageFragment"
         android:label="fragment_my_page"
-        tools:layout="@layout/fragment_my_page" />
+        tools:layout="@layout/fragment_my_page" >
+        <action
+            android:id="@+id/action_myPage_to_myInfo"
+            app:destination="@id/myPage_myInfo"/>
+        <action
+            android:id="@+id/action_myPage_to_myFeed"
+            app:destination="@id/myPage_myFeed"/>
+        <action
+            android:id="@+id/action_myPage_to_myScrap"
+            app:destination="@id/myPage_myScrap"/>
+        <action
+            android:id="@+id/action_myPage_to_mySetting"
+            app:destination="@id/myPage_mySetting"/>
+    </fragment>
+    <fragment
+        android:id="@+id/myPage_myInfo"
+        android:name="com.example.refit.presentation.mypage.MyInfoFragment"
+        android:label="fragment_myInfo"
+        tools:layout="@layout/fragment_my_info">
+        <action
+            android:id="@+id/action_myInfo_to_nav_my_page"
+            app:destination="@id/nav_my_page"/>
+    </fragment>
+    <fragment
+        android:id="@+id/myPage_myFeed"
+        android:name="com.example.refit.presentation.mypage.MyFeedFragment"
+        android:label="fragment_myFeed"
+        tools:layout="@layout/fragment_my_feed"/>
+    <fragment
+        android:id="@+id/myPage_myScrap"
+        android:name="com.example.refit.presentation.mypage.ScrapFragment"
+        android:label="fragment_myScrap"
+        tools:layout="@layout/fragment_scrap"/>
+    <fragment
+        android:id="@+id/myPage_mySetting"
+        android:name="com.example.refit.presentation.mypage.SettingFragment"
+        android:label="fragment_mySetting"
+        tools:layout="@layout/fragment_setting"/>
     <fragment
         android:id="@+id/clothRegistrationFragment"
         android:name="com.example.refit.presentation.closet.ClothRegistrationFragment"

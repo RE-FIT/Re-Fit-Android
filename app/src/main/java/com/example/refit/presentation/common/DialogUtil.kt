@@ -9,6 +9,7 @@ import com.example.refit.presentation.dialog.AlertBasicDialog
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.AlertNoIconDialog
 import com.example.refit.presentation.dialog.AlertNoIconDialogListener
+import com.example.refit.presentation.dialog.mypage.AlertBasicNoIconDialog
 import com.example.refit.presentation.dialog.closet.ClothItemSelectionDialog
 import com.example.refit.presentation.dialog.closet.ClothItemSelectionDialogListener
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialog
@@ -16,6 +17,10 @@ import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialogList
 import com.example.refit.presentation.dialog.community.BanOnSalesDialog
 import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialog
 import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialogListener
+import com.example.refit.presentation.dialog.mypage.MyPagePwCheckDialog
+import com.example.refit.presentation.dialog.mypage.MypageNickNameCheckDialog
+import com.example.refit.presentation.dialog.mypage.ProfileRegisterPhotoDialog
+import com.example.refit.presentation.dialog.mypage.ProfileRegisterPhotoDialogListener
 
 object DialogUtil {
     // TODO(모든 종류의 다이얼로그 메세지는 여기에 정의)
@@ -69,4 +74,31 @@ object DialogUtil {
         return AlertNoIconDialog(title, positive, negative, listener)
     }
 
+    fun Fragment.createAlertBasicNoIconDialog(
+        title: String,
+        positive: String,
+        negative: String,
+        listener: AlertBasicDialogListener
+    ): AlertBasicNoIconDialog {
+        return AlertBasicNoIconDialog(title, positive, negative, listener)
+    }
+
+    fun Fragment.checkNickNameDialog(
+        title: String
+    ): MypageNickNameCheckDialog {
+        val icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_alert_circle_24)
+        return MypageNickNameCheckDialog(icon!!, title)
+    }
+
+    fun Fragment.checkPwDialog(
+        title: String,
+        content: String
+    ): MyPagePwCheckDialog {
+        val icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_alert_circle_24)
+        return MyPagePwCheckDialog(icon!!, title, content)
+    }
+
+    fun showProfileRegisterPhotoDialog(listener: ProfileRegisterPhotoDialogListener): ProfileRegisterPhotoDialog {
+        return ProfileRegisterPhotoDialog(listener)
+    }
 }

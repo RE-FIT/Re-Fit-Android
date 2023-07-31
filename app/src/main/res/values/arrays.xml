@@ -91,7 +91,7 @@
         <item>직거래</item>
         <item>배송</item>
     </string-array>
-    
+
     <string-array name="community_info_overflow_ing_writer">
         <item>수정하기</item>
         <item>삭제하기</item>
@@ -112,6 +112,11 @@
     <string-array name="community_info_overflow_user">
         <item>신고하기</item>
         <item>이 사용자의 글 보지 않기</item>
+    </string-array>
+
+    <string-array name="my_page_myInfo_gender">
+        <item>여성</item>
+        <item>남성</item>
     </string-array>
 
 </resources>

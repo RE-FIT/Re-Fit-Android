@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.mypage.MyInfoUpdateFragment">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="photoUri"
+            type="String" />
+
+        <variable
+            name="onClickCardViewListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel" />
+
+    </data>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/profile_image_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/myInfo_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <!-- 캐릭터 -->
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/profile_image"
+                        setImage="@{photoUri}"
+                        android:layout_width="109dp"
+                        android:layout_height="109dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_white_100"
+                        android:scaleType="centerCrop" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/camera_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="229dp"
+                    android:layout_marginBottom="27dp"
+                    android:src="@drawable/ic_myinfo_camera"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <!-- 이름(닉네임) -->
+                <TextView
+                    android:id="@+id/myInfo_name"
+                    style="@style/RegularFont.14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_page_name"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_image_layout" />
+
+                <!-- 이메일 ~ 성별 -->
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="296dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/myInfo_name">
+
+                    <TextView
+                        style="@style/BoldFontKr.14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/my_info_emailTxt"
+                        android:textColor="@color/green1" />
+
+                    <EditText
+                        style="@style/RegularFont.12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="emailAddress"
+                        android:background="@drawable/et_mypage_round_10"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center_vertical"
+                        android:inputType="textEmailAddress"
+                        android:paddingStart="11dp"
+                        android:paddingTop="13dp"
+                        android:paddingEnd="0dp"
+                        android:paddingBottom="13dp"
+                        android:text="@string/my_info_email"
+                        android:textColor="@color/dark1" />
+
+                    <TextView
+                        style="@style/BoldFontKr.14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/my_info_idTxt"
+                        android:textColor="@color/green1" />
+
+                    <EditText
+                        style="@style/RegularFont.12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="username"
+                        android:background="@drawable/et_mypage_round_10"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center_vertical"
+                        android:paddingStart="11dp"
+                        android:paddingTop="13dp"
+                        android:paddingEnd="0dp"
+                        android:paddingBottom="13dp"
+                        android:text="@string/my_info_id"
+                        android:textColor="@color/dark1" />
+
+                    <TextView
+                        style="@style/BoldFontKr.14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/my_info_nameTxt"
+                        android:textColor="@color/green1" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <EditText
+                            android:id="@+id/et_nickname"
+                            style="@style/RegularFont.12"
+                            android:layout_width="match_parent"
+                            android:layout_height="37dp"
+                            android:autofillHints="name"
+                            android:background="@drawable/et_mypage_round_10"
+                            android:hint="@string/my_info_name"
+                            android:inputType="textPersonName"
+                            android:paddingStart="11dp"
+                            android:paddingEnd="0dp"
+                            android:text="@string/my_info_name"
+                            android:textColor="@color/black" />
+
+                        <android.widget.Button
+                            android:id="@+id/btn_nickName_check"
+                            style="@style/RegularFont.10"
+                            android:layout_width="49dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="26dp"
+                            android:background="@drawable/btn_my_info_check"
+                            android:backgroundTint="@{vm.isCheckNicknameAvailable() ? @color/green1 : @color/dark1}"
+                            android:clickable="@{vm.isCheckNicknameAvailable() == true ? true : false, default = false}"
+                            android:padding="0dp"
+                            android:shadowColor="@android:color/transparent"
+                            android:text="@string/my_info_isCheck_nickname"
+                            android:textColor="@color/white" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/able_name"
+                        style="@style/MediumFont.10"
+                        setVisibility="@{vm.isCheckNicknameAvailable() == true ? View.VISIBLE : View.GONE}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/my_info_available_nickname"
+                        android:textColor="@color/green1"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/enable_name"
+                        style="@style/MediumFont.10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/my_info_unavailable_nickname"
+                        android:textColor="@color/red"
+                        android:visibility="gone" />
+
+                    <TextView
+                        style="@style/BoldFontKr.14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/my_info_dateTxt"
+                        android:textColor="@color/green1" />
+
+                    <EditText
+                        android:id="@+id/et_birthday"
+                        style="@style/RegularFont.12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="birth"
+                        android:background="@drawable/et_mypage_round_10"
+                        android:inputType="date"
+                        android:paddingStart="11dp"
+                        android:paddingTop="13dp"
+                        android:paddingEnd="0dp"
+                        android:paddingBottom="13dp"
+                        android:text="@string/my_info_date"
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        style="@style/BoldFontKr.14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/my_page_genderTxt"
+                        android:textColor="@color/green1" />
+
+                    <Spinner
+                        android:id="@+id/spinner_gender"
+                        style="@style/RegularFont.12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/et_mypage_round_10"
+                        android:drawableEnd="@drawable/ic_arrow_bottom_14"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_my_info_update"
+                        style="@style/RegularFont.14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="33dp"
+                        android:layout_marginBottom="32dp"
+                        android:background="@drawable/btn_my_info_pw"
+                        android:backgroundTint="@{vm.isInfoModified() == true ? @color/green1 : @color/dark1}"
+                        android:clickable="@{vm.isInfoModified() == true ? true : false, default = false}"
+                        android:enabled="false"
+                        android:text="@string/my_info_btn_update"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

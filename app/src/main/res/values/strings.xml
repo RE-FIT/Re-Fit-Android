@@ -176,4 +176,74 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+
+
+
+
+    <!-- my page -->
+    <string name="my_page_myFeed">내 피드</string>
+    <string name="my_page_scrap">내 스크랩</string>
+    <string name="my_page_name">ansrud</string>
+
+    <string name="my_info_myInfo">내 정보</string>
+    <string name="my_info_warning">비밀번호는 8-16자의 영문,숫자,특수문자를 사용할 수 있습니다.\n비밀번호는 주기적(최소6개월) 으로 변경해주시기 바랍니다.</string>
+    <string name="my_info_current_pw">현재 비밀번호</string>
+    <string name="my_info_new_pw">새로운 비밀번호</string>
+    <string name="my_info_btn_update">수정하기</string>
+
+    <string name="my_info_emailTxt">이메일</string>
+    <string name="my_info_email">ansrud@gmail.com</string>
+    <string name="my_info_idTxt">아이디</string>
+    <string name="my_info_id">ansrud</string>
+    <string name="my_info_nameTxt">이름(닉네임)</string>
+    <string name="my_info_name">ansrud</string>
+    <string name="my_info_dateTxt">생년월일</string>
+    <string name="my_info_date">2000/09/27</string>
+
+    <string name="my_page_genderTxt">성별</string>
+    <string name="my_page_title">MY PAGE</string>
+    <string name="my_page_setting">설정</string>
+
+    <string name="setting_title">설정</string>
+    <string name="my_setting_stringTxt">정책</string>
+    <string name="my_setting_string">이용약관</string>
+    <string name="my_setting_string2">개인정보처리 방침</string>
+    <string name="my_setting_logoutTxt">로그아웃</string>
+    <string name="my_setting_logout">로그아웃 하기</string>
+    <string name="setting_account_delete">탈퇴</string>
+    <string name="setting_account_deleteTxt">탈퇴하기</string>
+
+    <string name="my_info_back_dialog_title">이 페이지에서 나가시면\n수정 중인 정보들이 다 삭제돼요!\n수정을 그만하시겠어요?</string>
+    <string name="my_info_back_positive">네, 그만할래요</string>
+
+    <string name="setting_logout_dialog_title">로그아웃 하시겠어요?</string>
+    <string name="setting_logout_positive">네</string>
+    <string name="setting_negative">아니오</string>
+
+    <string name="setting_account_delete_dialog_title">회원 탈퇴 이후 모든 기록이 삭제되며,\n삭제된 데이터는 복구할 수 없어요!\n회원 탈퇴를 진행하시겠어요? </string>
+    <string name="setting_account_delete_positive">네, 탈퇴할래요</string>
+
+    <string name="my_info_nickname_check">닉네임의 중복확인이 필요합니다!</string>
+
+    <string name="pw_change_delete_title">이 페이지에서 나가시면\n수정 중인 정보들이 다 삭제돼요!\n수정을 그만하시겠어요?</string>
+    <string name="pw_change_delete_positive">네, 그만할래요</string>
+    <string name="pw_change_delete_negative">아니오</string>
+
+    <string name="pw_incorrect_title">입력하신 비밀번호가 일치하지 않습니다.</string>
+    <string name="pw_incorrect_content">기존 비밀번호 혹은 새로운 비밀번호를 다시 확인해주세요!</string>
+    <string name="my_page_sell_text">판매</string>
+    <string name="my_page_share_text">나눔</string>
+    <string name="my_page_buy_text">구매</string>
+    
+    <string name="my_page_d_day">D + %1$d</string>
+    <string name="my_page_d_day_title">환경 지키기</string>
+    <string name="my_page_d_day_content">일째 되는 날이에요!</string>
+    <string name="my_info_available_nickname">* 사용 가능한 이름(닉네임)입니다.</string>
+    <string name="my_info_unavailable_nickname">* 이미 존재하는 이름(닉네임)입니다.</string>
+    <string name="my_info_isCheck_nickname">중복확인</string>
+    <string name="my_info_register_profile_title">프로필 사진 등록</string>
+    <string name="my_info_register_profile_content_camera">앨범에서 선택</string>
+    <string name="my_info_register_profile_photo_delete">사진 삭제</string>
+    <string name="my_page_dDay">10</string>
+
 </resources>
