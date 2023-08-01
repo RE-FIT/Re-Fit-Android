@@ -22,10 +22,6 @@ class ClosetViewModel(private val repository: ClosetRepository) : ViewModel() {
 
     // 옷장 필터링 옵션
 
-    private val _selectedCategory: MutableLiveData<String> = MutableLiveData<String>()
-    val selectedCategory: LiveData<String>
-        get() = _selectedCategory
-
     private val _selectedCategoryId: MutableLiveData<Int> = MutableLiveData<Int>()
     val selectedCategoryId: LiveData<Int>
         get() = _selectedCategoryId
@@ -34,9 +30,19 @@ class ClosetViewModel(private val repository: ClosetRepository) : ViewModel() {
     val selectedSeason: LiveData<String>
         get() = _selectedSeason
 
+    private val _selectedSeasonId: MutableLiveData<Int> = MutableLiveData<Int>()
+    val selectedSeasonId: LiveData<Int>
+        get() = _selectedSeasonId
+
     private val _selectedSortingOption: MutableLiveData<String> = MutableLiveData<String>()
     val selectedSortingOption: LiveData<String>
         get() = _selectedSortingOption
+
+    private val _selectedSortingOptionId: MutableLiveData<Int> = MutableLiveData<Int>()
+    val selectedSortingOptionId: LiveData<Int>
+        get() = _selectedSortingOptionId
+
+
 
 
     fun getUserRegisteredClothes() {
@@ -56,19 +62,21 @@ class ClosetViewModel(private val repository: ClosetRepository) : ViewModel() {
         }
     }
 
-    fun requestRegisteredItemsByClothCategory(selectedId: Int) {
-        _selectedCategoryId.value = selectedId
+    fun requestRegisteredItemsByClothCategory(selectedCategoryId: Int) {
+        _selectedCategoryId.value = selectedCategoryId
         Timber.d("선택된 옷 카테고리 -> ${_selectedCategoryId.value}")
     }
 
-    fun requestSortingBySeason(selectedOption: String) {
-        _selectedSeason.value = selectedOption
-        Timber.d("계절 옵션에 따른 정렬 요청 -> ${_selectedSeason.value} ${_selectedSortingOption.value}")
+    fun requestSortingBySeason(seasonList: List<String>, selectedSeason: String) {
+        _selectedSeason.value = selectedSeason
+        _selectedSeasonId.value = seasonList.indexOf(selectedSeason)
+        Timber.d("계절 옵션에 따른 정렬 요청 -> ${_selectedSeasonId.value} ${_selectedSortingOptionId.value}")
     }
 
-    fun requestSortingByClosetSorting(selectedOption: String) {
-        _selectedSortingOption.value = selectedOption
-        Timber.d("옷장 정렬 옵션에 따른 정렬 요청 -> ${_selectedSeason.value} ${_selectedSortingOption.value}")
+    fun requestSortingByClosetSorting(sortingOptionList: List<String>, selectedSortingOption: String) {
+        _selectedSortingOption.value = selectedSortingOption
+        _selectedSortingOptionId.value = sortingOptionList.indexOf(selectedSortingOption)
+        Timber.d("옷장 정렬 옵션에 따른 정렬 요청 -> ${_selectedSeasonId.value} ${_selectedSortingOptionId.value}")
     }
 
     fun handleClickItem(clothInfo: RegisteredClothInfoResponse) {

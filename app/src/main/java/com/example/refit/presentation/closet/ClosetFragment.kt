@@ -112,11 +112,17 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
             when (viewId) {
                 // TODO(기능 구현 때 뷰모델과 연동)
                 binding.cvClosetOptionSeason.id -> {
-                    closetViewModel.requestSortingBySeason(itemDescription)
+                    closetViewModel.requestSortingBySeason(
+                        resources.getStringArray(R.array.closet_item_search_option_season).toList(),
+                        itemDescription
+                    )
                 }
 
                 binding.cvClosetOptionSort.id -> {
-                    closetViewModel.requestSortingByClosetSorting(itemDescription)
+                    closetViewModel.requestSortingByClosetSorting(
+                        resources.getStringArray(R.array.closet_item_search_option_sort).toList(),
+                        itemDescription
+                    )
                 }
             }
             popupMenu.dismiss()
