@@ -17,5 +17,7 @@ data class CommunityListItemResponse(
     @SerializedName("region")
     val region: String,
     @SerializedName("title")
-    val title: String
+    val title: String,
+    @SerializedName("size")
+    val size: String
 )

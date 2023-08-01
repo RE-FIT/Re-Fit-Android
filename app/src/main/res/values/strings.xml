@@ -92,9 +92,9 @@
 
     <!--Community-->
     <string name="community_main_toolbar_title">Green Community</string>
-    <string name="community_search_option_first">종류</string>
-    <string name="community_search_option_second">성별</string>
-    <string name="community_search_option_third">카테고리</string>
+    <string name="community_search_option_first">나눔</string>
+    <string name="community_search_option_second">여성복</string>
+    <string name="community_search_option_third">상의</string>
     <string name="community_main_fab_bottom_end">글쓰기</string>
     <string name="community_item_text_first">사이즈</string>
     <string name="community_item_text_second">거래방식</string>

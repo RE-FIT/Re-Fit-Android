@@ -19,6 +19,7 @@ import com.example.refit.presentation.common.WindowUtil.setStatusBarColor
 import com.example.refit.presentation.community.adapter.CommunityListAdapter
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityViewModel
+import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
@@ -30,10 +31,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         super.onViewCreated(view, savedInstanceState)
         binding.vm = communityViewModel
 
-        communityViewModel.getCommunityList()
+        // communityViewModel.loadCommunityList()
         initCommunityList()
         initCommunityOptionDropdown()
         setClickedButton()
+        observeStatus()
     }
 
     private fun initCommunityOptionDropdown() {
@@ -87,11 +89,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
     private fun initCommunityList() {
         binding.rvCommunityList.layoutManager = LinearLayoutManager(requireActivity())
-        binding.rvCommunityList.adapter = CommunityListAdapter(communityViewModel).apply {
-           /* communityViewModel.communityList.observe(viewLifecycleOwner) { list ->
-                submitList(list)
-            }*/
+        binding.rvCommunityList.adapter = CommunityListAdapter(communityViewModel)
+        communityViewModel.communityList.observe(viewLifecycleOwner) { list ->
+            CommunityListAdapter(communityViewModel).submitList(list)
         }
+        communityViewModel.loadCommunityList()
     }
 
     private fun setClickedButton() {
@@ -101,12 +103,20 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
         // 페이지 이동 임시 코드
         binding.ibCommunitySearch.setOnClickListener {
-            navigate(R.id.action_nav_community_to_communityInfoFragment)
+            // navigate(R.id.action_nav_community_to_communityInfoFragment)
+            navigate(R.id.action_nav_community_to_communitySearchFragment)
         }
 
         binding.fabCommunityAdd.setOnClickListener {
             navigate(R.id.action_nav_community_to_communityAddPostFragment)
         }
 
+    }
+
+    private fun observeStatus() {
+        communityViewModel.selectedPostItem.observe(viewLifecycleOwner, EventObserver { postId ->
+            communityViewModel.getPost(postId)
+            navigate(R.id.action_nav_community_to_communityInfoFragment)
+        })
     }
 }

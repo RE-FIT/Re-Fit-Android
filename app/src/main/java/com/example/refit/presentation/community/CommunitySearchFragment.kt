@@ -15,6 +15,7 @@ import com.example.refit.databinding.FragmentCommunityBinding
 import com.example.refit.databinding.FragmentCommunitySearchBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DropdownMenuManager
+import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
 import com.example.refit.presentation.community.viewmodel.CommunitySearchViewModel
@@ -32,19 +33,25 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
         binding.vm = vm
 
         vm.initStatus()
-        setOnClickedBtn()
+        setOnClickedButton()
         initCommunityOptionDropdown()
         observeEditTextChanges()
     }
 
 
-    private fun setOnClickedBtn() {
+    private fun setOnClickedButton() {
         binding.ibCommunitySearchBack.setOnClickListener {
             navigateUp()
         }
 
         binding.ibCommunitySearchButton.setOnClickListener {
             vm.setSearchingState(true)
+            val keyword = binding.etCommunitySearchKeyword.text.toString()
+            vm.loadSearchResult(keyword)
+        }
+
+        binding.ibGoToCommunity.setOnClickListener {
+            navigateUp()
         }
     }
 
@@ -98,7 +105,7 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
     }
 
     private fun observeEditTextChanges() {
-        binding.etCommunityAddpostTitle.addTextChangedListener(object : TextWatcher {
+        binding.etCommunitySearchKeyword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }

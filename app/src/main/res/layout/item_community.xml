@@ -31,6 +31,7 @@
         android:paddingVertical="5dp">
 
         <com.google.android.material.card.MaterialCardView
+            android:onClick="@{() -> vm.handleClickItem(communityList.postId)}"
             android:id="@+id/mcv_community_item_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,7 +87,7 @@
                             style="@style/MediumFont.10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="50000원"
+                            android:text="@{communityList.component5() + `원`}"
                             android:textColor="@color/dark2"
                             android:layout_marginLeft="15dp" />
 
@@ -113,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="bottom"
-                        android:text="M"
+                        android:text="@{communityList.component8()}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_size_txt"
                         app:layout_constraintTop_toBottomOf="@id/ll_community_item" />

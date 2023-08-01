@@ -1,8 +1,11 @@
 package com.example.refit.presentation.community
 
+import android.annotation.SuppressLint
 import android.icu.text.DecimalFormat
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -16,6 +19,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ArrayRes
+import androidx.appcompat.app.WindowDecorActionBar.TabImpl
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.content.ContextCompat
 import com.example.refit.R
@@ -31,6 +35,9 @@ import com.example.refit.util.FileUtil
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 class CommunityAddPostFragment :
@@ -52,6 +59,7 @@ class CommunityAddPostFragment :
         handledAddShippingFee()
         handlePostcodeSetting()
         handleAddCommunityPhoto()
+        handleRegisterButton()
         selectShippingFeeType()
         observeEditTextChanges()
         initGalleryLauncher()
@@ -96,23 +104,30 @@ class CommunityAddPostFragment :
             when (viewId) {
                 binding.cvCommunityAddpostRecommendGender.id -> {
                     binding.tvCommunityAddpostRecommendGender.text = itemDescription
-                    binding.cvCommunityAddpostRecommendGender.strokeColor = ContextCompat.getColor(requireContext(), R.color.white)
-                    communityAddPostViewModel.setFilledStatus(2, true)
+                    binding.cvCommunityAddpostRecommendGender.strokeColor =
+                        ContextCompat.getColor(requireContext(), R.color.white)
+                    communityAddPostViewModel.setFilledStatus(2, true, itemDescription)
                 }
+
                 binding.cvCommunityAddpostClothesCategory.id -> {
                     binding.tvCommunityAddpostClothesCategory.text = itemDescription
-                    binding.cvCommunityAddpostClothesCategory.strokeColor = ContextCompat.getColor(requireContext(), R.color.white)
-                    communityAddPostViewModel.setFilledStatus(3, true)
+                    binding.cvCommunityAddpostClothesCategory.strokeColor =
+                        ContextCompat.getColor(requireContext(), R.color.white)
+                    communityAddPostViewModel.setFilledStatus(3, true, itemDescription)
                 }
+
                 binding.cvCommuntiyAddpostSize.id -> {
                     binding.tvCommuntiyAddpostSize.text = itemDescription
-                    binding.cvCommuntiyAddpostSize.strokeColor = ContextCompat.getColor(requireContext(), R.color.white)
-                    communityAddPostViewModel.setFilledStatus(4, true)
+                    binding.cvCommuntiyAddpostSize.strokeColor =
+                        ContextCompat.getColor(requireContext(), R.color.white)
+                    communityAddPostViewModel.setFilledStatus(4, true, itemDescription)
                 }
+
                 binding.cvCommunityAddpostTransactionMethod.id -> {
                     binding.tvCommunityAddpostTransactionMethod.text = itemDescription
-                    communityAddPostViewModel.setFilledStatus(5, true)
-                    binding.cvCommunityAddpostTransactionMethod.strokeColor = ContextCompat.getColor(requireContext(), R.color.white)
+                    communityAddPostViewModel.setFilledStatus(5, true, itemDescription)
+                    binding.cvCommunityAddpostTransactionMethod.strokeColor =
+                        ContextCompat.getColor(requireContext(), R.color.white)
                     communityAddPostViewModel.selectTransactionMethod(itemDescription)
                 }
             }
@@ -151,17 +166,19 @@ class CommunityAddPostFragment :
     }
 
     private fun selectShippingFeeType() {
-         binding.rgCommunityAddpostInputFee.setOnCheckedChangeListener { _, id ->
+        binding.rgCommunityAddpostInputFee.setOnCheckedChangeListener { _, id ->
             val type: Boolean = when (id) {
                 R.id.rb_community_addpost_input_include_fee -> {
                     binding.tvCommunityAddpostSf.text = ""
-                    binding.tvCommunityAddpostFeeInput.text = getString(R.string.community_addpost_contents_detail_fourth_input)
+                    binding.tvCommunityAddpostFeeInput.text =
+                        getString(R.string.community_addpost_contents_detail_fourth_input)
                     false
                 }
+
                 R.id.rb_community_addpost_input_exclude_fee -> true
                 else -> false
             }
-             communityAddPostViewModel.setFilledStatus(10, type)
+            communityAddPostViewModel.setFilledStatus(10, type, "")
         }
     }
 
@@ -169,12 +186,15 @@ class CommunityAddPostFragment :
         binding.tvCommunityAddpostFeeInput.setOnClickListener {
             showCommunityAddShippingFeeDiaglog(object : CommunityAddShippingFeeDialogListener {
                 override fun onClickDone(fee: Int) {
-                    communityAddPostViewModel.setFilledStatus(8, status = true)
+                    communityAddPostViewModel.setFilledStatus(8, status = true, "")
                     communityAddPostViewModel.setShippingFee(fee)
                     val feeText = communityAddPostViewModel.getDecimalFormat(fee.toString())
                     binding.tvCommunityAddpostSf.text = feeText + "원"
                 }
-            }, communityAddPostViewModel).show(requireActivity().supportFragmentManager, "CommunityAddShippingFeeDialog")
+            }, communityAddPostViewModel).show(
+                requireActivity().supportFragmentManager,
+                "CommunityAddShippingFeeDialog"
+            )
         }
     }
 
@@ -186,18 +206,33 @@ class CommunityAddPostFragment :
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val isFilled = s?.isNotEmpty() == true
-                communityAddPostViewModel.setFilledStatus(7, isFilled)
+                communityAddPostViewModel.setFilledStatus(6, isFilled, "")
             }
 
             override fun afterTextChanged(s: Editable?) {
             }
+        })
+
+        binding.etCommunityAddpostDetail.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val isFilled = p0?.isNotEmpty() == true
+                communityAddPostViewModel.setFilledStatus(7, isFilled, "")
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
         })
     }
 
     private fun handleAfterInputPrice() {
         binding.llCommunityAddpostView.setOnClickListener {
             val inputPriceText = binding.etCommunityAddpostPrice.text.toString()
-            binding.tvCommunityAddpostPrice.text = "₩ " + communityAddPostViewModel.getDecimalFormat(inputPriceText) + "원"
+            binding.tvCommunityAddpostPrice.text =
+                "₩ " + communityAddPostViewModel.getDecimalFormat(inputPriceText) + "원"
             communityAddPostViewModel.setPriceInputCompleted(inputPriceText)
         }
     }
@@ -215,30 +250,100 @@ class CommunityAddPostFragment :
         }
     }
 
-    private fun initGalleryLauncher() {
-        pickMultipleMedia = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) { uris ->
-            photoUris = null
-            if (uris != null) {
-                // 몇몇 기종에서는 5개 선택 제한이 안 되는 이슈 발생 -> 5개 초과로 받아와도 5개까지만 보여주도록 추가 설정
-                val selectedUris = uris.take(5)
-                photoUris = selectedUris.map { uri -> uri.toString() }
-                val len = photoUris!!.size
-                binding.photolen = "$len/5"
-                communityAddPostViewModel.setFilledStatus(0, status = true)
-                if (selectedUris.isNotEmpty()) {
-                    for (uri in selectedUris) {
-                        communityAddPostViewModel.setFilledImage(len)
-                        binding.photoUris = photoUris
+    private fun handleRegisterButton() {
+        binding.btnCommunityAddPostRegister.setOnClickListener {
+            val title = binding.etCommunityAddpostTitle.text.toString()
+            val detail = binding.etCommunityAddpostDetail.text.toString()
+            val imageFiles = mutableListOf<File>()
+            photoUris?.let {
+                for (uriString in it) {
+                    val uri = Uri.parse(uriString)
+                    val copiedFile = copyFileToInternalStorage(uri)
+                    Timber.d("file URI 값 정상 작동되는지 확인 : $uri ================ $copiedFile")
+
+                    copiedFile?.let { file ->
+                        if (file.exists()) {
+                            imageFiles.add(file)
+                        } else {
+                            Timber.e("파일이 존재하지 않습니다: $file")
+                        }
                     }
-                } else {
-                    Log.d("PhotoPicker", "No media selected")
                 }
-            } else {
-                photoUris = null
-                Log.d("PhotoPicker", "No media selected")
             }
+            communityAddPostViewModel.createPost(title, detail, imageFiles)
         }
     }
+    private fun copyFileToInternalStorage(uri: Uri): File? {
+        val context = requireContext().applicationContext
+        val inputStream = context.contentResolver.openInputStream(uri) ?: return null
+        val fileName = getFileName(uri) ?: return null
+
+        // 내부 저장소에 새 파일 생성
+        val file = File(context.filesDir, fileName)
+        file.outputStream().use { outputStream ->
+            inputStream.copyTo(outputStream)
+        }
+        return file
+    }
+
+    @SuppressLint("Range")
+    private fun getFileName(uri: Uri): String? {
+        val cursor = requireContext().contentResolver.query(uri, null, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val displayName = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+                if (!displayName.isNullOrEmpty()) {
+                    return displayName
+                }
+            }
+        }
+        return null
+    }
+
+
+    private fun initGalleryLauncher() {
+        pickMultipleMedia =
+            registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) { uris ->
+                photoUris = null
+                if (uris != null) {
+                    // 몇몇 기종에서는 5개 선택 제한이 안 되는 이슈 발생 -> 5개 초과로 받아와도 5개까지만 보여주도록 추가 설정
+                    val selectedUris = uris.take(5)
+                    photoUris = selectedUris.map { uri -> uri.toString() }
+                    val len = photoUris!!.size
+                    binding.photolen = "$len/5"
+                    communityAddPostViewModel.setFilledStatus(0, status = true, "")
+                    if (selectedUris.isNotEmpty()) {
+                        for (uri in selectedUris) {
+                            communityAddPostViewModel.setFilledImage(len)
+                            binding.photoUris = photoUris
+                        }
+                    } else {
+                        Log.d("PhotoPicker", "No media selected")
+                    }
+                } else {
+                    photoUris = null
+                    Log.d("PhotoPicker", "No media selected")
+                }
+            }
+    }
+
+    private fun uriToFile(uri: Uri): File? {
+        val context = requireContext().applicationContext
+        val filePathColumn = arrayOf(MediaStore.Images.Media.DISPLAY_NAME)
+        Timber.d("filePathColumn Test; ${filePathColumn[0]}")
+        val cursor = context.contentResolver.query(uri, filePathColumn, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
+                Timber.d("columnIndex Test: $columnIndex")
+                val fileName = cursor.getString(columnIndex)
+                val filePath = File(context.filesDir, fileName).path
+                return File(filePath)
+            }
+        }
+        return null
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

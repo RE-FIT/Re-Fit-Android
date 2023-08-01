@@ -52,7 +52,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/et_community_addpost_title"
+                    android:id="@+id/et_community_search_keyword"
                     style="@style/RegularFontKr.12"
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
@@ -70,6 +70,7 @@
                     android:layout_height="20dp"
                     android:layout_gravity="right|center"
                     android:layout_marginRight="10dp"
+                    android:enabled="@{vm.isSearchTypingState}"
                     android:background="@{vm.isSearching ? @drawable/ic_close_17 :  @drawable/ic_search_dark_13}" />
             </com.google.android.material.card.MaterialCardView>
             
