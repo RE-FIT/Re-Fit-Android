@@ -17,7 +17,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //엑세스 토큰 체크
+        /*//엑세스 토큰 체크
         tokenViewModel.checkAccessToken()
 
         //토큰 체크 후, 만약 엑세스 토큰이 유효하다면 이동
@@ -25,7 +25,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
             if (it) {
                 navigate(R.id.action_signInFragment_to_signUpFragment)
             }
-        }
+        }*/
 
         //로그인
         //id: admin1234

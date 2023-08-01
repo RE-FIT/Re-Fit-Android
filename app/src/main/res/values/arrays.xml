@@ -60,4 +60,73 @@
         <item>@string/cloth_register_wearing_season_confirm_negative</item>
     </string-array>
 
+    <string-array name="community_item_search_option_category">
+        <item>상의</item>
+        <item>하의</item>
+        <item>아우터</item>
+        <item>원피스</item>
+        <item>신발</item>
+        <item>악세사리</item>
+    </string-array>
+
+    <string-array name="community_item_search_option_type">
+        <item>나눔</item>
+        <item>판매</item>
+    </string-array>
+
+    <string-array name="community_item_search_option_gender">
+        <item>여성복</item>
+        <item>남성복</item>
+    </string-array>
+
+    <string-array name="community_item_search_option_size">
+        <item>XS</item>
+        <item>S</item>
+        <item>M</item>
+        <item>L</item>
+        <item>XL</item>
+    </string-array>
+
+    <string-array name="community_item_search_option_transaction_method">
+        <item>직거래</item>
+        <item>배송</item>
+    </string-array>
+
+    <string-array name="community_info_overflow_ing_writer">
+        <item>수정하기</item>
+        <item>삭제하기</item>
+    </string-array>
+
+    <string-array name="community_info_overflow_end_giveaway_writer">
+        <item>수정하기</item>
+        <item>삭제하기</item>
+        <item>나눔중</item>
+    </string-array>
+
+    <string-array name="community_info_overflow_end_sale_writer">
+        <item>수정하기</item>
+        <item>삭제하기</item>
+        <item>판매중</item>
+    </string-array>
+
+    <string-array name="community_info_overflow_user">
+        <item>신고하기</item>
+        <item>이 사용자의 글 보지 않기</item>
+    </string-array>
+
+    <string-array name="my_page_myInfo_gender">
+        <item>여성</item>
+        <item>남성</item>
+    </string-array>
+
+    <string-array name="sign_up_gender">
+        <item>여성</item>
+        <item>남성</item>
+    </string-array>
+
+    <string-array name="sign_up_find_id_password">
+        <item>아이디찾기</item>
+        <item>비밀번호찾기</item>
+    </string-array>
+
 </resources>

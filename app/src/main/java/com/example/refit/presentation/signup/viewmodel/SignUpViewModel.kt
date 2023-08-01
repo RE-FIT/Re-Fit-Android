@@ -56,4 +56,5 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
             }
         }
     }
+
 }

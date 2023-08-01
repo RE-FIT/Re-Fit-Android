@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">ReFit</string>
-    <string name="empty"/>
+    <string name="empty" />
     <string name="percent">%</string>
     <!-- dialog -->
     <string name="closet_dialog_cloth_delete_title">삭제 시 그동안 심은 나무와\n입력한 정보들이 다 삭제돼요!\n해당 옷을 삭제하시겠어요?</string>
@@ -89,5 +89,161 @@
     <string name="cloth_register_complete">등록 완료!</string>
     <string name="cloth_register_not_wearing_response">네 알겠어요!\n%1$s이 오면 다시 목표 착용 횟수를 \n설정할 수 있는 알림을 보내드릴게요!</string>
     <string name="cloth_register_recommend_wearing">"한 달에 %1$d번\n일주일에 %2$d번</string>
+
+    <!--Community-->
+    <string name="community_main_toolbar_title">Green Community</string>
+    <string name="community_search_option_first">카테고리</string>
+    <string name="community_search_option_second">종류</string>
+    <string name="community_search_option_third">성별</string>
+    <string name="community_main_fab_bottom_end">글쓰기</string>
+    <string name="community_item_text_first">사이즈</string>
+    <string name="community_item_text_second">거래방식</string>
+    <string name="community_item_text_third">거래지역</string>
+
+    <string name="community_info_toolbar_title">나눔</string>
+    <string name="community_info_toolbar_title2">판매</string>
+    <string name="community_info_fab_bottom_end">채팅하기</string>
+    <string name="community_info_text_first">Info</string>
+    <string name="community_info_text_second">상세 설명</string>
+    <string name="community_info_type_giveaway_ing">나눔 진행중</string>
+    <string name="community_info_type_giveaway_end">나눔 완료</string>
+    <string name="community_info_type_sale_ing">판매 진행중</string>
+    <string name="community_info_type_sale_end">판매 완료</string>
+    <string name="community_info_contents_first">사이즈 :</string>
+    <string name="community_info_contents_second">거래 방식 :</string>
+    <string name="community_info_contents_third">배송비 :</string>
+    <string name="community_info_contents_fourth">거래 희망 지역 :</string>
+    <string name="community_info_contents_fifth">가격 :</string>
+    <string name="community_info_overflow_writer_first">수정하기</string>
+    <string name="community_info_overflow_writer_second">삭제하기</string>
+    <string name="community_info_overflow_writer_third">나눔중</string>
+    <string name="community_info_dialog_title">글을 삭제하시겠어요?</string>
+    <string name="community_info_dialog_positive">네, 삭제할래요</string>
+    <string name="community_info_dialog_negative">아니오</string>
+    <string name="community_info_dialog_title_second">이 사용자를 신고하시겠어요?</string>
+    <string name="community_info_dialog_positive_second">네, 신고할래요</string>
+    <string name="community_info_dialog_title_third">님의 글을 보고 싶지 않으신가요?</string>
+    <string name="community_info_dialog_positive_third">네, 안볼래요</string>
+    <string name="community_info_snackbar_first">이 사용자의 글을 더 이상 목록에서 볼 수 없어요.</string>
+    <string name="community_info_snackbar_second">신고가 접수되었습니다.</string>
+    <string name="community_info_snackbar_third">신고하는 일이 없도록 RE-FIT에서 더 노력할게요!</string>
+
+    <string name="community_addpost_toolbar_title">글 작성</string>
+    <string name="community_addpost_contents_first">사진</string>
+    <string name="community_addpost_contents_second">제목 (상품명)</string>
+    <string name="community_addpost_contents_third">추천 착용 성별</string>
+    <string name="community_addpost_contents_fourth">카테고리</string>
+    <string name="community_addpost_contents_fifth">사이즈</string>
+    <string name="community_addpost_contents_sixth">거래 방식</string>
+    <string name="community_addpost_contents_seventh">상세 설명</string>
+    <string name="community_addpost_contents_detail_first">제목 (상품명)을 입력해주세요</string>
+    <string name="community_addpost_contents_detail_second">옷의 추천 착용 성별을 선택해주세요</string>
+    <string name="community_addpost_contents_detail_third">옷의 카테고리를 선택해주세요</string>
+    <string name="community_addpost_contents_detail_fourth">사이즈를 선택해주세요</string>
+    <string name="community_addpost_contents_detail_fourth_method">거래 희망 방식</string>
+    <string name="community_addpost_contents_detail_fourth_price">가격</string>
+    <string name="community_addpost_contents_detail_fourth_price_2">가격을 입력해주세요.</string>
+    <string name="community_addpost_contents_detail_fourth_include_price">배송비 포함</string>
+    <string name="community_addpost_contents_detail_fourth_exclude_price">배송비 별도</string>
+    <string name="community_addpost_contents_detail_fourth_shipping_fee">배송비</string>
+    <string name="community_addpost_contents_detail_fourth_shipping_fee_2">₩ 배송비를 입력해주세요.</string>
+    <string name="community_addpost_contents_detail_fourth_input"><u>입력</u></string>
+    <string name="community_addpost_contents_detail_fourth_input_2"><u>수정</u></string>
+    <string name="communtiy_addpost_contents_detail_fourth_region">거래 희망 장소를 선택해주세요</string>
+    <string name="community_addpost_contents_detail_fifth">옷과 자신의 키 등에 대한 정보를 상세하게\n적을수록 많은 분들이 관심을 가지니,
+        \n최대한 자세하게 작성 부탁드려요 :)\n\n(판매 금지 물품은 게시가 제한될 수 있음을 알립니다)</string>
+    <string name="community_addpost_contents_done">작성 완료</string>
+    <string name="community_addpost_contents_done2">완료</string>
+
+    <string name="community_post_report_toolbar_title">게시글 신고</string>
+    <string name="community_post_report_contents_text">이 게시물을 신고하려는 이유를 선택해주세요.\n(항목을 꼭 읽고 선택해주세요!)</string>
+    <string name="community_post_report_contents_first">판매 금지 물품이에요</string>
+    <string name="community_post_report_contents_second">중고거래 게시글이 아니에요</string>
+    <string name="community_post_report_contents_third">전문 판매업자 같아요</string>
+    <string name="community_post_report_contents_fourth">사기가 의심돼요</string>
+    <string name="community_post_report_contents_fifth">기타</string>
+    <string name="community_post_report_ban_on_sales_titles">판매 금지 물품</string>
+    <string name="community_post_report_ban_on_sales_contents">· 음란물 (청소년 유해 매체물)\n· 청소년 유해 상품 (청소년 유해 매체물)\n· 게임 아이템 거래 (청소년 유해 매체물)\n· 렌탈 제품\n· 개인정보\n· 경찰용품 (경찰제복, 경찰기동화, 경찰장구류 등)\n· 군용품 (군복, 군화, 군용장구류 등), 군마트용품\n· 나라미, 정부 지원 생필품, 지역 상품권, 문화누리카드, 에너지바우처 등 법률에 의해 재판매 할 수 없는 물품\n· 국가기관 인증을 받지 않고 친환경, 무농약, 유기농, 오가닉, 무공해 라는 표현을 사용하여 판매하는 행위 \n· 100만 원 이상 금 제품 (골드바, 금괴, 금으로 제작된 목걸이, 팔찌, 귀걸이 등)\n· 현금을 거래하는 행위 (돈을 빌리거나, 빌려주는 행위)\n· 이외 법률을 위반하는 모든 물품 \n· 모든 홍보 / 광고 </string>
+    <string name="community_post_report_next">다음</string>
+    <string name="community_post_report_ban_on_sales_contents_second">한 번 신고하면 취소가 불가능하니,\n신고 사유를 다시 한 번 확인해주세요!</string>
+    <string name="community_post_report_ban_on_sales_contents_third">[신고 사유]</string>
+    <string name="community_post_report_ban_on_sales_contents_fourth">이 사용자의 글 보지 않기</string>
+    <string name="community_post_report_ban_on_sales_contents_fifth">신고하기</string>
+    <string name="community_post_report_ban_on_sales_etc_first">예) 부적절한 사진이 올라와있고, 협의되지 않은 무리한 요구를 했습니다.</string>
+    <string name="community_post_report_ban_on_sales_etc_second">글자수 제한 (0/200)</string>
+    <string name="community_post_report_ban_on_sales_etc_third">이 회원이 신고 대상에 해당하는지 다시 한번 확인하여 주시길 바랍니다.</string>
+    <string name="community_post_report_ban_on_sales_etc_fourth">신고자 정보 및 신고 내용은 신고 대상에게 공개되지 않으나, 사실 관계 확인에 꼭 필요한 신고 내용의 일부는 언급될 수 있습니다.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+
+
+    <!-- my page -->
+    <string name="my_page_myFeed">내 피드</string>
+    <string name="my_page_scrap">내 스크랩</string>
+    <string name="my_page_name">ansrud</string>
+
+    <string name="my_info_myInfo">내 정보</string>
+    <string name="my_info_warning">비밀번호는 8-16자의 영문,숫자,특수문자를 사용할 수 있습니다.\n비밀번호는 주기적(최소6개월) 으로 변경해주시기 바랍니다.</string>
+    <string name="my_info_current_pw">현재 비밀번호</string>
+    <string name="my_info_new_pw">새로운 비밀번호</string>
+    <string name="my_info_btn_update">수정하기</string>
+
+    <string name="my_info_emailTxt">이메일</string>
+    <string name="my_info_email">ansrud@gmail.com</string>
+    <string name="my_info_idTxt">아이디</string>
+    <string name="my_info_id">ansrud</string>
+    <string name="my_info_nameTxt">이름(닉네임)</string>
+    <string name="my_info_name">ansrud</string>
+    <string name="my_info_dateTxt">생년월일</string>
+    <string name="my_info_date">2000/09/27</string>
+
+    <string name="my_page_genderTxt">성별</string>
+    <string name="my_page_title">MY PAGE</string>
+    <string name="my_page_setting">설정</string>
+
+    <string name="setting_title">설정</string>
+    <string name="my_setting_stringTxt">정책</string>
+    <string name="my_setting_string">이용약관</string>
+    <string name="my_setting_string2">개인정보처리 방침</string>
+    <string name="my_setting_logoutTxt">로그아웃</string>
+    <string name="my_setting_logout">로그아웃 하기</string>
+    <string name="setting_account_delete">탈퇴</string>
+    <string name="setting_account_deleteTxt">탈퇴하기</string>
+
+    <string name="my_info_back_dialog_title">이 페이지에서 나가시면\n수정 중인 정보들이 다 삭제돼요!\n수정을 그만하시겠어요?</string>
+    <string name="my_info_back_positive">네, 그만할래요</string>
+
+    <string name="setting_logout_dialog_title">로그아웃 하시겠어요?</string>
+    <string name="setting_logout_positive">네</string>
+    <string name="setting_negative">아니오</string>
+
+    <string name="setting_account_delete_dialog_title">회원 탈퇴 이후 모든 기록이 삭제되며,\n삭제된 데이터는 복구할 수 없어요!\n회원 탈퇴를 진행하시겠어요? </string>
+    <string name="setting_account_delete_positive">네, 탈퇴할래요</string>
+
+    <string name="my_info_nickname_check">닉네임의 중복확인이 필요합니다!</string>
+
+    <string name="pw_change_delete_title">이 페이지에서 나가시면\n수정 중인 정보들이 다 삭제돼요!\n수정을 그만하시겠어요?</string>
+    <string name="pw_change_delete_positive">네, 그만할래요</string>
+    <string name="pw_change_delete_negative">아니오</string>
+
+    <string name="pw_incorrect_title">입력하신 비밀번호가 일치하지 않습니다.</string>
+    <string name="pw_incorrect_content">기존 비밀번호 혹은 새로운 비밀번호를 다시 확인해주세요!</string>
+    <string name="my_page_sell_text">판매</string>
+    <string name="my_page_share_text">나눔</string>
+    <string name="my_page_buy_text">구매</string>
+    
+    <string name="my_page_d_day">D + %1$d</string>
+    <string name="my_page_d_day_title">환경 지키기</string>
+    <string name="my_page_d_day_content">일째 되는 날이에요!</string>
+    <string name="my_info_available_nickname">* 사용 가능한 이름(닉네임)입니다.</string>
+    <string name="my_info_unavailable_nickname">* 이미 존재하는 이름(닉네임)입니다.</string>
+    <string name="my_info_isCheck_nickname">중복확인</string>
+    <string name="my_info_register_profile_title">프로필 사진 등록</string>
+    <string name="my_info_register_profile_content_camera">앨범에서 선택</string>
+    <string name="my_info_register_profile_photo_delete">사진 삭제</string>
+    <string name="my_page_dDay">10</string>
 
 </resources>
