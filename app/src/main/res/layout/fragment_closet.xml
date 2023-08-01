@@ -9,10 +9,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="onClickCardViewListener"
-            type="android.view.View.OnClickListener" />
-
-        <variable
             name="vm"
             type="com.example.refit.presentation.closet.viewmodel.ClosetViewModel" />
 

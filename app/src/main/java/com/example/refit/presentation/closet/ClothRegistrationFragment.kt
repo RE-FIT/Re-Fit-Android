@@ -69,6 +69,7 @@ class ClothRegistrationFragment :
         handleClickInvalidSeasonConfirm()
         handleClickWearingNumberOption()
         handleClickAddCompleteButton()
+        handleSelectedClothCategory()
     }
 
     private fun handleClickAddCompleteButton() {
@@ -90,6 +91,18 @@ class ClothRegistrationFragment :
                 clothAddViewModel.checkSeasonValidation(
                     checkedSeason.text.toString(),
                     resources.getStringArray(R.array.cloth_register_wearing_season).toList()
+                )
+            }
+        }
+    }
+
+    private fun handleSelectedClothCategory() {
+        binding.cgClothRegisterCategory.setOnCheckedStateChangeListener { _, checkedIds ->
+            if (checkedIds.size > 0) {
+                val checkedClothCategory = binding.root.findViewById<Chip>(checkedIds[0])
+                clothAddViewModel.setClothCategory(
+                    resources.getStringArray(R.array.closet_cloth_category).toList(),
+                    checkedClothCategory.text.toString()
                 )
             }
         }

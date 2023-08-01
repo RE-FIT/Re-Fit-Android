@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.refit.data.repository.colset.ClosetRepository
+import timber.log.Timber
 import java.util.Calendar
 
 class ClothAddViewModel(private val repository: ClosetRepository) : ViewModel() {
@@ -54,6 +55,13 @@ class ClothAddViewModel(private val repository: ClosetRepository) : ViewModel() 
     val selectedSeason: LiveData<String>
         get() = _selectedSeason
 
+    private val _selectedSeasonId: MutableLiveData<Int> = MutableLiveData<Int>()
+    val selectedSeasonId: LiveData<Int>
+        get() = _selectedSeasonId
+
+    private val _selectedClothCategoryId: MutableLiveData<Int> = MutableLiveData<Int>()
+    val selectedClothCategoryId: LiveData<Int>
+        get() = _selectedClothCategoryId
 
     fun checkSeasonValidation(selectedSeason: String, seasonList: List<String>) {
         val currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
@@ -61,19 +69,23 @@ class ClothAddViewModel(private val repository: ClosetRepository) : ViewModel() 
             when (selectedSeason) {
                 seasonList[0] -> {
                     _selectedSeason.value = "봄 · 가을"
+                    _selectedSeasonId.value = 0
                     currentMonth in 3..5 || currentMonth in 9..11
                 }
 
                 seasonList[1] -> {
                     _selectedSeason.value = "여름"
+                    _selectedSeasonId.value = 1
                     currentMonth in 6..8
                 }
 
                 else -> {
                     _selectedSeason.value = "겨울"
+                    _selectedSeasonId.value = 2
                     currentMonth in 1..2 || currentMonth == 12
                 }
             }
+        Timber.d("계절 선택 : ${_selectedSeasonId.value}")
         initClothWearingGoalOptionStatus(isValidSeason)
         initRecommendWearingStatus(false)
         initInvalidSeasonConfirmStatus(!isValidSeason)
@@ -143,6 +155,11 @@ class ClothAddViewModel(private val repository: ClosetRepository) : ViewModel() 
         initClothWearingGoalOptionStatus(false)
         initRecommendWearingStatus(false)
         initNegativeInvalidSeasonConfirmStatus(false)
+    }
+
+    fun setClothCategory(categoryList: List<String>, selectedCategory: String) {
+        _selectedClothCategoryId.value = categoryList.indexOf(selectedCategory)
+        Timber.d("옷 카테고리 선택 : ${_selectedClothCategoryId.value}")
     }
 
 }
