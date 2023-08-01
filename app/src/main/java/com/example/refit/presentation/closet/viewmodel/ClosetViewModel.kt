@@ -20,6 +20,8 @@ class ClosetViewModel(private val repository: ClosetRepository) : ViewModel() {
     val selectedRegisteredClothItem: LiveData<Event<RegisteredClothInfoResponse>>
         get() = _selectedRegisteredClothItem
 
+    // 옷장 필터링 옵션
+
     private val _selectedCategory: MutableLiveData<String> = MutableLiveData<String>()
     val selectedCategory: LiveData<String>
         get() = _selectedCategory
@@ -54,10 +56,9 @@ class ClosetViewModel(private val repository: ClosetRepository) : ViewModel() {
         }
     }
 
-    fun requestRegisteredItemsByClothCategory(selectedCategory: String, selectedId: Int) {
-        _selectedCategory.value = selectedCategory
+    fun requestRegisteredItemsByClothCategory(selectedId: Int) {
         _selectedCategoryId.value = selectedId
-        Timber.d("선택된 옷 카테고리 -> ${_selectedCategory.value}")
+        Timber.d("선택된 옷 카테고리 -> ${_selectedCategoryId.value}")
     }
 
     fun requestSortingBySeason(selectedOption: String) {
@@ -73,4 +74,5 @@ class ClosetViewModel(private val repository: ClosetRepository) : ViewModel() {
     fun handleClickItem(clothInfo: RegisteredClothInfoResponse) {
         _selectedRegisteredClothItem.value = Event(clothInfo)
     }
+
 }

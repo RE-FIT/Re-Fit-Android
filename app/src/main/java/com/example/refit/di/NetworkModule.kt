@@ -41,6 +41,7 @@ val networkModule = module {
     single<ClosetApi> {
         get<Retrofit>().create(ClosetApi::class.java)
     }
+
     single<CommunityApi> {
         get<Retrofit>().create(CommunityApi::class.java)
     }

@@ -112,7 +112,6 @@ class ClothRegistrationFragment :
     private fun handleClickWearingMonthOption() {
         binding.cvClothRegisterWearingGoalOptionFirstContainer.setOnClickListener {
             val popupMenu = DropdownMenuManager.createPopupMenu(
-                requireActivity(),
                 it,
                 R.style.ListPopupMenuWindow_ClothRegister,
                 R.layout.list_popup_window_item_window_dark,
@@ -130,7 +129,6 @@ class ClothRegistrationFragment :
     private fun handleClickWearingNumberOption() {
         binding.cvClothRegisterWearingGoalOptionSecondContainer.setOnClickListener {
             val popupMenu = DropdownMenuManager.createPopupMenu(
-                requireActivity(),
                 it,
                 R.style.ListPopupMenuWindow_ClothRegister,
                 R.layout.list_popup_window_item_window_dark,

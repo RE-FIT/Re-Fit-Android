@@ -32,7 +32,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
 
         binding.logout.setOnClickListener {
             viewModel.logout()
-
             //로그인 페이지로 이동해야 함
         }
     }

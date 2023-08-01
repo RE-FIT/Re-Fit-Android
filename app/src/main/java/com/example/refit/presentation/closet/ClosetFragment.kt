@@ -2,7 +2,6 @@ package com.example.refit.presentation.closet
 
 import android.os.Bundle
 import android.view.View
-import android.view.View.OnClickListener
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
@@ -20,7 +19,6 @@ import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.closet.ClothItemSelectionDialogListener
 import com.example.refit.util.EventObserver
-import com.google.android.material.card.MaterialCardView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
@@ -31,14 +29,10 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = closetViewModel
-        initDefaultClothCategory(
-            binding.tvClosetCategoryTop.text.toString(),
-            binding.tvClosetCategoryTop.id
-        )
+        initDefaultClothCategory(0)
         closetViewModel.getUserRegisteredClothes()
         initRegisteredCloth()
         initClosetOptionPopupMenu()
-        handleClothesCategory()
         handleClickAddClothButton()
         handleSelectedRegisteredClothItem()
     }
@@ -92,24 +86,10 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         }
     }
 
-    private fun handleClickAddClothButton() {
-        binding.fabClosetAdd.setOnClickListener {
-            navigate(R.id.action_nav_closet_to_clothRegistrationFragment)
-        }
-    }
+    // ----------------------- 필터링 옵션 -----------------------
 
-    private fun initDefaultClothCategory(initCategory: String, initCategoryId: Int) {
-        closetViewModel.requestRegisteredItemsByClothCategory(initCategory, initCategoryId)
-    }
-
-    private fun handleClothesCategory() {
-        binding.onClickCardViewListener = OnClickListener { view ->
-            val selectedView = (view as MaterialCardView).getChildAt(0) as TextView
-            closetViewModel.requestRegisteredItemsByClothCategory(
-                selectedView.text.toString(),
-                selectedView.id
-            )
-        }
+    private fun initDefaultClothCategory(initCategoryId: Int) {
+        closetViewModel.requestRegisteredItemsByClothCategory(initCategoryId)
     }
 
     private fun initClosetOptionPopupMenu() {
@@ -148,11 +128,18 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         @ArrayRes items: Int,
     ): ListPopupWindow {
         return DropdownMenuManager.createPopupMenu(
-            requireActivity(),
             anchorView,
             R.style.ListPopupMenuWindow_ClosetOption,
             R.layout.list_popup_window_item_white,
             items
         )
+    }
+
+    // ----------------------- 페이지 이동 옵션 -----------------------
+
+    private fun handleClickAddClothButton() {
+        binding.fabClosetAdd.setOnClickListener {
+            navigate(R.id.action_nav_closet_to_clothRegistrationFragment)
+        }
     }
 }
