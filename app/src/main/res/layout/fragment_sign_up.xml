@@ -80,7 +80,6 @@
                     android:color="@color/white"
                     android:hint="아이디를 입력해주세요"
                     android:padding="10dp"
-
                     android:textColor="@android:color/darker_gray"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

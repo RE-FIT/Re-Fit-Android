@@ -12,6 +12,4 @@ class FindIdFragment : BaseFragment<FragmentFindIdBinding>(R.layout.fragment_fin
 
     }
 
-
-
 }

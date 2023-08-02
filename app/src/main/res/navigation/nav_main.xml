@@ -203,4 +203,5 @@
         android:name="com.example.refit.presentation.community.PostcodeFragment"
         android:label="fragment_postcode"
         tools:layout="@layout/fragment_postcode" />
+
 </navigation>

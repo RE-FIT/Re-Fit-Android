@@ -46,6 +46,4 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
             binding.emailCertificationCode = emailCertificationResponse
         }
     }
-
-
 }

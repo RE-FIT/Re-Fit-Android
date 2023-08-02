@@ -10,5 +10,4 @@ class FindPasswordFragment : BaseFragment<FragmentFindPasswordBinding>(R.layout.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
     }
-
 }

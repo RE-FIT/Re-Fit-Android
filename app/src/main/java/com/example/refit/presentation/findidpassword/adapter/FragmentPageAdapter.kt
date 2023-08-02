@@ -27,5 +27,4 @@ class FragmentPageAdapter(fragment: Fragment): FragmentStateAdapter(fragment) /*
             else -> FindPasswordFragment()
         }
     }
-
 }

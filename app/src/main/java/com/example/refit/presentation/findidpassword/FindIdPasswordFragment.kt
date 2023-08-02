@@ -34,5 +34,4 @@ class FindIdPasswordFragment : BaseFragment<FragmentFindIdPasswordBinding>(R.lay
             navigate(R.id.action_findIdPasswordFragment_to_signInFragment)
         }
     }
-
 }
