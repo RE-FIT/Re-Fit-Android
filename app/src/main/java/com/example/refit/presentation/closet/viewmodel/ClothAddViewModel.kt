@@ -3,8 +3,20 @@ package com.example.refit.presentation.closet.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.refit.data.model.closet.RequestAddNewCloth
 import com.example.refit.data.repository.colset.ClosetRepository
+import com.example.refit.util.FileUtil.toFile
+import com.google.gson.Gson
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import timber.log.Timber
+import java.io.File
 import java.util.Calendar
 
 class ClothAddViewModel(private val repository: ClosetRepository) : ViewModel() {
@@ -62,6 +74,42 @@ class ClothAddViewModel(private val repository: ClosetRepository) : ViewModel() 
     private val _selectedClothCategoryId: MutableLiveData<Int> = MutableLiveData<Int>()
     val selectedClothCategoryId: LiveData<Int>
         get() = _selectedClothCategoryId
+
+
+    // 서버 호출
+
+    fun addNewCloth(imageFile: File) {
+        viewModelScope.launch {
+            try {
+                val request = Gson().toJson(RequestAddNewCloth(
+                    _selectedClothCategoryId.value!!,
+                    _selectedSeasonId.value!!,
+                    null,
+                    null,
+                    _isValidShowingRecommendWearing.value!!,
+                    null,
+                    null
+                ))
+                val jsonObject = JSONObject().getJSONObject(request)
+                val mediaType = "application/json; charset=utf-8".toMediaType()
+                val body = jsonObject.toString().toRequestBody(mediaType)
+
+                val multipartBody = MultipartBody.Part.createFormData(
+                    name = "file",
+                    filename = imageFile.name,
+                    body = imageFile.asRequestBody("image/*".toMediaType())
+                )
+
+                
+
+            } catch (e: Throwable) {
+                Timber.d(e)
+            }
+        }
+    }
+
+
+    // 내부 처리
 
     fun checkSeasonValidation(selectedSeason: String, seasonList: List<String>) {
         val currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
