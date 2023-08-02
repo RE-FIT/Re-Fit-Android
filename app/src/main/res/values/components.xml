@@ -148,8 +148,6 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-
-
     <!-- Button -->
     <!-- TODO(여기에 버튼 뷰에 대한 스타일 정의) -->
 

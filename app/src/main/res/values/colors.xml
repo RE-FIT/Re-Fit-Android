@@ -16,5 +16,6 @@
     <color name="black">#000000</color>
     <color name="yellow">#FFE500</color>
     <color name="blue">#1C7D9C</color>
+    <color name="gray">#F0F2F5</color>
 
 </resources>

@@ -11,8 +11,8 @@ import com.example.refit.presentation.common.WindowUtil.setStatusBarColor
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 
-
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -20,6 +20,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         binding.bnvMain.setupWithNavController(getNavController())
         handleNavigationBarVisibility()
         initBottomNavigationBackground()
+
     }
 
     private fun getNavController(): NavController {
@@ -63,4 +64,5 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             .setTopRightCorner(CornerFamily.ROUNDED, radius)
             .build()
     }
+
 }

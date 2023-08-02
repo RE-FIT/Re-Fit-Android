@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.signup.SignUpFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -17,47 +16,260 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="18dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_sign_up_email_code"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{emailCertificationCode.code}"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@id/btn_sign_up_api_test"
-            app:layout_constraintEnd_toEndOf="parent"
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/back"
+            android:layout_width="61dp"
+            android:layout_height="47dp"
+            android:background="#00ff0000"
+            android:contentDescription="Back Button"
+            android:src="@drawable/back"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_sign_up_api_test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="이메일 인증 요청 API 테스트"
-            app:layout_constraintBottom_toTopOf="@id/btn_move_sign_up_to_next_page"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_sign_up_email_code" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_move_sign_up_to_next_page"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="메인 페이지 이동"
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="로그아웃"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:context=".presentation.signup.SignUpFragment">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/member_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/member_info"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.132"
+                    tools:ignore="MissingConstraints" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
+                    android:text="기본 정보를 입력해주세요 :)"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/member_info"
+                    tools:ignore="MissingConstraints" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/id"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/border_gray"
+                    android:color="@color/white"
+                    android:hint="아이디를 입력해주세요"
+                    android:padding="10dp"
+
+                    android:textColor="@android:color/darker_gray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.137"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text"
+                    app:layout_constraintVertical_bias="0.064"
+                    tools:ignore="MissingConstraints" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="30dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/id"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/dark1">
+                    <EditText
+                        android:id="@+id/sign_up_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:background="@drawable/border_gray"
+                        android:hint="비밀번호를 입력해주세요"
+                        android:padding="10dp"
+                        android:textColorHint="@android:color/darker_gray"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.137"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/id"
+                        app:layout_constraintVertical_bias="0.057" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_sign_up_email_code"
+                    style="@style/TextAppearance.Material3.TitleMedium"
+                    android:layout_width="250dp"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/border_gray"
+                    android:hint="이메일을 입력해주세요"
+                    android:padding="13dp"
+                    android:text="@{emailCertificationCode.code}"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_api_test"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_sign_up_api_test"
+                    android:layout_width="98dp"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="36dp"
+                    android:backgroundTint="@color/selector_selected_green1_else_dark1"
+                    android:text="인증"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.987"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+                    app:shapeAppearance="@color/selector_green1_else_dark1"
+                    tools:ignore="MissingConstraints" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nickname"
+                    android:layout_width="250dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/border_gray"
+                    android:color="@color/white"
+                    android:hint="이름(닉네임)을 입력해주세요"
+                    android:padding="10dp"
+                    android:textColor="@android:color/darker_gray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/duplicate_check"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_email_code"
+                    app:layout_constraintVertical_bias="0.084"
+                    tools:ignore="MissingConstraints" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/duplicate_check"
+                    android:layout_width="98dp"
+                    android:layout_height="52dp"
+                    android:backgroundTint="@color/selector_green1_else_dark1"
+                    android:text="중복확인"
+                    android:textSize="13dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.993"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_sign_up_api_test"
+                    app:layout_constraintVertical_bias="0.082"
+                    app:shapeAppearance="@color/selector_green1_else_dark1" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/birth_date"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/border_gray"
+                    android:color="@color/white"
+                    android:hint="생년월일을 입력해주세요(YYYY/MM/DD)"
+                    android:padding="10dp"
+                    android:textColor="@android:color/darker_gray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.517"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/nickname"
+                    app:layout_constraintVertical_bias="0.104"
+                    tools:ignore="MissingConstraints" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/gender"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="45dp"
+                    style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:textColorHint="@color/dark1"
+                    android:hint="성별을 선택해주세요"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/birth_date">
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:inputType="none"
+                        app:simpleItems="@array/sign_up_gender" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <CheckBox
+                    android:id="@+id/agree_to_terms_and_conditions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00ff0000"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginBottom="56dp"
+                    android:text="[필수] 이용약관 및 개인정보 수집 동의"
+                    android:textColor="@color/selector_green1_else_dark1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/view_content"
+                    app:layout_constraintHorizontal_bias="0.571"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gender"
+                    app:layout_constraintVertical_bias="0.475" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/view_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="130dp"
+                    android:background="#00ff0000"
+                    android:text="내용보기"
+                    android:textColor="@color/green1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.961"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gender"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/sign_up"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:backgroundTint="@color/selector_green1_else_dark1"
+                    android:text="가입하기"
+                    android:layout_marginTop="40dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.413"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_content"
+                    app:layout_constraintVertical_bias="1.0"
+                    app:shapeAppearance="@color/selector_green1_else_dark1" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

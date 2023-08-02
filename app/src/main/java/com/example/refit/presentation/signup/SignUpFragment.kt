@@ -1,6 +1,8 @@
 package com.example.refit.presentation.signup
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,8 @@ import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.signin.viewmodel.SignInViewModel
 import com.example.refit.presentation.signup.viewmodel.SignUpViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import java.util.regex.Pattern
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sign_up) {
 
@@ -26,14 +30,17 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
             signUpViewModel.certificateEmail("yoonmin0113@naver.com")
         }
 
-        binding.btnMoveSignUpToNextPage.setOnClickListener {
+        binding.signUp.setOnClickListener {
             navigate(R.id.action_signUpFragment_to_communityFragment)
         }
 
+        binding.back.setOnClickListener{
+            navigate(R.id.action_signUpFragment_to_signInFragment)
         binding.logout.setOnClickListener {
             viewModel.logout()
             //로그인 페이지로 이동해야 함
         }
+
     }
 
     private fun handleRequestEmailCertification() {
@@ -41,4 +48,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
             binding.emailCertificationCode = emailCertificationResponse
         }
     }
+
+
 }

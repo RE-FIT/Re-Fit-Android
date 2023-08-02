@@ -1,9 +1,6 @@
 package com.example.refit
 
 import android.app.Application
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import com.example.refit.di.dataSourceModule
 import com.example.refit.di.dataStoreModule
 import com.example.refit.di.networkModule

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <string-array name="closet_item_search_option_season">
         <item>봄 · 가을</item>
         <item>여름</item>
@@ -20,7 +20,7 @@
         <item>많이 입은 순</item>
         <item>적게 입은 순</item>
     </string-array>
-    
+
     <string-array name="cloth_register_wearing_month_option">
         <item>@string/cloth_register_wearing_goal_one_month</item>
         <item>@string/cloth_register_wearing_goal_two_month</item>
@@ -56,7 +56,7 @@
         <item>80</item>
         <item>90</item>
     </string-array>
-    
+
     <string-array name="cloth_register_wearing_season">
         <item>@string/cloth_register_category_wearing_season_spring</item>
         <item>@string/cloth_register_category_wearing_season_summer</item>
@@ -101,7 +101,7 @@
         <item>직거래</item>
         <item>배송</item>
     </string-array>
-    
+
     <string-array name="community_info_overflow_ing_writer">
         <item>수정하기</item>
         <item>삭제하기</item>
@@ -122,6 +122,21 @@
     <string-array name="community_info_overflow_user">
         <item>신고하기</item>
         <item>이 사용자의 글 보지 않기</item>
+    </string-array>
+
+    <string-array name="my_page_myInfo_gender">
+        <item>여성</item>
+        <item>남성</item>
+    </string-array>
+
+    <string-array name="sign_up_gender">
+        <item>여성</item>
+        <item>남성</item>
+    </string-array>
+
+    <string-array name="sign_up_find_id_password">
+        <item>아이디찾기</item>
+        <item>비밀번호찾기</item>
     </string-array>
 
 </resources>

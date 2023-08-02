@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools" >
 
     <data>
+
         <variable
             name="favToggleState"
             type="Boolean" />
@@ -15,6 +16,11 @@
         <variable
             name="vm"
             type="com.example.refit.presentation.community.viewmodel.CommunityViewModel" />
+
+        <variable
+            name="vm_scrap"
+            type="com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
