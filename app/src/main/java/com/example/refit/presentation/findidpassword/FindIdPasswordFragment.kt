@@ -1,60 +1,38 @@
 package com.example.refit.presentation.findidpassword
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.PersistableBundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.example.refit.R
+import com.example.refit.databinding.FragmentFindIdPasswordBinding
+import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.findidpassword.adapter.FragmentPageAdapter
-import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
-class FindIdPasswordFragment : AppCompatActivity() {
 
-    //tabLayout
-    private lateinit var tabLayout: TabLayout
-    private lateinit var viewPager2: ViewPager2
-    private lateinit var adapter : FragmentPageAdapter
+class FindIdPasswordFragment : BaseFragment<FragmentFindIdPasswordBinding>(R.layout.fragment_find_id_password) {
 
-    @SuppressLint("MissingInflatedId")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    private lateinit var fragmentPageAdapter: FragmentPageAdapter
+    private lateinit var viewPager: ViewPager2
 
-        //tabLayout
-        tabLayout = findViewById(R.id.tabLayout)
-        viewPager2 = findViewById(R.id.viewPager2)
 
-        adapter = FragmentPageAdapter(supportFragmentManager, lifecycle)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        fragmentPageAdapter = FragmentPageAdapter(this)
+        viewPager = binding.viewPager2
+        viewPager.adapter = fragmentPageAdapter
 
-        tabLayout.addTab(tabLayout.newTab().setText("First"))
-        tabLayout.addTab(tabLayout.newTab().setText("Second"))
-
-        viewPager2.adapter = adapter
-
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                if(tab != null) {
-                    viewPager2.currentItem = tab.position
-                }
+        TabLayoutMediator(binding.tabLayout, viewPager) { tab, position ->
+            when (position) {
+                0 -> tab.text = "아이디찾기"
+                1 -> tab.text = "비밀번호찾기"
             }
+        }.attach()
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
 
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-
-        })
-
-        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-            override fun onPageScrollStateChanged(positon: Int) {
-                super.onPageScrollStateChanged(positon)
-                tabLayout.selectTab(tabLayout.getTabAt(positon))
-            }
-        })
-
+        binding.back.setOnClickListener {
+            navigate(R.id.action_findIdPasswordFragment_to_signInFragment)
+        }
     }
+
 }
