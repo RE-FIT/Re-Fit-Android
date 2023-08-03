@@ -34,20 +34,15 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
             navigate(R.id.action_signUpFragment_to_communityFragment)
         }
 
-        binding.back.setOnClickListener{
+        binding.back.setOnClickListener {
             navigate(R.id.action_signUpFragment_to_signInFragment)
-        binding.logout.setOnClickListener {
-            viewModel.logout()
-            //로그인 페이지로 이동해야 함
-        }
-
-    }
-
-    private fun handleRequestEmailCertification() {
-        signUpViewModel.emailCode.observe(viewLifecycleOwner) { emailCertificationResponse ->
-            binding.emailCertificationCode = emailCertificationResponse
         }
     }
 
+        private fun handleRequestEmailCertification() {
+            signUpViewModel.emailCode.observe(viewLifecycleOwner) { emailCertificationResponse ->
+                binding.emailCertificationCode = emailCertificationResponse
+            }
+        }
 
 }

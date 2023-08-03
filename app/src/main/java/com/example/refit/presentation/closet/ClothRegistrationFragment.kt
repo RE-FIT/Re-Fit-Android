@@ -74,13 +74,16 @@ class ClothRegistrationFragment :
 
     private fun handleClickAddCompleteButton() {
         binding.btnClothRegisterComplete.setOnClickListener {
-            //TODO(추후 기능 구현 때 서버 등록 요청이 정상적으로 되면 스낵 알림 호출할 것)
-            CustomSnackBar.make(
-                it,
-                R.layout.custom_snack_bar_basic,
-                R.anim.anim_show_snack_bar_from_bottom
-            ).setTitle("옷 등록을 완료하였습니다!", null).show()
-            navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
+//            //TODO(추후 기능 구현 때 서버 등록 요청이 정상적으로 되면 스낵 알림 호출할 것)
+//            CustomSnackBar.make(
+//                it,
+//                R.layout.custom_snack_bar_basic,
+//                R.anim.anim_show_snack_bar_from_bottom
+//            ).setTitle("옷 등록을 완료하였습니다!", null).show()
+//            navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
+            photoUri?.let {
+                clothAddViewModel.addNewCloth(FileUtil.toFile(requireActivity(), it))
+            }
         }
     }
 
@@ -195,6 +198,7 @@ class ClothRegistrationFragment :
             registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
                 if (uri != null) {
                     binding.photoUri = uri.toString()
+                    photoUri = uri
                     binding.ivClothRegisterSelectedCloth.visibility = View.VISIBLE
                 } else {
                     Timber.d("선택된 사진이 없음")

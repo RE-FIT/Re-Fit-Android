@@ -11,7 +11,7 @@ import retrofit2.http.Part
 
 interface ClosetApi {
     @Multipart
-    @POST("refit/clothe")
+    @POST("/refit/clothe")
     fun addNewCloth(
         @Header("Authorization") token: String,
         @Part image: MultipartBody.Part,

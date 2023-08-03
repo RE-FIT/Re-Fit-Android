@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseAddNewCloth(
     @SerializedName("id")
-    val id: String
+    val id: Long
 )
