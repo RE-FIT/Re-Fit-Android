@@ -10,40 +10,38 @@
         android:background="@color/light">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/logo"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
+            android:id="@+id/sign_in_logo"
+            android:layout_width="135dp"
+            android:layout_height="135dp"
             android:layout_gravity="center"
-            android:src="@drawable/logo"
+            android:src="@drawable/ic_sign_in_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.157"
+            tools:ignore="MissingConstraints" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/sign_in_login_join_text"
+            android:layout_width="200sp"
+            android:layout_height="25sp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="408dp"
+            android:src="@drawable/ic_sign_in_login_join"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.205"
-            tools:ignore="MissingConstraints" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/shapeableImageView"
-            android:layout_width="260sp"
-            android:layout_height="30sp"
-            android:layout_gravity="center"
-            android:layout_marginTop="9dp"
-            android:src="@drawable/login_join"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logo"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintTop_toBottomOf="@+id/sign_in_logo"
+            app:layout_constraintVertical_bias="0.507"
             tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_id"
+            android:id="@+id/sign_in_login_id"
             android:layout_width="315dp"
             android:layout_height="53dp"
-            android:layout_marginTop="7dp"
-
+            android:layout_marginBottom="328dp"
             android:background="@drawable/border"
             android:color="@color/white"
             android:hint="  아이디를 입력해주세요"
@@ -51,8 +49,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/shapeableImageView"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintTop_toBottomOf="@+id/sign_in_login_join_text"
+            app:layout_constraintVertical_bias="0.2"
             tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -60,19 +58,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="12dp"
+            android:hint="비밀번호를 입력해주세요"
+            android:textColorHint="@color/dark1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_id"
+            app:layout_constraintTop_toBottomOf="@+id/sign_in_login_id"
             app:passwordToggleEnabled="true"
             app:passwordToggleTint="@color/dark1">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/login_password"
+                android:id="@+id/sign_in_password"
                 android:layout_width="315dp"
                 android:layout_height="53dp"
                 android:inputType="textPassword"
                 android:background="@drawable/border"
-                android:hint="비밀번호를 입력해주세요"
-                android:textColorHint="@color/dark1"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -81,34 +79,33 @@
                 app:layout_constraintVertical_bias="0.6" />
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/existing_login"
+            android:id="@+id/sign_in_existing_login"
             android:layout_width="286dp"
             android:layout_height="48dp"
             android:backgroundTint="@color/selector_green1_else_dark1"
             android:text="기존 회원 로그인"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintHorizontal_bias="0.488"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-            app:layout_constraintVertical_bias="0.098"
+            app:layout_constraintVertical_bias="0.073"
             app:shapeAppearance="@color/selector_green1_else_dark1" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/find_id_password"
+            android:id="@+id/sign_in_find_id_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#00ff0000"
             android:text="아이디 비밀번호 찾기   |"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.315"
+            app:layout_constraintEnd_toStartOf="@+id/join"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.762" />
+            app:layout_constraintTop_toBottomOf="@+id/sign_in_existing_login"
+            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/join"
@@ -119,25 +116,42 @@
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.754"
+            app:layout_constraintHorizontal_bias="0.795"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.762" />
+            app:layout_constraintTop_toBottomOf="@+id/sign_in_existing_login"
+            app:layout_constraintVertical_bias="0.0" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/line"
+            android:id="@+id/sign_in_line"
             android:layout_width="353dp"
             android:layout_height="26dp"
             android:layout_gravity="center"
-            android:src="@drawable/line"
+            android:src="@drawable/ic_sign_in_line"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.807"
+            app:layout_constraintTop_toBottomOf="@+id/sign_in_find_id_password"
+            app:layout_constraintVertical_bias="0.0"
             tools:ignore="MissingConstraints" />
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/sign_in_btn_cacao_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/ic_sign_in_cacao_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sign_in_line" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/sign_in_cacao_text"
+            android:layout_width="353dp"
+            android:layout_height="13dp"
+            android:src="@drawable/ic_sign_in_cacao"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sign_in_btn_cacao_login" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
