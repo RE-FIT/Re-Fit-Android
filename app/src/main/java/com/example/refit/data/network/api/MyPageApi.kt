@@ -3,6 +3,7 @@ package com.example.refit.data.network.api
 import androidx.lifecycle.LiveData
 import com.example.refit.data.model.community.CommunityListItemResponse
 import com.example.refit.data.model.mypage.CheckNicknameResponse
+import com.example.refit.data.model.mypage.ShowInfoResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -18,10 +19,8 @@ interface MyPageApi {
     // 회원 정보 조회
     @GET("/refit/mypage/info")
     fun showInfo(
-        @Header("Authorization") token: String,
-        @Field("userId") userId : Int,
-        @Field("postType") postType : String
-    )
+        @Header("Authorization") token: String
+    ): Call<ShowInfoResponse>
 
     // 회원 정보 수정
     @Multipart
@@ -36,9 +35,9 @@ interface MyPageApi {
 
     // 이름(닉네임) 중복 확인
     @GET("/refit/mypage/info/check")
-    fun showInfo(
+    fun showMyInfo(
         @Header("Authorization") token: String,
-        @Query("name") name: LiveData<String>
+        @Query("name") name: String?
     ): Call<CheckNicknameResponse>
 
     // 내 피드 나눔
@@ -95,15 +94,3 @@ interface MyPageApi {
         @Field("price") price: Int,
     ): Call<CommunityListItemResponse>
 }
-/*
-class AuthInterceptor : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val token = "Bearer $token"
-
-        val requeset = chain.request().newBuilder()
-            .addHeader("Authorization", token)
-            .build()
-
-        return chain.proceed(requeset)
-    }
-}*/

@@ -29,7 +29,6 @@ import timber.log.Timber
 class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.fragment_my_info_update) {
 
     private val vm: MyInfoViewModel by sharedViewModel()
-    private val tokenViewModel: AccessTokenViewModel by sharedViewModel()
 
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
     private lateinit var takePicture: ActivityResultLauncher<Uri>
@@ -93,7 +92,7 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
 
             // 값 변경 시
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // 중복(확인, 수정하기 버튼 활성화 > 색깔 바뀜
+                // 중복 확인, 수정하기 버튼 활성화 > 색깔 바뀜
                 Log.d("checkNickname", "TextWatcher")
 
                 vm.updateNickname(s.toString())
@@ -126,16 +125,12 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         checkBtn.setOnClickListener {
             Timber.d("중복 확인 버튼 클릭됨")
 
-            lifecycleScope.launch {
-                vm.checkNicknameRetrofit()
-            }
+            vm.checkNicknameRetrofit()
         }
 
         // 중복확인 안 누르고 수정하기 버튼 눌렀을 때
         updateBtn.setOnClickListener {
-            if (!binding.ableName.isVisible) {
-                showMyPageNickNameCheckDialog()
-            }
+            showMyPageNickNameCheckDialog()
         }
 
         vm.initAllStatus()

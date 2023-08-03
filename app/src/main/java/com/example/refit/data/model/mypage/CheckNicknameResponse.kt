@@ -1,5 +1,8 @@
 package com.example.refit.data.model.mypage
 
-data class CheckNicknameResponse (
-    val checked: Boolean
+import com.google.gson.annotations.SerializedName
+
+data class CheckNicknameResponse(
+    @SerializedName(value = "Checked")
+    val Checked: Boolean
 )

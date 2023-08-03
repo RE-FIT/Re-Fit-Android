@@ -3,17 +3,16 @@ package com.example.refit.presentation.mypage.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.refit.BuildConfig
+import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
+import com.example.refit.data.model.common.ResponseError
 import com.example.refit.data.model.mypage.CheckNicknameResponse
-import com.example.refit.data.network.api.MyPageApi
 import com.example.refit.data.repository.mypage.MyPageRepository
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 
 class MyInfoViewModel(private val repository: MyPageRepository, private val ds: TokenStore) : ViewModel() {
@@ -53,6 +52,10 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     val isCheckNicknameAvailable: LiveData<Boolean>
         get() = _isCheckNicknameAvailable
 
+    private val _checkNickname: MutableLiveData<CheckNicknameResponse> = MutableLiveData<CheckNicknameResponse>()
+    val checkNickname: LiveData<CheckNicknameResponse>
+        get() = _checkNickname
+
     // 현재 비밀번호, 서버 데이터랑 같은지 확인
     private val _currentPassword: MutableLiveData<String> = MutableLiveData<String>()
     val currentPassword: LiveData<String>
@@ -79,7 +82,7 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     // 생년 월일 수정
     fun updateBirth(updateBirth: String) {
         _userBirth.value = updateBirth
-        onInfoModified(true)
+        _isInfoModified.value = true
     }
 
     // 성별 수정
@@ -88,22 +91,11 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
             0 -> _userGender.value = "남성"
             1 -> _userGender.value = "여성"
         }
-        onInfoModified(true)
+        _isInfoModified.value = true
     }
-
-    // 수정된 정보가 있을 때 해당 LiveData들을 true로 업데이트
-    private fun onInfoModified(status: Boolean) {
-        _isInfoModified.value = status
-    }
-
 
     // 현재 비밀번호 일치/불일치
     fun checkCurrenPassword(status: Boolean) {
-
-    }
-
-    // 새로운 비밀번호 조건 충족
-    fun checkNewPassword(newPw: String) {
 
     }
 
@@ -121,37 +113,31 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     }
 
     // Retrofit
-    suspend fun checkNicknameRetrofit() {
-        val token = ds.getAccessToken().first()
-        val call = RetrofitBuilder.api.showInfo(token, userNickname)
+    fun checkNicknameRetrofit() {
+        viewModelScope.launch {
+            try {
+                val token = ds.getAccessToken().first()
+                val response = repository.showMyInfo("$token", "${_userNickname.value}")
 
-        call.enqueue(object : Callback<CheckNicknameResponse> {
-            override fun onResponse(
-                call: Call<CheckNicknameResponse>,
-                response: Response<CheckNicknameResponse>
-            ) {
-                val checkResponse = response.body()
-                if (checkResponse != null) {
-                    // 성공적인 응답 처리
-                    val isDuplicate = checkResponse.checked
-
-                    Timber.d("닉네임 중복 여부: $isDuplicate")
-                }
+                response.enqueue(object : Callback<CheckNicknameResponse> {
+                    override fun onResponse(
+                        call: Call<CheckNicknameResponse>,
+                        response: Response<CheckNicknameResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            _checkNickname.value = response.body()
+                            Timber.d("닉네임 중복 여부: ${response.body()}")
+                        } else {
+                            Timber.d("404 Not Found")
+                        }
+                    }
+                    override fun onFailure(call: Call<CheckNicknameResponse>, t: Throwable) {
+                        Timber.d("401 Unauthorized: $t")
+                    }
+                })
+            } catch (e: Throwable) {
+                Timber.d("ERROR: $e")
             }
-
-            override fun onFailure(call: Call<CheckNicknameResponse>, t: Throwable) {
-                Timber.d("실패")
-            }
-        })
-    }
-
-    object RetrofitBuilder {
-
-        private val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL) // BuildConfig.BASE_URL이 null일 가능성이 있음
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val api: MyPageApi = retrofit.create(MyPageApi::class.java)
+        }
     }
 }

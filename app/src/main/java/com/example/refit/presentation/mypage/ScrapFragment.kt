@@ -15,7 +15,7 @@ class ScrapFragment: BaseFragment<FragmentScrapBinding>(R.layout.fragment_scrap)
     private val myScrapViewModel: MyScrapViewModel by sharedViewModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //binding.vm = myScrapViewModel
+        binding.vm = myScrapViewModel
 
         myScrapViewModel.getCommunityList()
         initScrapList()
