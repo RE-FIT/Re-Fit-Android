@@ -3,7 +3,7 @@ package com.example.refit.di
 import com.example.refit.data.network.NetworkInterceptor
 import com.example.refit.data.network.api.ClosetApi
 import com.example.refit.data.network.api.CommunityApi
-import com.example.refit.data.network.api.MypageApi
+import com.example.refit.data.network.api.MyPageApi
 import com.example.refit.data.network.api.SignUpApi
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
@@ -45,8 +45,8 @@ val networkModule = module {
     single<CommunityApi> {
         get<Retrofit>().create(CommunityApi::class.java)
     }
-    single<MypageApi> {
-        get<Retrofit>().create(MypageApi::class.java)
+    single<MyPageApi> {
+        get<Retrofit>().create(MyPageApi::class.java)
     }
 
 

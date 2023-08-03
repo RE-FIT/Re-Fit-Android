@@ -55,7 +55,7 @@
                     android:layout_marginBottom="27dp"
                     android:src="@drawable/ic_myinfo_camera"
                     app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"/>
 
                 <!-- 이름(닉네임) -->
                 <TextView
@@ -167,7 +167,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="26dp"
                             android:background="@drawable/btn_my_info_check"
-                            android:backgroundTint="@{vm.isCheckNicknameAvailable() ? @color/green1 : @color/dark1}"
+                            android:backgroundTint="@{vm.isCheckNicknameAvailable() == true ? @color/green1 : @color/dark1}"
                             android:clickable="@{vm.isCheckNicknameAvailable() == true ? true : false, default = false}"
                             android:padding="0dp"
                             android:shadowColor="@android:color/transparent"
@@ -243,13 +243,12 @@
                         android:id="@+id/btn_my_info_update"
                         style="@style/RegularFont.14"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="41dp"
                         android:layout_marginTop="33dp"
                         android:layout_marginBottom="32dp"
                         android:background="@drawable/btn_my_info_pw"
                         android:backgroundTint="@{vm.isInfoModified() == true ? @color/green1 : @color/dark1}"
                         android:clickable="@{vm.isInfoModified() == true ? true : false, default = false}"
-                        android:enabled="false"
                         android:text="@string/my_info_btn_update"
                         android:textColor="@color/white" />
 

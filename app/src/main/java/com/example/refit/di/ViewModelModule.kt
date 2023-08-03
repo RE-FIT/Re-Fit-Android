@@ -29,6 +29,6 @@ val viewModelModule = module{
     viewModel { MyScrapViewModel(get()) }
     viewModel { MyFeedViewModel(get()) }
     viewModel { MyPageViewModel(get()) }
-    viewModel { MyInfoViewModel(get()) }
+    viewModel { MyInfoViewModel(get(), get()) }
 
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/nav_closet">
+    app:startDestination="@id/signInFragment">
 
     <fragment
         android:id="@+id/signInFragment"
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/findIdPasswordFragment"
-        android:name="com.example.refit.presentation.findidpassword.FindIdPasswordFragment"
+        android:name="com.example.refit.presentation.findidpassword.FindPasswordFragment"
         android:label="fragment_find_id_password"
         tools:layout="@layout/fragment_find_id_password">
     </fragment>
