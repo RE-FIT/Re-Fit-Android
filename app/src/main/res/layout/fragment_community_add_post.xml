@@ -210,6 +210,7 @@
                             android:layout_height="40dp"
                             android:background="@drawable/bg_solid_white_radius_10"
                             android:hint="@string/community_addpost_contents_detail_first"
+                            android:maxLines="1"
                             android:paddingHorizontal="15dp"
                             android:textColor="@color/black"
                             android:textColorHint="@color/dark2" />
@@ -596,7 +597,8 @@
                             style="@style/MediumFontKr.14"
                             android:layout_width="200dp"
                             android:layout_height="40dp"
-                            android:background="@drawable/bg_solid_dark1_radius_10"
+                            android:enabled="@{cmviewmodel.isFilledAllOptions}"
+                            android:background="@{cmviewmodel.isFilledAllOptions ? @drawable/bg_solid_green_radius_10 : @drawable/bg_solid_dark1_radius_10}"
                             android:text="@string/community_addpost_contents_done"
                             android:textColor="@color/white" />
                     </LinearLayout>

@@ -127,11 +127,8 @@ class CommunityViewModel(
                 ) {
                     if (response.isSuccessful) {
                         Timber.d("API 호출 성공")
-                        val responseBody = response.body()
-                        if (responseBody != null) {
-                            val json = responseBody.toString()
-                            // val communityList = parseCommunityList(json)
-                        }
+                        val json = response.body()?.toString()
+                        Timber.d("COMMUNITY POST API 호출 성공 : $json")
                     } else {
                         val errorBody = response.errorBody()
                         val errorCode = response.code()
@@ -154,16 +151,19 @@ class CommunityViewModel(
             "커뮤니티 글 상세 페이지 로딩 오류: $e"
         }
     }
+
     fun setDropDownController(type: Int, value: String) {
         when (type) {
             0 -> {
                 // 글 타입 (나눔/판매)
                 _dropDownValue[0].value = conversionTextToType(0, value)
             }
+
             1 -> {
                 // 성별 (여성복/남성복)
                 _dropDownValue[1].value = conversionTextToType(1, value)
             }
+
             2 -> {
                 // 카테고리 (상의/하의/...)
                 _dropDownValue[2].value = conversionTextToType(2, value)
@@ -176,7 +176,7 @@ class CommunityViewModel(
     }
 
     fun initStatus() {
-        for(item in _dropDownValue) {
+        for (item in _dropDownValue) {
             item.value = 0
         }
     }
@@ -216,6 +216,7 @@ class CommunityViewModel(
                 4 -> "XL"
                 else -> "Unknown"
             }
+
             4 -> when (value) {
                 "null" -> "전국"
                 else -> "Unknown"

@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
-import com.example.refit.data.model.community.CommunityListItemResponse
 import com.example.refit.data.model.community.PostDTODelivery
 import com.example.refit.data.model.community.PostDTODt
 import com.example.refit.data.repository.community.CommunityRepository
@@ -24,7 +23,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 import java.io.File
-import java.lang.Exception
 
 class CommunityAddPostViewModel(
     private val repository: CommunityRepository,
@@ -114,12 +112,20 @@ class CommunityAddPostViewModel(
         get() = _isSFExclude
 
     // 필수 입력 항목들 값 채워짐 여부
-    // 이미지(0), 글 제목(1), 추천 성별(2), 카테고리(3), 사이즈(4), 거래 방식(직/배-5), 가격(6), 상세 설명(7)
+    // 이미지(0), 글 제목(1), 추천 성별(2), 카테고리(3), 사이즈(4), 거래 방식(직/배-5), 상세 설명(6)
     private val _isFilledValue: List<MutableLiveData<Boolean>> =
-        List(8) { MutableLiveData<Boolean>() }
+        List(7) { MutableLiveData<Boolean>() }
     val isFilledValue: List<LiveData<Boolean>>
         get() = _isFilledValue
 
+    // 직거래의 경우의 필수 항목 채워짐 여부: sido(0), sigungu(1), bname(2), bname2(3)
+    val _isFilledValueDt: List<MutableLiveData<Boolean>> = List(4) { MutableLiveData<Boolean>() }
+    val isFilledValueDt: List<LiveData<Boolean>>
+        get() = _isFilledValueDt
+
+    private val _isFilledPrice: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFilledPrice: LiveData<Boolean>
+        get() = _isFilledPrice
 
     private val _isFilledFee: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isFilledFee: LiveData<Boolean>
@@ -129,14 +135,18 @@ class CommunityAddPostViewModel(
     val isFilledDialogEditSF: LiveData<Boolean>
         get() = _isFilledDialogEditSF
 
-// TODO 배송비 옵션 까지만 설정해둔 상태 밑으로 더 추가해줘야 함
+    // 등록에 필요한 모든 값이 채워졌는가?
+    private val _isFilledAllOptions: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFilledAllOptions: LiveData<Boolean>
+        get() = _isFilledAllOptions
+
 
     fun checkTransactionType(selectedType: String, typeList: List<String>) {
         when (selectedType) {
             typeList[0] -> { // 나눔
                 _postValue[0].value = 0
                 _postValue[6].value = 0
-                _isFilledValue[6].value = true
+                _isFilledPrice.value = true
             }
 
             else -> { // 판매
@@ -239,12 +249,13 @@ class CommunityAddPostViewModel(
             }
 
             5 -> _isFilledValue[5].value = status // 거래 방식(직/배)
-            6 -> _isFilledValue[6].value = status // 가격
-            7 -> _isFilledValue[7].value = status // 상세 설명
+            6 -> _isFilledPrice.value = status // 가격
+            7 -> _isFilledValue[6].value = status // 상세 설명
             8 -> _isFilledFee.value = status
             9 -> _isFilledDialogEditSF.value = status
             10 -> _isSFExclude.value = status
         }
+        gaugeFilledStatus()
     }
 
     fun setShippingFee(value: Int) {
@@ -258,6 +269,41 @@ class CommunityAddPostViewModel(
                 else -> _isFilledImageValues[i].value = false
             }
         }
+    }
+
+    fun gaugeFilledStatus() {
+        val pt = _postValue[0].value ?: 0
+        val dt = _postValue[1].value ?: 0
+        var gauge: Boolean = true
+
+
+        gauge = gauge && _isFilledValue.all { it.value == true }
+        Timber.d("글 등록 가시성 value 리스트에서 $gauge")
+        Timber.d("_isFilledValue 글 등록 가시성:\n${_isFilledValue[0].value}\n" +
+                "${_isFilledValue[1].value}\n" +
+                "${_isFilledValue[2].value}\n" +
+                "${_isFilledValue[3].value}\n" +
+                "${_isFilledValue[4].value}\n" +
+                "${_isFilledValue[5].value}\n" +
+                "${_isFilledValue[6].value}")
+
+
+        if (dt == 0) { // 직거래인 경우
+            gauge = gauge && (_isFilledValueDt[0]?.value == true)
+            Timber.d("글 등록 가시성 직거래의 경우에서 $gauge")
+        } else { // 배송인 경우
+            gauge = gauge && (_isFilledFee.value == true)
+            Timber.d("글 등록 가시성 배송의 경우에서 $gauge")
+        }
+
+        if (pt == 1) { // 판매인 경우
+            // price 필수 입력 체크 추가
+            gauge = gauge && (_isFilledPrice.value == true)
+            Timber.d("글 등록 가시성 판매의 경우에서 $gauge")
+        }
+
+        _isFilledAllOptions.value = gauge
+        Timber.d("글 등록 가시성 테스트: pt-$pt, dt:$dt, 총괄: ${_isFilledAllOptions.value}")
     }
 
     private fun conversionTextToType(itemType: Int, value: String): Int {
@@ -405,12 +451,18 @@ class CommunityAddPostViewModel(
     }
 
     fun initFilledState() {
+        _isFilledAllOptions.value = false
+
         for (item in _isFilledValue) {
+            item.value = false
+        }
+        for(item in _isFilledValueDt) {
             item.value = false
         }
         for (item in _isFilledImageValues) {
             item.value = false
         }
+
         _isFilledFee.value = false
         _isFilledDialogEditSF.value = false
         _isSFExclude.value = false

@@ -29,6 +29,7 @@ import com.example.refit.presentation.common.DialogUtil
 import com.example.refit.presentation.common.DialogUtil.showCommunityAddShippingFeeDiaglog
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
+import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialogListener
 import com.example.refit.util.FileUtil
@@ -91,6 +92,7 @@ class CommunityAddPostFragment :
 
         binding.cvCommunityAddpostTransactionMethod.setOnClickListener {
             communityAddPostViewModel.setClickedOptionTM(clicked = true)
+            communityAddPostViewModel.setFilledStatus(5, false, "")
             val listPopupWindow =
                 getPopupMenu(it, R.array.community_item_search_option_transaction_method)
             setPopupItemClickListener(it.id, listPopupWindow)
@@ -169,13 +171,17 @@ class CommunityAddPostFragment :
         binding.rgCommunityAddpostInputFee.setOnCheckedChangeListener { _, id ->
             val type: Boolean = when (id) {
                 R.id.rb_community_addpost_input_include_fee -> {
+                    communityAddPostViewModel.setFilledStatus(8, true, "")
                     binding.tvCommunityAddpostSf.text = ""
                     binding.tvCommunityAddpostFeeInput.text =
                         getString(R.string.community_addpost_contents_detail_fourth_input)
                     false
                 }
 
-                R.id.rb_community_addpost_input_exclude_fee -> true
+                R.id.rb_community_addpost_input_exclude_fee -> {
+                    communityAddPostViewModel.setFilledStatus(8, false, "")
+                    true
+                }
                 else -> false
             }
             communityAddPostViewModel.setFilledStatus(10, type, "")
@@ -199,17 +205,31 @@ class CommunityAddPostFragment :
     }
 
     private fun observeEditTextChanges() {
+        binding.etCommunityAddpostTitle.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val isFilled = p0?.isNotEmpty() == true
+                communityAddPostViewModel.setFilledStatus(1, isFilled, "")
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        })
+
         binding.etCommunityAddpostPrice.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 communityAddPostViewModel.setPriceInputCompleted("")
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val isFilled = s?.isNotEmpty() == true
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val isFilled = p0?.isNotEmpty() == true
                 communityAddPostViewModel.setFilledStatus(6, isFilled, "")
             }
 
-            override fun afterTextChanged(s: Editable?) {
+            override fun afterTextChanged(p0: Editable?) {
             }
         })
 
@@ -271,6 +291,7 @@ class CommunityAddPostFragment :
                 }
             }
             communityAddPostViewModel.createPost(title, detail, imageFiles)
+            navigateUp()
         }
     }
     private fun copyFileToInternalStorage(uri: Uri): File? {
