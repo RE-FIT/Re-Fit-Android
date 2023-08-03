@@ -12,6 +12,7 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.io.IOException
 
 
 interface CommunityApi {
@@ -26,73 +27,11 @@ interface CommunityApi {
 
     @Multipart
     @POST("refit/community")
-    fun createPostShareNDt(
+    fun createPost(
         @Header("Authorization") accessToken: String,
-        @Part("title") title: RequestBody,
-        @Part("gender") gender: RequestBody,
-        @Part("postType") postType: RequestBody,
-        @Part("category") category: RequestBody,
-        @Part("size") size: RequestBody,
-        @Part("deliveryType") deliveryType: RequestBody,
-        @Part("detail") detail: RequestBody,
-        @Part("sido") sido: RequestBody,
-        @Part("sigungu") sigungu: RequestBody,
-        @Part("bname") bname: RequestBody,
-        @Part("bname2") bname2: RequestBody,
-        @Part images: List<MultipartBody.Part>
+        @Part ("postDto") postDto: RequestBody,
+        @Part image: List<MultipartBody.Part>
     ): Call<ResponseBody>
-
-
-    @Multipart
-    @POST("refit/community")
-    fun createPostShareNDelivery(
-        @Header("Authorization") accessToken: String,
-        @Part("title") title: RequestBody,
-        @Part("gender") gender: RequestBody,
-        @Part("postType") postType: RequestBody,
-        @Part("category") category: RequestBody,
-        @Part("size") size: RequestBody,
-        @Part("deliveryType") deliveryType: RequestBody,
-        @Part("deliveryFee") deliveryFee: RequestBody,
-        @Part("detail") detail: RequestBody,
-        @Part images: List<MultipartBody.Part>
-    ): Call<ResponseBody>
-
-    @Multipart
-    @POST("refit/community")
-    fun createPostSaleNDt(
-        @Header("Authorization") accessToken: String,
-        @Part("title") title: RequestBody,
-        @Part("gender") gender: RequestBody,
-        @Part("postType") postType: RequestBody,
-        @Part("price") price: RequestBody,
-        @Part("category") category: RequestBody,
-        @Part("size") size: RequestBody,
-        @Part("deliveryType") deliveryType: RequestBody,
-        @Part("detail") detail: RequestBody,
-        @Part("sido") sido: RequestBody,
-        @Part("sigungu") sigungu: RequestBody,
-        @Part("bname") bname: RequestBody,
-        @Part("bname2") bname2: RequestBody,
-        @Part images: List<MultipartBody.Part>
-    ): Call<ResponseBody>
-
-    @Multipart
-    @POST("refit/community")
-    fun createPostSaleNDelivery(
-        @Header("Authorization") accessToken: String,
-        @Part("title") title: RequestBody,
-        @Part("gender") gender: RequestBody,
-        @Part("postType") postType: RequestBody,
-        @Part("price") price: RequestBody,
-        @Part("category") category: RequestBody,
-        @Part("size") size: RequestBody,
-        @Part("deliveryType") deliveryType: RequestBody,
-        @Part("deliveryFee") deliveryFee: RequestBody,
-        @Part("detail") detail: RequestBody,
-        @Part images: List<MultipartBody.Part>
-    ): Call<ResponseBody>
-
 
     @GET("refit/community/{postId}")
     fun getPost(

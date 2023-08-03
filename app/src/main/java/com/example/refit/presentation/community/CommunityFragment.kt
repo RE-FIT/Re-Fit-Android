@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.refit.R
 import com.example.refit.databinding.FragmentCommunityBinding
@@ -31,7 +32,8 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         super.onViewCreated(view, savedInstanceState)
         binding.vm = communityViewModel
 
-        // communityViewModel.loadCommunityList()
+        communityViewModel.initStatus()
+        communityViewModel.loadCommunityList()
         initCommunityList()
         initCommunityOptionDropdown()
         setClickedButton()
@@ -39,12 +41,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
     }
 
     private fun initCommunityOptionDropdown() {
-        binding.cvCommunityOptionCategory.setOnClickListener {
-            val listPopupWindow = getPopupMenu(it, R.array.community_item_search_option_category)
-            setPopupItemClickListener(it.id, listPopupWindow)
-            listPopupWindow.show()
-        }
-
         binding.cvCommunityOptionType.setOnClickListener {
             val listPopupWindow = getPopupMenu(it, R.array.community_item_search_option_type)
             setPopupItemClickListener(it.id, listPopupWindow)
@@ -56,20 +52,34 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
             setPopupItemClickListener(it.id, listPopupWindow)
             listPopupWindow.show()
         }
+
+        binding.cvCommunityOptionCategory.setOnClickListener {
+            val listPopupWindow = getPopupMenu(it, R.array.community_item_search_option_category)
+            setPopupItemClickListener(it.id, listPopupWindow)
+            listPopupWindow.show()
+        }
     }
 
     private fun setPopupItemClickListener(viewId: Int, popupMenu: ListPopupWindow) {
-        val textView: TextView = when (viewId) {
-            binding.cvCommunityOptionCategory.id -> binding.tvCommunityOptionCategory
-            binding.cvCommunityOptionType.id -> binding.tvCommunityOptionType
-            binding.cvCommunityOptionGender.id -> binding.tvCommunityOptionGender
-            else -> return
-        }
-
         popupMenu.setOnItemClickListener { _, view, _, _ ->
             val itemDescription = (view as TextView).text.toString()
-            textView.text = itemDescription
-            Timber.d(itemDescription)
+            when (viewId) {
+                binding.cvCommunityOptionType.id -> {
+                    binding.tvCommunityOptionType.text = itemDescription
+                    communityViewModel.setDropDownController(0, itemDescription)
+                }
+
+                binding.cvCommunityOptionGender.id -> {
+                    binding.tvCommunityOptionGender.text = itemDescription
+                    communityViewModel.setDropDownController(1, itemDescription)
+                }
+
+                binding.cvCommunityOptionCategory.id -> {
+                    binding.tvCommunityOptionCategory.text = itemDescription
+                    communityViewModel.setDropDownController(2, itemDescription)
+                }
+            }
+            communityViewModel.loadCommunityList()
             popupMenu.dismiss()
         }
     }
@@ -89,11 +99,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
     private fun initCommunityList() {
         binding.rvCommunityList.layoutManager = LinearLayoutManager(requireActivity())
-        binding.rvCommunityList.adapter = CommunityListAdapter(communityViewModel)
-        communityViewModel.communityList.observe(viewLifecycleOwner) { list ->
-            CommunityListAdapter(communityViewModel).submitList(list)
+        binding.rvCommunityList.adapter = CommunityListAdapter(communityViewModel).apply {
+            communityViewModel.communityList.observe(viewLifecycleOwner) { list ->
+                //CommunityListAdapter(communityViewModel).submitList(list)
+                submitList(list)
+            }
         }
-        communityViewModel.loadCommunityList()
     }
 
     private fun setClickedButton() {

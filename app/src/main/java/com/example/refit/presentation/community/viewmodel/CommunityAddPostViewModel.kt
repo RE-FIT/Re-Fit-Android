@@ -7,14 +7,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
-import com.example.refit.data.model.community.PostDTO
+import com.example.refit.data.model.community.CommunityListItemResponse
+import com.example.refit.data.model.community.PostDTODelivery
+import com.example.refit.data.model.community.PostDTODt
 import com.example.refit.data.repository.community.CommunityRepository
+import com.google.gson.Gson
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 import java.io.File
@@ -66,11 +72,16 @@ class CommunityAddPostViewModel(
     val isVisibleRegionStatus: LiveData<Boolean>
         get() = _isVisibleRegionStatus
 
-    /////////////////////////////////////////////// 코드 리팩토링 중 ////////////////////////////////////////////////
     // VALUE - 글 타입(0), 거래 방식(1), 배송비(2), 카테고리(3), 사이즈(4), 추천 성별(5), 가격(6)
-    private val _postValue: List<MutableLiveData<Int>> = List(7) { MutableLiveData<Int>() }
+    private val _postValue: List<MutableLiveData<Int>> = List(11) { MutableLiveData<Int>() }
     val postValue: List<LiveData<Int>>
         get() = _postValue
+
+    // ADDRESS VALUE - 시도(0), 시군구(1), bname(2), bname2(3)
+    private val _postAddressValue: List<MutableLiveData<String>> =
+        List(4) { MutableLiveData<String>() }
+    val postAddressValue: List<LiveData<String>>
+        get() = _postAddressValue
 
 
     // 거래 방식-3 (가격 정보) : 입력 받지 않음 (false), 입력 예정 (true)
@@ -191,7 +202,7 @@ class CommunityAddPostViewModel(
 
     fun setPriceInputCompleted(value: String) {
         _isPriceInputCompleted.value = value.isNotEmpty()
-        if(value.isNotEmpty()) {
+        if (value.isNotEmpty()) {
             _postValue[6].value = value.toInt()
         }
     }
@@ -291,73 +302,67 @@ class CommunityAddPostViewModel(
         images: List<File>
     ) = viewModelScope.launch {
         val token = ds.getAccessToken().first()
-        if (images == null || images.isEmpty()) {
+        if (images.isEmpty()) {
             Timber.d("이미지 파일이 없습니다.")
             return@launch
         }
         try {
-
-            val gender = _postValue[5].value ?: 0
-            val postType = _postValue[0].value ?: 0
-            val price = _postValue[6].value ?: 0
-            val category = _postValue[3].value ?: 0
-            val size = _postValue[4].value ?: 0
             val deliveryType = _postValue[1].value ?: 0
-            val deliveryFee = _postValue[2].value ?: 0
-            val sido = "서울시"
-            val sigungu = "중랑구"
-            val bname = "묵동"
-            val bname2 = ""
 
-
-            // 나눔 && 직거래
-            var response: Call<ResponseBody> = repository.createPostShareNDt(
-                token, title, gender, postType, category, size, deliveryType, detail, sido, sigungu, bname, bname2, images )
-
-            when (postType) {
-                // 나눔
+            val postDTO = when (deliveryType) {
                 0 -> {
-                    when (deliveryType) {
-                        // 직거래
-                        0 -> {
-                            Timber.d("나눔 & 직거래")
-                        }
-                        // 배송
-                        1 -> {
-                            response = repository.createPostShareNDelivery(
-                                token, title, gender, postType, category, size, deliveryType, deliveryFee, detail, images)
-                            Timber.d("나눔 & 배송")
-                        }
-                    }
+                    PostDTODt(
+                        title = title,
+                        gender = _postValue[5].value ?: 0,
+                        postType = _postValue[0].value ?: 0,
+                        price = _postValue[6].value ?: 0,
+                        category = _postValue[3].value ?: 0,
+                        size = _postValue[4].value ?: 0,
+                        deliveryType = _postValue[1].value ?: 0,
+                        deliveryFee = _postValue[2].value ?: 0,
+                        detail = detail,
+                        sido = _postAddressValue[0].value ?: "서울시",
+                        sigungu = _postAddressValue[1].value ?: "중랑구",
+                        bname = _postAddressValue[2].value ?: "묵동",
+                        bname2 = _postAddressValue[3].value ?: "",
+                    )
                 }
-                // 판매
+
                 1 -> {
-                    when (deliveryType) {
-                        0 -> {
-                            response = repository.createPostSaleNDt(token, title, gender, postType, price, category, size, deliveryType, detail, sido, sigungu, bname, bname2, images)
-                            Timber.d("판매 & 직거래")
-                        }
-                        1 -> {
-                            response = repository.createPostSaleNDelivery(token, title, gender, postType, price, category, size, deliveryType, deliveryFee, detail, images)
-                            Timber.d("판매 & 나눔")
-                        }
-                    }
+                    PostDTODelivery(
+                        title = title,
+                        gender = _postValue[5].value ?: 0,
+                        postType = _postValue[0].value ?: 0,
+                        price = _postValue[6].value ?: 0,
+                        category = _postValue[3].value ?: 0,
+                        size = _postValue[4].value ?: 0,
+                        deliveryType = _postValue[1].value ?: 0,
+                        deliveryFee = _postValue[2].value ?: 0,
+                        detail = detail,
+                    )
                 }
+
+                else -> Timber.d("postDTO 생성 과정 오류 발생")
             }
 
+            // PostDto 객체를 JSON 형태의 문자열로 변환
+            val postDtoJson = Gson().toJson(postDTO)
+            Timber.d("postDto to JSON : ${postDtoJson.toString()}")
+            val postDtoRequestBody =
+                postDtoJson.toRequestBody("application/json".toMediaTypeOrNull())
 
-            Timber.d("title: $title\ngender: $gender \npostType: $postType\nprice: $price\n" +
-                    "category: $category\nsize: $size\ndeliveryType: $deliveryType\n" +
-                    "deliveryFee: $deliveryFee\ndetail: $detail\nimages: ${images.toString()}")
-           // val response = repository.createPost(token, title, 0, 0, 0, 0, 0, 10000, detail, images)
+            var response: Call<ResponseBody> = repository.createPost(
+                token, postDtoRequestBody, images
+            )
 
-            response.enqueue(object : retrofit2.Callback<ResponseBody> {
+            response.enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
                     response: Response<ResponseBody>
                 ) {
                     if (response.isSuccessful) {
-                        Timber.d("COMMUNITY POST API 호출 성공")
+                        val json = response.body()?.string()
+                        Timber.d("COMMUNITY POST API 호출 성공 : $json")
                     } else {
                         try {
                             val errorBody = response.errorBody()
@@ -401,6 +406,9 @@ class CommunityAddPostViewModel(
 
     fun initFilledState() {
         for (item in _isFilledValue) {
+            item.value = false
+        }
+        for (item in _isFilledImageValues) {
             item.value = false
         }
         _isFilledFee.value = false

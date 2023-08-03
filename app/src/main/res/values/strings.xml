@@ -99,6 +99,9 @@
     <string name="community_item_text_first">사이즈</string>
     <string name="community_item_text_second">거래방식</string>
     <string name="community_item_text_third">거래지역</string>
+    <string name="community_item_region_all">전국</string>
+    <string name="community_item_region">%1$s %2$s %3$s %4$s</string>
+
 
     <string name="community_info_toolbar_title">나눔</string>
     <string name="community_info_toolbar_title2">판매</string>
@@ -179,7 +182,6 @@
     <string name="community_search_contents_second">거래가 완료된 경우에는 검색되지 않아요.</string>
     <string name="community_search_contents_third">찾으시는 물건이 없다면, 이렇게 검색해보세요!</string>
     <string name="community_search_contents_fourth">· 검색어를 바르게 입력했는지 확인해보세요.\n· 간단한 단어로 검색해보세요. (예: 빨간 셔츠 → 셔츠)</string>
-
 
 
     <!-- my page -->

@@ -99,32 +99,17 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/cv_community_option_category"
-                            style="@style/CommunityOptionCardView.Common"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/tv_community_option_category"
-                                style="@style/CommunitySearchOption.TextCommon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/community_search_option_first" />
-
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_community_option_type"
                             style="@style/CommunityOptionCardView.Common"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
-                            <androidx.appcompat.widget.AppCompatTextView
+                            <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/tv_community_option_type"
                                 style="@style/CommunitySearchOption.TextCommon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/community_search_option_second" />
+                                android:text="@string/community_search_option_first" />
 
                         </com.google.android.material.card.MaterialCardView>
 
@@ -136,6 +121,21 @@
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tv_community_option_gender"
+                                style="@style/CommunitySearchOption.TextCommon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/community_search_option_second" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cv_community_option_category"
+                            style="@style/CommunityOptionCardView.Common"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_community_option_category"
                                 style="@style/CommunitySearchOption.TextCommon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
