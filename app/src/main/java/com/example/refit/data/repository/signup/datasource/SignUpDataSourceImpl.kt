@@ -1,10 +1,12 @@
 package com.example.refit.data.repository.signup.datasource
 
+import com.example.refit.data.model.signup.RegisterUserRequest
 import com.example.refit.data.model.signup.RequestEmailCertification
 import com.example.refit.data.model.signup.ResponseEmailCertification
 import com.example.refit.data.network.api.SignUpApi
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 
 class SignUpDataSourceImpl(private val signUpApi: SignUpApi) : SignUpDataSource {
 
@@ -22,5 +24,10 @@ class SignUpDataSourceImpl(private val signUpApi: SignUpApi) : SignUpDataSource 
 
     override suspend fun logout(accessToken: String): Call<ResponseBody> {
         return signUpApi.logout(accessToken)
+    }
+
+    // 회원 가입용 임시 코드 (추후 삭제 예정)
+    override suspend fun requestJoinUser(body: RegisterUserRequest): Call<ResponseBody> {
+        return signUpApi.requestJoinUser(body)
     }
 }
