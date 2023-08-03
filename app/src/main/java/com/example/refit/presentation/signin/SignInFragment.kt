@@ -34,7 +34,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         //로그인
         //id: admin1234
         //password: AAaa1234!!
-        binding.existingLogin.setOnClickListener {
+        binding.signInExistingLogin.setOnClickListener {
             // vm.signUpUser("admin1234", "AAaa1234!!","refit@gmail.com","어드민","2023/07/12", 0)
             viewModel.basicLogin("admin1234", "AAaa1234!!")
         }
@@ -51,7 +51,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         }
 
         //아이디 비밀번호 찾기 이동
-        binding.findIdPassword.setOnClickListener(){
+        binding.signInFindIdPassword.setOnClickListener(){
             navigate(R.id.action_signInFragment_to_findIdPasswordFragment)
         }
 
