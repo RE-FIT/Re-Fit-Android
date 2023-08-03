@@ -8,14 +8,18 @@ import com.example.refit.presentation.AccessTokenViewModel
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.signin.viewmodel.SignInViewModel
+import com.example.refit.presentation.signup.viewmodel.SignUpViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import timber.log.Timber
 
 class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sign_in) {
 
     private val tokenViewModel: AccessTokenViewModel by sharedViewModel()
     private val viewModel: SignInViewModel by sharedViewModel()
+    private val vm: SignUpViewModel by sharedViewModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //viewModel.logout()
 
         /*//엑세스 토큰 체크
         tokenViewModel.checkAccessToken()
@@ -31,8 +35,10 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         //id: admin1234
         //password: AAaa1234!!
         binding.existingLogin.setOnClickListener {
+            // vm.signUpUser("admin1234", "AAaa1234!!","refit@gmail.com","어드민","2023/07/12", 0)
             viewModel.basicLogin("admin1234", "AAaa1234!!")
         }
+
 
         //로그인 시 이동
         viewModel.accessToken.observe(viewLifecycleOwner) {

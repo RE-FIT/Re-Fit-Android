@@ -5,12 +5,29 @@ import android.icu.text.DecimalFormat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.refit.data.datastore.TokenStore
+import com.example.refit.data.model.community.PostDTODelivery
+import com.example.refit.data.model.community.PostDTODt
 import com.example.refit.data.repository.community.CommunityRepository
+import com.google.gson.Gson
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.ResponseBody
+import org.json.JSONException
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import timber.log.Timber
+import java.io.File
 
-class CommunityAddPostViewModel (
-    private val communityRepository: CommunityRepository
-): ViewModel() {
+class CommunityAddPostViewModel(
+    private val repository: CommunityRepository,
+    private val ds: TokenStore
+) : ViewModel() {
 
     private val _isTransactionMethodChip: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isTransactionMethodChip: LiveData<Boolean>
@@ -33,7 +50,8 @@ class CommunityAddPostViewModel (
         get() = _isClickedOptionTM
 
     // 이미지 개수별 가시성
-    private val _isFilledImageValues: List<MutableLiveData<Boolean>> = (0 until 5).map { MutableLiveData<Boolean>() }
+    private val _isFilledImageValues: List<MutableLiveData<Boolean>> =
+        (0 until 5).map { MutableLiveData<Boolean>() }
     val isFilledImageValues: List<LiveData<Boolean>>
         get() = _isFilledImageValues
 
@@ -52,16 +70,17 @@ class CommunityAddPostViewModel (
     val isVisibleRegionStatus: LiveData<Boolean>
         get() = _isVisibleRegionStatus
 
+    // VALUE - 글 타입(0), 거래 방식(1), 배송비(2), 카테고리(3), 사이즈(4), 추천 성별(5), 가격(6)
+    private val _postValue: List<MutableLiveData<Int>> = List(11) { MutableLiveData<Int>() }
+    val postValue: List<LiveData<Int>>
+        get() = _postValue
 
-    // 거래 방식-1 나눔(0), 판매(1)
-    private val _selectedType: MutableLiveData<Int> = MutableLiveData<Int>()
-    val selectedType: LiveData<Int>
-        get() = _selectedType
+    // ADDRESS VALUE - 시도(0), 시군구(1), bname(2), bname2(3)
+    private val _postAddressValue: List<MutableLiveData<String>> =
+        List(4) { MutableLiveData<String>() }
+    val postAddressValue: List<LiveData<String>>
+        get() = _postAddressValue
 
-    // 거래 방식-2 배송(1), 직거래(2)
-    private val _selectedTMType: MutableLiveData<Int> = MutableLiveData<Int>()
-    val selectedTMType: LiveData<Int>
-        get() = _selectedTMType
 
     // 거래 방식-3 (가격 정보) : 입력 받지 않음 (false), 입력 예정 (true)
     private val _priceCategory: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
@@ -92,39 +111,17 @@ class CommunityAddPostViewModel (
     val isSFExclude: LiveData<Boolean>
         get() = _isSFExclude
 
-    // 배송비 별도 시 배송비
-    private val _shippingFee: MutableLiveData<Int> = MutableLiveData<Int>()
-    val shippingFee: LiveData<Int>
-        get() = _shippingFee
-
     // 필수 입력 항목들 값 채워짐 여부
-    private val _isFilledImage: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isFilledImage: LiveData<Boolean>
-        get() = _isFilledImage
+    // 이미지(0), 글 제목(1), 추천 성별(2), 카테고리(3), 사이즈(4), 거래 방식(직/배-5), 상세 설명(6)
+    private val _isFilledValue: List<MutableLiveData<Boolean>> =
+        List(7) { MutableLiveData<Boolean>() }
+    val isFilledValue: List<LiveData<Boolean>>
+        get() = _isFilledValue
 
-    private val _isFilledTitle: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isFilledTitle: LiveData<Boolean>
-        get() = _isFilledTitle
-
-    private val _isFilledRG: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isFilledRG: LiveData<Boolean>
-        get() = _isFilledRG
-
-    private val _isFilledCategory: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isFilledCategory: LiveData<Boolean>
-        get() = _isFilledCategory
-
-    private val _isFilledSize: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isFilledSize: LiveData<Boolean>
-        get() = _isFilledSize
-
-    private val _isFilledTMChip: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isFilledTMChip: LiveData<Boolean>
-        get() = _isFilledTMChip
-
-    private val _isFilledTM: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isFilledTM: LiveData<Boolean>
-        get() = _isFilledTM
+    // 직거래의 경우의 필수 항목 채워짐 여부: sido(0), sigungu(1), bname(2), bname2(3)
+    val _isFilledValueDt: List<MutableLiveData<Boolean>> = List(4) { MutableLiveData<Boolean>() }
+    val isFilledValueDt: List<LiveData<Boolean>>
+        get() = _isFilledValueDt
 
     private val _isFilledPrice: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isFilledPrice: LiveData<Boolean>
@@ -138,15 +135,22 @@ class CommunityAddPostViewModel (
     val isFilledDialogEditSF: LiveData<Boolean>
         get() = _isFilledDialogEditSF
 
-// TODO 배송비 옵션 까지만 설정해둔 상태 밑으로 더 추가해줘야 함
+    // 등록에 필요한 모든 값이 채워졌는가?
+    private val _isFilledAllOptions: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFilledAllOptions: LiveData<Boolean>
+        get() = _isFilledAllOptions
+
 
     fun checkTransactionType(selectedType: String, typeList: List<String>) {
         when (selectedType) {
-            typeList[0] -> {
-                _selectedType.value = 0
+            typeList[0] -> { // 나눔
+                _postValue[0].value = 0
+                _postValue[6].value = 0
+                _isFilledPrice.value = true
             }
-            else -> {
-                _selectedType.value = 1
+
+            else -> { // 판매
+                _postValue[0].value = 1
             }
         }
         _isTransactionMethodChip.value = true
@@ -157,19 +161,18 @@ class CommunityAddPostViewModel (
 
 
     fun selectTransactionMethod(itemType: String) {
-        setFilledStatus(6, true)
         when (itemType) {
             "배송" -> {
-                _selectedTMType.value = 1
-                selectedType.value?.let { setVisiblePriceStatus(true, it) }
+                _postValue[1].value = 1
+                postValue[0].value?.let { setVisiblePriceStatus(true, it) }
                 setVisibleFeeStatus(true)
                 setVisibleRegionStatus(false)
             }
+
             "직거래" -> {
-                _selectedTMType.value = 2
+                _postValue[1].value = 0
                 setVisibleRegionStatus(true)
-                // TODO 판매 - 직거래는 가격 입력 받아야 함
-                selectedType.value?.let { setVisiblePriceStatus(true, it) }
+                postValue[0].value?.let { setVisiblePriceStatus(true, it) }
                 setVisibleFeeStatus(false)
             }
         }
@@ -209,12 +212,15 @@ class CommunityAddPostViewModel (
 
     fun setPriceInputCompleted(value: String) {
         _isPriceInputCompleted.value = value.isNotEmpty()
+        if (value.isNotEmpty()) {
+            _postValue[6].value = value.toInt()
+        }
     }
 
     @SuppressLint("TimberArgCount")
     fun setVisibleRegionStatus(status: Boolean) {
         _isVisibleRegionStatus.value = status
-        if(status) Timber.d("직거래 체크")
+        if (status) Timber.d("직거래 체크")
         else Timber.d("false")
     }
 
@@ -223,24 +229,37 @@ class CommunityAddPostViewModel (
         Timber.d("우편 API 동작 테스트 : $data")
     }
 
-    fun setFilledStatus(type: Int, status: Boolean) {
+    fun setFilledStatus(type: Int, status: Boolean, value: String) {
         when (type) {
-            0 -> _isFilledImage.value = status
-            1 -> _isFilledTitle.value = status
-            2 -> _isFilledRG.value = status
-            3 -> _isFilledCategory.value = status
-            4 -> _isFilledSize.value = status
-            5 -> _isFilledTMChip.value = status
-            6 -> _isFilledTM.value = status
-            7 -> _isFilledPrice.value = status
+            0 -> _isFilledValue[0].value = status // 이미지
+            1 -> _isFilledValue[1].value = status // 글 제목
+            2 -> {
+                _isFilledValue[2].value = status // 추천 성별
+                _postValue[5].value = conversionTextToType(5, value)
+            }
+
+            3 -> {
+                _isFilledValue[3].value = status // 카테고리
+                _postValue[3].value = conversionTextToType(3, value)
+            }
+
+            4 -> {
+                _isFilledValue[4].value = status // 사이즈
+                _postValue[4].value = conversionTextToType(4, value)
+            }
+
+            5 -> _isFilledValue[5].value = status // 거래 방식(직/배)
+            6 -> _isFilledPrice.value = status // 가격
+            7 -> _isFilledValue[6].value = status // 상세 설명
             8 -> _isFilledFee.value = status
             9 -> _isFilledDialogEditSF.value = status
             10 -> _isSFExclude.value = status
         }
+        gaugeFilledStatus()
     }
 
     fun setShippingFee(value: Int) {
-        _shippingFee.value = value
+        _postValue[2].value = value
     }
 
     fun setFilledImage(num: Int) {
@@ -252,10 +271,170 @@ class CommunityAddPostViewModel (
         }
     }
 
+    fun gaugeFilledStatus() {
+        val pt = _postValue[0].value ?: 0
+        val dt = _postValue[1].value ?: 0
+        var gauge: Boolean = true
+
+
+        gauge = gauge && _isFilledValue.all { it.value == true }
+        Timber.d("글 등록 가시성 value 리스트에서 $gauge")
+        Timber.d("_isFilledValue 글 등록 가시성:\n${_isFilledValue[0].value}\n" +
+                "${_isFilledValue[1].value}\n" +
+                "${_isFilledValue[2].value}\n" +
+                "${_isFilledValue[3].value}\n" +
+                "${_isFilledValue[4].value}\n" +
+                "${_isFilledValue[5].value}\n" +
+                "${_isFilledValue[6].value}")
+
+
+        if (dt == 0) { // 직거래인 경우
+            gauge = gauge && (_isFilledValueDt[0]?.value == true)
+            Timber.d("글 등록 가시성 직거래의 경우에서 $gauge")
+        } else { // 배송인 경우
+            gauge = gauge && (_isFilledFee.value == true)
+            Timber.d("글 등록 가시성 배송의 경우에서 $gauge")
+        }
+
+        if (pt == 1) { // 판매인 경우
+            // price 필수 입력 체크 추가
+            gauge = gauge && (_isFilledPrice.value == true)
+            Timber.d("글 등록 가시성 판매의 경우에서 $gauge")
+        }
+
+        _isFilledAllOptions.value = gauge
+        Timber.d("글 등록 가시성 테스트: pt-$pt, dt:$dt, 총괄: ${_isFilledAllOptions.value}")
+    }
+
+    private fun conversionTextToType(itemType: Int, value: String): Int {
+        var type = Integer.MIN_VALUE
+        when (itemType) {
+            3 -> when (value) {
+                "상의" -> type = 0
+                "하의" -> type = 1
+                "아우터" -> type = 2
+                "원피스" -> type = 3
+                "신발" -> type = 4
+                "악세사리" -> type = 5
+            }
+
+            4 -> when (value) {
+                "XS" -> type = 0
+                "S" -> type = 1
+                "M" -> type = 2
+                "L" -> type = 3
+                "XL" -> type = 4
+            }
+
+            5 -> when (value) {
+                "여성복" -> type = 0
+                "남성복" -> type = 1
+            }
+
+
+        }
+        return type
+    }
+
     fun getDecimalFormat(number: String): String {
         val intNumber = number.toIntOrNull() ?: 0
         val decimalFormat = DecimalFormat("#,###")
         return decimalFormat.format(intNumber)
+    }
+
+    fun createPost(
+        title: String,
+        detail: String,
+        images: List<File>
+    ) = viewModelScope.launch {
+        val token = ds.getAccessToken().first()
+        if (images.isEmpty()) {
+            Timber.d("이미지 파일이 없습니다.")
+            return@launch
+        }
+        try {
+            val deliveryType = _postValue[1].value ?: 0
+
+            val postDTO = when (deliveryType) {
+                0 -> {
+                    PostDTODt(
+                        title = title,
+                        gender = _postValue[5].value ?: 0,
+                        postType = _postValue[0].value ?: 0,
+                        price = _postValue[6].value ?: 0,
+                        category = _postValue[3].value ?: 0,
+                        size = _postValue[4].value ?: 0,
+                        deliveryType = _postValue[1].value ?: 0,
+                        deliveryFee = _postValue[2].value ?: 0,
+                        detail = detail,
+                        sido = _postAddressValue[0].value ?: "서울시",
+                        sigungu = _postAddressValue[1].value ?: "중랑구",
+                        bname = _postAddressValue[2].value ?: "묵동",
+                        bname2 = _postAddressValue[3].value ?: "",
+                    )
+                }
+
+                1 -> {
+                    PostDTODelivery(
+                        title = title,
+                        gender = _postValue[5].value ?: 0,
+                        postType = _postValue[0].value ?: 0,
+                        price = _postValue[6].value ?: 0,
+                        category = _postValue[3].value ?: 0,
+                        size = _postValue[4].value ?: 0,
+                        deliveryType = _postValue[1].value ?: 0,
+                        deliveryFee = _postValue[2].value ?: 0,
+                        detail = detail,
+                    )
+                }
+
+                else -> Timber.d("postDTO 생성 과정 오류 발생")
+            }
+
+            // PostDto 객체를 JSON 형태의 문자열로 변환
+            val postDtoJson = Gson().toJson(postDTO)
+            Timber.d("postDto to JSON : ${postDtoJson.toString()}")
+            val postDtoRequestBody =
+                postDtoJson.toRequestBody("application/json".toMediaTypeOrNull())
+
+            var response: Call<ResponseBody> = repository.createPost(
+                token, postDtoRequestBody, images
+            )
+
+            response.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    if (response.isSuccessful) {
+                        val json = response.body()?.string()
+                        Timber.d("COMMUNITY POST API 호출 성공 : $json")
+                    } else {
+                        try {
+                            val errorBody = response.errorBody()
+                            val errorCode = response.code()
+
+                            if (errorBody != null) {
+                                val errorJson = JSONObject(errorBody.string())
+                                val errorMessage = errorJson.optString("message")
+                                val errorCodeFromJson = errorJson.optInt("code")
+
+                                Timber.d("API 호출 실패: $errorCodeFromJson / $errorMessage")
+                            } else Timber.d("COMMUNITY POST API 호출 실패: $errorCode")
+                        } catch (e: JSONException) {
+                            Timber.d("error response failed : ${e.message}")
+                        }
+
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Timber.d("RESPONSE FAILURE")
+                }
+            })
+        } catch (e: Exception) {
+            Timber.d("커뮤니티 글 등록 과정 오류 발생: $e")
+        }
     }
 
     fun initAllStatus() {
@@ -272,14 +451,18 @@ class CommunityAddPostViewModel (
     }
 
     fun initFilledState() {
-        _isFilledImage.value = false
-        _isFilledTitle.value = false
-        _isFilledRG.value = false
-        _isFilledCategory.value = false
-        _isFilledSize.value = false
-        _isFilledTMChip.value = false
-        _isFilledTM.value = false
-        _isFilledPrice.value = false
+        _isFilledAllOptions.value = false
+
+        for (item in _isFilledValue) {
+            item.value = false
+        }
+        for(item in _isFilledValueDt) {
+            item.value = false
+        }
+        for (item in _isFilledImageValues) {
+            item.value = false
+        }
+
         _isFilledFee.value = false
         _isFilledDialogEditSF.value = false
         _isSFExclude.value = false

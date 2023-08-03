@@ -73,7 +73,7 @@ class CommunityAddShippingFeeDialog(
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val isFilled = s?.isNotEmpty() == true
-                communityAddPostViewModel.setFilledStatus(9, isFilled)
+                communityAddPostViewModel.setFilledStatus(9, isFilled, "")
                 Timber.d("텍스트 입력중 : $isFilled")
             }
 

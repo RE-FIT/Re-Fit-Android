@@ -118,6 +118,17 @@
         <item name="android:textColor">@color/green1</item>
     </style>
 
+    <style name="CommunitySearchOption2.TextCommon" parent="Widget.AppCompat.TextView">
+        <item name="android:drawableRight">@drawable/ic_arrow_bottom_14</item>
+        <item name="android:textAppearance">@style/RegularFontKr.10</item>
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:drawableTint">@color/dark2</item>
+        <item name="android:minWidth">65dp</item>
+        <item name="android:layout_marginStart">6dp</item>
+        <item name="android:layout_marginEnd">6dp</item>
+        <item name="android:textColor">@color/dark2</item>
+    </style>
+
     <style name="CommunityAddPostOption.TextCommon" parent="Widget.AppCompat.TextView">
         <item name="android:drawableRight">@drawable/ic_arrow_bottom_14</item>
         <item name="android:textAppearance">@style/RegularFontKr.12</item>

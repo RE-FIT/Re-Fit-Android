@@ -1,6 +1,7 @@
 package com.example.refit.di
 
 import com.example.refit.BuildConfig
+import android.net.Uri.Builder
 import com.example.refit.data.network.NetworkInterceptor
 import com.example.refit.data.network.api.ClosetApi
 import com.example.refit.data.network.api.CommunityApi
