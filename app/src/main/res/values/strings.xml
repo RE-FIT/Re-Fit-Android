@@ -265,4 +265,15 @@
     <string name="my_info_register_profile_photo_delete">사진 삭제</string>
     <string name="my_page_dDay">10</string>
 
+    <!--  sign_up -->
+    <string name="sign_up_id">아이디</string>
+    <string name="sign_up_password">비밀번호</string>
+    <string name="sign_up_email">이메일</string>
+    <string name="sign_up_name">이름(닉네임)</string>
+    <string name="sign_up_brith_date">생년월월</string>
+    <string name="sign_up_gender">성별</string>
+    <!-- find id -->
+    <string name="find_id_name">이름(닉네임)</string>
+    <string name="find_id_email">이메일</string>
+
 </resources>

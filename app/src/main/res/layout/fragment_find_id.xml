@@ -6,20 +6,31 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:background="@color/light">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/find_id_text"
+            android:layout_width="365dp"
+            android:layout_height="123dp"
+            android:src="@drawable/ic_find_id_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/find_id_name"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginTop="76dp"
-            android:text="이름"
+            android:layout_marginTop="40dp"
+            android:text="@string/find_id_name"
+            android:textColor="@color/green1"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintHorizontal_bias="0.475"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/find_id_text"
             tools:ignore="MissingConstraints" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -45,7 +56,8 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="44dp"
-            android:text="이메일"
+            android:text="@string/find_id_email"
+            android:textColor="@color/green1"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +73,7 @@
             android:layout_marginTop="4dp"
             android:background="@drawable/border_gray"
             android:color="@color/white"
-            android:hint="회원가입 시 입력한 이메일을 입력해주세요."
+            android:hint="이메일을 입력해주세요."
             android:padding="10dp"
             android:textColor="@android:color/darker_gray"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -87,5 +99,6 @@
             app:shapeAppearance="@color/selector_green1_else_dark1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

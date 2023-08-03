@@ -34,7 +34,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
             navigate(R.id.action_signUpFragment_to_communityFragment)
         }
 
-        binding.back.setOnClickListener {
+        binding.signUpBack.setOnClickListener{
             navigate(R.id.action_signUpFragment_to_signInFragment)
         }
     }
