@@ -1,5 +1,6 @@
 package com.example.refit.di
 
+import android.net.Uri.Builder
 import com.example.refit.data.network.NetworkInterceptor
 import com.example.refit.data.network.api.ClosetApi
 import com.example.refit.data.network.api.CommunityApi
@@ -10,6 +11,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
+import com.example.refit.BuildConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -30,7 +32,7 @@ val networkModule = module {
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .client(get())
-            .baseUrl("http://www.umc-refit.com/")
+            .baseUrl(BuildConfig.BASE_URL)
             .build()
     }
 
