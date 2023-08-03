@@ -3,10 +3,29 @@ package com.example.refit.presentation.closet.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.refit.data.datastore.TokenStore
+import com.example.refit.data.model.closet.RequestAddNewCloth
+import com.example.refit.data.model.closet.ResponseAddNewCloth
 import com.example.refit.data.repository.colset.ClosetRepository
+import com.google.gson.Gson
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import timber.log.Timber
+import java.io.File
 import java.util.Calendar
 
-class ClothAddViewModel(private val repository: ClosetRepository) : ViewModel() {
+class ClothAddViewModel(
+    private val repository: ClosetRepository,
+    private val dataStore: TokenStore
+) : ViewModel() {
 
     // 항목별 컨테이너 상태 값
 
@@ -38,22 +57,99 @@ class ClothAddViewModel(private val repository: ClosetRepository) : ViewModel() 
     val isFocusWearingNumberPopup: LiveData<Boolean>
         get() = _isFocusWearingNumberPopup
 
-    private val _selectedMonthOption: MutableLiveData<Int> = MutableLiveData<Int>()
-    val selectedMonthOption: LiveData<Int>
+    private val _selectedMonthOption: MutableLiveData<Int?> = MutableLiveData<Int?>()
+    val selectedMonthOption: LiveData<Int?>
         get() = _selectedMonthOption
 
-    private val _selectedWearingNumberOption: MutableLiveData<Int> = MutableLiveData<Int>()
-    val selectedWearingNumberOption: LiveData<Int>
+    private val _selectedWearingNumberOption: MutableLiveData<Int?> = MutableLiveData<Int?>()
+    val selectedWearingNumberOption: LiveData<Int?>
         get() = _selectedWearingNumberOption
 
-    private val _recommendWearingNumberOfMonth: MutableLiveData<Int> = MutableLiveData<Int>()
-    val recommendWearingNumberOfMonth: LiveData<Int>
+    private val _recommendWearingNumberOfWeek: MutableLiveData<Int?> = MutableLiveData<Int?>()
+    val recommendWearingNumberOfWeek: LiveData<Int?>
+        get() = _recommendWearingNumberOfWeek
+
+    private val _recommendWearingNumberOfMonth: MutableLiveData<Int?> = MutableLiveData<Int?>()
+    val recommendWearingNumberOfMonth: LiveData<Int?>
         get() = _recommendWearingNumberOfMonth
 
     private val _selectedSeason: MutableLiveData<String> = MutableLiveData<String>()
     val selectedSeason: LiveData<String>
         get() = _selectedSeason
 
+    private val _selectedSeasonId: MutableLiveData<Int> = MutableLiveData<Int>()
+    val selectedSeasonId: LiveData<Int>
+        get() = _selectedSeasonId
+
+    private val _selectedClothCategoryId: MutableLiveData<Int> = MutableLiveData<Int>()
+    val selectedClothCategoryId: LiveData<Int>
+        get() = _selectedClothCategoryId
+
+    private val _registeredClothInfo: MutableLiveData<ResponseAddNewCloth> =
+        MutableLiveData<ResponseAddNewCloth>()
+    val registeredClothInfo: LiveData<ResponseAddNewCloth>
+        get() = _registeredClothInfo
+
+    // 서버 호출
+
+    fun addNewCloth(imageFile: File) {
+        viewModelScope.launch {
+            try {
+//                val request = Gson().toJson(RequestAddNewCloth(
+//                    _selectedClothCategoryId.value!!,
+//                    _selectedSeasonId.value!!,
+//                    _selectedWearingNumberOption.value.toString(),
+//                    _selectedMonthOption.value.toString(),
+//                    _isValidShowingRecommendWearing.value!!,
+//                    _recommendWearingNumberOfMonth.value.toString(),
+//                    _recommendWearingNumberOfWeek.value.toString()
+//                ))
+                val request = Gson().toJson(
+                    RequestAddNewCloth(
+                        _selectedClothCategoryId.value!!,
+                        _selectedSeasonId.value!!,
+                        30,
+                        1,
+                        _isValidShowingRecommendWearing.value!!,
+                        30,
+                        7
+                    )
+                )
+                val body = request.toRequestBody("application/json".toMediaType())
+                val multipartBody = MultipartBody.Part.createFormData(
+                    name = "image",
+                    filename = imageFile.name,
+                    body = imageFile.asRequestBody("image/*".toMediaType())
+                )
+
+                Timber.d(request)
+
+                val response =
+                    repository.addNewCloth(dataStore.getAccessToken().first(), multipartBody, body)
+                response.enqueue(object : Callback<ResponseAddNewCloth> {
+                    override fun onResponse(
+                        call: Call<ResponseAddNewCloth>,
+                        response: Response<ResponseAddNewCloth>
+                    ) {
+                        if (response.isSuccessful) {
+                            _registeredClothInfo.value = response.body()
+                            Timber.d("옷 등록 성공 : ${_registeredClothInfo.value}")
+                        } else {
+                            Timber.d("옷 등록 실패1 : ${(response.errorBody().toString())}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseAddNewCloth>, t: Throwable) {
+                        Timber.d("옷 등록 실패2 : $t")
+                    }
+                })
+            } catch (e: Throwable) {
+                Timber.d(e)
+            }
+        }
+    }
+
+    // 내부 처리
 
     fun checkSeasonValidation(selectedSeason: String, seasonList: List<String>) {
         val currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
@@ -61,19 +157,23 @@ class ClothAddViewModel(private val repository: ClosetRepository) : ViewModel() 
             when (selectedSeason) {
                 seasonList[0] -> {
                     _selectedSeason.value = "봄 · 가을"
+                    _selectedSeasonId.value = 0
                     currentMonth in 3..5 || currentMonth in 9..11
                 }
 
                 seasonList[1] -> {
                     _selectedSeason.value = "여름"
+                    _selectedSeasonId.value = 1
                     currentMonth in 6..8
                 }
 
                 else -> {
                     _selectedSeason.value = "겨울"
+                    _selectedSeasonId.value = 2
                     currentMonth in 1..2 || currentMonth == 12
                 }
             }
+        Timber.d("계절 선택 : ${_selectedSeasonId.value}")
         initClothWearingGoalOptionStatus(isValidSeason)
         initRecommendWearingStatus(false)
         initInvalidSeasonConfirmStatus(!isValidSeason)
@@ -112,12 +212,12 @@ class ClothAddViewModel(private val repository: ClosetRepository) : ViewModel() 
 
     private fun initWearingGoalNumberOption() {
         _isFocusWearingNumberPopup.value = false
-        _selectedWearingNumberOption.value = 0
+        _selectedWearingNumberOption.value = null
     }
 
     private fun initWearingGoalMonthOption() {
-        _selectedMonthOption.value = 0
         _isFocusMonthPopup.value = false
+        _selectedMonthOption.value = null
     }
 
     private fun initClothWearingGoalOptionStatus(status: Boolean) {
@@ -128,6 +228,14 @@ class ClothAddViewModel(private val repository: ClosetRepository) : ViewModel() 
 
     private fun initRecommendWearingStatus(status: Boolean) {
         _isValidShowingRecommendWearing.value = status
+        if (status) {
+            _recommendWearingNumberOfMonth.value =
+                _selectedWearingNumberOption.value!! / _selectedMonthOption.value!!
+            _recommendWearingNumberOfWeek.value = _recommendWearingNumberOfMonth.value!! / 4
+        } else {
+            _recommendWearingNumberOfMonth.value = null
+            _recommendWearingNumberOfWeek.value = null
+        }
     }
 
     private fun initInvalidSeasonConfirmStatus(status: Boolean) {
@@ -143,6 +251,11 @@ class ClothAddViewModel(private val repository: ClosetRepository) : ViewModel() 
         initClothWearingGoalOptionStatus(false)
         initRecommendWearingStatus(false)
         initNegativeInvalidSeasonConfirmStatus(false)
+    }
+
+    fun setClothCategory(categoryList: List<String>, selectedCategory: String) {
+        _selectedClothCategoryId.value = categoryList.indexOf(selectedCategory)
+        Timber.d("옷 카테고리 선택 : ${_selectedClothCategoryId.value}")
     }
 
 }

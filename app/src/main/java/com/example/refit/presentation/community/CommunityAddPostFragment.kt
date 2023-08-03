@@ -143,7 +143,6 @@ class CommunityAddPostFragment :
         @ArrayRes items: Int,
     ): ListPopupWindow {
         return DropdownMenuManager.createPopupMenu(
-            requireActivity(),
             anchorView,
             R.style.ListPopupMenuWindow_CommunityAddPostOption,
             R.layout.list_popup_window_item_window_dark,

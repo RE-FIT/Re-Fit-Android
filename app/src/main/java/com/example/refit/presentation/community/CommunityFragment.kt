@@ -89,7 +89,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         @ArrayRes items: Int,
     ): ListPopupWindow {
         return DropdownMenuManager.createPopupMenu(
-            requireActivity(),
             anchorView,
             R.style.ListPopupMenuWindow_CommunityOption,
             R.layout.list_popup_window_item_white,

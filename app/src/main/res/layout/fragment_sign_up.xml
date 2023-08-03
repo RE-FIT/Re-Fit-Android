@@ -9,6 +9,8 @@
             name="emailCertificationCode"
             type="com.example.refit.data.model.signup.ResponseEmailCertification" />
 
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

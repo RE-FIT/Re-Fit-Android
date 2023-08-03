@@ -3,6 +3,7 @@ package com.example.refit.di
 import com.example.refit.presentation.AccessTokenViewModel
 import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
 import com.example.refit.presentation.closet.viewmodel.ClothAddViewModel
+import com.example.refit.presentation.closet.viewmodel.ForestViewModel
 import com.example.refit.presentation.signin.viewmodel.SignInViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
@@ -21,8 +22,10 @@ val viewModelModule = module {
     viewModel { AccessTokenViewModel(get(), get()) }
     viewModel { SignInViewModel(get(), get()) }
     viewModel { SignUpViewModel(get()) }
-    viewModel { ClothAddViewModel(get()) }
+    viewModel { ClothAddViewModel(get(), get()) }
     viewModel { ClosetViewModel(get()) }
+    viewModel { ForestViewModel(get()) }
+    viewModel { CommunityViewModel(get(), get())}
     viewModel { CommunityViewModel(get(), get()) }
     viewModel { CommunityInfoViewModel(get()) }
     viewModel { CommunityAddPostViewModel(get(), get()) }

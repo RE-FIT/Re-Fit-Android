@@ -14,6 +14,7 @@ import com.example.refit.presentation.dialog.closet.ClothItemSelectionDialog
 import com.example.refit.presentation.dialog.closet.ClothItemSelectionDialogListener
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialog
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialogListener
+import com.example.refit.presentation.dialog.closet.ForestStampDialog
 import com.example.refit.presentation.dialog.community.BanOnSalesDialog
 import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialog
 import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialogListener
@@ -100,5 +101,9 @@ object DialogUtil {
 
     fun showProfileRegisterPhotoDialog(listener: ProfileRegisterPhotoDialogListener): ProfileRegisterPhotoDialog {
         return ProfileRegisterPhotoDialog(listener)
+    }
+
+    fun showForestStampDialog(): ForestStampDialog {
+        return ForestStampDialog()
     }
 }

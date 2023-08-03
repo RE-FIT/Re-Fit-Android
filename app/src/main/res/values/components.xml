@@ -39,6 +39,11 @@
         </item>
     </style>
 
+    <style name="ForestTopCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.ForestTop.CardView.Corners
+        </item>
+    </style>
+
     <style name="ClothRegistrationCardView.Common" parent="Widget.Material3.CardView.Filled">
         <item name="strokeWidth">0dp</item>
         <item name="cardCornerRadius">20dp</item>
@@ -308,6 +313,27 @@
         <item name="chipIconVisible">true</item>
         <item name="chipIconSize">10dp</item>
         <item name="itemIconPadding">5dp</item>
+    </style>
+
+    <style name="ShapeAppearance.ForestTop.CardView.Corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomRight">50dp</item>
+        <item name="cornerSizeBottomLeft">50dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+    </style>
+
+    <style name="ShapeAppearance.ForestDialog.CardView.Corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 
 

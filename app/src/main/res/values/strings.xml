@@ -89,6 +89,20 @@
     <string name="cloth_register_complete">등록 완료!</string>
     <string name="cloth_register_not_wearing_response">네 알겠어요!\n%1$s이 오면 다시 목표 착용 횟수를 \n설정할 수 있는 알림을 보내드릴게요!</string>
     <string name="cloth_register_recommend_wearing">"한 달에 %1$d번\n일주일에 %2$d번</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="forest_top_title_first">오늘은</string>
+    <string name="forest_top_title_second">를 착용하셨군요!</string>
+    <string name="forest_top_wearing_count">착용 횟수</string>
+    <string name="forest_top_wearin_goal">목표 횟수</string>
+    <string name="forest_top_percent">달성률</string>
+    <string name="forest_button_return_to_cloth">옷장으로 돌아가기</string>
+    <string name="forest_dialog_registered_tree">그루</string>
+    <string name="forest_dialog_title_first">나무 심기 완료!</string>
+    <string name="forest_dialog_title_second">오늘도 환경을 위해\n힘써주셔서 감사해요 :)</string>
+    <string name="forest_dialog_title_require_tree_title">숲 완성까지 남은 나무</string>
+    <string name="forest_dialog_title_require_tree_number">7그루</string>
+    <string name="forest_dialog_confirm_button">확인</string>
 
     <!--Community-->
     <string name="community_main_toolbar_title">Green Community</string>
@@ -176,6 +190,7 @@
     <string name="community_post_report_ban_on_sales_etc_second">글자수 제한 (0/200)</string>
     <string name="community_post_report_ban_on_sales_etc_third">이 회원이 신고 대상에 해당하는지 다시 한번 확인하여 주시길 바랍니다.</string>
     <string name="community_post_report_ban_on_sales_etc_fourth">신고자 정보 및 신고 내용은 신고 대상에게 공개되지 않으나, 사실 관계 확인에 꼭 필요한 신고 내용의 일부는 언급될 수 있습니다.</string>
+
 
     <string name="community_search_edit_hint">어떤 옷을 찾고 계신가요?</string>
     <string name="communtiy_search_contents_first">아쉽게도 일치하는 물건이 없어요.</string>

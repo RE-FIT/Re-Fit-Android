@@ -6,11 +6,7 @@
 
     <data>
 
-        <import type="android.view.View"/>
-
-        <variable
-            name="onClickCardViewListener"
-            type="android.view.View.OnClickListener" />
+        <import type="android.view.View" />
 
         <variable
             name="vm"
@@ -79,15 +75,15 @@
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_closet_category_container_top"
                             style="@style/ClosetCategoryCardView.Common"
-                            setCardViewGroupSelected="@{vm.selectedCategoryId}"
                             android:layout_width="@dimen/closet_category_card_view_length"
                             android:layout_height="@dimen/closet_category_card_view_length"
-                            android:onClickListener="@{onClickCardViewListener}">
+                            android:checked="@{vm.selectedCategoryId == 0}"
+                            android:onClick="@{() -> vm.requestRegisteredItemsByClothCategory(0)}">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tv_closet_category_top"
                                 style="@style/ClosetCategory.TextCommon"
-                                setTextGroupSelected="@{vm.selectedCategoryId}"
+                                setClothCategoryTextSelectionStatus="@{vm.selectedCategoryId == 0}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableTop="@drawable/ic_cloth_top_22"
@@ -98,15 +94,15 @@
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_closet_category_container_bottom"
                             style="@style/ClosetCategoryCardView.Common"
-                            setCardViewGroupSelected="@{vm.selectedCategoryId}"
                             android:layout_width="@dimen/closet_category_card_view_length"
                             android:layout_height="@dimen/closet_category_card_view_length"
-                            android:onClickListener="@{onClickCardViewListener}">
+                            android:checked="@{vm.selectedCategoryId == 1}"
+                            android:onClick="@{() -> vm.requestRegisteredItemsByClothCategory(1)}">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tv_closet_category_bottom"
                                 style="@style/ClosetCategory.TextCommon"
-                                setTextGroupSelected="@{vm.selectedCategoryId}"
+                                setClothCategoryTextSelectionStatus="@{vm.selectedCategoryId == 1}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableTop="@drawable/ic_cloth_bottom_12"
@@ -117,15 +113,15 @@
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_closet_category_container_outer"
                             style="@style/ClosetCategoryCardView.Common"
-                            setCardViewGroupSelected="@{vm.selectedCategoryId}"
                             android:layout_width="@dimen/closet_category_card_view_length"
                             android:layout_height="@dimen/closet_category_card_view_length"
-                            android:onClickListener="@{onClickCardViewListener}">
+                            android:checked="@{vm.selectedCategoryId == 2}"
+                            android:onClick="@{() -> vm.requestRegisteredItemsByClothCategory(2)}">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tv_closet_category_outer"
                                 style="@style/ClosetCategory.TextCommon"
-                                setTextGroupSelected="@{vm.selectedCategoryId}"
+                                setClothCategoryTextSelectionStatus="@{vm.selectedCategoryId == 2}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableTop="@drawable/ic_cloth_outer_24"
@@ -136,15 +132,15 @@
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_closet_category_container_one_piece"
                             style="@style/ClosetCategoryCardView.Common"
-                            setCardViewGroupSelected="@{vm.selectedCategoryId}"
                             android:layout_width="@dimen/closet_category_card_view_length"
                             android:layout_height="@dimen/closet_category_card_view_length"
-                            android:onClickListener="@{onClickCardViewListener}">
+                            android:checked="@{vm.selectedCategoryId == 3}"
+                            android:onClick="@{() -> vm.requestRegisteredItemsByClothCategory(3)}">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tv_closet_category_one_piece"
                                 style="@style/ClosetCategory.TextCommon"
-                                setTextGroupSelected="@{vm.selectedCategoryId}"
+                                setClothCategoryTextSelectionStatus="@{vm.selectedCategoryId == 3}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableTop="@drawable/ic_cloth_one_piece_24"
@@ -155,15 +151,15 @@
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_closet_category_container_shoes"
                             style="@style/ClosetCategoryCardView.Common"
-                            setCardViewGroupSelected="@{vm.selectedCategoryId}"
                             android:layout_width="@dimen/closet_category_card_view_length"
                             android:layout_height="@dimen/closet_category_card_view_length"
-                            android:onClickListener="@{onClickCardViewListener}">
+                            android:checked="@{vm.selectedCategoryId == 4}"
+                            android:onClick="@{() -> vm.requestRegisteredItemsByClothCategory(4)}">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tv_closet_category_shoes"
                                 style="@style/ClosetCategory.TextCommon"
-                                setTextGroupSelected="@{vm.selectedCategoryId}"
+                                setClothCategoryTextSelectionStatus="@{vm.selectedCategoryId == 4}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawableTop="@drawable/ic_cloth_shoes_18"
@@ -244,14 +240,14 @@
                     tools:listitem="@layout/item_cloth" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/RegularFontKr.12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableTop="@drawable/ic_empty_cloth_item_24"
                     android:drawablePadding="20dp"
                     android:gravity="center"
-                    style="@style/RegularFontKr.12"
-                    android:textColor="@color/dark2"
                     android:text="@string/closet_empty_item"
+                    android:textColor="@color/dark2"
                     android:visibility="@{vm.registeredClothes.size() == 0 ? View.VISIBLE : View.GONE}"
                     app:layout_constraintBottom_toBottomOf="@id/rv_closet_list"
                     app:layout_constraintEnd_toEndOf="@id/rv_closet_list"
