@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.refit.R
 import com.example.refit.databinding.FragmentCommunityBinding
@@ -19,6 +20,7 @@ import com.example.refit.presentation.common.WindowUtil.setStatusBarColor
 import com.example.refit.presentation.community.adapter.CommunityListAdapter
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityViewModel
+import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
@@ -30,19 +32,15 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         super.onViewCreated(view, savedInstanceState)
         binding.vm = communityViewModel
 
-        communityViewModel.getCommunityList()
+        communityViewModel.initStatus()
+        communityViewModel.loadCommunityList()
         initCommunityList()
         initCommunityOptionDropdown()
         setClickedButton()
+        observeStatus()
     }
 
     private fun initCommunityOptionDropdown() {
-        binding.cvCommunityOptionCategory.setOnClickListener {
-            val listPopupWindow = getPopupMenu(it, R.array.community_item_search_option_category)
-            setPopupItemClickListener(it.id, listPopupWindow)
-            listPopupWindow.show()
-        }
-
         binding.cvCommunityOptionType.setOnClickListener {
             val listPopupWindow = getPopupMenu(it, R.array.community_item_search_option_type)
             setPopupItemClickListener(it.id, listPopupWindow)
@@ -54,20 +52,34 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
             setPopupItemClickListener(it.id, listPopupWindow)
             listPopupWindow.show()
         }
+
+        binding.cvCommunityOptionCategory.setOnClickListener {
+            val listPopupWindow = getPopupMenu(it, R.array.community_item_search_option_category)
+            setPopupItemClickListener(it.id, listPopupWindow)
+            listPopupWindow.show()
+        }
     }
 
     private fun setPopupItemClickListener(viewId: Int, popupMenu: ListPopupWindow) {
-        val textView: TextView = when (viewId) {
-            binding.cvCommunityOptionCategory.id -> binding.tvCommunityOptionCategory
-            binding.cvCommunityOptionType.id -> binding.tvCommunityOptionType
-            binding.cvCommunityOptionGender.id -> binding.tvCommunityOptionGender
-            else -> return
-        }
-
         popupMenu.setOnItemClickListener { _, view, _, _ ->
             val itemDescription = (view as TextView).text.toString()
-            textView.text = itemDescription
-            Timber.d(itemDescription)
+            when (viewId) {
+                binding.cvCommunityOptionType.id -> {
+                    binding.tvCommunityOptionType.text = itemDescription
+                    communityViewModel.setDropDownController(0, itemDescription)
+                }
+
+                binding.cvCommunityOptionGender.id -> {
+                    binding.tvCommunityOptionGender.text = itemDescription
+                    communityViewModel.setDropDownController(1, itemDescription)
+                }
+
+                binding.cvCommunityOptionCategory.id -> {
+                    binding.tvCommunityOptionCategory.text = itemDescription
+                    communityViewModel.setDropDownController(2, itemDescription)
+                }
+            }
+            communityViewModel.loadCommunityList()
             popupMenu.dismiss()
         }
     }
@@ -89,6 +101,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         binding.rvCommunityList.layoutManager = LinearLayoutManager(requireActivity())
         binding.rvCommunityList.adapter = CommunityListAdapter(communityViewModel).apply {
             communityViewModel.communityList.observe(viewLifecycleOwner) { list ->
+                //CommunityListAdapter(communityViewModel).submitList(list)
                 submitList(list)
             }
         }
@@ -101,12 +114,20 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
         // 페이지 이동 임시 코드
         binding.ibCommunitySearch.setOnClickListener {
-            navigate(R.id.action_nav_community_to_communityInfoFragment)
+            // navigate(R.id.action_nav_community_to_communityInfoFragment)
+            navigate(R.id.action_nav_community_to_communitySearchFragment)
         }
 
         binding.fabCommunityAdd.setOnClickListener {
             navigate(R.id.action_nav_community_to_communityAddPostFragment)
         }
 
+    }
+
+    private fun observeStatus() {
+        communityViewModel.selectedPostItem.observe(viewLifecycleOwner, EventObserver { postId ->
+            communityViewModel.getPost(postId)
+            navigate(R.id.action_nav_community_to_communityInfoFragment)
+        })
     }
 }

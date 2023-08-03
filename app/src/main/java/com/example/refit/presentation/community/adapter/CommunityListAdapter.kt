@@ -36,6 +36,10 @@ class CommunityListAdapter(private val viewModel: CommunityViewModel) :
             binding.communityList = communityList
             binding.vm = viewModel
             binding.executePendingBindings()
+
+            binding.mcvCommunityItemHolder.setOnClickListener {
+                viewModel.handleClickItem(communityList.postId)
+            }
         }
     }
 
