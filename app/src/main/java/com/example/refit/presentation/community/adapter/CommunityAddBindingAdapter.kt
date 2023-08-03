@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import com.example.refit.R
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
+import org.w3c.dom.Text
 import timber.log.Timber
 
 @BindingAdapter("CDrawableTint")
@@ -30,6 +31,22 @@ fun setTextColor(view: TextView, isClicked: Boolean) {
     val colorResId = if (isClicked) R.color.green1 else R.color.dark2
     val color = ContextCompat.getColor(view.context, colorResId)
     view.setTextColor(color)
+}
+
+@BindingAdapter("setTextSize")
+fun setText(view: TextView, size: String) {
+    view.text = getSizeString(size.toInt())
+}
+
+private fun getSizeString(size: Int): String {
+    return when (size) {
+        0 -> "XS"
+        1 -> "S"
+        2 -> "M"
+        3 -> "L"
+        4 -> "XL"
+        else -> "Unknown" // You can set a default value or handle other cases as needed
+    }
 }
 
 @BindingAdapter("app:restrictText")

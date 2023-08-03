@@ -19,6 +19,10 @@
             type="com.example.refit.presentation.community.viewmodel.CommunityViewModel" />
 
         <variable
+            name="vm_search"
+            type="com.example.refit.presentation.community.viewmodel.CommunitySearchViewModel" />
+
+        <variable
             name="vm_scrap"
             type="com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel" />
 
@@ -32,7 +36,6 @@
         android:paddingVertical="5dp">
 
         <com.google.android.material.card.MaterialCardView
-            android:onClick="@{() -> vm.handleClickItem(communityList.postId)}"
             android:id="@+id/mcv_community_item_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -118,7 +121,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="bottom"
-                        android:text="@{vm.conversionTypeToText(3, communityList.size)}"
+                        setTextSize="@{communityList.size}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_size_txt"
                         app:layout_constraintTop_toBottomOf="@id/ll_community_item" />

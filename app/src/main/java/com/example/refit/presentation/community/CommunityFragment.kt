@@ -40,6 +40,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         observeStatus()
     }
 
+    override fun onResume() {
+        super.onResume()
+        Timber.d("onResume")
+        communityViewModel.loadCommunityList()
+        initCommunityList()
+    }
+
     private fun initCommunityOptionDropdown() {
         binding.cvCommunityOptionType.setOnClickListener {
             val listPopupWindow = getPopupMenu(it, R.array.community_item_search_option_type)
@@ -100,7 +107,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         binding.rvCommunityList.layoutManager = LinearLayoutManager(requireActivity())
         binding.rvCommunityList.adapter = CommunityListAdapter(communityViewModel).apply {
             communityViewModel.communityList.observe(viewLifecycleOwner) { list ->
-                //CommunityListAdapter(communityViewModel).submitList(list)
                 submitList(list)
             }
         }
@@ -111,9 +117,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
             // TODO (새로운 채팅이 있으면 N)
         }
 
-        // 페이지 이동 임시 코드
         binding.ibCommunitySearch.setOnClickListener {
-            // navigate(R.id.action_nav_community_to_communityInfoFragment)
             navigate(R.id.action_nav_community_to_communitySearchFragment)
         }
 

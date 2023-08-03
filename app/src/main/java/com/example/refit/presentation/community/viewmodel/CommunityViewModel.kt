@@ -205,27 +205,8 @@ class CommunityViewModel(
         }
         return type
     }
-
-    fun conversionTypeToText(itemType: Int, value: String): String {
-        return when (itemType) {
-            3 -> when (value.toInt()) {
-                0 -> "XS"
-                1 -> "S"
-                2 -> "M"
-                3 -> "L"
-                4 -> "XL"
-                else -> "Unknown"
-            }
-
-            4 -> when (value) {
-                "null" -> "전국"
-                else -> "Unknown"
-            }
-
-            else -> "Unknown"
-        }
-    }
 }
+
 
 private fun parseCommunityList(json: String): List<CommunityListItemResponse> {
     // TODO: JSON 파싱 로직을 구현하여 CommunityListItemResponse 리스트로 반환하는 부분 구현해야 함.
