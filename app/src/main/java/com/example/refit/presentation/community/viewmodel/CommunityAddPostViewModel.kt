@@ -353,9 +353,8 @@ class CommunityAddPostViewModel(
             return@launch
         }
         try {
-            val deliveryType = _postValue[1].value ?: 0
 
-            val postDTO = when (deliveryType) {
+            val postDTO = when (_postValue[1].value ?: 0) {
                 0 -> {
                     PostDTODt(
                         title = title,

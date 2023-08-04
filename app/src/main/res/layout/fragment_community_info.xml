@@ -8,6 +8,7 @@
         <variable
             name="vm"
             type="com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,7 +38,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/default_dark"
-                        app:title="@string/community_info_toolbar_title"
+                        app:title="@{vm.postResponse.postType == 0 ? @string/community_info_toolbar_title : @string/community_info_toolbar_title2}"
                         app:titleCentered="true"
                         app:titleTextAppearance="@style/BoldFont.20"
                         app:titleTextColor="@color/green1"/>
@@ -100,7 +101,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="20dp"
                                 android:layout_marginTop="7dp"
-                                android:text="@string/community_info_type_giveaway_ing"
+                                android:text="@{vm.conversionType(vm.postResponse.postState)}"
                                 android:textColor="@color/white"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -135,7 +136,7 @@
                                 style="@style/BoldFontKr.18"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="항공 점퍼 새 옷"
+                                android:text="@{vm.postResponse.title}"
                                 android:textColor="@color/green1"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -148,7 +149,7 @@
                                 android:layout_gravity="bottom"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginEnd="10dp"
-                                android:text="user01"
+                                android:text="@{vm.postResponse.author}"
                                 android:textColor="@color/dark2"
                                 app:layout_constraintBottom_toTopOf="@id/tv_community_info_item_datetitme"
                                 app:layout_constraintStart_toEndOf="@id/tv_community_info_item_title"
@@ -183,7 +184,6 @@
                                 android:layout_marginTop="10dp"
                                 app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_datetitme"
                                 app:layout_constraintStart_toStartOf="parent" >
-
 
                                 <com.google.android.material.imageview.ShapeableImageView
                                     android:id="@+id/iv_community_info_image"
@@ -241,7 +241,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginLeft="5dp"
-                                android:text="XS"
+                                android:text="size"
+                                setTextSizeInt="@{vm.postResponse.size}"
                                 android:textColor="@color/black"
                                 app:layout_constraintStart_toEndOf="@id/tv_community_info_item_size_txt"
                                 app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_first" />
@@ -255,7 +256,7 @@
                                 android:text="@string/community_info_contents_second"
                                 android:textColor="@color/black"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_size_txt" />
+                                app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_price_txt" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tv_community_info_item_method"
@@ -264,16 +265,17 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginLeft="5dp"
-                                android:text="직거래"
+                                android:text="@{vm.postResponse.deliveryType == 0 ? `직거래` : `택배`}"
                                 android:textColor="@color/black"
                                 app:layout_constraintStart_toEndOf="@id/tv_community_info_item_method_txt"
-                                app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_size" />
+                                app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_price_txt" />
 
                             <LinearLayout
                                 android:id="@+id/tv_community_info_item_price_txt"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:visibility="gone"
+                                setVisibility="@{vm.postResponse.postType == 0 ? false : true}"
                                 android:orientation="horizontal"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_size_txt" >
@@ -292,7 +294,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
-                                    android:text="50,000원"
+                                    android:layout_marginLeft="5dp"
+                                    android:text="@{vm.postResponse.price + `원`}"
                                     android:textColor="@color/black" />
 
                             </LinearLayout>
@@ -316,7 +319,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginLeft="5dp"
-                                android:text="0원"
+                                android:text="@{vm.postResponse.deliveryFee + `원`}"
                                 android:textColor="@color/black"
                                 app:layout_constraintStart_toEndOf="@id/tv_community_info_item_deliveryfee_txt"
                                 app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_method_txt" />
@@ -339,7 +342,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginLeft="5dp"
-                                android:text="서울특별시 서대문구 신촌동"
+                                android:text="@{vm.postResponse.sido == null ? @string/community_item_region_all : @string/community_item_region(vm.postResponse.sido, vm.postResponse.sigungu, vm.postResponse.bname, vm.postResponse.bname2)}"
                                 android:textColor="@color/black"
                                 app:layout_constraintStart_toEndOf="@id/tv_community_info_item_region_txt"
                                 app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_deliveryfee_txt" />
@@ -386,12 +389,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text="쇼핑몰에서 샀는데 생각보다 커서 그냥 나눔해용. 제 키는 160cm 이고 오픈채팅방에서 편하게
-이야기 나눠요!! 쇼핑몰에서 샀는데 생각보다 커서 그냥 나눔해용. 제 키는 160cm 이고 오픈채팅방에서 편하게
-이야기 나눠요!! 쇼핑몰에서 샀는데 생각보다 커서 그냥 나눔해용. 제 키는 160cm 이고 오픈채팅방에서 편하게
-이야기 나눠요!! 쇼핑몰에서 샀는데 생각보다 커서 그냥 나눔해용. 제 키는 160cm 이고 오픈채팅방에서 편하게
-이야기 나눠요!! 쇼핑몰에서 샀는데 생각보다 커서 그냥 나눔해용. 제 키는 160cm 이고 오픈채팅방에서 편하게
-이야기 나눠요!!"
+                                android:text="@{vm.postResponse.detail}"
                                 android:lineSpacingExtra="3dp"
                                 android:textColor="@color/black"
                                 app:layout_constraintBottom_toBottomOf="parent"
