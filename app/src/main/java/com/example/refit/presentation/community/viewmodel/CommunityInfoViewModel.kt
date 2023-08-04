@@ -11,12 +11,14 @@ import com.example.refit.data.model.community.PostResponse
 import com.example.refit.data.repository.community.CommunityRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 import java.lang.Exception
+import java.sql.Types.INTEGER
 
 class CommunityInfoViewModel (
     private val repository: CommunityRepository,
@@ -118,6 +120,81 @@ class CommunityInfoViewModel (
             })
         } catch (e: Exception) {
             "커뮤니티 글 상세 페이지 로딩 오류: $e"
+        }
+    }
+
+
+    // 글 삭제 기능
+    fun deletePost() = viewModelScope.launch {
+        val accessToken = ds.getAccessToken().first()
+        val postId = _postId.value ?: 0
+        try {
+            val response =
+                repository.deletePost(accessToken, postId)
+
+            response.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    if (response.isSuccessful) {
+                        Timber.d("API 호출 성공")
+                    } else {
+                        val errorBody = response.errorBody()
+                        val errorCode = response.code()
+
+                        if (errorBody != null) {
+                            val errorJson = JSONObject(errorBody.string())
+                            val errorCodeFromJson = errorJson.optInt("code")
+
+                            Timber.d("API 호출 실패: $errorCodeFromJson")
+                        } else Timber.d("API 호출 실패: $errorCode")
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Timber.d("RESPONSE FAILURE")
+                }
+            })
+        } catch (e: Exception) {
+            "커뮤니티 글 삭제 오류: $e"
+        }
+    }
+
+    // 글 스크랩 기능
+    fun scrapPost() = viewModelScope.launch {
+        val accessToken = ds.getAccessToken().first()
+        val postId = _postId.value ?: 0
+        try {
+            val response =
+                repository.scrapPost(accessToken, postId)
+
+            response.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    if (response.isSuccessful) {
+                        Timber.d("API 호출 성공")
+                    } else {
+                        val errorBody = response.errorBody()
+                        val errorCode = response.code()
+
+                        if (errorBody != null) {
+                            val errorJson = JSONObject(errorBody.string())
+                            val errorCodeFromJson = errorJson.optInt("code")
+
+                            Timber.d("API 호출 실패: $errorCodeFromJson")
+                        } else Timber.d("API 호출 실패: $errorCode")
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Timber.d("RESPONSE FAILURE")
+                }
+            })
+        } catch (e: Exception) {
+            "커뮤니티 글 스크랩 오류: $e"
         }
     }
 

@@ -22,4 +22,8 @@ interface CommunityRepository {
     suspend fun getPost(accessToken: String, postInt: Int): Call<PostResponse>
     suspend fun loadSearchResult(accessToken: String, keyword: String): Call<ResponseBody>
 
+    suspend fun deletePost(accessToken: String, postId: Int): Call<ResponseBody>
+
+    suspend fun scrapPost(accessToken: String, postId: Int): Call<ResponseBody>
+
 }

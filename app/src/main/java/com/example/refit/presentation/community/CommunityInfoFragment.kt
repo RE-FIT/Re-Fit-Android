@@ -16,6 +16,7 @@ import com.example.refit.presentation.common.DialogUtil.createAlertNoImageDialog
 import com.example.refit.presentation.common.DialogUtil.createAlertSirenDialog
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
+import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.AlertNoIconDialogListener
@@ -40,7 +41,7 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
 
     private fun CommunityEtcMenuDropdown() {
         // TODO 유저 상태에 따라 array 값 다르게 불러와야 함
-        val status = 3
+        val status = 0
         binding.cvEtcOverflow.setOnClickListener {
             val listPopupWindow = when (status) {
                 0 -> getPopupMenu(
@@ -104,6 +105,8 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
 
     private fun handleFavIconClicked() {
         binding.tbCommunityInfoFav.setOnClickListener {
+            // TODO 서버에서 스크랩 여부 받아오면 toggleStatus 연결
+            vm.scrapPost()
             val toggleStatus = !binding.tbCommunityInfoFav.isChecked
             if (toggleStatus) {
                 CustomSnackBar.make(
@@ -171,6 +174,8 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
             object : AlertNoIconDialogListener {
                 override fun onClickPositive() {
                     // TODO 글 삭제
+                    vm.deletePost()
+                    navigateUp()
                 }
 
                 override fun onClickNegative() {
