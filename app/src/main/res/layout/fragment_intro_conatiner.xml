@@ -9,19 +9,22 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tl_page_indicator"
+            android:id="@+id/tl_intro_page_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toTopOf="@id/vp_on_boarding_page"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tabBackground="@drawable/selector_on_boarding"
             app:tabGravity="center"
+            app:tabIndicator="@null"
             app:tabRippleColor="@android:color/transparent" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_intro_skip"
             style="@style/MediumFont.14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,9 +34,9 @@
             android:drawableTint="@color/green1"
             android:text="@string/on_boarding_skip"
             android:textColor="@color/green1"
-            app:layout_constraintBottom_toBottomOf="@id/tl_page_indicator"
+            app:layout_constraintBottom_toBottomOf="@id/tl_intro_page_indicator"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tl_page_indicator" />
+            app:layout_constraintTop_toTopOf="@id/tl_intro_page_indicator" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp_on_boarding_page"
@@ -42,7 +45,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tl_page_indicator" />
+            app:layout_constraintTop_toBottomOf="@id/tl_intro_page_indicator" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

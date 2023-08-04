@@ -10,7 +10,6 @@ import com.example.refit.databinding.FragmentOnBoardingFirstBinding
 import com.example.refit.presentation.common.BaseFragment
 
 class OnBoardingFirstFragment : BaseFragment<FragmentOnBoardingFirstBinding>(R.layout.fragment_on_boarding_first) {
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

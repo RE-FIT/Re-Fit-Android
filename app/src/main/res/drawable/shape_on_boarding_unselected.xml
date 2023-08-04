@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:innerRadius="0dp"
     android:shape="ring"
-    android:thickness="12dp"
+    android:thickness="@dimen/on_boarding_indicator"
     android:useLevel="false">
 
     <solid android:color="@color/dark1" />
