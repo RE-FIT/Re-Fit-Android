@@ -2,7 +2,6 @@ package com.example.refit.data.model.community
 
 import com.google.gson.annotations.SerializedName
 
-
 data class CommunityListItemResponse(
     @SerializedName("deliveryType")
     val deliveryType: Int,

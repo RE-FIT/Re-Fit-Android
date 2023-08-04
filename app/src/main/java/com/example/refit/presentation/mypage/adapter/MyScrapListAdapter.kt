@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.refit.data.model.community.CommunityListItemResponse
-import com.example.refit.databinding.ItemCommunityBinding
+import com.example.refit.databinding.ItemScrapBinding
 import com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel
 
 class MyScrapListAdapter(private val viewModel: MyScrapViewModel) :
@@ -19,7 +19,7 @@ class MyScrapListAdapter(private val viewModel: MyScrapViewModel) :
         viewType: Int
     ): MyScrapListAdapter.MatchingListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ItemCommunityBinding.inflate(layoutInflater, parent, false)
+        val binding = ItemScrapBinding.inflate(layoutInflater, parent, false)
         return MatchingListViewHolder(binding)
     }
 
@@ -30,11 +30,11 @@ class MyScrapListAdapter(private val viewModel: MyScrapViewModel) :
         holder.bindItems(getItem(position))
     }
 
-    inner class MatchingListViewHolder(private val binding: ItemCommunityBinding) :
+    inner class MatchingListViewHolder(private val binding: ItemScrapBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindItems(scrapList: CommunityListItemResponse) {
             binding.communityList = scrapList
-            binding.vmScrap = viewModel
+            binding.vm = viewModel
             binding.executePendingBindings()
         }
     }

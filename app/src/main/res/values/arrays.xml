@@ -115,8 +115,8 @@
     </string-array>
 
     <string-array name="my_page_myInfo_gender">
-        <item>남성</item>
         <item>여성</item>
+        <item>남성</item>
     </string-array>
 
     <string-array name="sign_up_gender">

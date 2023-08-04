@@ -6,7 +6,25 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 
 class MyPageRepositoryImpl(private val myPageDataSource: MyPageDataSource): MyPageRepository {
-    override suspend fun showMyInfo(token: String, name: String): Call<CheckNicknameResponse> {
-        return myPageDataSource.showMyInfo(token, name)
+    override suspend fun checkNickname(token: String, name: String): Call<CheckNicknameResponse> {
+        return myPageDataSource.checkNickname(token, name)
     }
+
+    override suspend fun loadCommunityList(token: String): Call<ResponseBody> {
+        return myPageDataSource.loadCommunityList(token)
+    }
+
+    override suspend fun loadCommunityListSort(
+        accesstoken: String,
+        postType: Int,
+        gender: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return myPageDataSource.loadCommunityListSort(accesstoken, postType, gender, category)
+    }
+
+    override suspend fun showMyFeedSell(token: String): Call<ResponseBody> {
+        return myPageDataSource.showMyFeedSell(token)
+    }
+
 }

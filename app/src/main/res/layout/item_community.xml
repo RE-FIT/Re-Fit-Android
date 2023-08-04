@@ -13,14 +13,10 @@
             name="communityList"
             type="com.example.refit.data.model.community.CommunityListItemResponse" />
 
-
         <variable
             name="vm"
             type="com.example.refit.presentation.community.viewmodel.CommunityViewModel" />
 
-        <variable
-            name="vm_scrap"
-            type="com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel" />
 
     </data>
 

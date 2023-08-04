@@ -167,25 +167,27 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="26dp"
                             android:background="@drawable/btn_my_info_check"
-                            android:backgroundTint="@{vm.isCheckNicknameAvailable() == true ? @color/green1 : @color/dark1}"
-                            android:clickable="@{vm.isCheckNicknameAvailable() == true ? true : false, default = false}"
+                            android:backgroundTint="@{vm.isCheckUpdatedNickname() == true ? @color/green1 : @color/dark1}"
+                            android:clickable="@{vm.isCheckUpdatedNickname() == true ? true : false, default = false}"
                             android:padding="0dp"
                             android:shadowColor="@android:color/transparent"
                             android:text="@string/my_info_isCheck_nickname"
                             android:textColor="@color/white" />
-
                     </FrameLayout>
 
                     <TextView
                         android:id="@+id/able_name"
                         style="@style/MediumFont.10"
-                        setVisibility="@{vm.isCheckNicknameAvailable() == true ? View.VISIBLE : View.GONE}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/my_info_available_nickname"
                         android:textColor="@color/green1"
                         android:visibility="gone" />
+
+                    <!--
+                    setVisibility="@{vm.isCheckUpdatedNickname() == true ? View.VISIBLE : View.GONE}"
+                    -->
 
                     <TextView
                         android:id="@+id/enable_name"
@@ -239,7 +241,7 @@
                         android:drawableEnd="@drawable/ic_arrow_bottom_14"
                         android:textSize="12sp" />
 
-                    <com.google.android.material.button.MaterialButton
+                    <android.widget.Button
                         android:id="@+id/btn_my_info_update"
                         style="@style/RegularFont.14"
                         android:layout_width="match_parent"
@@ -247,8 +249,8 @@
                         android:layout_marginTop="33dp"
                         android:layout_marginBottom="32dp"
                         android:background="@drawable/btn_my_info_pw"
-                        android:backgroundTint="@{vm.isInfoModified() == true ? @color/green1 : @color/dark1}"
-                        android:clickable="@{vm.isInfoModified() == true ? true : false, default = false}"
+                        android:backgroundTint="@{vm.isCheckUpdatedNickname() || vm.isCheckUpdatedBirth() || vm.isCheckUpdatedGender() ? @color/green1 : @color/dark1}"
+                        android:clickable="@{vm.isCheckUpdatedNickname() || vm.isCheckUpdatedBirth() || vm.isCheckUpdatedGender() ? true : false, default = false}"
                         android:text="@string/my_info_btn_update"
                         android:textColor="@color/white" />
 

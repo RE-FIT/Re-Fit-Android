@@ -134,7 +134,7 @@
     <fragment
         android:id="@+id/myPage_myScrap"
         android:name="com.example.refit.presentation.mypage.ScrapFragment"
-        android:label="fragment_myScrap"
+        android:label="fragment_Scrap"
         tools:layout="@layout/fragment_scrap"/>
     <fragment
         android:id="@+id/myPage_mySetting"

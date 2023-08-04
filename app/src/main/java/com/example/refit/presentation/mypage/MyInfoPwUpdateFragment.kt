@@ -48,6 +48,16 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.vm = vm
+        binding.lifecycleOwner = this
+
+        binding.newPw.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                vm.updateCurrentPw(s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) { }
+        })
     }
 
     private fun notifyPwIncorrectDialog() {

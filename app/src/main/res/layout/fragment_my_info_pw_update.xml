@@ -5,9 +5,9 @@
     tools:context=".presentation.mypage.MyInfoPwUpdateFragment">
 
     <data>
-
-
-
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -89,6 +89,8 @@
                 android:layout_marginTop="95dp"
                 android:layout_marginBottom="165dp"
                 android:background="@drawable/btn_my_info_pw"
+                android:backgroundTint="@{vm.isCheckUpdatedPw() ? @color/green1 : @color/dark1}"
+                android:clickable="@{vm.isCheckUpdatedPw() ? true : false, default = false}"
                 android:text="@string/my_info_btn_update"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
