@@ -250,16 +250,12 @@
         android:name="com.example.refit.presentation.community.PostcodeFragment"
         android:label="fragment_postcode"
         tools:layout="@layout/fragment_postcode" />
-    <fragment
-        android:id="@+id/communitySearchFragment"
-        android:name="com.example.refit.presentation.community.CommunitySearchFragment"
-        android:label="fragment_community_search"
-        tools:layout="@layout/fragment_community_search" />
+
     <fragment
         android:id="@+id/startingFragment"
         android:name="com.example.refit.presentation.onboarding.StartingFragment"
         android:label="fragment_starting"
-        tools:layout="@layout/fragment_starting" >
+        tools:layout="@layout/fragment_starting">
         <action
             android:id="@+id/action_startingFragment_to_signInFragment"
             app:destination="@id/signInFragment"
@@ -293,7 +289,7 @@
         android:id="@+id/introContainerFragment"
         android:name="com.example.refit.presentation.onboarding.IntroContainerFragment"
         android:label="fragment_intro_conatiner"
-        tools:layout="@layout/fragment_intro_conatiner" >
+        tools:layout="@layout/fragment_intro_conatiner">
         <action
             android:id="@+id/action_introContainerFragment_to_signInFragment"
             app:destination="@id/signInFragment"
@@ -306,7 +302,7 @@
         android:id="@+id/onBoardingFifthFragment"
         android:name="com.example.refit.presentation.onboarding.pages.OnBoardingFifthFragment"
         android:label="fragment_on_boarding_fifth"
-        tools:layout="@layout/fragment_on_boarding_fifth" >
+        tools:layout="@layout/fragment_on_boarding_fifth">
         <action
             android:id="@+id/action_onBoardingFifthFragment_to_signInFragment"
             app:destination="@id/signInFragment"
@@ -315,7 +311,11 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
-        tools:layout="@layout/fragment_community_search" >
+    <fragment
+        android:id="@+id/communitySearchFragment"
+        android:name="com.example.refit.presentation.community.CommunitySearchFragment"
+        android:label="fragment_community_search"
+        tools:layout="@layout/fragment_community_search">
         <action
             android:id="@+id/action_communitySearchFragment_to_communityInfoFragment"
             app:destination="@id/communityInfoFragment"
