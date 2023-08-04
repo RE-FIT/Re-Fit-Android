@@ -19,6 +19,7 @@ import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.common.WindowUtil.setStatusBarColor
 import com.example.refit.presentation.community.adapter.CommunityListAdapter
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
+import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -27,6 +28,7 @@ import timber.log.Timber
 class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragment_community) {
 
     private val communityViewModel: CommunityViewModel by sharedViewModel()
+    private val infoViewModel: CommunityInfoViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -129,7 +131,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
     private fun observeStatus() {
         communityViewModel.selectedPostItem.observe(viewLifecycleOwner, EventObserver { postId ->
-            communityViewModel.getPost(postId)
+            infoViewModel.clickedGetPost(postId)
             navigate(R.id.action_nav_community_to_communityInfoFragment)
         })
     }

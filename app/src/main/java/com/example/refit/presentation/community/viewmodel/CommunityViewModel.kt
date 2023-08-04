@@ -111,47 +111,6 @@ class CommunityViewModel(
 
         }
 
-    fun getPost(postId: Int) = viewModelScope.launch {
-        val accessToken = ds.getAccessToken().first()
-        try {
-            val response =
-                repository.getPost(accessToken, postId)
-            Timber.d(
-                "accessToken: ${accessToken.toString()}\n" +
-                        "postId: ${postId.toString()}"
-            )
-            response.enqueue(object : Callback<PostResponse> {
-                override fun onResponse(
-                    call: Call<PostResponse>,
-                    response: Response<PostResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        Timber.d("API 호출 성공")
-                        val json = response.body()?.toString()
-                        Timber.d("COMMUNITY POST API 호출 성공 : $json")
-                    } else {
-                        val errorBody = response.errorBody()
-                        val errorCode = response.code()
-
-                        if (errorBody != null) {
-                            val errorJson = JSONObject(errorBody.string())
-                            val errorMessage = errorJson.optString("errorMessage")
-                            val errorCodeFromJson = errorJson.optInt("code")
-
-                            Timber.d("API 호출 실패: $errorCodeFromJson / $errorMessage")
-                        } else Timber.d("API 호출 실패: $errorCode")
-                    }
-                }
-
-                override fun onFailure(call: Call<PostResponse>, t: Throwable) {
-                    Timber.d("RESPONSE FAILURE")
-                }
-            })
-        } catch (e: Exception) {
-            "커뮤니티 글 상세 페이지 로딩 오류: $e"
-        }
-    }
-
     fun setDropDownController(type: Int, value: String) {
         when (type) {
             0 -> {

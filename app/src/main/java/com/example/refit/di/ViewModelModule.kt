@@ -27,7 +27,7 @@ val viewModelModule = module {
     viewModel { ForestViewModel(get()) }
     viewModel { CommunityViewModel(get(), get())}
     viewModel { CommunityViewModel(get(), get()) }
-    viewModel { CommunityInfoViewModel(get()) }
+    viewModel { CommunityInfoViewModel(get(), get()) }
     viewModel { CommunityAddPostViewModel(get(), get()) }
     viewModel { CommunitySearchViewModel(get(), get()) }
     viewModel { PostReportViewModel(get()) }

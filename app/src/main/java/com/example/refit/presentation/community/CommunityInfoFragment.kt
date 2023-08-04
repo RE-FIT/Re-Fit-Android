@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
 import com.example.refit.R
+import com.example.refit.data.model.community.PostResponse
 import com.example.refit.databinding.FragmentCommunityInfoBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.CustomSnackBar
@@ -18,21 +19,23 @@ import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.AlertNoIconDialogListener
+import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 import java.lang.IllegalArgumentException
 
 class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layout.fragment_community_info) {
 
-    private val communityInfoViewModel: CommunityInfoViewModel by sharedViewModel()
+    private val vm: CommunityInfoViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.vm = communityInfoViewModel
-        communityInfoViewModel.initAllState()
+        binding.vm = vm
+
+        vm.initAllState()
         CommunityEtcMenuDropdown()
         handleFavIconClicked()
-
+        observeStatus()
     }
 
     private fun CommunityEtcMenuDropdown() {
@@ -40,13 +43,22 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         val status = 3
         binding.cvEtcOverflow.setOnClickListener {
             val listPopupWindow = when (status) {
-                0 -> getPopupMenu(it, R.array.community_info_overflow_ing_writer) // 작성자 && (판매중 || 나눔중)
-                1 -> getPopupMenu(it, R.array.community_info_overflow_end_sale_writer) // 작성자 && 판매완료
-                2 -> getPopupMenu(it, R.array.community_info_overflow_end_giveaway_writer) // 작성자 && 나눔완료
+                0 -> getPopupMenu(
+                    it,
+                    R.array.community_info_overflow_ing_writer
+                ) // 작성자 && (판매중 || 나눔중)
+                1 -> getPopupMenu(
+                    it,
+                    R.array.community_info_overflow_end_sale_writer
+                ) // 작성자 && 판매완료
+                2 -> getPopupMenu(
+                    it,
+                    R.array.community_info_overflow_end_giveaway_writer
+                ) // 작성자 && 나눔완료
                 3 -> getPopupMenu(it, R.array.community_info_overflow_user) // 일반 유저
                 else -> throw IllegalArgumentException("Invalid Status Value")
             }
-            communityInfoViewModel.classifyUserState(status)
+            vm.classifyUserState(status)
             setPopupItemClickListener(listPopupWindow)
             listPopupWindow.show()
         }
@@ -71,12 +83,15 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
                 "삭제하기" -> {
                     showDeletePost()
                 }
+
                 "수정하기" -> {
                     navigate(R.id.action_communityInfoFragment_to_communityAddPostFragment)
                 }
+
                 "신고하기" -> {
                     showCommunityReport()
                 }
+
                 "이 사용자의 글 보지 않기" -> {
                     // TODO 사용자 id 불러오기
                     hideUserPost(userid = "user1")
@@ -91,11 +106,14 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         binding.tbCommunityInfoFav.setOnClickListener {
             val toggleStatus = !binding.tbCommunityInfoFav.isChecked
             if (toggleStatus) {
-                //CustomSnackBar.make(binding.clCommunityInfo, "스크랩을 완료하였습니다!", R.anim.anim_show_snack_bar_from_bottom).show()
-                CustomSnackBar.make(requireView(), R.layout.custom_snack_bar_basic, R.anim.anim_show_snack_bar_from_bottom)
+                CustomSnackBar.make(
+                    requireView(),
+                    R.layout.custom_snack_bar_basic,
+                    R.anim.anim_show_snack_bar_from_bottom
+                )
                     .setTitle("스크랩을 완료하였습니다!", null).show()
             }
-            communityInfoViewModel.setScrapState(toggleStatus)
+            vm.setScrapState(toggleStatus)
         }
 
         binding.fabCommunityInfoChat.setOnClickListener {
@@ -129,8 +147,13 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
             object : AlertBasicDialogListener {
                 override fun onClickPositive() {
                     // TODO 이 사용자의 글 보지 않기 (스낵바 수정하기)
-                    CustomSnackBar.make(requireView(), R.layout.custom_snackbar_community_basic, R.anim.anim_show_snack_bar_from_top)
-                        .setTitle(resources.getString(R.string.community_info_snackbar_first), null).show()
+                    CustomSnackBar.make(
+                        requireView(),
+                        R.layout.custom_snackbar_community_basic,
+                        R.anim.anim_show_snack_bar_from_top
+                    )
+                        .setTitle(resources.getString(R.string.community_info_snackbar_first), null)
+                        .show()
 
                 }
 
@@ -157,4 +180,7 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         ).show(requireActivity().supportFragmentManager, null)
     }
 
+    private fun observeStatus() {
+
+    }
 }

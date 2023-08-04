@@ -38,6 +38,11 @@ fun setText(view: TextView, size: String) {
     view.text = getSizeString(size.toInt())
 }
 
+@BindingAdapter("setTextSizeInt")
+fun setText(view: TextView, size: Int) {
+    view.text = getSizeString(size)
+}
+
 private fun getSizeString(size: Int): String {
     return when (size) {
         0 -> "XS"

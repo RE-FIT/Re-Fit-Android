@@ -30,7 +30,7 @@ import timber.log.Timber
 class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.layout.fragment_community_search) {
 
     private val vm: CommunitySearchViewModel by sharedViewModel()
-    private val vmCommunity: CommunityViewModel by sharedViewModel()
+    private val vminfo: CommunityInfoViewModel by sharedViewModel()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -154,7 +154,7 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
 
     private fun observeStatus() {
         vm.selectedPostItem.observe(viewLifecycleOwner, EventObserver { postId ->
-            vmCommunity.getPost(postId)
+            vminfo.clickedGetPost(postId)
             navigate(R.id.action_communitySearchFragment_to_communityInfoFragment)
         })
     }
