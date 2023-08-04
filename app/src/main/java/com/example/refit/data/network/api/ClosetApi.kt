@@ -16,6 +16,6 @@ interface ClosetApi {
         @Header("Authorization") token: String,
         @Part image: MultipartBody.Part,
         @Part("request") request: RequestBody
-    ): Call<ResponseAddNewCloth>
+    ): Call<Long>
 
 }

@@ -12,5 +12,5 @@ interface ClosetRepository {
         token: String,
         image: MultipartBody.Part,
         request: RequestBody
-    ): Call<ResponseAddNewCloth>
+    ): Call<Long>
 }

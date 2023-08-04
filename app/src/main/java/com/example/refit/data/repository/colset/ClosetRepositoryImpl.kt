@@ -12,7 +12,7 @@ class ClosetRepositoryImpl(private val closetDataSource: ClosetDataSource): Clos
         token: String,
         image: MultipartBody.Part,
         request: RequestBody
-    ): Call<ResponseAddNewCloth> {
+    ): Call<Long> {
         return closetDataSource.addNewCloth(token, image, request)
     }
 }
