@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.closet.RequestAddNewCloth
-import com.example.refit.data.model.closet.ResponseAddNewCloth
 import com.example.refit.data.repository.colset.ClosetRepository
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.first
@@ -81,13 +80,13 @@ class ClothAddViewModel(
     val selectedSeasonId: LiveData<Int>
         get() = _selectedSeasonId
 
-    private val _selectedClothCategoryId: MutableLiveData<Int> = MutableLiveData<Int>()
+    private val _selectedClothCategoryId: MutableLiveData<Int> = MutableLiveData<Int>(0)
     val selectedClothCategoryId: LiveData<Int>
         get() = _selectedClothCategoryId
 
-    private val _registeredClothInfo: MutableLiveData<ResponseAddNewCloth> =
-        MutableLiveData<ResponseAddNewCloth>()
-    val registeredClothInfo: LiveData<ResponseAddNewCloth>
+    private val _registeredClothInfo: MutableLiveData<Long> =
+        MutableLiveData<Long>()
+    val registeredClothInfo: LiveData<Long>
         get() = _registeredClothInfo
 
     // 서버 호출
@@ -108,11 +107,11 @@ class ClothAddViewModel(
                     RequestAddNewCloth(
                         _selectedClothCategoryId.value!!,
                         _selectedSeasonId.value!!,
-                        30,
-                        1,
-                        _isValidShowingRecommendWearing.value!!,
-                        30,
-                        7
+                        _selectedWearingNumberOption.value,
+                        _selectedMonthOption.value,
+                        _isValidInvalidSeasonConfirm.value!! && !_isNegativeInvalidSeasonConfirm.value!!,
+                        _recommendWearingNumberOfMonth.value,
+                        _recommendWearingNumberOfWeek.value
                     )
                 )
                 val body = request.toRequestBody("application/json".toMediaType())
@@ -122,14 +121,14 @@ class ClothAddViewModel(
                     body = imageFile.asRequestBody("image/*".toMediaType())
                 )
 
-                Timber.d(request)
+                Timber.d("옷 등록 리퀘스트 : $request")
 
                 val response =
                     repository.addNewCloth(dataStore.getAccessToken().first(), multipartBody, body)
-                response.enqueue(object : Callback<ResponseAddNewCloth> {
+                response.enqueue(object : Callback<Long> {
                     override fun onResponse(
-                        call: Call<ResponseAddNewCloth>,
-                        response: Response<ResponseAddNewCloth>
+                        call: Call<Long>,
+                        response: Response<Long>
                     ) {
                         if (response.isSuccessful) {
                             _registeredClothInfo.value = response.body()
@@ -138,8 +137,7 @@ class ClothAddViewModel(
                             Timber.d("옷 등록 실패1 : ${(response.errorBody().toString())}")
                         }
                     }
-
-                    override fun onFailure(call: Call<ResponseAddNewCloth>, t: Throwable) {
+                    override fun onFailure(call: Call<Long>, t: Throwable) {
                         Timber.d("옷 등록 실패2 : $t")
                     }
                 })
