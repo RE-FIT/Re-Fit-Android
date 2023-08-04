@@ -9,13 +9,48 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/tv_on_boarding_fifth"
+            style="@style/BoldFontKr.14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fifth"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="20dp"
+            android:text="@string/on_boarding_fifth_page"
+            android:textAlignment="center"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_on_boarding_fifth"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_on_boarding_fifth"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_on_boarding_to_sign_in"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_fifth" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_on_boarding_to_sign_in"
+            style="@style/RegularFontKr.14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/green1"
+            android:padding="16dp"
+            android:text="RE-FIT 시작하기"
+            app:cornerRadius="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_on_boarding_fifth" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

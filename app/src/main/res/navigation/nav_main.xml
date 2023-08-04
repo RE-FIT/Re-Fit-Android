@@ -293,5 +293,26 @@
         android:id="@+id/introContainerFragment"
         android:name="com.example.refit.presentation.onboarding.IntroContainerFragment"
         android:label="fragment_intro_conatiner"
-        tools:layout="@layout/fragment_intro_conatiner" />
+        tools:layout="@layout/fragment_intro_conatiner" >
+        <action
+            android:id="@+id/action_introContainerFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/onBoardingFifthFragment"
+        android:name="com.example.refit.presentation.onboarding.pages.OnBoardingFifthFragment"
+        android:label="fragment_on_boarding_fifth"
+        tools:layout="@layout/fragment_on_boarding_fifth" >
+        <action
+            android:id="@+id/action_onBoardingFifthFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 </navigation>

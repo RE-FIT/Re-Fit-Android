@@ -9,13 +9,30 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/tv_on_boarding_third"
+            style="@style/BoldFontKr.14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="third"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="20dp"
+            android:text="@string/on_boarding_third_page"
+            android:textAlignment="center"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_on_boarding_third"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/img_on_boarding_third"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_on_boarding_third" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

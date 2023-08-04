@@ -3,6 +3,7 @@ package com.example.refit.presentation.onboarding
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.widget.ViewPager2
 import com.example.refit.R
 import com.example.refit.databinding.FragmentIntroConatinerBinding
 import com.example.refit.presentation.common.BaseFragment
@@ -15,6 +16,7 @@ class IntroContainerFragment : BaseFragment<FragmentIntroConatinerBinding>(R.lay
         super.onViewCreated(view, savedInstanceState)
         setOnBoardingPager(requireActivity())
         setIndicatorTabMediator()
+        setViewPagerPageCallback()
         handleViewPagerEvent()
     }
 
@@ -30,8 +32,24 @@ class IntroContainerFragment : BaseFragment<FragmentIntroConatinerBinding>(R.lay
         binding.tvIntroSkip.setOnClickListener {
             binding.vpOnBoardingPage.adapter?.let {
                 binding.vpOnBoardingPage.currentItem = it.itemCount - 1
-
             }
+        }
+    }
+
+    private fun setViewPagerPageCallback() {
+        binding.vpOnBoardingPage.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                setSkipVisibility(position)
+            }
+        })
+    }
+
+    private fun setSkipVisibility(position: Int) {
+        binding.tvIntroSkip.visibility = when(position) {
+            4 -> View.GONE
+            else -> View.VISIBLE
         }
     }
 
