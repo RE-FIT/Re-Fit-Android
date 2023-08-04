@@ -31,6 +31,7 @@ import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
+import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialogListener
 import com.example.refit.util.FileUtil
 import com.google.android.material.chip.Chip
@@ -45,6 +46,7 @@ class CommunityAddPostFragment :
     BaseFragment<FragmentCommunityAddPostBinding>(R.layout.fragment_community_add_post) {
 
     private val communityAddPostViewModel: CommunityAddPostViewModel by sharedViewModel()
+    private val vm: CommunityViewModel by sharedViewModel()
     private lateinit var pickMultipleMedia: ActivityResultLauncher<PickVisualMediaRequest>
 
     private var photoUris: List<String>? = null
@@ -291,6 +293,7 @@ class CommunityAddPostFragment :
             }
             communityAddPostViewModel.createPost(title, detail, imageFiles)
             navigateUp()
+            vm.loadCommunityList()
         }
     }
     private fun copyFileToInternalStorage(uri: Uri): File? {
@@ -345,23 +348,6 @@ class CommunityAddPostFragment :
                     Log.d("PhotoPicker", "No media selected")
                 }
             }
-    }
-
-    private fun uriToFile(uri: Uri): File? {
-        val context = requireContext().applicationContext
-        val filePathColumn = arrayOf(MediaStore.Images.Media.DISPLAY_NAME)
-        Timber.d("filePathColumn Test; ${filePathColumn[0]}")
-        val cursor = context.contentResolver.query(uri, filePathColumn, null, null, null)
-        cursor?.use {
-            if (it.moveToFirst()) {
-                val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
-                Timber.d("columnIndex Test: $columnIndex")
-                val fileName = cursor.getString(columnIndex)
-                val filePath = File(context.filesDir, fileName).path
-                return File(filePath)
-            }
-        }
-        return null
     }
 
 

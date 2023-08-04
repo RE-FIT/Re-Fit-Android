@@ -46,6 +46,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         //로그인
         //id: admin1234
         //password: AAaa1234!!
+
         binding.signInExistingLogin.setOnClickListener {
             val id = binding.signInLoginId.toString()
             val password = binding.signInFindIdPassword.toString()

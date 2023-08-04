@@ -42,5 +42,13 @@ class CommunityRepositoryImpl (private val communityDataSource: CommunityDataSou
         return communityDataSource.loadSearchResult(accessToken, keyword)
     }
 
+    override suspend fun deletePost(accessToken: String, postId: Int): Call<ResponseBody> {
+        return communityDataSource.deletePost(accessToken, postId)
+    }
+
+    override suspend fun scrapPost(accessToken: String, postId: Int): Call<ResponseBody> {
+        return communityDataSource.scrapPost(accessToken, postId)
+    }
+
 
 }

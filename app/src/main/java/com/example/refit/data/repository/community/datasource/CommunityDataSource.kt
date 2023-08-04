@@ -23,7 +23,11 @@ interface CommunityDataSource {
         image: List<File>
     ): Call<ResponseBody>
 
-
     suspend fun getPost(accessToken: String, postId: Int): Call<PostResponse>
     suspend fun loadSearchResult(accessToken: String, keyword: String): Call<ResponseBody>
+
+    suspend fun deletePost(accessToken: String, postId: Int): Call<ResponseBody>
+
+    suspend fun scrapPost(accessToken: String, postId: Int): Call<ResponseBody>
+
 }
