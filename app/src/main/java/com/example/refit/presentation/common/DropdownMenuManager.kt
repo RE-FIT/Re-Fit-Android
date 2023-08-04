@@ -13,7 +13,6 @@ import com.google.android.material.R.attr
 object DropdownMenuManager {
 
     fun createPopupMenu(
-        context: Context,
         anchorView: View,
         @StyleRes style: Int,
         @LayoutRes itemLayout: Int,

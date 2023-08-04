@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.closet.ForestFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/default_dark">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_forest_top_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_forest_top_background"
+                style="@style/ForestTopCardView"
+                android:layout_width="match_parent"
+                android:layout_height="156dp"
+                app:cardBackgroundColor="@color/green1"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeWidth="0dp" />
+
+            <LinearLayout
+                android:id="@+id/ll_forest_top_info_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/cv_forest_top_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_forest_top_title_first"
+                    style="@style/MediumFontKr.16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/forest_top_title_first"
+                    android:textColor="@color/white"
+                    tools:text="오늘은" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/siv_forest_top_user_cloth"
+                    android:layout_width="66dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginEnd="18dp"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.20"
+                    tools:src="@drawable/img_temp_67" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_forest_top_title_second"
+                    style="@style/MediumFontKr.16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/forest_top_title_second"
+                    android:textColor="@color/white"
+                    tools:text="를 착용하셨군요!" />
+
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_forest_top_info_container"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/RegularFontKr.10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:text="@string/forest_top_wearing_count"
+                            android:textColor="@color/black"
+                            tools:text="착용 횟수" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/BoldFontKr.16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/green1"
+                            tools:text="3" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@color/dark1" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/RegularFontKr.10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:text="@string/forest_top_wearin_goal"
+                            android:textColor="@color/black"
+                            tools:text="목표 횟수" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/BoldFontKr.16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/green1"
+                            tools:text="3" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@color/dark1" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/RegularFontKr.10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:text="@string/forest_top_percent"
+                            android:textColor="@color/black"
+                            tools:text="달성률" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/BoldFontKr.16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/green1"
+                            tools:text="30%" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_forest_stamp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/btn_forest_return_to_cloth"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_forest_top_container"
+            tools:listitem="@layout/item_forest_stamp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_forest_return_to_cloth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/green1"
+            android:padding="16dp"
+            android:text="@string/forest_button_return_to_cloth"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_forest_stamp"
+            tools:text="옷장으로 돌아가기" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

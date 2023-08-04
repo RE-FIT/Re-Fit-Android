@@ -5,6 +5,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
@@ -43,6 +44,18 @@ interface CommunityApi {
     fun loadSearchResult(
         @Header("Authorization") accessToken: String,
         @Query("keyword") postType: String,
+    ): Call<ResponseBody>
+
+    @DELETE("refit/community/{postId}")
+    fun deletePost(
+        @Header("Authorization") accessToken: String,
+        @Path("postId") postId: Int
+    ) : Call<ResponseBody>
+
+    @POST("refit/community/{postId}/scrap")
+    fun scrapPost(
+        @Header("Authorization") accessToken: String,
+        @Path("postId") postId: Int
     ): Call<ResponseBody>
 
 }

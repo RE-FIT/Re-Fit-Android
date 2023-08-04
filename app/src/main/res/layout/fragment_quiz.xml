@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.closet.QuizFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/default_dark">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/tb_forest_quiz_top_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_arrow_left_24"
+            app:navigationIconTint="@color/dark2"
+            app:title="환경 상식 퀴즈"
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/BoldFontKr.20" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_forest_quiz_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_forest_quiz_result_status"
+            app:layout_constraintTop_toBottomOf="@id/tb_forest_quiz_top_container"
+            app:strokeColor="@color/green1"
+            app:strokeWidth="1dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/RegularFontKr.12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textColor="@color/green1"
+                tools:text="분리배출" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_forest_quiz_result_status"
+            style="@style/BoldFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Q."
+            android:textColor="@color/green1"
+            android:textSize="50sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_forest_quiz_title"
+            tools:text="Q." />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/MediumFontKr.18"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@id/btn_forest_quiz_confirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_forest_quiz_result_status"
+            tools:text="영수증은 종이가 아닌 감열지를 사용하는데, 감열지에는 염료와 유기산 등 약품 처리가 되어있어 재활용이 되지 않아요!" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_forest_quiz_confirm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/green1"
+            android:text=""
+            android:textAppearance="@style/RegularFontKr.14"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="정답 보러가기" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

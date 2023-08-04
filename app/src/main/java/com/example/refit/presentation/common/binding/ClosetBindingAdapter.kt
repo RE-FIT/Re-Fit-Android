@@ -19,4 +19,12 @@ object ClosetBindingAdapter {
             }
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("setClothCategoryTextSelectionStatus")
+    fun setClothCategoryTextSelectionStatus(view: TextView, status: Boolean?) {
+        status?.let{
+            view.isSelected = status
+        }
+    }
 }

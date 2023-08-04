@@ -7,6 +7,14 @@
         <item>겨울</item>
     </string-array>
 
+    <string-array name="closet_cloth_category">
+        <item>상의</item>
+        <item>하의</item>
+        <item>아우터</item>
+        <item>원피스</item>
+        <item>신발</item>
+    </string-array>
+
     <string-array name="closet_item_search_option_sort">
         <item>D-Day 순</item>
         <item>많이 입은 순</item>
@@ -59,6 +67,8 @@
         <item>@string/cloth_register_wearing_season_confirm_positive</item>
         <item>@string/cloth_register_wearing_season_confirm_negative</item>
     </string-array>
+
+
 
     <string-array name="community_item_search_option_category">
         <item>상의</item>

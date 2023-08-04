@@ -70,8 +70,21 @@
                     android:layout_height="20dp"
                     android:layout_gravity="right|center"
                     android:layout_marginRight="10dp"
+                    android:visibility="visible"
+                    setVisibility="@{vm.isSearching ? View.GONE : View.VISIBLE}"
                     android:enabled="@{vm.isSearchTypingState}"
-                    android:background="@{vm.isSearching ? @drawable/ic_close_17 :  @drawable/ic_search_dark_13}" />
+                    android:background="@drawable/ic_search_dark_13" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/ib_community_search_close"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="right|center"
+                    android:layout_marginRight="10dp"
+                    android:visibility="gone"
+                    setVisibility="@{vm.isSearching}"
+                    android:background="@drawable/ic_close_17" />
+
             </com.google.android.material.card.MaterialCardView>
             
             <androidx.appcompat.widget.AppCompatImageButton
@@ -109,32 +122,17 @@
                 android:paddingTop="10dp">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cv_community_option_category"
-                    style="@style/CommunityOptionCardView.Common"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tv_community_option_category"
-                        style="@style/CommunitySearchOption2.TextCommon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/community_search_option_first" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv_community_option_type"
                     style="@style/CommunityOptionCardView.Common"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tv_community_option_type"
                         style="@style/CommunitySearchOption2.TextCommon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/community_search_option_second" />
+                        android:text="@string/community_search_option_first" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -149,6 +147,21 @@
                         style="@style/CommunitySearchOption2.TextCommon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/community_search_option_second" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cv_community_option_category"
+                    style="@style/CommunityOptionCardView.Common"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_community_option_category"
+                        style="@style/CommunitySearchOption2.TextCommon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/community_search_option_third" />
 
                 </com.google.android.material.card.MaterialCardView>
@@ -158,11 +171,12 @@
         </HorizontalScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_community_list"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:id="@+id/rv_search_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
             android:visibility="gone"
+            setVisibility="@{vm.isExistResult}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -171,8 +185,11 @@
             tools:listitem="@layout/item_community" />
 
         <FrameLayout
+            android:id="@+id/fl_no_result"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            setVisibility="@{vm.isVisibleNoResult ? true : false}">
 
             <LinearLayout
                 android:layout_width="match_parent"

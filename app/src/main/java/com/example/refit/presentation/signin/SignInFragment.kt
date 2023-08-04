@@ -1,7 +1,11 @@
 package com.example.refit.presentation.signin
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.example.refit.R
 import com.example.refit.databinding.FragmentSignInBinding
 import com.example.refit.presentation.AccessTokenViewModel
@@ -19,6 +23,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
     private val vm: SignUpViewModel by sharedViewModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        textWatcher()
         //viewModel.logout()
 
         /*//엑세스 토큰 체크
@@ -31,12 +36,30 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
             }
         }*/
 
+        /*tokenViewModel.error.observe(viewLifecycleOwner) {
+            it?.let {
+                Timber.d(it.toString())
+            }
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) {
+            it?.let{
+                Timber.d(it.toString())
+            }
+        }*/
+
         //로그인
         //id: admin1234
         //password: AAaa1234!!
-        binding.existingLogin.setOnClickListener {
-            // vm.signUpUser("admin1234", "AAaa1234!!","refit@gmail.com","어드민","2023/07/12", 0)
-            viewModel.basicLogin("admin1234", "AAaa1234!!")
+
+        binding.signInExistingLogin.setOnClickListener {
+            val id = binding.signInLoginId.text.toString()
+            val password = binding.signInPassword.text.toString()
+
+            /*vm.signUpUser("admin1234", "AAaa1234!!","refit@gmail.com","어드민","2023/07/12", 0)*/
+            /*viewModel.basicLogin("admin1234", "AAaa1234!!")*/
+            //Timber.d("$id $password")
+            viewModel.basicLogin(id, password)
         }
 
 
@@ -51,9 +74,34 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         }
 
         //아이디 비밀번호 찾기 이동
-        binding.findIdPassword.setOnClickListener(){
+        binding.signInFindIdPassword.setOnClickListener(){
             navigate(R.id.action_signInFragment_to_findIdPasswordFragment)
         }
-
     }
+    fun textWatcher() {
+        binding.signInPassword.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                val id = binding.signInLoginId.text.toString()
+                val password = binding.signInPassword.text.toString()
+
+                //텍스트 입력시 버튼 색상 초록으로 변경
+                if (id.isEmpty() && password.isEmpty()) {
+                    binding.signInExistingLogin.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green1))
+                } else {
+                    binding.signInExistingLogin.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green1))
+                }
+
+            }
+        })
+    }
+
+
 }

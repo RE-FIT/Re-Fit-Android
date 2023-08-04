@@ -9,6 +9,8 @@
             name="emailCertificationCode"
             type="com.example.refit.data.model.signup.ResponseEmailCertification" />
 
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,24 +19,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/back"
-            android:layout_width="61dp"
-            android:layout_height="47dp"
-            android:background="#00ff0000"
-            android:contentDescription="Back Button"
-            android:src="@drawable/back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
-
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
@@ -44,70 +35,77 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp"
+                android:background="@color/light"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:context=".presentation.signup.SignUpFragment">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/member_info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/member_info"
+                    android:id="@+id/sign_up_input_info_text"
+                    android:layout_width="215dp"
+                    android:layout_height="64dp"
+                    android:src="@drawable/ic_sign_up_input_info"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.132"
+                    app:layout_constraintTop_toBottomOf="@+id/sign_up_back"
+                    app:layout_constraintVertical_bias="0.034"
                     tools:ignore="MissingConstraints" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/text"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/sign_up_id_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="4dp"
-                    android:text="기본 정보를 입력해주세요 :)"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/member_info"
-                    tools:ignore="MissingConstraints" />
+                    android:layout_marginTop="28dp"
+                    android:text="@string/sign_up_id"
+                    android:textSize="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/sign_up_input_info_text"
+                    tools:layout_editor_absoluteX="-2dp" />
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/id"
+                    android:id="@+id/sign_up_id_input"
                     android:layout_width="0dp"
                     android:layout_height="52dp"
                     android:background="@drawable/border_gray"
-                    android:color="@color/white"
                     android:hint="아이디를 입력해주세요"
+                    android:textColorHint="@color/dark1"
                     android:padding="10dp"
-
-                    android:textColor="@android:color/darker_gray"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.137"
+                    app:layout_constraintHorizontal_bias="0.241"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text"
-                    app:layout_constraintVertical_bias="0.064"
-                    tools:ignore="MissingConstraints" />
+                    app:layout_constraintTop_toBottomOf="@+id/sign_up_id_text"
+                    app:layout_constraintVertical_bias="0.0"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/sign_up_password_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:text="@string/sign_up_password"
+                    android:textSize="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/sign_up_id_input"
+                    tools:layout_editor_absoluteX="-3dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayout2"
+                    android:id="@+id/sign_up_textInputLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingTop="30dp"
+                    android:layout_height="wrap_content"
+                    android:hint="비밀번호를 입력해주세요"
+                    app:hintTextColor="@color/dark1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/id"
+                    app:layout_constraintTop_toBottomOf="@+id/sign_up_password_text"
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/dark1">
+
                     <EditText
                         android:id="@+id/sign_up_password"
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
                         android:background="@drawable/border_gray"
-                        android:hint="비밀번호를 입력해주세요"
                         android:padding="10dp"
-                        android:textColorHint="@android:color/darker_gray"
+                        app:hintEnabled="false"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.137"
@@ -118,11 +116,21 @@
 
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/sign_up_email_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:text="@string/sign_up_email"
+                    android:textSize="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/sign_up_textInputLayout"
+                    tools:layout_editor_absoluteX="-1dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_sign_up_email_code"
                     style="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_width="250dp"
+                    android:layout_width="280dp"
                     android:layout_height="52dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/border_gray"
                     android:hint="이메일을 입력해주세요"
                     android:padding="13dp"
@@ -130,26 +138,36 @@
                     app:layout_constraintEnd_toStartOf="@+id/btn_sign_up_api_test"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+                    app:layout_constraintTop_toBottomOf="@+id/sign_up_email_text" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_sign_up_api_test"
-                    android:layout_width="98dp"
+                    android:layout_width="75dp"
                     android:layout_height="52dp"
-                    android:layout_marginTop="36dp"
                     android:backgroundTint="@color/selector_selected_green1_else_dark1"
                     android:text="인증"
                     android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_sign_up_email_code"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.987"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+                    app:layout_constraintTop_toTopOf="@+id/tv_sign_up_email_code"
                     app:shapeAppearance="@color/selector_green1_else_dark1"
                     tools:ignore="MissingConstraints" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/sign_up_nickname_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:text="@string/sign_up_name"
+                    android:textSize="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sign_up_email_code"
+                    tools:layout_editor_absoluteX="-1dp" />
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/nickname"
-                    android:layout_width="250dp"
+                    android:layout_width="280dp"
                     android:layout_height="52dp"
                     android:background="@drawable/border_gray"
                     android:color="@color/white"
@@ -160,8 +178,8 @@
                     app:layout_constraintEnd_toStartOf="@+id/duplicate_check"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_sign_up_email_code"
-                    app:layout_constraintVertical_bias="0.084"
+                    app:layout_constraintTop_toBottomOf="@+id/sign_up_nickname_text"
+                    app:layout_constraintVertical_bias="0.0"
                     tools:ignore="MissingConstraints" />
 
                 <com.google.android.material.button.MaterialButton
@@ -170,15 +188,25 @@
                     android:layout_height="52dp"
                     android:backgroundTint="@color/selector_green1_else_dark1"
                     android:text="중복확인"
-                    android:textSize="13dp"
                     android:textColor="@color/black"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textSize="13dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/nickname"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.993"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_sign_up_api_test"
-                    app:layout_constraintVertical_bias="0.082"
+                    app:layout_constraintTop_toTopOf="@+id/nickname"
+                    app:layout_constraintVertical_bias="1.0"
                     app:shapeAppearance="@color/selector_green1_else_dark1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/sign_up_brith_date_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:text="@string/sign_up_brith_date"
+                    android:textSize="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/nickname"
+                    tools:layout_editor_absoluteX="-1dp" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/birth_date"
@@ -191,40 +219,53 @@
                     android:textColor="@android:color/darker_gray"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.517"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/nickname"
-                    app:layout_constraintVertical_bias="0.104"
+                    app:layout_constraintTop_toBottomOf="@+id/sign_up_brith_date_text"
+                    app:layout_constraintVertical_bias="0.0"
                     tools:ignore="MissingConstraints" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/sign_up_gender_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="36dp"
+                    android:text="@string/sign_up_gender"
+                    android:textSize="20dp"
+                    app:layout_constraintTop_toBottomOf="@id/birth_date"
+                    tools:layout_editor_absoluteX="-1dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/gender"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="52dp"
-                    android:layout_marginTop="45dp"
-                    style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                    android:textColorHint="@color/dark1"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
                     android:hint="성별을 선택해주세요"
+                    android:textColorHint="@color/dark1"
+                    app:boxStrokeErrorColor="@color/red"
+                    app:boxStrokeWidth="3dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.137"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/birth_date">
+                    app:layout_constraintTop_toBottomOf="@+id/sign_up_gender_text">
 
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
                         android:inputType="none"
                         app:simpleItems="@array/sign_up_gender" />
-
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <CheckBox
                     android:id="@+id/agree_to_terms_and_conditions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#00ff0000"
                     android:layout_marginTop="100dp"
                     android:layout_marginEnd="6dp"
                     android:layout_marginBottom="56dp"
+                    android:background="#00ff0000"
                     android:text="[필수] 이용약관 및 개인정보 수집 동의"
                     android:textColor="@color/selector_green1_else_dark1"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -253,9 +294,9 @@
                     android:id="@+id/sign_up"
                     android:layout_width="0dp"
                     android:layout_height="52dp"
+                    android:layout_marginTop="40dp"
                     android:backgroundTint="@color/selector_green1_else_dark1"
                     android:text="가입하기"
-                    android:layout_marginTop="40dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.413"
@@ -263,6 +304,19 @@
                     app:layout_constraintTop_toBottomOf="@+id/view_content"
                     app:layout_constraintVertical_bias="1.0"
                     app:shapeAppearance="@color/selector_green1_else_dark1" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/sign_up_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="#00ff0000"
+                    android:src="@drawable/ic_go_back"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

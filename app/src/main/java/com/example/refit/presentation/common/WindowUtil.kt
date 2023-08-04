@@ -12,8 +12,16 @@ object WindowUtil {
         window.statusBarColor = ContextCompat.getColor(this, color)
     }
 
+    fun Fragment.setStatusBarColor(color: Int) {
+        requireActivity().window.statusBarColor = ContextCompat.getColor(requireActivity(), color)
+    }
+
     fun Activity.setNavigationBarColor(color: Int) {
         window.navigationBarColor = ContextCompat.getColor(this, color)
+    }
+
+    fun Fragment.setNavigationBarColor(color: Int) {
+        requireActivity().window.navigationBarColor = ContextCompat.getColor(requireActivity(), color)
     }
 
     fun Fragment.hideKeyboard() {
