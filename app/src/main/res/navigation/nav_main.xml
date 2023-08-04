@@ -281,5 +281,17 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_startingFragment_to_introContainerFragment"
+            app:destination="@id/introContainerFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
+    <fragment
+        android:id="@+id/introContainerFragment"
+        android:name="com.example.refit.presentation.onboarding.IntroContainerFragment"
+        android:label="fragment_intro_conatiner"
+        tools:layout="@layout/fragment_intro_conatiner" />
 </navigation>

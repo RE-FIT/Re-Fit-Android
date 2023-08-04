@@ -21,7 +21,7 @@ class StartingFragment : BaseFragment<FragmentStartingBinding>(R.layout.fragment
         }
 
         binding.btnStartingTop.setOnClickListener {
-
+            navigate(R.id.action_startingFragment_to_introContainerFragment)
         }
 
         binding.tvStartingFindIdPassword.setOnClickListener {

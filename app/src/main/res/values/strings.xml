@@ -282,5 +282,6 @@
     <string name="starting_find_id_password">아이디 / 비밀번호 찾기</string>
     <string name="starting_basic_sign_up">일반 회원가입</string>
     <string name="starting_sign_container_divider">|</string>
+    <string name="on_boarding_skip">SKIP</string>
 
 </resources>
