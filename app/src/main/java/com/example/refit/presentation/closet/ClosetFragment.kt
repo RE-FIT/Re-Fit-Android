@@ -7,7 +7,7 @@ import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.refit.R
-import com.example.refit.data.model.closet.RegisteredClothInfoResponse
+import com.example.refit.data.model.closet.ResponseRegisteredClothes
 import com.example.refit.databinding.FragmentClosetBinding
 import com.example.refit.presentation.closet.adapter.UserRegisteredClothesAdapter
 import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
@@ -29,7 +29,6 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = closetViewModel
-        initDefaultClothCategory(0)
         closetViewModel.getUserRegisteredClothes()
         initRegisteredCloth()
         initClosetOptionPopupMenu()
@@ -48,7 +47,7 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
                         navigate(R.id.action_nav_closet_to_forestFragment)
                     }
 
-                    override fun onClickFixInfo(clothInfo: RegisteredClothInfoResponse) {
+                    override fun onClickFixInfo(clothInfo: ResponseRegisteredClothes) {
                         //TODO(옷 등록 페이지로 이동)
                     }
 

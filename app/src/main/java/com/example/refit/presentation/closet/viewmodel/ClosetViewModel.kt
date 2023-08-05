@@ -1,28 +1,40 @@
 package com.example.refit.presentation.closet.viewmodel
 
+import androidx.datastore.dataStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.refit.data.model.closet.RegisteredClothInfoResponse
+import androidx.lifecycle.viewModelScope
+import com.example.refit.data.datastore.TokenStore
+import com.example.refit.data.model.closet.RequestRegisteredClothes
+import com.example.refit.data.model.closet.ResponseRegisteredClothes
 import com.example.refit.data.repository.colset.ClosetRepository
 import com.example.refit.util.Event
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import timber.log.Timber
 
-class ClosetViewModel(private val repository: ClosetRepository) : ViewModel() {
+class ClosetViewModel(
+    private val repository: ClosetRepository,
+    private val dataStore: TokenStore
+) : ViewModel() {
 
-    private val _registeredClothes: MutableLiveData<List<RegisteredClothInfoResponse>> =
-        MutableLiveData<List<RegisteredClothInfoResponse>>()
-    val registeredClothes: LiveData<List<RegisteredClothInfoResponse>>
+    private val _registeredClothes: MutableLiveData<List<ResponseRegisteredClothes>> =
+        MutableLiveData<List<ResponseRegisteredClothes>>()
+    val registeredClothes: LiveData<List<ResponseRegisteredClothes>>
         get() = _registeredClothes
 
-    private val _selectedRegisteredClothItem: MutableLiveData<Event<RegisteredClothInfoResponse>> =
-        MutableLiveData<Event<RegisteredClothInfoResponse>>()
-    val selectedRegisteredClothItem: LiveData<Event<RegisteredClothInfoResponse>>
+    private val _selectedRegisteredClothItem: MutableLiveData<Event<ResponseRegisteredClothes>> =
+        MutableLiveData<Event<ResponseRegisteredClothes>>()
+    val selectedRegisteredClothItem: LiveData<Event<ResponseRegisteredClothes>>
         get() = _selectedRegisteredClothItem
 
     // 옷장 필터링 옵션
 
-    private val _selectedCategoryId: MutableLiveData<Int> = MutableLiveData<Int>()
+    private val _selectedCategoryId: MutableLiveData<Int> = MutableLiveData<Int>(0)
     val selectedCategoryId: LiveData<Int>
         get() = _selectedCategoryId
 
@@ -30,7 +42,7 @@ class ClosetViewModel(private val repository: ClosetRepository) : ViewModel() {
     val selectedSeason: LiveData<String>
         get() = _selectedSeason
 
-    private val _selectedSeasonId: MutableLiveData<Int> = MutableLiveData<Int>()
+    private val _selectedSeasonId: MutableLiveData<Int> = MutableLiveData<Int>(0)
     val selectedSeasonId: LiveData<Int>
         get() = _selectedSeasonId
 
@@ -38,48 +50,81 @@ class ClosetViewModel(private val repository: ClosetRepository) : ViewModel() {
     val selectedSortingOption: LiveData<String>
         get() = _selectedSortingOption
 
-    private val _selectedSortingOptionId: MutableLiveData<Int> = MutableLiveData<Int>()
-    val selectedSortingOptionId: LiveData<Int>
+    private val _selectedSortingOptionId: MutableLiveData<String> = MutableLiveData<String>("d-day")
+    val selectedSortingOptionId: LiveData<String>
         get() = _selectedSortingOptionId
 
 
-
-
     fun getUserRegisteredClothes() {
-        try {
-            _registeredClothes.value = listOf(
-                RegisteredClothInfoResponse(0, 10, 2, 90, 10, 2, 60),
-                RegisteredClothInfoResponse(1, 11, 5, 30, 10, 1, 10),
-                RegisteredClothInfoResponse(2, 12, 10, 60, 10, 4, 30),
-                RegisteredClothInfoResponse(3, 12, 7, 90, 10, 3, 40),
-                RegisteredClothInfoResponse(4, 13, 20, 60, 10, 2, 90),
-                RegisteredClothInfoResponse(5, 14, 17, 30, 10, 2, 100),
-                RegisteredClothInfoResponse(6, 15, 14, 90, 10, 3, 5),
-                RegisteredClothInfoResponse(7, 16, 6, 60, 10, 2, 70)
-            )
-        } catch (e: Throwable) {
-            Timber.d("유저가 등록한 옷 정보를 불러오는 데 실패했습니다 : $e")
+        viewModelScope.launch {
+            try {
+                val request = RequestRegisteredClothes(
+                    _selectedCategoryId.value!!,
+                    _selectedSeasonId.value!!,
+                    _selectedSortingOptionId.value!!,
+                    0,
+                    6
+                )
+                val response = repository.getRegisteredClothes(dataStore.getAccessToken().first(), request)
+                response.enqueue(object: Callback<List<ResponseRegisteredClothes>> {
+                    override fun onResponse(
+                        call: Call<List<ResponseRegisteredClothes>>,
+                        response: Response<List<ResponseRegisteredClothes>>
+                    ) {
+                        if(response.isSuccessful) {
+
+                            _registeredClothes.value = when(response.body()) {
+                                null -> listOf()
+                                else -> response.body()
+                            }
+                            Timber.d("등록된 옷 조회 성공 : ${_registeredClothes.value}")
+                        } else {
+                            Timber.d("등록된 옷 조회 실패1 : ${response.errorBody()}")
+                        }
+                    }
+
+                    override fun onFailure(
+                        call: Call<List<ResponseRegisteredClothes>>,
+                        t: Throwable
+                    ) {
+                        Timber.d("등록된 옷 조회 실패2 : $t")
+                    }
+
+                })
+            } catch (e: Throwable) {
+                Timber.d("유저가 등록한 옷 정보를 불러오는 데 실패했습니다 : $e")
+            }
         }
     }
 
     fun requestRegisteredItemsByClothCategory(selectedCategoryId: Int) {
         _selectedCategoryId.value = selectedCategoryId
+        getUserRegisteredClothes()
         Timber.d("선택된 옷 카테고리 -> ${_selectedCategoryId.value}")
     }
 
     fun requestSortingBySeason(seasonList: List<String>, selectedSeason: String) {
         _selectedSeason.value = selectedSeason
         _selectedSeasonId.value = seasonList.indexOf(selectedSeason)
+        getUserRegisteredClothes()
         Timber.d("계절 옵션에 따른 정렬 요청 -> ${_selectedSeasonId.value} ${_selectedSortingOptionId.value}")
     }
 
-    fun requestSortingByClosetSorting(sortingOptionList: List<String>, selectedSortingOption: String) {
+    fun requestSortingByClosetSorting(
+        sortingOptionList: List<String>,
+        selectedSortingOption: String
+    ) {
         _selectedSortingOption.value = selectedSortingOption
-        _selectedSortingOptionId.value = sortingOptionList.indexOf(selectedSortingOption)
+        _selectedSortingOptionId.value = when(sortingOptionList.indexOf(selectedSortingOption)) {
+            0 -> "d-day"
+            1 -> "most-worn"
+            else -> "least-worn"
+        }
+        getUserRegisteredClothes()
         Timber.d("옷장 정렬 옵션에 따른 정렬 요청 -> ${_selectedSeasonId.value} ${_selectedSortingOptionId.value}")
     }
 
-    fun handleClickItem(clothInfo: RegisteredClothInfoResponse) {
+    fun handleClickItem(clothInfo: ResponseRegisteredClothes) {
         _selectedRegisteredClothItem.value = Event(clothInfo)
     }
 

@@ -12,8 +12,12 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import com.example.refit.BuildConfig
+import com.example.refit.data.network.NullOnEmptyConverterFactory
+import okhttp3.ResponseBody
+import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.reflect.Type
 
 val networkModule = module {
     single {
@@ -30,6 +34,7 @@ val networkModule = module {
 
     single<Retrofit> {
         Retrofit.Builder()
+            .addConverterFactory(NullOnEmptyConverterFactory())
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .client(get())
             .baseUrl(BuildConfig.BASE_URL)
