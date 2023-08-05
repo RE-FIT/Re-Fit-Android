@@ -19,6 +19,8 @@ import retrofit2.Response
 import timber.log.Timber
 import java.lang.Exception
 import java.sql.Types.INTEGER
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class CommunityInfoViewModel (
     private val repository: CommunityRepository,
@@ -47,6 +49,15 @@ class CommunityInfoViewModel (
     val isPostAuthor: LiveData<Boolean>
         get() = _isPostAuthor
 
+    // 이미지 URL 리스트
+    private val _sliderImageUrls:  MutableLiveData<List<String>> = MutableLiveData<List<String>>()
+    val sliderImageUrls: LiveData<List<String>>
+        get() = _sliderImageUrls
+
+    private val _postDate: MutableLiveData<String> = MutableLiveData<String>()
+    val postDate: LiveData<String>
+        get() = _postDate
+
 
     fun clickedGetPost(postId: Int) {
         _postId.value = postId
@@ -60,6 +71,22 @@ class CommunityInfoViewModel (
         }
     }
 
+    fun setSliderImageUrls() {
+        _sliderImageUrls.value = postResponse.value?.imgUrls
+    }
+
+    fun formatDate(dateTime: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("MM/dd HH:mm", Locale.getDefault())
+        val date = inputFormat.parse(dateTime)
+        return outputFormat.format(date!!)
+    }
+
+    fun setPostDate() {
+        val date = postResponse.value?.createdAt
+        _postDate.value = date?.let { formatDate(it) }
+    }
+
     fun conversionType(value: Int): String {
         return when (value) {
             0 -> "나눔 중"
@@ -69,6 +96,8 @@ class CommunityInfoViewModel (
             else -> "UnKnown Data"
         }
     }
+
+
 
     fun classifyUserState() {
         when (isPostAuthor.value) {
@@ -120,6 +149,8 @@ class CommunityInfoViewModel (
                         postResponse?.let {
                             _postResponse.postValue(it)
                             checkIfAuthor()
+                            setSliderImageUrls()
+                            setPostDate()
                             classifyUserState()
                         }
 

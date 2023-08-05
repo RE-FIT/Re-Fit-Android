@@ -17,11 +17,13 @@ import com.example.refit.presentation.common.DialogUtil.createAlertSirenDialog
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.common.NavigationUtil.navigateUp
+import com.example.refit.presentation.community.adapter.InfoImageAdapter
 import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.AlertNoIconDialogListener
 import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.lang.IllegalArgumentException
 
@@ -37,6 +39,7 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         CommunityEtcMenuDropdown()
         handleFavIconClicked()
         observeStatus()
+        initImageList()
     }
 
     private fun CommunityEtcMenuDropdown() {
@@ -98,6 +101,14 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
             }
             Timber.d(itemDescription)
             popupMenu.dismiss()
+        }
+    }
+
+    private fun initImageList() {
+        val imageSliderAdapter = InfoImageAdapter(vm)
+        binding.vpCommunityInfoImage.adapter = imageSliderAdapter
+        vm.postResponse.observe(viewLifecycleOwner) {
+                postResponse -> imageSliderAdapter.sliderImageUrls = postResponse.imgUrls
         }
     }
 
@@ -187,6 +198,7 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
             if (response != null) {
                 vm.checkIfAuthor()
                 vm.classifyUserState()
+                vm.setPostDate()
             }
         }
     }
