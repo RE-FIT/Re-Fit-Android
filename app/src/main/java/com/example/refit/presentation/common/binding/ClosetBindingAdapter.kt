@@ -1,8 +1,10 @@
 package com.example.refit.presentation.common.binding
 
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.example.refit.R
+import com.google.android.material.button.MaterialButton
 import kotlin.math.abs
 
 object ClosetBindingAdapter {
@@ -56,6 +58,15 @@ object ClosetBindingAdapter {
                     abs(remainedDay)
                 )
             }
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("setButtonBackgroundTintByStatus")
+    fun setButtonBackgroundTintByStatus(view: MaterialButton, status: Boolean) {
+        when(status) {
+            true -> view.setBackgroundColor(ContextCompat.getColor(view.context, R.color.green1))
+            else -> view.setBackgroundColor(ContextCompat.getColor(view.context, R.color.dark1))
         }
     }
 }

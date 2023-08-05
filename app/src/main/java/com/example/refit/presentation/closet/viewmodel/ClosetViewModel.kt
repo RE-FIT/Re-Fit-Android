@@ -32,6 +32,11 @@ class ClosetViewModel(
     val selectedRegisteredClothItem: LiveData<Event<ResponseRegisteredClothes>>
         get() = _selectedRegisteredClothItem
 
+    private val _isSuccessDeleteItem: MutableLiveData<Event<Boolean>> =
+        MutableLiveData<Event<Boolean>>()
+    val isSuccessDeleteItem: LiveData<Event<Boolean>>
+        get() = _isSuccessDeleteItem
+
     // 옷장 필터링 옵션
 
     private val _selectedCategoryId: MutableLiveData<Int> = MutableLiveData<Int>(0)
@@ -72,12 +77,12 @@ class ClosetViewModel(
                         response: Response<List<ResponseRegisteredClothes>>
                     ) {
                         if(response.isSuccessful) {
-
                             _registeredClothes.value = when(response.body()) {
                                 null -> listOf()
                                 else -> response.body()
                             }
-                            Timber.d("등록된 옷 조회 성공 : ${_registeredClothes.value}")
+
+                            Timber.d("등록된 옷 조회 성공 : ${response.body()}")
                         } else {
                             Timber.d("등록된 옷 조회 실패1 : ${response.errorBody()}")
                         }
@@ -96,6 +101,36 @@ class ClosetViewModel(
             }
         }
     }
+
+    fun deleteClothItem(id: Int) {
+        viewModelScope.launch {
+            try {
+                val response = repository.deleteClothItem(dataStore.getAccessToken().first(), id)
+                response.enqueue(object: Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if(response.code() == 200) {
+                            _isSuccessDeleteItem.value = Event(true)
+                            getUserRegisteredClothes()
+                            Timber.d("옷 아이템 삭제 성공 - id: $id")
+                        } else{
+                            _isSuccessDeleteItem.value = Event(false)
+                            Timber.d("옷 아이템 삭제 실패1 - ${response.errorBody()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        _isSuccessDeleteItem.value = Event(false)
+                        Timber.d("옷 아이템 삭제 실패 - $t")
+                    }
+
+                })
+            } catch (e: Throwable) {
+                Timber.d(e)
+            }
+        }
+    }
+
+
 
     fun requestRegisteredItemsByClothCategory(selectedCategoryId: Int) {
         _selectedCategoryId.value = selectedCategoryId

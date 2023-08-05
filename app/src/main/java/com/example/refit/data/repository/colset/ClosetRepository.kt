@@ -20,4 +20,9 @@ interface ClosetRepository {
         token: String,
         request: RequestRegisteredClothes
     ): Call<List<ResponseRegisteredClothes>>
+
+    suspend fun deleteClothItem(
+        token: String,
+        clothId: Int
+    ): Call<Void>
 }

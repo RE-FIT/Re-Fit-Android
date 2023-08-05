@@ -8,10 +8,12 @@ import androidx.appcompat.widget.ListPopupWindow
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.refit.R
 import com.example.refit.data.model.closet.ResponseRegisteredClothes
+import com.example.refit.databinding.CustomDialogAlertBasicBinding
 import com.example.refit.databinding.FragmentClosetBinding
 import com.example.refit.presentation.closet.adapter.UserRegisteredClothesAdapter
 import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
 import com.example.refit.presentation.common.DialogUtil.showClothItemSelectionDialog
 import com.example.refit.presentation.common.DropdownMenuManager
@@ -34,6 +36,21 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         initClosetOptionPopupMenu()
         handleClickAddClothButton()
         handleSelectedRegisteredClothItem()
+        handleNotificationAfterDeleteItem()
+    }
+
+    private fun handleNotificationAfterDeleteItem() {
+        closetViewModel.isSuccessDeleteItem.observe(viewLifecycleOwner, EventObserver { isDelete ->
+            val message = when(isDelete) {
+                true -> "해당 옷 정보를 삭제했습니다"
+                false -> "다시 시도해 주세요"
+            }
+            CustomSnackBar.make(
+                binding.root,
+                R.layout.custom_snack_bar_basic,
+                R.anim.anim_show_snack_bar_from_bottom
+            ).setTitle("옷 등록을 완료했습니다!", null).show()
+        })
     }
 
     private fun handleSelectedRegisteredClothItem() {
@@ -52,21 +69,21 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
                     }
 
                     override fun onClickClothDeletion(id: Int) {
-                        showClothDeletionConfirmDialog()
+                        showClothDeletionConfirmDialog(id)
                     }
                 }).show(requireActivity().supportFragmentManager, null)
                 Timber.d("클릭한 아이템 아이디 -> $item")
             })
     }
 
-    private fun showClothDeletionConfirmDialog() {
+    private fun showClothDeletionConfirmDialog(id: Int) {
         createAlertBasicDialog(
             resources.getString(R.string.closet_dialog_cloth_delete_title),
             resources.getString(R.string.closet_dialog_cloth_delete_positive),
             resources.getString(R.string.closet_dialog_cloth_delete_negative),
             object : AlertBasicDialogListener {
                 override fun onClickPositive() {
-                    //TODO(서버 API를 통해 삭제 요청할 것)
+                    closetViewModel.deleteClothItem(id)
                 }
 
                 override fun onClickNegative() {

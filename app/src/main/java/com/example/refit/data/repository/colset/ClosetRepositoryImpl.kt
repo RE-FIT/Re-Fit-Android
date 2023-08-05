@@ -24,4 +24,8 @@ class ClosetRepositoryImpl(private val closetDataSource: ClosetDataSource): Clos
     ): Call<List<ResponseRegisteredClothes>> {
         return closetDataSource.getRegisteredClothes(token, request)
     }
+
+    override suspend fun deleteClothItem(token: String, clothId: Int): Call<Void> {
+        return closetDataSource.deleteClothItem(token, clothId)
+    }
 }

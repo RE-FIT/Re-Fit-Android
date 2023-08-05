@@ -29,4 +29,8 @@ class ClosetDataSourceImpl(private val closetApi: ClosetApi): ClosetDataSource {
             request.sort
         )
     }
+
+    override suspend fun deleteClothItem(token: String, clothId: Int): Call<Void> {
+        return closetApi.deleteClothItem(token, clothId)
+    }
 }
