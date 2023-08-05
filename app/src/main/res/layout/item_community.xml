@@ -177,7 +177,7 @@
                     android:layout_width="18dp"
                     android:layout_height="15dp"
                     android:layout_marginEnd="20dp"
-                    android:background="@{favToggleState ? @drawable/ic_community_heart_18 : @drawable/ic_community_blank_heart_18}"
+                    android:background="@{communityList.scrapFlag ? @drawable/ic_community_heart_18 : @drawable/ic_community_blank_heart_18}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

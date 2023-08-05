@@ -29,10 +29,6 @@ class CommunityInfoViewModel (
     val postId: LiveData<Int>
         get() = _postId
 
-    private val _isScrapState: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isScrapState: LiveData<Boolean>
-        get() = _isScrapState
-
     private val _postResponse: MutableLiveData<PostResponse> = MutableLiveData<PostResponse>()
     val postResponse: LiveData<PostResponse>
         get() = _postResponse
@@ -46,14 +42,22 @@ class CommunityInfoViewModel (
     val UserStatusMainText: LiveData<String>
         get() = _UserStatusMainText
 
+    // 작성자 여부
+    private val _isPostAuthor: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isPostAuthor: LiveData<Boolean>
+        get() = _isPostAuthor
 
-    fun setScrapState(status: Boolean) {
-        _isScrapState.value = status
-    }
 
     fun clickedGetPost(postId: Int) {
         _postId.value = postId
         getPost()
+    }
+
+    fun setScrapStatus(status: Boolean) {
+        _postResponse.value?.let { postResponse ->
+            val updatedPostResponse = postResponse.copy(scrapFlag = status)
+            _postResponse.value = updatedPostResponse
+        }
     }
 
     fun conversionType(value: Int): String {
@@ -77,6 +81,11 @@ class CommunityInfoViewModel (
         _UserStatus.value = status
     }
 
+    fun checkIfAuthor() {
+        _isPostAuthor.value = postResponse.value?.author == postResponse.value?.clickedMember
+        Timber.d("글 작성자인지 확인: RR: ${postResponse.value?.author} , CM: ${postResponse.value?.clickedMember} -> ${isPostAuthor.value}")
+    }
+
     // 글 조회 기능
     private fun getPost() = viewModelScope.launch {
         val accessToken = ds.getAccessToken().first()
@@ -97,6 +106,7 @@ class CommunityInfoViewModel (
 
                         postResponse?.let {
                             _postResponse.postValue(it)
+                            checkIfAuthor()
                         }
 
                         Timber.d("COMMUNITY POST API 호출 성공 : $json")
@@ -199,7 +209,6 @@ class CommunityInfoViewModel (
     }
 
     fun initAllState() {
-        _isScrapState.value = false
         _UserStatus.value = 0
         _UserStatusMainText.value = "수정하기"
     }

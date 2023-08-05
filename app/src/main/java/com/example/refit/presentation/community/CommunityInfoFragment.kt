@@ -105,9 +105,8 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
 
     private fun handleFavIconClicked() {
         binding.tbCommunityInfoFav.setOnClickListener {
-            // TODO 서버에서 스크랩 여부 받아오면 toggleStatus 연결
             vm.scrapPost()
-            val toggleStatus = !binding.tbCommunityInfoFav.isChecked
+            val toggleStatus = !vm.postResponse.value?.scrapFlag!!
             if (toggleStatus) {
                 CustomSnackBar.make(
                     requireView(),
@@ -116,7 +115,7 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
                 )
                     .setTitle("스크랩을 완료하였습니다!", null).show()
             }
-            vm.setScrapState(toggleStatus)
+            vm.setScrapStatus(toggleStatus)
         }
 
         binding.fabCommunityInfoChat.setOnClickListener {
@@ -186,6 +185,10 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
     }
 
     private fun observeStatus() {
-
+        vm.postResponse.observe(viewLifecycleOwner) { response ->
+            if (response != null) {
+                vm.checkIfAuthor()
+            }
+        }
     }
 }

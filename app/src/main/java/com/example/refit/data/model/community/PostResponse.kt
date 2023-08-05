@@ -17,5 +17,8 @@ data class PostResponse(
     @SerializedName("price") val price: Int,
     @SerializedName("detail") val detail: String,
     @SerializedName("postType") val postType: Int,
-    @SerializedName("postState") val postState: Int
+    @SerializedName("postState") val postState: Int,
+    @SerializedName("createdAt") val createdAt: String,
+    @SerializedName("clickedMember") val clickedMember: String,
+    @SerializedName("scrapFlag") val scrapFlag: Boolean
 )

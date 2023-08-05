@@ -26,5 +26,7 @@ data class CommunityListItemResponse(
     @SerializedName("bname")
     val bname: String,
     @SerializedName("bname2")
-    val bname2: String
+    val bname2: String,
+    @SerializedName("scrapFlag")
+    val scrapFlag: Boolean
 )
