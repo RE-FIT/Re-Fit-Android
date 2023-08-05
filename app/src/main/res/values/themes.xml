@@ -12,5 +12,13 @@
         <item name="android:backgroundDimAmount">0.4</item>
     </style>
 
+    <!-- Splash Screen -->
+    <style name="Theme.ReFit.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/green1</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_app_240</item>
+        <item name="windowSplashScreenAnimationDuration">2000</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.ReFit</item>
+    </style>
+
     <style name="Theme.ReFit" parent="Base.Theme.ReFit" />
 </resources>

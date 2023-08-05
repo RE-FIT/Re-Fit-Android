@@ -10,6 +10,9 @@
     <!-- Chip -->
     <dimen name="cloth_register_category_chip_spacing">14dp</dimen>
 
+    <!-- Tab Indicator -->
+    <dimen name="on_boarding_indicator">6dp</dimen>
+
 
     <!-- Bottom Navigation -->
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
