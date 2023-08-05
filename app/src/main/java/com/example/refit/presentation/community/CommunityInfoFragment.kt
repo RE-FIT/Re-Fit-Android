@@ -41,25 +41,23 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
 
     private fun CommunityEtcMenuDropdown() {
         // TODO 유저 상태에 따라 array 값 다르게 불러와야 함
-        val status = 0
         binding.cvEtcOverflow.setOnClickListener {
-            val listPopupWindow = when (status) {
-                0 -> getPopupMenu(
+            val listPopupWindow = when (vm.UserStatus.value) {
+                0 -> getPopupMenu( // 작성자 && (판매중 || 나눔중)
                     it,
                     R.array.community_info_overflow_ing_writer
-                ) // 작성자 && (판매중 || 나눔중)
-                1 -> getPopupMenu(
+                )
+                1 -> getPopupMenu( // 작성자 && 나눔완료
                     it,
-                    R.array.community_info_overflow_end_sale_writer
+                    R.array.community_info_overflow_end_giveaway_writer
                 ) // 작성자 && 판매완료
                 2 -> getPopupMenu(
                     it,
-                    R.array.community_info_overflow_end_giveaway_writer
+                    R.array.community_info_overflow_end_sale_writer
                 ) // 작성자 && 나눔완료
                 3 -> getPopupMenu(it, R.array.community_info_overflow_user) // 일반 유저
                 else -> throw IllegalArgumentException("Invalid Status Value")
             }
-            vm.classifyUserState(status)
             setPopupItemClickListener(listPopupWindow)
             listPopupWindow.show()
         }
@@ -188,6 +186,7 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         vm.postResponse.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 vm.checkIfAuthor()
+                vm.classifyUserState()
             }
         }
     }

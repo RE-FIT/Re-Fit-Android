@@ -70,15 +70,28 @@ class CommunityInfoViewModel (
         }
     }
 
-    fun classifyUserState(status: Int) {
-        when (status) {
-            0 -> _UserStatusMainText.value = "수정하기"
-            1 -> _UserStatusMainText.value = "수정하기"
-            2 -> _UserStatusMainText.value = "수정하기"
-            3 -> _UserStatusMainText.value = "이 사용자의 글 보지 않기"
-        }
+    fun classifyUserState() {
+        when (isPostAuthor.value) {
+            true -> {
+                if (postResponse.value?.postState == 0 || postResponse.value?.postState == 1) {
+                    _UserStatus.value = 0
+                    _UserStatusMainText.value = "수정하기"
+                } else if (postResponse.value?.postState == 2) {
+                    _UserStatus.value = 1
+                    _UserStatusMainText.value = "수정하기"
+                } else if (postResponse.value?.postState == 3) {
+                    _UserStatus.value = 2
+                    _UserStatusMainText.value = "수정하기"
+                } else {
 
-        _UserStatus.value = status
+                }
+            }
+            false -> {
+                _UserStatus.value = 3
+                _UserStatusMainText.value = "이 사용자의 글 보지 않기"
+            }
+            else -> {}
+        }
     }
 
     fun checkIfAuthor() {
@@ -107,6 +120,7 @@ class CommunityInfoViewModel (
                         postResponse?.let {
                             _postResponse.postValue(it)
                             checkIfAuthor()
+                            classifyUserState()
                         }
 
                         Timber.d("COMMUNITY POST API 호출 성공 : $json")
@@ -211,6 +225,7 @@ class CommunityInfoViewModel (
     fun initAllState() {
         _UserStatus.value = 0
         _UserStatusMainText.value = "수정하기"
+        _isPostAuthor.value = false
     }
 
 }

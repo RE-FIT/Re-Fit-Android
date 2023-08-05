@@ -84,7 +84,7 @@
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardBackgroundColor="@color/green1"
+                        app:cardBackgroundColor="@{vm.postResponse.postState == 0 || vm.postResponse.postState == 1 ? @color/green1 : @color/dark1}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:strokeColor="@android:color/transparent" >
