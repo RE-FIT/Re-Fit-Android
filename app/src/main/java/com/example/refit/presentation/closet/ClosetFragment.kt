@@ -87,10 +87,6 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
 
     // ----------------------- 필터링 옵션 -----------------------
 
-    private fun initDefaultClothCategory(initCategoryId: Int) {
-        closetViewModel.requestRegisteredItemsByClothCategory(initCategoryId)
-    }
-
     private fun initClosetOptionPopupMenu() {
         binding.cvClosetOptionSeason.setOnClickListener {
             val listPopupWindow = getPopupMenu(it, R.array.closet_item_search_option_season)

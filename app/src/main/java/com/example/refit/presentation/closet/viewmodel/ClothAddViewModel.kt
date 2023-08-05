@@ -8,6 +8,7 @@ import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.closet.RequestAddNewCloth
 import com.example.refit.data.repository.colset.ClosetRepository
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -94,16 +95,7 @@ class ClothAddViewModel(
     fun addNewCloth(imageFile: File) {
         viewModelScope.launch {
             try {
-//                val request = Gson().toJson(RequestAddNewCloth(
-//                    _selectedClothCategoryId.value!!,
-//                    _selectedSeasonId.value!!,
-//                    _selectedWearingNumberOption.value.toString(),
-//                    _selectedMonthOption.value.toString(),
-//                    _isValidShowingRecommendWearing.value!!,
-//                    _recommendWearingNumberOfMonth.value.toString(),
-//                    _recommendWearingNumberOfWeek.value.toString()
-//                ))
-                val request = Gson().toJson(
+                val request = GsonBuilder().serializeNulls().create().toJson(
                     RequestAddNewCloth(
                         _selectedClothCategoryId.value!!,
                         _selectedSeasonId.value!!,
@@ -137,6 +129,7 @@ class ClothAddViewModel(
                             Timber.d("옷 등록 실패1 : ${(response.errorBody().toString())}")
                         }
                     }
+
                     override fun onFailure(call: Call<Long>, t: Throwable) {
                         Timber.d("옷 등록 실패2 : $t")
                     }
