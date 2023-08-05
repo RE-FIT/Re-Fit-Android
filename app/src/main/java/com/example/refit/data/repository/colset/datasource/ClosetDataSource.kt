@@ -2,6 +2,7 @@ package com.example.refit.data.repository.colset.datasource
 
 import com.example.refit.data.model.closet.RequestRegisteredClothes
 import com.example.refit.data.model.closet.ResponseAddNewCloth
+import com.example.refit.data.model.closet.ResponseRegisteredClothInfo
 import com.example.refit.data.model.closet.ResponseRegisteredClothes
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -25,5 +26,10 @@ interface ClosetDataSource {
         token: String,
         clothId: Int
     ): Call<Void>
+
+    suspend fun getRegisteredClothInfo(
+        token: String,
+        clothId: Int
+    ): Call<ResponseRegisteredClothInfo>
 
 }

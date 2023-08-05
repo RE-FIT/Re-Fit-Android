@@ -2,6 +2,7 @@ package com.example.refit.data.network.api
 
 import com.example.refit.data.model.closet.RequestRegisteredClothes
 import com.example.refit.data.model.closet.ResponseAddNewCloth
+import com.example.refit.data.model.closet.ResponseRegisteredClothInfo
 import com.example.refit.data.model.closet.ResponseRegisteredClothes
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -41,5 +42,11 @@ interface ClosetApi {
         @Header("Authorization") token: String,
         @Path("id") id: Int
     ): Call<Void>
+
+    @GET("/refit/clothe/{id}")
+    fun getRegisteredClothInfo(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Call<ResponseRegisteredClothInfo>
 
 }

@@ -2,6 +2,7 @@ package com.example.refit.data.repository.colset.datasource
 
 import com.example.refit.data.model.closet.RequestRegisteredClothes
 import com.example.refit.data.model.closet.ResponseAddNewCloth
+import com.example.refit.data.model.closet.ResponseRegisteredClothInfo
 import com.example.refit.data.model.closet.ResponseRegisteredClothes
 import com.example.refit.data.network.api.ClosetApi
 import okhttp3.MultipartBody
@@ -29,8 +30,14 @@ class ClosetDataSourceImpl(private val closetApi: ClosetApi): ClosetDataSource {
             request.sort
         )
     }
-
     override suspend fun deleteClothItem(token: String, clothId: Int): Call<Void> {
         return closetApi.deleteClothItem(token, clothId)
+    }
+
+    override suspend fun getRegisteredClothInfo(
+        token: String,
+        clothId: Int
+    ): Call<ResponseRegisteredClothInfo> {
+        return closetApi.getRegisteredClothInfo(token, clothId)
     }
 }

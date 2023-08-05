@@ -9,6 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.get
 import com.example.refit.R
 import com.example.refit.databinding.FragmentClothRegistrationBinding
 import com.example.refit.presentation.closet.viewmodel.ClothAddViewModel
@@ -20,6 +21,7 @@ import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialogListener
+import com.example.refit.util.EventObserver
 import com.example.refit.util.FileUtil
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -70,15 +72,16 @@ class ClothRegistrationFragment :
         handleClickWearingNumberOption()
         handleClickAddCompleteButton()
         handleSelectedClothCategory()
+        handleFixClothInfo()
 
-        clothAddViewModel.registeredClothInfo.observe(viewLifecycleOwner) {
+        clothAddViewModel.registeredClothId.observe(viewLifecycleOwner, EventObserver {
             CustomSnackBar.make(
                 binding.root,
                 R.layout.custom_snack_bar_basic,
                 R.anim.anim_show_snack_bar_from_bottom
             ).setTitle("옷 등록을 완료했습니다!", null).show()
             navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
-        }
+        })
     }
 
     private fun handleClickAddCompleteButton() {
@@ -201,7 +204,6 @@ class ClothRegistrationFragment :
                 if (uri != null) {
                     binding.photoUri = uri.toString()
                     photoUri = uri
-                    binding.ivClothRegisterSelectedCloth.visibility = View.VISIBLE
                 } else {
                     Timber.d("선택된 사진이 없음")
                 }
@@ -214,12 +216,21 @@ class ClothRegistrationFragment :
                 if (it) {
                     photoUri?.let {
                         binding.photoUri = photoUri.toString()
-                        binding.ivClothRegisterSelectedCloth.visibility = View.VISIBLE
                     }
                 } else {
                     Timber.d("사진 가져오기 실패")
                 }
             }
+    }
+
+    // ----------------------- 옷 재등록 -----------------------
+
+    private fun handleFixClothInfo() {
+        clothAddViewModel.requestedFixClothInfo.observe(viewLifecycleOwner, EventObserver { clothInfo ->
+            binding.photoUri = clothInfo.imageUrl
+            (binding.cgClothRegisterCategory.getChildAt(clothInfo.category) as Chip).isChecked = true
+            (binding.cgClothRegisterWearingSeason.getChildAt(clothInfo.season) as Chip).isChecked = true
+        })
     }
 
     override fun onDestroy() {

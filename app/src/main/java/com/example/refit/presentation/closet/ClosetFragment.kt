@@ -12,6 +12,7 @@ import com.example.refit.databinding.CustomDialogAlertBasicBinding
 import com.example.refit.databinding.FragmentClosetBinding
 import com.example.refit.presentation.closet.adapter.UserRegisteredClothesAdapter
 import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
+import com.example.refit.presentation.closet.viewmodel.ClothAddViewModel
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
@@ -27,6 +28,7 @@ import timber.log.Timber
 class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_closet) {
 
     private val closetViewModel: ClosetViewModel by sharedViewModel()
+    private val clothAddViewModel: ClothAddViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,7 +51,7 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
                 binding.root,
                 R.layout.custom_snack_bar_basic,
                 R.anim.anim_show_snack_bar_from_bottom
-            ).setTitle("옷 등록을 완료했습니다!", null).show()
+            ).setTitle(message, null).show()
         })
     }
 
@@ -66,6 +68,8 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
 
                     override fun onClickFixInfo(clothInfo: ResponseRegisteredClothes) {
                         //TODO(옷 등록 페이지로 이동)
+                        clothAddViewModel.fixClothInfo(clothInfo.id)
+                        navigate(R.id.action_nav_closet_to_clothRegistrationFragment)
                     }
 
                     override fun onClickClothDeletion(id: Int) {

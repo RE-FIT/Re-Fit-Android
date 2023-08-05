@@ -70,6 +70,7 @@ class ClosetViewModel(
                     0,
                     6
                 )
+                Timber.d("옷장 현황 데이터 요청 데이터 - $request")
                 val response = repository.getRegisteredClothes(dataStore.getAccessToken().first(), request)
                 response.enqueue(object: Callback<List<ResponseRegisteredClothes>> {
                     override fun onResponse(

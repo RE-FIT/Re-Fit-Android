@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.closet.RequestAddNewCloth
+import com.example.refit.data.model.closet.ResponseRegisteredClothInfo
 import com.example.refit.data.repository.colset.ClosetRepository
-import com.google.gson.Gson
+import com.example.refit.util.Event
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -85,10 +86,20 @@ class ClothAddViewModel(
     val selectedClothCategoryId: LiveData<Int>
         get() = _selectedClothCategoryId
 
-    private val _registeredClothInfo: MutableLiveData<Long> =
-        MutableLiveData<Long>()
-    val registeredClothInfo: LiveData<Long>
-        get() = _registeredClothInfo
+    private val _registeredClothId: MutableLiveData<Event<Long>> =
+        MutableLiveData<Event<Long>>()
+    val registeredClothId: LiveData<Event<Long>>
+        get() = _registeredClothId
+
+    // 옷 재등록
+
+    private val _requestedFixClothInfo: MutableLiveData<Event<ResponseRegisteredClothInfo>> = MutableLiveData<Event<ResponseRegisteredClothInfo>>()
+    val requestedFixClothInfo: LiveData<Event<ResponseRegisteredClothInfo>>
+        get() = _requestedFixClothInfo
+
+    private val _isRequestedResetCompletedCloth: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isRequestedResetCompletedCloth: LiveData<Boolean>
+        get() = _isRequestedResetCompletedCloth
 
     // 서버 호출
 
@@ -123,8 +134,8 @@ class ClothAddViewModel(
                         response: Response<Long>
                     ) {
                         if (response.isSuccessful) {
-                            _registeredClothInfo.value = response.body()
-                            Timber.d("옷 등록 성공 : ${_registeredClothInfo.value}")
+                            _registeredClothId.value = Event(response.body()!!)
+                            Timber.d("옷 등록 성공 : ${_registeredClothId.value}")
                         } else {
                             Timber.d("옷 등록 실패1 : ${(response.errorBody().toString())}")
                         }
@@ -133,6 +144,33 @@ class ClothAddViewModel(
                     override fun onFailure(call: Call<Long>, t: Throwable) {
                         Timber.d("옷 등록 실패2 : $t")
                     }
+                })
+            } catch (e: Throwable) {
+                Timber.d(e)
+            }
+        }
+    }
+
+    fun fixClothInfo(clothId: Int) {
+        viewModelScope.launch {
+            try {
+                val response = repository.getRegisteredClothInfo(dataStore.getAccessToken().first(), clothId)
+                response.enqueue(object: Callback<ResponseRegisteredClothInfo> {
+                    override fun onResponse(
+                        call: Call<ResponseRegisteredClothInfo>,
+                        response: Response<ResponseRegisteredClothInfo>
+                    ) {
+                        if(response.isSuccessful) {
+                            _requestedFixClothInfo.value = Event(response.body()!!)
+                        } else {
+                            Timber.d("등록된 옷 정보 수정 요청 실패1 - ${response.errorBody()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseRegisteredClothInfo>, t: Throwable) {
+                        Timber.d("등록된 옷 정보 수정 요청 실패2 - $t")
+                    }
+
                 })
             } catch (e: Throwable) {
                 Timber.d(e)
@@ -248,5 +286,4 @@ class ClothAddViewModel(
         _selectedClothCategoryId.value = categoryList.indexOf(selectedCategory)
         Timber.d("옷 카테고리 선택 : ${_selectedClothCategoryId.value}")
     }
-
 }
