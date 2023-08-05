@@ -34,7 +34,7 @@ class MyFeedListAdapter(private val viewModel: MyFeedViewModel) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindItems(feedList: CommunityListItemResponse) {
             binding.communityList = feedList
-            binding.vmFeed = viewModel
+            binding.vm = viewModel
             binding.executePendingBindings()
         }
     }

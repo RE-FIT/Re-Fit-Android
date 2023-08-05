@@ -31,9 +31,9 @@ val viewModelModule = module {
     viewModel { CommunityAddPostViewModel(get(), get()) }
     viewModel { CommunitySearchViewModel(get(), get()) }
     viewModel { PostReportViewModel(get()) }
-    viewModel { MyScrapViewModel(get()) }
-    viewModel { MyFeedViewModel(get()) }
+    viewModel { MyScrapViewModel(get(), get())}
+    viewModel { MyFeedViewModel(get(), get()) }
     viewModel { MyPageViewModel(get()) }
-    viewModel { MyInfoViewModel(get()) }
+    viewModel { MyInfoViewModel(get(), get()) }
 
 }

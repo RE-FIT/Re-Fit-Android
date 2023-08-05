@@ -15,7 +15,7 @@
 
         <variable
             name="vm"
-            type="com.example.refit.presentation.mypage.viewmodel.MyFeedViewModel" />
+            type="com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel" />
 
     </data>
 
@@ -165,6 +165,17 @@
                         tools:ignore="MissingConstraints" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatToggleButton
+                    android:layout_width="18dp"
+                    android:layout_height="15dp"
+                    android:layout_marginEnd="20dp"
+                    android:checked="@={favToggleState}"
+                    android:background="@{favToggleState ? @drawable/ic_community_blank_heart_18 : @drawable/ic_community_heart_18}"
+                    android:textOff=""
+                    android:textOn=""
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

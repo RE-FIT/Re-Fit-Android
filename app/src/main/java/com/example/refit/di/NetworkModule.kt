@@ -1,17 +1,17 @@
 package com.example.refit.di
 
+import com.example.refit.BuildConfig
 import android.net.Uri.Builder
 import com.example.refit.data.network.NetworkInterceptor
 import com.example.refit.data.network.api.ClosetApi
 import com.example.refit.data.network.api.CommunityApi
-import com.example.refit.data.network.api.MypageApi
+import com.example.refit.data.network.api.MyPageApi
 import com.example.refit.data.network.api.SignUpApi
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
-import com.example.refit.BuildConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -48,8 +48,8 @@ val networkModule = module {
     single<CommunityApi> {
         get<Retrofit>().create(CommunityApi::class.java)
     }
-    single<MypageApi> {
-        get<Retrofit>().create(MypageApi::class.java)
+    single<MyPageApi> {
+        get<Retrofit>().create(MyPageApi::class.java)
     }
 
 

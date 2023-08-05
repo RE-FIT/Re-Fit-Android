@@ -14,5 +14,5 @@ val dataSourceModule = module {
     single<SignUpDataSource> { SignUpDataSourceImpl(get()) }
     single<ClosetDataSource> { ClosetDataSourceImpl(get()) }
     single<CommunityDataSource> { CommunityDataSourceImpl(get()) }
-    single<MyPageDataSource> { MyPageDataSourceImpl(get()) }
+    single<MyPageDataSource> { MyPageDataSourceImpl(get(), get()) }
 }
