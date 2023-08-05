@@ -1,5 +1,6 @@
 package com.example.refit.presentation.mypage.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +10,6 @@ import com.example.refit.data.model.mypage.CheckNicknameResponse
 import com.example.refit.data.repository.mypage.MyPageRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,10 +22,20 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     val userNickname: LiveData<String>
         get() = _userNickname
 
+    // 이름(닉네임) - 서버값 여기에 저장 - true 중복 / false 가능
+    private val _userNicknameResponse: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val userNicknameResponse: LiveData<Boolean>
+        get() = _userNicknameResponse
+
     // 이름(닉네임) 수정됨?
     private val _isCheckUpdatedNickname: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isCheckUpdatedNickname: LiveData<Boolean>
         get() = _isCheckUpdatedNickname
+
+    // 중복 확인 눌림?
+    private val _isCheckUpdatedBtnStatus: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isCheckUpdatedBtnStatus: LiveData<Boolean>
+        get() = _isCheckUpdatedBtnStatus
 
     // 생일 수정됨?
     private val _isCheckUpdatedBirth: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
@@ -41,10 +51,6 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     private val _isCheckUpdatedPw: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isCheckUpdatedPw: LiveData<Boolean>
         get() = _isCheckUpdatedPw
-
-    private val _checkNickname: MutableLiveData<CheckNicknameResponse> = MutableLiveData<CheckNicknameResponse>()
-    val checkNickname: LiveData<CheckNicknameResponse>
-        get() = _checkNickname
 
     // 이메일
     private val _userEmail: MutableLiveData<String> = MutableLiveData<String>()
@@ -88,10 +94,10 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
 
     }
 
-    // 이름(닉네임) 수정
+    // 이름(닉네임) 수정했을 때
     fun updateNickname(newNickname: String) {
-        _userNickname.value = newNickname
-        _isCheckUpdatedNickname.value = true
+        _userNickname.value = newNickname // 새로운 닉네임으로 저장
+        _isCheckUpdatedNickname.value = true // 닉네임이 수정되었다는 상태값 저장
     }
 
     // 생년 월일 수정
@@ -112,6 +118,11 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
         _isCheckUpdatedPw.value = true
     }
 
+    // 중복 확인 눌림
+    fun updateBtn() {
+        _isCheckUpdatedBtnStatus.value = _isCheckUpdatedNickname.value == false
+    }
+
     private fun initNicknameInfoStatus(status: Boolean) {
         _isCheckUpdatedNickname.value = status
     }
@@ -124,33 +135,42 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
         _isCheckUpdatedGender.value = status
     }
 
+    private fun initCheckBtnStatus(status: Boolean) {
+        _isCheckUpdatedBtnStatus.value = status
+    }
+
     fun initAllStatus() {
         initNicknameInfoStatus(false)
         initBirthInfoStatus(false)
         initGenderInfoStatus(false)
+        initCheckBtnStatus(false)
     }
 
     // Retrofit
     fun checkNicknameRetrofit() {
         viewModelScope.launch {
-            val token = ds.getAccessToken().first()
+            val accessToken = ds.getAccessToken().first()
 
             try {
-                val response = repository.checkNickname("$token", "${_userNickname.value}")
+                val response = repository.checkNickname("$accessToken", "${_userNickname.value}")
+                Log.d("닉네임 값", "${_userNickname.value}")
 
-                response.enqueue(object : Callback<CheckNicknameResponse> {
+                response.enqueue(object : Callback<Boolean> {
                     override fun onResponse(
-                        call: Call<CheckNicknameResponse>,
-                        response: Response<CheckNicknameResponse>
+                        call: Call<Boolean>,
+                        response: Response<Boolean>
                     ) {
-                        if (response.isSuccessful) {
-                            _checkNickname.value = response.body()
-                            Timber.d("닉네임 중복 여부: ${response.body()}")
+                        if (response.isSuccessful){
+                            _userNicknameResponse.value = response.body() ?: false
+                            updateBtn()
+
+                            Timber.d("닉네임 중복 여부: ${_userNicknameResponse.value}")
                         } else {
-                            Timber.d("404 Not Found")
+                            Timber.e("Error: ${response.code()}")
                         }
                     }
-                    override fun onFailure(call: Call<CheckNicknameResponse>, t: Throwable) {
+
+                    override fun onFailure(call: Call<Boolean>, t: Throwable) {
                         Timber.d("401 Unauthorized: $t")
                     }
                 })

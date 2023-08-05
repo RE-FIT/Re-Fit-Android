@@ -1,5 +1,6 @@
 package com.example.refit.presentation.mypage
 
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -10,7 +11,9 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import com.example.refit.R
+import com.example.refit.data.model.mypage.CheckNicknameResponse
 import com.example.refit.databinding.FragmentMyInfoUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DialogUtil
@@ -32,20 +35,77 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val spinner = binding.spinnerGender
-
         binding.vm = vm
         binding.lifecycleOwner = this
 
+        vm.initAllStatus()
+
+        editNickname()
+        editBirth()
+        pressCheckButton()
+        pressUpdateButton()
+        selectGenderSpinner()
+
+        vm.isCheckUpdatedNickname.observe(viewLifecycleOwner) {
+            vm.checkNicknameRetrofit()
+        }
+
+        // 앨범에서 사진 가져오기
+        initGalleryLauncher()
+        handleAddProfilePhoto()
+    }
+
+    // ----------------------- 이름(닉네임) 중복/수정 버튼 -----------------------
+    private fun showMyPageNickNameCheckDialog() {
+        checkNickNameDialog(
+            resources.getString(R.string.my_info_nickname_check)
+        ).show(requireActivity().supportFragmentManager, null)
+    }
+
+    private fun pressCheckButton() {
+        // 중복 확인 눌렀을 때
+        binding.btnNickNameCheck.setOnClickListener {
+            if (vm.userNicknameResponse.value == false) {
+                binding.ableName.visibility = View.VISIBLE
+                binding.enableName.visibility = View.GONE
+            } else {
+                binding.enableName.visibility = View.VISIBLE
+                binding.ableName.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun pressUpdateButton() {
+        // 수정 버튼 눌렀을 때
+        // [이름만 수정 되었을 때]
+            // 1. 중복 확인 누름 - 사용 가능 / 이미 사용 중 >> 이미 사용 중일 땐 - 수정 버튼 눌러도 다이얼로그
+            // 2. 중복 확인 안 누름 > 다이얼 로그 띄우기
+            // 3. 수정 버튼
+        // [성별, 생일 수정 됐을 때] >> 수정 버튼 바로 클릭 가능
+        binding.btnMyInfoUpdate.setOnClickListener {
+            /*vm.isCheckUpdatedBtnStatus.observe(viewLifecycleOwner) {
+                if (it) {
+                    binding.btnNickNameCheck.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dark1))
+                } else {
+                    showMyPageNickNameCheckDialog()
+                }
+            }*/
+        }
+
+    }
+
+    // ----------------------- 정보 수정 -----------------------
+    private fun selectGenderSpinner() {
         // 성별 선택
+        val spinner = binding.spinnerGender
+
         spinner.adapter = ArrayAdapter.createFromResource(
             this.requireContext(),
             R.array.my_page_myInfo_gender,
             R.layout.mypage_spinner_gender
         )
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) { }
-
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -57,6 +117,7 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
                         0 -> {
                             vm.updateGender(0)
                         }
+
                         1 -> {
                             vm.updateGender(1)
                         }
@@ -64,11 +125,9 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
                 }
             }
         }
+    }
 
-        // 앨범에서 사진 가져오기
-        initGalleryLauncher()
-        handleAddProfilePhoto()
-
+    private fun editNickname() {
         // 이름(닉네임)
         binding.etNickname.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
@@ -76,10 +135,11 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
                 // 중복 확인, 수정하기 버튼 활성화 > 색깔 바뀜
                 vm.updateNickname(s.toString())
             }
-
             override fun afterTextChanged(s: Editable?) { }
         })
+    }
 
+    private fun editBirth() {
         // 생일
         binding.etBirthday.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
@@ -89,36 +149,6 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
             }
             override fun afterTextChanged(s: Editable?) { }
         })
-
-        // 중복 확인 눌렀을 때
-        binding.btnNickNameCheck.setOnClickListener {
-            Timber.d("중복 확인 버튼 클릭됨")
-
-            vm.isCheckUpdatedNickname.observe(viewLifecycleOwner) {
-                vm.checkNicknameRetrofit()
-            }
-        }
-
-        // 수정 하기 버튼 눌렀을 때
-        // 1. 중복 확인 누름 - 사용 가능 / 이미 사용 중
-        // 2. 중복 확인 안 누름 > 다이얼 로그 띄우기
-        // 3. 닉네임 수정 안 해서 바로 수정 가능
-        binding.btnMyInfoUpdate.setOnClickListener {
-            vm.userNickname.observe(viewLifecycleOwner) {
-
-            }
-
-            showMyPageNickNameCheckDialog()
-        }
-
-        vm.initAllStatus()
-    }
-
-    // ----------------------- 이름(닉네임) 중복 확인 -----------------------
-    private fun showMyPageNickNameCheckDialog() {
-        checkNickNameDialog(
-            resources.getString(R.string.my_info_nickname_check)
-        ).show(requireActivity().supportFragmentManager, null)
     }
 
     // ----------------------- 사진 및 카메라 통한 옷 이미지 등록 -----------------------
@@ -153,4 +183,6 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         super.onDestroy()
         vm.initAllStatus()
     }
+
+
 }

@@ -20,6 +20,10 @@
             name="vm"
             type="com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel" />
 
+        <variable
+            name="checkNickname"
+            type="com.example.refit.data.model.mypage.CheckNicknameResponse" />
+
     </data>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -167,8 +171,8 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="26dp"
                             android:background="@drawable/btn_my_info_check"
-                            android:backgroundTint="@{vm.isCheckUpdatedNickname() == true ? @color/green1 : @color/dark1}"
-                            android:clickable="@{vm.isCheckUpdatedNickname() == true ? true : false, default = false}"
+                            android:backgroundTint="@{vm.isCheckUpdatedNickname == true ? @color/green1 : @color/dark1}"
+                            android:clickable="@{vm.isCheckUpdatedNickname == true ? true : false, default = false}"
                             android:padding="0dp"
                             android:shadowColor="@android:color/transparent"
                             android:text="@string/my_info_isCheck_nickname"
@@ -184,10 +188,6 @@
                         android:text="@string/my_info_available_nickname"
                         android:textColor="@color/green1"
                         android:visibility="gone" />
-
-                    <!--
-                    setVisibility="@{vm.isCheckUpdatedNickname() == true ? View.VISIBLE : View.GONE}"
-                    -->
 
                     <TextView
                         android:id="@+id/enable_name"

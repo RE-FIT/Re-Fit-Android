@@ -38,14 +38,14 @@ interface MyPageApi {
     // 이름(닉네임) 중복 확인
     @GET("/refit/mypage/info/check")
     fun checkNickname(
-        @Header("Authorization") token: String,
-        @Query("name") name: String?
-    ): Call<CheckNicknameResponse>
+        @Header("Authorization") accessToken: String,
+        @Query("name") name: String
+    ): Call<Boolean>
 
     // 내 피드 나눔
     @GET("/refit/mypage/myfeed/give")
     fun showMyFeedGive(
-        @Header("Authorization") token: String
+        @Header("Authorization") accessToken: String
     ): Call<ResponseBody>
 
     // 내 피드 판매

@@ -6,8 +6,8 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 
 class MyPageRepositoryImpl(private val myPageDataSource: MyPageDataSource): MyPageRepository {
-    override suspend fun checkNickname(token: String, name: String): Call<CheckNicknameResponse> {
-        return myPageDataSource.checkNickname(token, name)
+    override suspend fun checkNickname(accessToken: String, name: String): Call<Boolean> {
+        return myPageDataSource.checkNickname(accessToken, name)
     }
 
     override suspend fun loadCommunityList(token: String): Call<ResponseBody> {

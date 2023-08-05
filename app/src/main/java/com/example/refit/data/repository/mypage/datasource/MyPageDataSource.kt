@@ -8,7 +8,7 @@ import retrofit2.Call
 import java.io.File
 
 interface MyPageDataSource {
-    suspend fun checkNickname(token: String, name: String): Call<CheckNicknameResponse>
+    suspend fun checkNickname(accessToken: String, name: String): Call<Boolean>
 
     suspend fun loadCommunityList(accessToken: String): Call<ResponseBody>
 

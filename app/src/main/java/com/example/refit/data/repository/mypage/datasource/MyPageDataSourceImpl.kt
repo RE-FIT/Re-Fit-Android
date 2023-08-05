@@ -13,12 +13,12 @@ import retrofit2.Call
 import java.io.File
 
 class MyPageDataSourceImpl (private val myPageApi: MyPageApi, private val communityApi: CommunityApi): MyPageDataSource {
-    override suspend fun loadCommunityList(token: String): Call<ResponseBody> {
-        return myPageApi.showMyFeedBuy(token)
+    override suspend fun loadCommunityList(accessToken: String): Call<ResponseBody> {
+        return myPageApi.showMyFeedBuy(accessToken)
     }
 
-    override suspend fun checkNickname(token: String, name: String): Call<CheckNicknameResponse> {
-        return myPageApi.checkNickname(token, name)
+    override suspend fun checkNickname(accessToken: String, name: String): Call<Boolean> {
+        return myPageApi.checkNickname(accessToken, name)
     }
 
     override suspend fun loadCommunityListSort(

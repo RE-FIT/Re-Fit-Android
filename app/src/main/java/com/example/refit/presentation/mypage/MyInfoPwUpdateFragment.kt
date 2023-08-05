@@ -22,35 +22,24 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
 
     private val vm: MyInfoViewModel by sharedViewModel()
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    createAlertBasicDialog(
-                        resources.getString(R.string.pw_change_delete_title),
-                        resources.getString(R.string.pw_change_delete_positive),
-                        resources.getString(R.string.pw_change_delete_negative),
-                        object : AlertBasicDialogListener {
-                            override fun onClickPositive() {
-                                //vm.initAllStatus()
-                                navigate(R.id.action_myInfo_to_nav_my_page)
-                            }
-
-                            override fun onClickNegative() {
-                            }
-                        }).show(requireActivity().supportFragmentManager, null)
-                }
-            })
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = vm
         binding.lifecycleOwner = this
 
+        editNewPassword()
+        pressUpdatePwBtn()
+    }
+
+    private fun notifyPwIncorrectDialog() {
+        checkPwDialog(
+            resources.getString(R.string.pw_incorrect_title),
+            resources.getString(R.string.pw_incorrect_content)
+        ).show(requireActivity().supportFragmentManager, null)
+    }
+
+    private fun editNewPassword() {
         binding.newPw.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -60,11 +49,10 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
         })
     }
 
-    private fun notifyPwIncorrectDialog() {
-        checkPwDialog(
-            resources.getString(R.string.pw_incorrect_title),
-            resources.getString(R.string.pw_incorrect_content)
-        ).show(requireActivity().supportFragmentManager, null)
+    private fun pressUpdatePwBtn() {
+        vm.isCheckUpdatedPw.observe(viewLifecycleOwner) {
+
+        }
     }
 
 }
