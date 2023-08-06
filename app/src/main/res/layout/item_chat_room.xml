@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="favToggleState"
+            type="Boolean" />
+
+        <variable
+            name="chatList"
+            type="com.example.refit.data.model.chat.ChatRoom" />
+
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.chat.viewmodel.ChatRoomViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/default_dark"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_community_item_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@android:color/transparent" >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_community_item"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.10"
+                    app:strokeColor="@android:color/transparent"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/textView"
+                    style="@style/BoldFontKr.16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="월계수달"
+                    app:layout_constraintStart_toEndOf="@+id/iv_community_item"
+                    app:layout_constraintTop_toTopOf="@+id/iv_community_item"></TextView>
+
+                <TextView
+                    style="@style/BoldFontKr.12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="구매 희망합니다!"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_community_item"
+                    app:layout_constraintStart_toStartOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView"></TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

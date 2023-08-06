@@ -1,0 +1,17 @@
+package com.example.refit.data.model.chat
+
+import com.google.gson.annotations.SerializedName
+
+//채팅방 DTO
+data class ChatRoom(
+    @SerializedName("roomId")
+    val roomId: Int,
+    @SerializedName("username")
+    val username: String,
+    @SerializedName("other")
+    val other: String,
+    @SerializedName("message")
+    val message: String,
+    @SerializedName("participants")
+    val participants: List<String>,
+)

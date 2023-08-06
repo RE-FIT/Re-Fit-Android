@@ -1,6 +1,7 @@
 package com.example.refit.di
 
 import com.example.refit.presentation.AccessTokenViewModel
+import com.example.refit.presentation.chat.viewmodel.ChatRoomViewModel
 import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
 import com.example.refit.presentation.closet.viewmodel.ClothAddViewModel
 import com.example.refit.presentation.closet.viewmodel.ForestViewModel
@@ -35,5 +36,5 @@ val viewModelModule = module {
     viewModel { MyFeedViewModel(get(), get()) }
     viewModel { MyPageViewModel(get()) }
     viewModel { MyInfoViewModel(get(), get()) }
-
+    viewModel { ChatRoomViewModel(get(), get()) }
 }

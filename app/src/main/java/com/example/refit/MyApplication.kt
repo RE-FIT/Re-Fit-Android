@@ -4,6 +4,7 @@ import android.app.Application
 import com.example.refit.di.dataSourceModule
 import com.example.refit.di.dataStoreModule
 import com.example.refit.di.networkModule
+import com.example.refit.di.networkNodeModule
 import com.example.refit.di.repositoryModule
 import com.example.refit.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -17,7 +18,7 @@ class MyApplication: Application() {
 
         startKoin {
             androidContext(this@MyApplication)
-            modules(networkModule, viewModelModule, repositoryModule, dataSourceModule, dataStoreModule)
+            modules(networkModule, networkNodeModule, viewModelModule, repositoryModule, dataSourceModule, dataStoreModule)
         }
 
         setUpTimber()
