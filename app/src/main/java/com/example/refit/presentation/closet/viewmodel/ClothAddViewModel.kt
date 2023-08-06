@@ -162,6 +162,7 @@ class ClothAddViewModel(
                     ) {
                         if(response.isSuccessful) {
                             _requestedFixClothInfo.value = Event(response.body()!!)
+                            Timber.d("등록된 옷 정보 수정 요청 성공 - ${response.body()}")
                         } else {
                             Timber.d("등록된 옷 정보 수정 요청 실패1 - ${response.errorBody()}")
                         }

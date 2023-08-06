@@ -230,6 +230,14 @@ class ClothRegistrationFragment :
             binding.photoUri = clothInfo.imageUrl
             (binding.cgClothRegisterCategory.getChildAt(clothInfo.category) as Chip).isChecked = true
             (binding.cgClothRegisterWearingSeason.getChildAt(clothInfo.season) as Chip).isChecked = true
+            (binding.cgClothRegisterSeasonConfirm.getChildAt(1) as Chip).isChecked = true
+            //TODO(현재 계절이 아닌 경우에 대한 컨펌 칩 -> 이것도 적용되도록 작성)
+//            if(clothInfo.isPlan && clothInfo.targetPeriod > 0) {
+//                (binding.cgClothRegisterSeasonConfirm.getChildAt(0) as Chip).isChecked = true
+//            }
+//            if(!clothInfo.isPlan && clothInfo.targetPeriod == 0) {
+//                (binding.cgClothRegisterSeasonConfirm.getChildAt(1) as Chip).isChecked = true
+//            }
         })
     }
 
