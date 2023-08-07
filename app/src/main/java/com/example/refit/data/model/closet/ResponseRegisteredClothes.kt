@@ -16,5 +16,7 @@ data class ResponseRegisteredClothes(
     @SerializedName("remainedDay")
     val remainedDay: Int,
     @SerializedName("targetCnt")
-    val targetCnt: Int
+    val targetCnt: Int,
+    @SerializedName("lastDate")
+    val lastDate: String?
 )
