@@ -1,6 +1,8 @@
 package com.example.refit.data.repository.colset.datasource
 
+import com.example.refit.data.model.closet.RequestAddNewCloth
 import com.example.refit.data.model.closet.RequestRegisteredClothes
+import com.example.refit.data.model.closet.RequestResetCompletedCloth
 import com.example.refit.data.model.closet.ResponseAddNewCloth
 import com.example.refit.data.model.closet.ResponseRegisteredClothInfo
 import com.example.refit.data.model.closet.ResponseRegisteredClothes
@@ -39,5 +41,21 @@ class ClosetDataSourceImpl(private val closetApi: ClosetApi): ClosetDataSource {
         clothId: Int
     ): Call<ResponseRegisteredClothInfo> {
         return closetApi.getRegisteredClothInfo(token, clothId)
+    }
+
+    override suspend fun fixClothItem(
+        token: String,
+        request: RequestAddNewCloth,
+        clothId: Int
+    ): Call<Void> {
+        return closetApi.fixClothItem(token, clothId, request)
+    }
+
+    override suspend fun resetCompletedCloth(
+        token: String,
+        request: RequestResetCompletedCloth,
+        clothId: Int
+    ): Call<Void> {
+        return closetApi.resetCompletedCloth(token, clothId, request)
     }
 }

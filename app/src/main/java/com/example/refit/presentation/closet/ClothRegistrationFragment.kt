@@ -3,12 +3,14 @@ package com.example.refit.presentation.closet
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.os.FileUtils
 import android.view.View
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toFile
 import androidx.core.view.get
 import com.example.refit.R
 import com.example.refit.databinding.FragmentClothRegistrationBinding
@@ -25,7 +27,9 @@ import com.example.refit.util.EventObserver
 import com.example.refit.util.FileUtil
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import retrofit2.http.Url
 import timber.log.Timber
+import java.net.URL
 
 
 class ClothRegistrationFragment :
@@ -36,6 +40,7 @@ class ClothRegistrationFragment :
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
     private lateinit var takePicture: ActivityResultLauncher<Uri>
     private var photoUri: Uri? = null
+    private var requestedClothIdForUpdate: Long? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -82,12 +87,25 @@ class ClothRegistrationFragment :
             ).setTitle("옷 등록을 완료했습니다!", null).show()
             navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
         })
+
+        clothAddViewModel.isSuccessUpdatingClothInfo.observe(viewLifecycleOwner, EventObserver { isSuccess ->
+            if(isSuccess) {
+                CustomSnackBar.make(
+                    binding.root,
+                    R.layout.custom_snack_bar_basic,
+                    R.anim.anim_show_snack_bar_from_bottom
+                ).setTitle("정보가 수정됐습니다", null).show()
+                navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
+            }
+        })
     }
 
     private fun handleClickAddCompleteButton() {
         binding.btnClothRegisterComplete.setOnClickListener {
-            photoUri?.let {
-                clothAddViewModel.addNewCloth(FileUtil.toFile(requireActivity(), it))
+            if(photoUri != null) {
+                clothAddViewModel.requestRegisteringCloth(FileUtil.toFile(requireActivity(), photoUri!!), null)
+            } else {
+                clothAddViewModel.requestRegisteringCloth(null, requestedClothIdForUpdate?.toInt())
             }
         }
     }
@@ -230,14 +248,7 @@ class ClothRegistrationFragment :
             binding.photoUri = clothInfo.imageUrl
             (binding.cgClothRegisterCategory.getChildAt(clothInfo.category) as Chip).isChecked = true
             (binding.cgClothRegisterWearingSeason.getChildAt(clothInfo.season) as Chip).isChecked = true
-            (binding.cgClothRegisterSeasonConfirm.getChildAt(1) as Chip).isChecked = true
-            //TODO(현재 계절이 아닌 경우에 대한 컨펌 칩 -> 이것도 적용되도록 작성)
-//            if(clothInfo.isPlan && clothInfo.targetPeriod > 0) {
-//                (binding.cgClothRegisterSeasonConfirm.getChildAt(0) as Chip).isChecked = true
-//            }
-//            if(!clothInfo.isPlan && clothInfo.targetPeriod == 0) {
-//                (binding.cgClothRegisterSeasonConfirm.getChildAt(1) as Chip).isChecked = true
-//            }
+            requestedClothIdForUpdate = clothInfo.id
         })
     }
 

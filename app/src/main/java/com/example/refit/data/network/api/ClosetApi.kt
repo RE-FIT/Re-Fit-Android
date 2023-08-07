@@ -1,6 +1,8 @@
 package com.example.refit.data.network.api
 
+import com.example.refit.data.model.closet.RequestAddNewCloth
 import com.example.refit.data.model.closet.RequestRegisteredClothes
+import com.example.refit.data.model.closet.RequestResetCompletedCloth
 import com.example.refit.data.model.closet.ResponseAddNewCloth
 import com.example.refit.data.model.closet.ResponseRegisteredClothInfo
 import com.example.refit.data.model.closet.ResponseRegisteredClothes
@@ -14,7 +16,9 @@ import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.Header
 import retrofit2.http.Multipart
+import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -48,5 +52,19 @@ interface ClosetApi {
         @Header("Authorization") token: String,
         @Path("id") id: Int
     ): Call<ResponseRegisteredClothInfo>
+
+    @PUT("/refit/clothe/{id}")
+    fun fixClothItem(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Body request: RequestAddNewCloth
+    ): Call<Void>
+
+    @PATCH("/refit/clothe/{id}")
+    fun resetCompletedCloth(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Body request: RequestResetCompletedCloth
+    ): Call<Void>
 
 }

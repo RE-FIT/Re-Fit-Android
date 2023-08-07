@@ -1,6 +1,8 @@
 package com.example.refit.data.repository.colset.datasource
 
+import com.example.refit.data.model.closet.RequestAddNewCloth
 import com.example.refit.data.model.closet.RequestRegisteredClothes
+import com.example.refit.data.model.closet.RequestResetCompletedCloth
 import com.example.refit.data.model.closet.ResponseAddNewCloth
 import com.example.refit.data.model.closet.ResponseRegisteredClothInfo
 import com.example.refit.data.model.closet.ResponseRegisteredClothes
@@ -31,5 +33,17 @@ interface ClosetDataSource {
         token: String,
         clothId: Int
     ): Call<ResponseRegisteredClothInfo>
+
+    suspend fun fixClothItem(
+        token: String,
+        request: RequestAddNewCloth,
+        clothId: Int
+    ): Call<Void>
+
+    suspend fun resetCompletedCloth(
+        token: String,
+        request: RequestResetCompletedCloth,
+        clothId: Int
+    ): Call<Void>
 
 }

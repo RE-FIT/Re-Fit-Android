@@ -43,7 +43,7 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
 
     private fun handleNotificationAfterDeleteItem() {
         closetViewModel.isSuccessDeleteItem.observe(viewLifecycleOwner, EventObserver { isDelete ->
-            val message = when(isDelete) {
+            val message = when (isDelete) {
                 true -> "해당 옷 정보를 삭제했습니다"
                 false -> "다시 시도해 주세요"
             }
@@ -62,14 +62,15 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
                 //TODO(이미 옷 입기가 된 아이템인지 확인 필요 -> 입었다면 옷 입기 막기 처리)
                 showClothItemSelectionDialog(item, object : ClothItemSelectionDialogListener {
                     override fun onClickMainButton(isNotCompleteGoal: Boolean) {
-                        //TODO(목표 달성 상태에 따라 다르게 처리)
-                        navigate(R.id.action_nav_closet_to_forestFragment)
+                        if(isNotCompleteGoal) {
+                            navigate(R.id.action_nav_closet_to_forestFragment)
+                        } else {
+                            handleRequestForResetCompletedCloth(item.id)
+                        }
                     }
 
                     override fun onClickFixInfo(clothInfo: ResponseRegisteredClothes) {
-                        //TODO(옷 등록 페이지로 이동)
-                        clothAddViewModel.fixClothInfo(clothInfo.id)
-                        navigate(R.id.action_nav_closet_to_clothRegistrationFragment)
+                        handleRequestForFixCloth(clothInfo.id)
                     }
 
                     override fun onClickClothDeletion(id: Int) {
@@ -77,6 +78,28 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
                     }
                 }).show(requireActivity().supportFragmentManager, null)
                 Timber.d("클릭한 아이템 아이디 -> $item")
+            })
+    }
+
+    private fun handleRequestForFixCloth(clothId: Int) {
+        clothAddViewModel.fixClothInfo(clothId, false)
+        clothAddViewModel.isRequestedFixCloth.observe(
+            viewLifecycleOwner,
+            EventObserver { isSuccessRequest ->
+                if (isSuccessRequest) {
+                    navigate(R.id.action_nav_closet_to_clothRegistrationFragment)
+                }
+            })
+    }
+
+    private fun handleRequestForResetCompletedCloth(clothId: Int) {
+        clothAddViewModel.fixClothInfo(clothId, true)
+        clothAddViewModel.isRequestedResetCompletedCloth.observe(
+            viewLifecycleOwner,
+            EventObserver { isSuccessRequest ->
+                if (isSuccessRequest) {
+                    navigate(R.id.action_nav_closet_to_clothRegistrationFragment)
+                }
             })
     }
 
