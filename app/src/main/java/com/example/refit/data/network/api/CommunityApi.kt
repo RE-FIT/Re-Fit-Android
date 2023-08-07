@@ -1,8 +1,8 @@
 package com.example.refit.data.network.api
 
-import com.example.refit.data.model.community.BlockedMember
+import com.example.refit.data.model.community.BlockDto
 import com.example.refit.data.model.community.PostResponse
-import com.example.refit.data.model.community.ReportedMember
+import com.example.refit.data.model.community.Member
 import com.example.refit.data.model.community.ReportedUser
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -83,7 +83,7 @@ interface CommunityApi {
     @POST("refit/block")
     fun blockUser(
         @Header("Authorization") accessToken: String,
-        @Body blockedMember: BlockedMember,
+        @Body requestBody: BlockDto,
     ): Call<ResponseBody>
 
     @POST("refit/report")

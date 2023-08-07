@@ -1,7 +1,8 @@
 package com.example.refit.data.repository.community
 
 import androidx.lifecycle.LiveData
-import com.example.refit.data.model.community.BlockedMember
+import com.example.refit.data.model.community.BlockDto
+import com.example.refit.data.model.community.Member
 import com.example.refit.data.model.community.PostResponse
 import com.example.refit.data.model.community.ReportedUser
 import com.example.refit.data.repository.community.datasource.CommunityDataSource
@@ -54,9 +55,9 @@ class CommunityRepositoryImpl (private val communityDataSource: CommunityDataSou
 
     override suspend fun blockUser(
         accessToken: String,
-        blockedMember: BlockedMember
+        blockDto: BlockDto
     ): Call<ResponseBody> {
-        return communityDataSource.blockUser(accessToken, blockedMember)
+        return communityDataSource.blockUser(accessToken, blockDto)
     }
 
     override suspend fun reportUser(

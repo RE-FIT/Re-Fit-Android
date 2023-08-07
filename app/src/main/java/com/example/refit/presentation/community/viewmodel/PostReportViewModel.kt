@@ -7,9 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.R
 import com.example.refit.data.datastore.TokenStore
-import com.example.refit.data.model.community.BlockedMember
+import com.example.refit.data.model.community.BlockDto
+import com.example.refit.data.model.community.Member
 import com.example.refit.data.model.community.PostResponse
-import com.example.refit.data.model.community.ReportedMember
 import com.example.refit.data.model.community.ReportedUser
 import com.example.refit.data.repository.community.CommunityRepository
 import kotlinx.coroutines.flow.first
@@ -141,9 +141,10 @@ class PostReportViewModel(
         val accessToken = ds.getAccessToken().first()
         try {
             val user = userName.value.toString()
-            val blockedMember = BlockedMember(name = user)
+            val blockedMember = Member(name = user)
+            val blockDto = BlockDto(blockedMember)
             val response =
-                repository.blockUser(accessToken, blockedMember)
+                repository.blockUser(accessToken, blockDto)
 
             response.enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
@@ -182,7 +183,7 @@ class PostReportViewModel(
         val reason = isSelectReasonType.value.toString()
 
         try {
-            val reportedMember = ReportedMember(user)
+            val reportedMember = Member(user)
             val reportedUser = ReportedUser(reportedMember, reason)
             val response =
                 repository.reportUser(accessToken, reportedUser)

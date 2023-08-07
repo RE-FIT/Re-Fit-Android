@@ -1,6 +1,7 @@
 package com.example.refit.data.repository.community.datasource
 
-import com.example.refit.data.model.community.BlockedMember
+import com.example.refit.data.model.community.BlockDto
+import com.example.refit.data.model.community.Member
 import com.example.refit.data.model.community.PostResponse
 import com.example.refit.data.model.community.ReportedUser
 import com.example.refit.data.network.api.CommunityApi
@@ -67,9 +68,9 @@ class CommunityDataSourceImpl(private val communityApi: CommunityApi) : Communit
 
     override suspend fun blockUser(
         accessToken: String,
-        blockedMember: BlockedMember
+        blockDto: BlockDto
     ): Call<ResponseBody> {
-        return communityApi.blockUser(accessToken, blockedMember)
+        return communityApi.blockUser(accessToken, blockDto)
     }
 
     override suspend fun reportUser(
