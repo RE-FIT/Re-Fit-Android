@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -94,4 +95,6 @@ dependencies {
     //splash screen
     implementation "androidx.core:core-splashscreen:1.0.1"
 
+    //socketIo
+    implementation('io.socket:socket.io-client:1.0.1')
 }

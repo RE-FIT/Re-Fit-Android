@@ -335,5 +335,29 @@
         <action
             android:id="@+id/action_chatRoomFragment_to_nav_community"
             app:destination="@id/nav_community" />
+        <action
+            android:id="@+id/action_chatRoomFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.refit.presentation.chat.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" >
+        <action
+            android:id="@+id/action_chatFragment_to_chatRoomFragment"
+            app:destination="@id/chatRoomFragment" />
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="roomId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="otherId"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

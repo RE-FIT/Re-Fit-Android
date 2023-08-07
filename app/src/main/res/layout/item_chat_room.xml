@@ -5,20 +5,16 @@
 
     <data>
         <variable
-            name="favToggleState"
-            type="Boolean" />
-
-        <variable
             name="chatList"
             type="com.example.refit.data.model.chat.ChatRoom" />
 
         <variable
             name="vm"
             type="com.example.refit.presentation.chat.viewmodel.ChatRoomViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/default_dark"
@@ -31,6 +27,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             app:cardBackgroundColor="@color/white"
             app:strokeColor="@android:color/transparent" >
 
@@ -41,9 +39,9 @@
                 android:paddingBottom="15dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/iv_community_item"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:id="@+id/iv_chat_item"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.10"
                     app:strokeColor="@android:color/transparent"
@@ -53,22 +51,24 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="2dp"
                     android:id="@+id/textView"
-                    style="@style/BoldFontKr.16"
+                    style="@style/MediumFontKr.12"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:text="월계수달"
-                    app:layout_constraintStart_toEndOf="@+id/iv_community_item"
-                    app:layout_constraintTop_toTopOf="@+id/iv_community_item"></TextView>
+                    app:layout_constraintStart_toEndOf="@+id/iv_chat_item"
+                    app:layout_constraintTop_toTopOf="@+id/iv_chat_item"></TextView>
 
                 <TextView
-                    style="@style/BoldFontKr.12"
+                    android:layout_marginTop="5dp"
+                    style="@style/RegularFont.10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="구매 희망합니다!"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_community_item"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_chat_item"
                     app:layout_constraintStart_toStartOf="@+id/textView"
                     app:layout_constraintTop_toBottomOf="@+id/textView"></TextView>
 

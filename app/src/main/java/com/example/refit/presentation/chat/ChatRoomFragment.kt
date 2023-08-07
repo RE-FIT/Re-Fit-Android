@@ -1,7 +1,9 @@
 package com.example.refit.presentation.chat
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.refit.R
@@ -28,16 +30,12 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
             val dataRVAdapter = ChatRoomRVAdapter(it)
             binding.rv.adapter = dataRVAdapter
             binding.rv.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            // 클릭 이벤트 처리
+
             dataRVAdapter.setOnItemClickListener(object: ChatRoomRVAdapter.OnItemClickListner {
                 override fun onItemClick(v: View, data: ChatRoom, pos: Int) {
-
-//                    //프로젝트 상세보기로 이동
-//                    val intent = Intent(requireContext(), ChatActivity::class.java)
-//                    intent.putExtra("roomId", data.roomId.toString())
-//                    intent.putExtra("userId", data.username.toString())
-//                    intent.putExtra("otherId", data.other.toString())
-//                    startActivity(intent)
+                    val action = ChatRoomFragmentDirections.actionChatRoomFragmentToChatFragment(
+                        data.username.toString(), data.roomId.toString(), data.other.toString())
+                    Navigation.findNavController(view).navigate(action)
                 }
             })
         }
