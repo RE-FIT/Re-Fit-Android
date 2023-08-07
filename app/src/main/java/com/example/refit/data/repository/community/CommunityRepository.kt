@@ -1,7 +1,9 @@
 package com.example.refit.data.repository.community
 
 import androidx.lifecycle.LiveData
+import com.example.refit.data.model.community.BlockedMember
 import com.example.refit.data.model.community.PostResponse
+import com.example.refit.data.model.community.ReportedUser
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -25,5 +27,11 @@ interface CommunityRepository {
     suspend fun deletePost(accessToken: String, postId: Int): Call<ResponseBody>
 
     suspend fun scrapPost(accessToken: String, postId: Int): Call<ResponseBody>
+
+    suspend fun blockUser(accessToken: String, blockedMember: BlockedMember): Call<ResponseBody>
+
+    suspend fun reportUser(accessToken: String, reportedUser: ReportedUser): Call<ResponseBody>
+
+    suspend fun changePostStatus(accessToken: String, postId: Int): Call<PostResponse>
 
 }

@@ -7,6 +7,7 @@ data class PostResponse(
     @SerializedName("title") val title: String,
     @SerializedName("author") val author: String,
     @SerializedName("imgUrls") val imgUrls: List<String>,
+    @SerializedName("gender") val gender: Int,
     @SerializedName("size") val size: Int,
     @SerializedName("deliveryType") val deliveryType: Int,
     @SerializedName("deliveryFee") val deliveryFee: Int,

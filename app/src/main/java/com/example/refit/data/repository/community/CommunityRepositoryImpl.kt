@@ -1,7 +1,9 @@
 package com.example.refit.data.repository.community
 
 import androidx.lifecycle.LiveData
+import com.example.refit.data.model.community.BlockedMember
 import com.example.refit.data.model.community.PostResponse
+import com.example.refit.data.model.community.ReportedUser
 import com.example.refit.data.repository.community.datasource.CommunityDataSource
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -48,6 +50,24 @@ class CommunityRepositoryImpl (private val communityDataSource: CommunityDataSou
 
     override suspend fun scrapPost(accessToken: String, postId: Int): Call<ResponseBody> {
         return communityDataSource.scrapPost(accessToken, postId)
+    }
+
+    override suspend fun blockUser(
+        accessToken: String,
+        blockedMember: BlockedMember
+    ): Call<ResponseBody> {
+        return communityDataSource.blockUser(accessToken, blockedMember)
+    }
+
+    override suspend fun reportUser(
+        accessToken: String,
+        reportedUser: ReportedUser
+    ): Call<ResponseBody> {
+        return communityDataSource.reportUser(accessToken, reportedUser)
+    }
+
+    override suspend fun changePostStatus(accessToken: String, postId: Int): Call<PostResponse> {
+        return communityDataSource.changePostStatus(accessToken, postId)
     }
 
 

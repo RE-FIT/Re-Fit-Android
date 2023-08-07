@@ -9,6 +9,7 @@ import com.example.refit.R
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.community.PostResponse
 import com.example.refit.data.repository.community.CommunityRepository
+import com.example.refit.data.repository.community.PostDataRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
@@ -62,6 +63,10 @@ class CommunityInfoViewModel (
     fun clickedGetPost(postId: Int) {
         _postId.value = postId
         getPost()
+    }
+
+    fun updatePostResponse(response: PostResponse) {
+        PostDataRepository.updatePostResponse(response)
     }
 
     fun setScrapStatus(status: Boolean) {
@@ -148,6 +153,7 @@ class CommunityInfoViewModel (
 
                         postResponse?.let {
                             _postResponse.postValue(it)
+                            updatePostResponse(it)
                             checkIfAuthor()
                             setSliderImageUrls()
                             setPostDate()
@@ -213,6 +219,57 @@ class CommunityInfoViewModel (
             })
         } catch (e: Exception) {
             "커뮤니티 글 삭제 오류: $e"
+        }
+    }
+
+    // 글 상태 변경 기능
+    fun changePostStatus() = viewModelScope.launch {
+        val accessToken = ds.getAccessToken().first()
+        val postId = _postId.value ?: 0
+        try {
+            val response =
+                repository.changePostStatus(accessToken, postId)
+
+            response.enqueue(object : Callback<PostResponse> {
+                override fun onResponse(
+                    call: Call<PostResponse>,
+                    response: Response<PostResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        Timber.d("API 호출 성공")
+                        val postResponse = response.body()
+                        val json = postResponse.toString()
+
+                        postResponse?.let {
+                            _postResponse.postValue(it)
+                            updatePostResponse(it)
+                            checkIfAuthor()
+                            setSliderImageUrls()
+                            setPostDate()
+                            classifyUserState()
+                        }
+
+                        Timber.d("COMMUNITY PATCH API 호출 성공 : $json")
+                    } else {
+                        val errorBody = response.errorBody()
+                        val errorCode = response.code()
+
+                        if (errorBody != null) {
+                            val errorJson = JSONObject(errorBody.string())
+                            val errorMessage = errorJson.optString("errorMessage")
+                            val errorCodeFromJson = errorJson.optInt("code")
+
+                            Timber.d("API 호출 실패: $errorCodeFromJson / $errorMessage")
+                        } else Timber.d("API 호출 실패: $errorCode")
+                    }
+                }
+
+                override fun onFailure(call: Call<PostResponse>, t: Throwable) {
+                    Timber.d("RESPONSE FAILURE")
+                }
+            })
+        } catch (e: Exception) {
+            "커뮤니티 글 상태 변경 오류: $e"
         }
     }
 

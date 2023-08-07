@@ -1,6 +1,8 @@
 package com.example.refit.data.repository.community.datasource
 
+import com.example.refit.data.model.community.BlockedMember
 import com.example.refit.data.model.community.PostResponse
+import com.example.refit.data.model.community.ReportedUser
 import com.example.refit.data.network.api.CommunityApi
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -40,8 +42,6 @@ class CommunityDataSourceImpl(private val communityApi: CommunityApi) : Communit
         return communityApi.createPost(accessToken, postDto, imageParts)
     }
 
-
-
     override suspend fun getPost(accessToken: String, postId: Int): Call<PostResponse> {
         return communityApi.getPost(accessToken, postId)
     }
@@ -57,8 +57,26 @@ class CommunityDataSourceImpl(private val communityApi: CommunityApi) : Communit
         return communityApi.deletePost(accessToken, postId)
     }
 
+    override suspend fun changePostStatus(accessToken: String, postId: Int): Call<PostResponse> {
+        return communityApi.changePostStatus(accessToken, postId)
+    }
+
     override suspend fun scrapPost(accessToken: String, postId: Int): Call<ResponseBody> {
         return communityApi.scrapPost(accessToken, postId)
+    }
+
+    override suspend fun blockUser(
+        accessToken: String,
+        blockedMember: BlockedMember
+    ): Call<ResponseBody> {
+        return communityApi.blockUser(accessToken, blockedMember)
+    }
+
+    override suspend fun reportUser(
+        accessToken: String,
+        reportedUser: ReportedUser
+    ): Call<ResponseBody> {
+        return communityApi.reportUser(accessToken, reportedUser)
     }
 
 }
