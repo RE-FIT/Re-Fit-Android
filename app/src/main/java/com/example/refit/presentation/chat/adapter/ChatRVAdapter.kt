@@ -33,41 +33,70 @@ class ChatRVAdapter(private val dataList: MutableList<Chat>): RecyclerView.Adapt
 
         fun bind(data: Chat) {
 
-            // 뷰를 초기화합니다.
+            resetViews()
+
+            // 현재 메시지가 마지막 메시지가 아닌 경우 다음 메시지 가져오기
+            val nextData: Chat? = if (adapterPosition < dataList.size - 1) dataList[adapterPosition + 1] else null
+
+            if (data.isMy === true) {
+                handleMyMessage(data, nextData)
+            } else {
+                handleOtherMessage(data, nextData)
+            }
+        }
+
+        private fun handleMyMessage(data: Chat, nextData: Chat?) {
+            binding.other.isVisible = false
+            binding.myChat.text = data.content
+            binding.myTime.text = formatToKoreanTime(data.time)
+
+            // 조건에 따라 현재 메시지의 시간 숨기기
+            if (nextData != null && nextData.isMy == true && nextData.username == data.username && formatToKoreanTime(nextData.time) == formatToKoreanTime(data.time)) {
+                binding.myTime.isVisible = false
+            }
+        }
+
+        private fun handleOtherMessage(data: Chat, nextData: Chat?) {
+            binding.my.isVisible = false
+
+            if (adapterPosition == 0) {
+                binding.otherName.text = data.username
+                binding.otherConnect.isVisible = false
+                binding.otherChat.text = data.content
+                binding.otherTime.text = formatToKoreanTime(data.time)
+            } else {
+                val previousData = dataList[adapterPosition - 1]
+
+                // 메시지를 보낸 사람이 같은 경우
+                if (previousData.username == data.username) {
+                    binding.otherFirst.isVisible = false
+                    binding.otherChatConnect.text = data.content
+                    binding.otherTimeConnect.text = formatToKoreanTime(data.time)
+
+                } else { // 다른 경우
+
+                    binding.otherName.text = data.username
+                    binding.otherConnect.isVisible = false
+                    binding.otherChat.text = data.content
+                    binding.otherTime.text = formatToKoreanTime(data.time)
+                }
+            }
+
+            // 조건에 따라 현재 메시지의 시간 숨기기
+            if (nextData != null && nextData.username == data.username && formatToKoreanTime(nextData.time) == formatToKoreanTime(data.time)) {
+                binding.otherTimeConnect.isVisible = false
+                binding.otherTime.isVisible = false
+            }
+        }
+
+        private fun resetViews() {
             binding.other.isVisible = true
             binding.my.isVisible = true
             binding.otherConnect.isVisible = true
             binding.otherFirst.isVisible = true
-
-            //내 글일 경우
-            if (data.isMy == true) {
-                binding.other.isVisible = false
-                binding.myChat.text = data.content
-                binding.myTime.text = formatToKoreanTime(data.time)
-            } else {
-                binding.my.isVisible = false
-                binding.otherName.text = data.username
-                if (position == 0) {
-                    binding.otherConnect.isVisible = false
-                    binding.otherChat.text = data.content
-                    binding.otherTime.text = data.time
-                } else {
-                    val previousData = dataList[position - 1]
-
-                    //메시지를 보낸 사람이 같은 경우
-                    if (previousData.username == data.username) {
-
-                        binding.otherFirst.isVisible = false
-                        binding.otherChatConnect.text = data.content
-                        binding.otherTimeConnect.text = data.time
-                    } else { //다른 경우
-
-                        binding.otherConnect.isVisible = false
-                        binding.otherChat.text = data.content
-                        binding.otherTime.text = data.time
-                    }
-                }
-            }
+            binding.otherTimeConnect.isVisible = true
+            binding.otherTime.isVisible = true
+            binding.myTime.isVisible = true
         }
     }
 

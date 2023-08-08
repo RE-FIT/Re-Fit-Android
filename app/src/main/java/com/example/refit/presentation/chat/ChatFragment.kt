@@ -48,7 +48,10 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
         viewModel.room_detail(roomId)
 
         viewModel.delete.observe(viewLifecycleOwner){
-            navigate(R.id.action_chatFragment_to_chatRoomFragment)
+            if (it === true) {
+                viewModel.initDelete()
+                findNavController().popBackStack()
+            }
         }
 
         viewModel.chats.observe(viewLifecycleOwner) {

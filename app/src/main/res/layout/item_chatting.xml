@@ -6,8 +6,7 @@
         android:id="@+id/item_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="9dp"
-        android:orientation="vertical">
+        android:layout_marginBottom="9dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/my"

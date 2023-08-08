@@ -25,6 +25,9 @@ class ChatViewModel(private val repository: ChatRepository, private val ds: Toke
     val delete : LiveData<Boolean>
         get() = _delete
 
+    fun initDelete() {
+        _delete.postValue(false)
+    }
 
     fun room_detail(roomId: String) = viewModelScope.launch {
         val accessToken = ds.getAccessToken().first()
