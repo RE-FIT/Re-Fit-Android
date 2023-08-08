@@ -6,6 +6,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.refit.data.model.chat.Chat
 import com.example.refit.databinding.ItemChattingBinding
+import java.time.ZonedDateTime
+import java.util.Locale
 
 class ChatRVAdapter(private val dataList: MutableList<Chat>): RecyclerView.Adapter<ChatRVAdapter.DataViewHolder>() {
 
@@ -41,7 +43,7 @@ class ChatRVAdapter(private val dataList: MutableList<Chat>): RecyclerView.Adapt
             if (data.isMy == true) {
                 binding.other.isVisible = false
                 binding.myChat.text = data.content
-                binding.myTime.text = data.time
+                binding.myTime.text = formatToKoreanTime(data.time)
             } else {
                 binding.my.isVisible = false
                 binding.otherName.text = data.username
@@ -67,5 +69,18 @@ class ChatRVAdapter(private val dataList: MutableList<Chat>): RecyclerView.Adapt
                 }
             }
         }
+    }
+
+    fun formatToKoreanTime(time: String): String {
+        val dateTime = ZonedDateTime.parse(time)
+        val adjustedDateTime = dateTime.plusHours(9)
+
+        val hour = adjustedDateTime.hour
+        val minute = adjustedDateTime.minute
+
+        val period = if (hour < 12) "오전" else "오후"
+        val hourIn12Format = if (hour > 12) hour - 12 else hour
+
+        return String.format(Locale.getDefault(), "%s %02d:%02d", period, hourIn12Format, minute)
     }
 }

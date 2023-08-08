@@ -3,6 +3,7 @@ package com.example.refit.presentation.chat
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,8 @@ import io.socket.emitter.Emitter
 import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
+import java.time.ZonedDateTime
+import java.util.Locale
 
 
 class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
@@ -35,7 +38,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
         val roomId = args.roomId.toString()
 
         binding.cancel.setOnClickListener {
-            navigate(R.id.action_chatFragment_to_chatRoomFragment)
+            findNavController().popBackStack()
         }
 
         binding.out.setOnClickListener {
