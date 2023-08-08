@@ -1,5 +1,6 @@
 package com.example.refit.presentation.common.binding
 
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -67,6 +68,38 @@ object ClosetBindingAdapter {
         when(status) {
             true -> view.setBackgroundColor(ContextCompat.getColor(view.context, R.color.green1))
             else -> view.setBackgroundColor(ContextCompat.getColor(view.context, R.color.dark1))
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("setForestStampImage")
+    fun setForestStampImage(view: ImageView, treeId: Int) {
+        val treeDrawable = when(treeId) {
+            0 -> R.drawable.ic_tree_first_65
+            1 -> R.drawable.ic_tree_second_55
+            2 -> R.drawable.ic_tree_third_59
+            else -> R.drawable.ic_tree_first_65
+        }
+        CommonBindingAdapter.setImage(view, treeDrawable)
+    }
+
+    @JvmStatic
+    @BindingAdapter("setQuizCategory")
+    fun setQuizCategory(view: TextView, categoryId: Int?) {
+        categoryId?.let{
+            val categoryList = view.context.resources.getStringArray(R.array.closet_forest_quiz_category).toList()
+            view.text = categoryList[it]
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("setQuizAnswer", "isRequestAnswer")
+    fun setQuizAnswer(view: TextView, isAnswer: Boolean, isRequestAnswer: Boolean) {
+        if(isRequestAnswer) {
+            if(isAnswer) view.text = view.context.resources.getString(R.string.closet_quiz_question_positive)
+            else view.text = view.context.resources.getString(R.string.closet_quiz_question_negative)
+        } else {
+            view.text = view.context.resources.getString(R.string.closet_quiz_question)
         }
     }
 }

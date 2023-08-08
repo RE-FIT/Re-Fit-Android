@@ -4,6 +4,8 @@ import com.example.refit.data.model.closet.RequestAddNewCloth
 import com.example.refit.data.model.closet.RequestRegisteredClothes
 import com.example.refit.data.model.closet.RequestResetCompletedCloth
 import com.example.refit.data.model.closet.ResponseAddNewCloth
+import com.example.refit.data.model.closet.ResponseForestStatusInfo
+import com.example.refit.data.model.closet.ResponseQuizInfo
 import com.example.refit.data.model.closet.ResponseRegisteredClothInfo
 import com.example.refit.data.model.closet.ResponseRegisteredClothes
 import com.example.refit.data.repository.colset.datasource.ClosetDataSource
@@ -50,4 +52,14 @@ interface ClosetRepository {
         token: String,
         id: Int
     ): Call<Void>
+
+    suspend fun getForestStatusInfo(
+        token: String,
+        id: Int
+    ): Call<ResponseForestStatusInfo>
+
+    suspend fun getQuizInfo(
+        token: String,
+        id: Int
+    ): Call<ResponseQuizInfo>
 }

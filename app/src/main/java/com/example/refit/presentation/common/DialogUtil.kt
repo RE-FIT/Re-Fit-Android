@@ -3,6 +3,7 @@ package com.example.refit.presentation.common
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.refit.R
+import com.example.refit.data.model.closet.ResponseForestStatusInfo
 import com.example.refit.data.model.closet.ResponseRegisteredClothes
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.dialog.AlertBasicDialog
@@ -103,7 +104,7 @@ object DialogUtil {
         return ProfileRegisterPhotoDialog(listener)
     }
 
-    fun showForestStampDialog(): ForestStampDialog {
-        return ForestStampDialog()
+    fun showForestStampDialog(initData: ResponseForestStatusInfo): ForestStampDialog {
+        return ForestStampDialog(initData)
     }
 }

@@ -4,6 +4,8 @@ import com.example.refit.data.model.closet.RequestAddNewCloth
 import com.example.refit.data.model.closet.RequestRegisteredClothes
 import com.example.refit.data.model.closet.RequestResetCompletedCloth
 import com.example.refit.data.model.closet.ResponseAddNewCloth
+import com.example.refit.data.model.closet.ResponseForestStatusInfo
+import com.example.refit.data.model.closet.ResponseQuizInfo
 import com.example.refit.data.model.closet.ResponseRegisteredClothInfo
 import com.example.refit.data.model.closet.ResponseRegisteredClothes
 import okhttp3.MultipartBody
@@ -72,5 +74,17 @@ interface ClosetApi {
         @Header("Authorization") token: String,
         @Path("id") id: Int,
     ): Call<Void>
+
+    @GET("/refit/clothe/{id}/forest")
+    fun getForestStatusInfo(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Call<ResponseForestStatusInfo>
+
+    @GET("/refit/clothe/{id}/forest/question")
+    fun getQuizInfo(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Call<ResponseQuizInfo>
 
 }

@@ -4,6 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.closet.QuizFragment">
 
+    <data>
+
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.closet.viewmodel.ForestViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:textColor="@color/green1"
+                setQuizCategory="@{vm.quizInfo.category}"
                 tools:text="분리배출" />
 
         </com.google.android.material.card.MaterialCardView>
@@ -50,7 +58,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Q."
+            setQuizAnswer="@{vm.quizInfo.answer}"
+            isRequestAnswer="@{vm.isRequestAnswer().content}"
             android:textColor="@color/green1"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,14 +80,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_forest_quiz_result_status"
-            tools:text="영수증은 종이가 아닌 감열지를 사용하는데, 감열지에는 염료와 유기산 등 약품 처리가 되어있어 재활용이 되지 않아요!" />
+            android:text="@{vm.isRequestAnswer().content ? vm.quizInfo.explanation : vm.quizInfo.question}" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_forest_quiz_confirm"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> vm.handleClickQuizButton(vm.isRequestAnswer().content)}"
             android:background="@color/green1"
-            android:text=""
+            android:text="@{vm.isRequestAnswer().content ? @string/closet_quiz_button_exit : @string/closet_quiz_button_view_answer}"
             android:textAppearance="@style/RegularFontKr.14"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

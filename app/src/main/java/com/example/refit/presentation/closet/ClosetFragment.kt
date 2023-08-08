@@ -13,6 +13,7 @@ import com.example.refit.databinding.FragmentClosetBinding
 import com.example.refit.presentation.closet.adapter.UserRegisteredClothesAdapter
 import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
 import com.example.refit.presentation.closet.viewmodel.ClothAddViewModel
+import com.example.refit.presentation.closet.viewmodel.ForestViewModel
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
@@ -29,7 +30,7 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
 
     private val closetViewModel: ClosetViewModel by sharedViewModel()
     private val clothAddViewModel: ClothAddViewModel by sharedViewModel()
-
+    private val forestViewModel: ForestViewModel by sharedViewModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = closetViewModel
@@ -39,7 +40,6 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         handleClickAddClothButton()
         handleSelectedRegisteredClothItem()
         handleNotificationAfterDeleteItem()
-        handleCompletedWearingClothes()
     }
 
     private fun handleNotificationAfterDeleteItem() {
@@ -65,6 +65,7 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
                     override fun onClickMainButton(isNotCompleteGoal: Boolean) {
                         if(isNotCompleteGoal) {
                             closetViewModel.wearClothes(item.id)
+                            handleCompletedWearingClothes(item.id)
                         } else {
                             handleRequestForResetCompletedCloth(item.id)
                         }
@@ -82,9 +83,10 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
             })
     }
 
-    private fun handleCompletedWearingClothes() {
+    private fun handleCompletedWearingClothes(clothId: Int) {
         closetViewModel.isSuccessWearingClothes.observe(viewLifecycleOwner, EventObserver { isSuccess ->
             if(isSuccess) {
+                forestViewModel.checkValidationShowingDialog(true, clothId)
                 navigate(R.id.action_nav_closet_to_forestFragment)
             }
         })

@@ -50,6 +50,16 @@ object CommonBindingAdapter {
     }
 
     @JvmStatic
+    @BindingAdapter("setImageDrawable")
+    fun setImage(view: ImageView, drawable: Int?) {
+        drawable?.let {
+            Glide.with(view)
+                .load(drawable)
+                .into(view)
+        }
+    }
+
+    @JvmStatic
     @BindingAdapter("setTextGroupSelected")
     fun setTextGroupSelected(view: TextView, selectedId: Int?) {
         selectedId?.let {

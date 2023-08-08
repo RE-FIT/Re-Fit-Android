@@ -26,10 +26,6 @@
         <variable
             name="isWornToday"
             type="Boolean" />
-        
-        <variable
-            name="vm"
-            type="com.example.refit.presentation.closet.viewmodel.ClosetViewModel" />
 
     </data>
 

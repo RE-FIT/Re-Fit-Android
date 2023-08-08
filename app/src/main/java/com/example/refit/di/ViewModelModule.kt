@@ -24,7 +24,7 @@ val viewModelModule = module {
     viewModel { SignUpViewModel(get()) }
     viewModel { ClothAddViewModel(get(), get()) }
     viewModel { ClosetViewModel(get(), get()) }
-    viewModel { ForestViewModel(get()) }
+    viewModel { ForestViewModel(get(), get()) }
     viewModel { CommunityViewModel(get(), get())}
     viewModel { CommunityViewModel(get(), get()) }
     viewModel { CommunityInfoViewModel(get(), get()) }
