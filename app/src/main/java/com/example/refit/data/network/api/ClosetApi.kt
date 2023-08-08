@@ -67,4 +67,10 @@ interface ClosetApi {
         @Body request: RequestResetCompletedCloth
     ): Call<Void>
 
+    @PATCH("/refit/clothe/{id}/wear")
+    fun wearClothes(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+    ): Call<Void>
+
 }

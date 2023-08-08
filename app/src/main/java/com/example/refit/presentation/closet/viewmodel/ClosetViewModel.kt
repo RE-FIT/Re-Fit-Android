@@ -9,6 +9,7 @@ import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.closet.RequestRegisteredClothes
 import com.example.refit.data.model.closet.ResponseRegisteredClothes
 import com.example.refit.data.repository.colset.ClosetRepository
+import com.example.refit.util.DateUtil
 import com.example.refit.util.Event
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -16,6 +17,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 class ClosetViewModel(
     private val repository: ClosetRepository,
@@ -37,7 +40,15 @@ class ClosetViewModel(
     val isSuccessDeleteItem: LiveData<Event<Boolean>>
         get() = _isSuccessDeleteItem
 
-    // 옷장 필터링 옵션
+    private val _isClothesWornToday: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isClothesWornToday: LiveData<Boolean>
+        get() = _isClothesWornToday
+
+    private val _isSuccessWearingClothes: MutableLiveData<Event<Boolean>> = MutableLiveData<Event<Boolean>>()
+    val isSuccessWearingClothes: LiveData<Event<Boolean>>
+        get() = _isSuccessWearingClothes
+
+        // 옷장 필터링 옵션
 
     private val _selectedCategoryId: MutableLiveData<Int> = MutableLiveData<Int>(0)
     val selectedCategoryId: LiveData<Int>
@@ -131,6 +142,32 @@ class ClosetViewModel(
         }
     }
 
+    fun wearClothes(id: Int) {
+        viewModelScope.launch {
+            try {
+                val response = repository.wearClothes(dataStore.getAccessToken().first(), id)
+                response.enqueue(object: Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if(response.code() == 200) {
+                            _isSuccessWearingClothes.value = Event(true)
+                            Timber.d("옷 입기 요청 성공")
+                        } else {
+                            _isSuccessWearingClothes.value = Event(false)
+                            Timber.d("옷 입기 요청 실패1 - ${response.errorBody()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Timber.d("옷 입기 요청 실패2 - $t")
+                    }
+
+                })
+            } catch (e:Throwable) {
+                Timber.d(e)
+            }
+        }
+    }
+
 
 
     fun requestRegisteredItemsByClothCategory(selectedCategoryId: Int) {
@@ -162,6 +199,11 @@ class ClosetViewModel(
 
     fun handleClickItem(clothInfo: ResponseRegisteredClothes) {
         _selectedRegisteredClothItem.value = Event(clothInfo)
+        clothInfo.lastDate?.let {
+            val isWorn = DateUtil.isCurrentDate("YYYY-MM-dd", clothInfo.lastDate)
+            Timber.d("오늘 입은 옷인가? - $isWorn")
+            _isClothesWornToday.value = isWorn
+        }
     }
 
 }

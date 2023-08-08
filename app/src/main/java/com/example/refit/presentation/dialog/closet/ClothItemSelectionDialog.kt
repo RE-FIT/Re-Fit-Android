@@ -10,6 +10,7 @@ import com.example.refit.databinding.CustomDialogClothSelectionBinding
 import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
 import com.example.refit.presentation.dialog.BaseDialog
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import timber.log.Timber
 
 class ClothItemSelectionDialog(
     private val clothInfo: ResponseRegisteredClothes,
@@ -17,21 +18,23 @@ class ClothItemSelectionDialog(
 ) :
     BaseDialog<CustomDialogClothSelectionBinding>(R.layout.custom_dialog_cloth_selection) {
 
-//    private val closetViewModel: ClosetViewModel by sharedViewModel()
+    private val closetViewModel: ClosetViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.isValidGoal =
             resources.getString(R.string.registered_cloth_none_goal_remained_day)
                 .toInt() != clothInfo.remainedDay
-            binding.isNotCompleteGoal =
+        binding.isNotCompletedGoal =
             resources.getString(R.string.registered_cloth_completed_goal_remained_day)
                 .toInt() != clothInfo.remainedDay
+
         binding.dialog = this
         binding.clothInfo = clothInfo
         handleClickUpdateInfoButton()
         handleClickClothDeletion()
         handleClickCloseButton()
+        observingClothesWornStatus()
     }
 
     fun handleClickMainButton(isNotCompleteGoal: Boolean) {
@@ -56,6 +59,12 @@ class ClothItemSelectionDialog(
     private fun handleClickCloseButton() {
         binding.btnDialogClothSelectionClose.setOnClickListener {
             dismiss()
+        }
+    }
+
+    private fun observingClothesWornStatus() {
+        closetViewModel.isClothesWornToday.observe(viewLifecycleOwner) {
+            binding.isWornToday = it
         }
     }
 

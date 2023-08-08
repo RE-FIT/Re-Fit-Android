@@ -39,6 +39,7 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         handleClickAddClothButton()
         handleSelectedRegisteredClothItem()
         handleNotificationAfterDeleteItem()
+        handleCompletedWearingClothes()
     }
 
     private fun handleNotificationAfterDeleteItem() {
@@ -63,7 +64,7 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
                 showClothItemSelectionDialog(item, object : ClothItemSelectionDialogListener {
                     override fun onClickMainButton(isNotCompleteGoal: Boolean) {
                         if(isNotCompleteGoal) {
-                            navigate(R.id.action_nav_closet_to_forestFragment)
+                            closetViewModel.wearClothes(item.id)
                         } else {
                             handleRequestForResetCompletedCloth(item.id)
                         }
@@ -79,6 +80,14 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
                 }).show(requireActivity().supportFragmentManager, null)
                 Timber.d("클릭한 아이템 아이디 -> $item")
             })
+    }
+
+    private fun handleCompletedWearingClothes() {
+        closetViewModel.isSuccessWearingClothes.observe(viewLifecycleOwner, EventObserver { isSuccess ->
+            if(isSuccess) {
+                navigate(R.id.action_nav_closet_to_forestFragment)
+            }
+        })
     }
 
     private fun handleRequestForFixCloth(clothId: Int) {

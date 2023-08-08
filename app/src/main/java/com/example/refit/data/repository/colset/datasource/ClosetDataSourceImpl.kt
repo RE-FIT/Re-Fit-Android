@@ -58,4 +58,8 @@ class ClosetDataSourceImpl(private val closetApi: ClosetApi): ClosetDataSource {
     ): Call<Void> {
         return closetApi.resetCompletedCloth(token, clothId, request)
     }
+
+    override suspend fun wearClothes(token: String, id: Int): Call<Void> {
+        return closetApi.wearClothes(token, id)
+    }
 }

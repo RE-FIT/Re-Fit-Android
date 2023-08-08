@@ -46,4 +46,9 @@ interface ClosetDataSource {
         clothId: Int
     ): Call<Void>
 
+    suspend fun wearClothes(
+        token: String,
+        id: Int
+    ): Call<Void>
+
 }

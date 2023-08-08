@@ -45,4 +45,9 @@ interface ClosetRepository {
         request: RequestResetCompletedCloth,
         clothId: Int
     ): Call<Void>
+
+    suspend fun wearClothes(
+        token: String,
+        id: Int
+    ): Call<Void>
 }

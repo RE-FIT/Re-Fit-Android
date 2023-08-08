@@ -54,4 +54,8 @@ class ClosetRepositoryImpl(private val closetDataSource: ClosetDataSource): Clos
     ): Call<Void> {
         return closetDataSource.resetCompletedCloth(token, request, clothId)
     }
+
+    override suspend fun wearClothes(token: String, id: Int): Call<Void> {
+        return closetDataSource.wearClothes(token, id)
+    }
 }
