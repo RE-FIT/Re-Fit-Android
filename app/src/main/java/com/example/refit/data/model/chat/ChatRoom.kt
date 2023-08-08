@@ -12,6 +12,10 @@ data class ChatRoom(
     val other: String,
     @SerializedName("message")
     val message: String,
+    @SerializedName("time")
+    val time: String,
+    @SerializedName("remain")
+    val remain: Int,
     @SerializedName("participants")
     val participants: List<String>,
 )

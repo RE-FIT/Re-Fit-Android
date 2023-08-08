@@ -95,6 +95,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
     override fun onResume() {
         super.onResume()
         Timber.d("onResume")
+
+        viewModel.room_detail(args.roomId.toString())
     }
 
     fun sendMessage(message: String) {

@@ -44,5 +44,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
     override fun onResume() {
         super.onResume()
         Timber.d("onResume")
+
+        chatRoomViewModel.get_rooms()
     }
 }
