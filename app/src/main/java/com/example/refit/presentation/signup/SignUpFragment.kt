@@ -37,6 +37,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
         binding.signUpBack.setOnClickListener{
             navigate(R.id.action_signUpFragment_to_signInFragment)
         }
+
+
     }
 
         private fun handleRequestEmailCertification() {
@@ -44,5 +46,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
                 binding.emailCertificationCode = emailCertificationResponse
             }
         }
+
+    //gender dropdown menu
 
 }
