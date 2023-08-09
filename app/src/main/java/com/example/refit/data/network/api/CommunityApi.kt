@@ -41,22 +41,23 @@ interface CommunityApi {
     ): Call<ResponseBody>
 
     @Multipart
-    @PUT("refit/community/{postId}")
-    fun modifyPostAndImage(
+    @PUT("refit/community/{postId}/update")
+    fun modifyPostIncludeImage(
         @Header("Authorization") accessToken: String,
-        @Path("postId") postId: Int,
+        @Path ("postId") postId: Int,
         @Part ("postDto") postDto: RequestBody,
         @Part ("image_updated") image_updated: Boolean,
         @Part image: List<MultipartBody.Part>
     ): Call<ResponseBody>
 
     @Multipart
-    @PUT("refit/community/{postId}")
+    @PUT("refit/community/{postId}/update")
     fun modifyPost(
-        @Header("Authorization") accessToken: String,
-        @Path("postId") postId: Int,
+        @Header ("Authorization") accessToken: String,
+        @Path ("postId") postId: Int,
         @Part ("postDto") postDto: RequestBody,
-    ): Call<ResponseBody>
+        @Part ("image_updated") image_updated: Boolean,
+        ): Call<ResponseBody>
 
     @GET("refit/community/{postId}")
     fun getPost(

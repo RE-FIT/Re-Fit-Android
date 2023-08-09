@@ -92,6 +92,10 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
 
                 "수정하기" -> {
                     vmAdd.setModifyOrNew(true)
+                    val postId = vm.postId.value
+                    if (postId != null) {
+                        vmAdd.setPostId(postId)
+                    }
                     navigate(R.id.action_communityInfoFragment_to_communityAddPostFragment)
                 }
 

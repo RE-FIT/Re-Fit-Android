@@ -32,6 +32,10 @@ class CommunityAddPostViewModel(
     private val ds: TokenStore
 ) : ViewModel() {
 
+    private val _postId: MutableLiveData<Int> = MutableLiveData<Int>()
+    val postId: LiveData<Int>
+        get() = _postId
+
     private val _isModifyPost: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isModifyPost: LiveData<Boolean>
         get() = _isModifyPost
@@ -174,7 +178,14 @@ class CommunityAddPostViewModel(
     val postCodeValue: LiveData<Boolean>
         get() = _postCodeValue
 
+    // 수정 시에 이미지 변경 여부 확인
+    private val _modifyImageStatus: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val modifyImageStatus: LiveData<Boolean>
+        get() = _modifyImageStatus
 
+    fun setPostId(id: Int) {
+        _postId.value = id
+    }
 
     fun checkTransactionType(selectedType: String, typeList: List<String>) {
         when (selectedType) {
@@ -224,6 +235,7 @@ class CommunityAddPostViewModel(
     }
     fun setImageUris(value: List<String>) {
         _photoUris.value = value
+        if(isModifyPost.value == true) _modifyImageStatus.value = true
         Timber.d("포토 uris: ${photoUris.value}")
     }
 
@@ -240,6 +252,7 @@ class CommunityAddPostViewModel(
             // 이미지 관련 처리
             _photoUris.value = postResponse.value?.imgUrls
             _photoLen.value = postResponse.value?.imgUrls?.size
+            _isFilledValue[0].value = true
             for (i in 0 until _photoLen.value!!) {
                 _isFilledImageValues[i].value = true
             }
@@ -268,6 +281,16 @@ class CommunityAddPostViewModel(
             // 거래 희망 방식 (직/배)
             _isFilledValue[5].value = true
             _postValue[1].value = postResponse.value!!.deliveryType
+
+            if(_postValue[1].value == 0) {
+                // 직거래일시, 주소 정보 처리
+                _postAddressValue.value = postResponse.value!!.address.toString()
+                _isFilledAddress.value = true
+            } else {
+                // 배송일 시, 배송비 관련 정보 처리
+                _postValue[2].value = postResponse.value!!.deliveryFee
+                _isFilledFee.value = true
+            }
 
             // 가격
             _postValue[6].value = postResponse.value?.price
@@ -386,7 +409,6 @@ class CommunityAddPostViewModel(
         val pt = _postValue[0].value ?: 0
         val dt = _postValue[1].value ?: 0
         var gauge: Boolean = true
-
 
         gauge = gauge && _isFilledValue.all { it.value == true }
         Timber.d("글 등록 가시성 value 리스트에서 $gauge")
@@ -511,10 +533,6 @@ class CommunityAddPostViewModel(
                         deliveryFee = _postValue[2].value ?: 0,
                         detail = _postDetail.value ?: "",
                         address = _postAddressValue.value ?: "서울시 중랑구 묵동"
-                        /*sido = _postAddressValue[0].value ?: "서울시",
-                        sigungu = _postAddressValue[1].value ?: "중랑구",
-                        bname = _postAddressValue[2].value ?: "묵동",
-                        bname2 = _postAddressValue[3].value ?: "",*/
                     )
                 }
 
@@ -537,7 +555,7 @@ class CommunityAddPostViewModel(
 
             // PostDto 객체를 JSON 형태의 문자열로 변환
             val postDtoJson = Gson().toJson(postDTO)
-            Timber.d("postDto to JSON : ${postDtoJson.toString()}")
+            Timber.d("[POST] postDto to JSON : ${postDtoJson.toString()}")
             val postDtoRequestBody =
                 postDtoJson.toRequestBody("application/json".toMediaTypeOrNull())
 
@@ -581,6 +599,175 @@ class CommunityAddPostViewModel(
         }
     }
 
+    fun modifyPostIncludeImage(
+        images: List<File>
+    ) = viewModelScope.launch {
+        val token = ds.getAccessToken().first()
+        if (images.isEmpty()) {
+            Timber.d("이미지 파일이 없습니다.")
+            return@launch
+        }
+        try {
+            val postId = _postId.value ?: 0
+            val postDTO = when (_postValue[1].value ?: 0) {
+                0 -> {
+                    PostDTODt(
+                        title = _postTitle.value ?: "",
+                        gender = _postValue[5].value ?: 0,
+                        postType = _postValue[0].value ?: 0,
+                        price = _postValue[6].value ?: 0,
+                        category = _postValue[3].value ?: 0,
+                        size = _postValue[4].value ?: 0,
+                        deliveryType = _postValue[1].value ?: 0,
+                        deliveryFee = _postValue[2].value ?: 0,
+                        detail = _postDetail.value ?: "",
+                        address = _postAddressValue.value ?: "00시 00구 00동"
+                    )
+                }
+
+                1 -> {
+                    PostDTODelivery(
+                        title = _postTitle.value ?: "",
+                        gender = _postValue[5].value ?: 0,
+                        postType = _postValue[0].value ?: 0,
+                        price = _postValue[6].value ?: 0,
+                        category = _postValue[3].value ?: 0,
+                        size = _postValue[4].value ?: 0,
+                        deliveryType = _postValue[1].value ?: 0,
+                        deliveryFee = _postValue[2].value ?: 0,
+                        detail = _postDetail.value ?: "",
+                    )
+                }
+                else -> Timber.d("postDTO 생성 과정 오류 발생")
+            }
+
+            // PostDto 객체를 JSON 형태의 문자열로 변환
+            val postDtoJson = Gson().toJson(postDTO)
+            Timber.d("[PUT] postDto to JSON : ${postDtoJson.toString()}")
+            val postDtoRequestBody =
+                postDtoJson.toRequestBody("application/json".toMediaTypeOrNull())
+
+            var response: Call<ResponseBody> = repository.modifyPostIncludeImage(
+                token, true, postId, postDtoRequestBody, images)
+
+
+            response.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    if (response.isSuccessful) {
+                        val json = response.body()?.string()
+                        Timber.d("COMMUNITY PUT API 호출 성공 : $json")
+                    } else {
+                        try {
+                            val errorBody = response.errorBody()
+                            val errorCode = response.code()
+
+                            if (errorBody != null) {
+                                val errorJson = JSONObject(errorBody.string())
+                                val errorMessage = errorJson.optString("message")
+                                val errorCodeFromJson = errorJson.optInt("code")
+
+                                Timber.d("API 호출 실패: $errorCodeFromJson / $errorMessage")
+                            } else Timber.d("COMMUNITY POST API 호출 실패: $errorCode")
+                        } catch (e: JSONException) {
+                            Timber.d("error response failed : ${e.message}")
+                        }
+
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Timber.d("RESPONSE FAILURE")
+                }
+            })
+        } catch (e: Exception) {
+            Timber.d("커뮤니티 글 수정 과정 오류 발생: $e")
+        }
+    }
+
+    fun modifyPost() = viewModelScope.launch {
+        val token = ds.getAccessToken().first()
+        try {
+            val postId = _postId.value ?: 0
+            val postDTO = when (_postValue[1].value ?: 0) {
+                0 -> {
+                    PostDTODt(
+                        title = _postTitle.value ?: "",
+                        gender = _postValue[5].value ?: 0,
+                        postType = _postValue[0].value ?: 0,
+                        price = _postValue[6].value ?: 0,
+                        category = _postValue[3].value ?: 0,
+                        size = _postValue[4].value ?: 0,
+                        deliveryType = _postValue[1].value ?: 0,
+                        deliveryFee = _postValue[2].value ?: 0,
+                        detail = _postDetail.value ?: "",
+                        address = _postAddressValue.value ?: "00시 00구 00동"
+                    )
+                }
+
+                1 -> {
+                    PostDTODelivery(
+                        title = _postTitle.value ?: "",
+                        gender = _postValue[5].value ?: 0,
+                        postType = _postValue[0].value ?: 0,
+                        price = _postValue[6].value ?: 0,
+                        category = _postValue[3].value ?: 0,
+                        size = _postValue[4].value ?: 0,
+                        deliveryType = _postValue[1].value ?: 0,
+                        deliveryFee = _postValue[2].value ?: 0,
+                        detail = _postDetail.value ?: "",
+                    )
+                }
+                else -> Timber.d("postDTO 생성 과정 오류 발생")
+            }
+
+            // PostDto 객체를 JSON 형태의 문자열로 변환
+            val postDtoJson = Gson().toJson(postDTO)
+            Timber.d("[PUT] postDto to JSON : ${postDtoJson.toString()}")
+            val postDtoRequestBody =
+                postDtoJson.toRequestBody("application/json".toMediaTypeOrNull())
+
+            var response: Call<ResponseBody> = repository.modifyPost(
+                token, false, postId, postDtoRequestBody)
+
+            response.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    if (response.isSuccessful) {
+                        val json = response.body()?.string()
+                        Timber.d("COMMUNITY PUT API 호출 성공 : $json")
+                    } else {
+                        try {
+                            val errorBody = response.errorBody()
+                            val errorCode = response.code()
+
+                            if (errorBody != null) {
+                                val errorJson = JSONObject(errorBody.string())
+                                val errorMessage = errorJson.optString("message")
+                                val errorCodeFromJson = errorJson.optInt("code")
+
+                                Timber.d("API 호출 실패: $errorCodeFromJson / $errorMessage")
+                            } else Timber.d("COMMUNITY POST API 호출 실패: $errorCode")
+                        } catch (e: JSONException) {
+                            Timber.d("error response failed : ${e.message}")
+                        }
+
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Timber.d("RESPONSE FAILURE")
+                }
+            })
+        } catch (e: Exception) {
+            Timber.d("커뮤니티 글 수정 과정 오류 발생: $e")
+        }
+    }
+
     fun setPostCodeValue(value: Boolean) {
         _postCodeValue.value = value
     }
@@ -608,6 +795,7 @@ class CommunityAddPostViewModel(
         for (item in _isFilledImageValues) {
             item.value = false
         }
+        _modifyImageStatus.value = false
         _postCodeValue.value = false
         _postTitle.value = ""
         _photoLen.value = 0

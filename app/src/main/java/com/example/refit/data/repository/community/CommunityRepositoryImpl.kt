@@ -45,6 +45,25 @@ class CommunityRepositoryImpl (private val communityDataSource: CommunityDataSou
         return communityDataSource.loadSearchResult(accessToken, keyword)
     }
 
+    override suspend fun modifyPostIncludeImage(
+        accessToken: String,
+        image_updated: Boolean,
+        postId: Int,
+        postDto: RequestBody,
+        image: List<File>
+    ): Call<ResponseBody> {
+        return communityDataSource.modifyPostIncludeImage(accessToken, image_updated, postId, postDto, image)
+    }
+
+    override suspend fun modifyPost(
+        accessToken: String,
+        image_updated: Boolean,
+        postId: Int,
+        postDto: RequestBody
+    ): Call<ResponseBody> {
+        return communityDataSource.modifyPost(accessToken, image_updated, postId, postDto)
+    }
+
     override suspend fun deletePost(accessToken: String, postId: Int): Call<ResponseBody> {
         return communityDataSource.deletePost(accessToken, postId)
     }

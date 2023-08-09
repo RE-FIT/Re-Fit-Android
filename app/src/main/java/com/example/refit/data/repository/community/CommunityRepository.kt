@@ -25,6 +25,21 @@ interface CommunityRepository {
     suspend fun getPost(accessToken: String, postInt: Int): Call<PostResponse>
     suspend fun loadSearchResult(accessToken: String, keyword: String): Call<ResponseBody>
 
+    suspend fun modifyPostIncludeImage(
+        accessToken: String,
+        image_updated: Boolean,
+        postId: Int,
+        postDto: RequestBody,
+        image: List<File>
+    ): Call<ResponseBody>
+
+    suspend fun modifyPost(
+        accessToken: String,
+        image_updated: Boolean,
+        postId: Int,
+        postDto: RequestBody,
+    ): Call<ResponseBody>
+
     suspend fun deletePost(accessToken: String, postId: Int): Call<ResponseBody>
 
     suspend fun scrapPost(accessToken: String, postId: Int): Call<ResponseBody>

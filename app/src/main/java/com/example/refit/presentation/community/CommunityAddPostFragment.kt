@@ -69,6 +69,7 @@ class CommunityAddPostFragment :
 
         if (vmAdd.isModifyPost.value == true) {
             initTextValueIfModify()
+            observeStatus()
         }
     }
 
@@ -312,9 +313,23 @@ class CommunityAddPostFragment :
                     }
                 }
             }
-            vmAdd.createPost(imageFiles)
+
+            Timber.d("modifyPost : ${vmAdd.isModifyPost.value}\nimagestaus: ${vmAdd.modifyImageStatus.value}")
+            if (vmAdd.isModifyPost.value == true) {
+                val imageStatus = vmAdd.modifyImageStatus.value
+                if (imageStatus == false || imageStatus == null) {
+                    vmAdd.modifyPost()
+                } else {
+                    vmAdd.modifyPostIncludeImage(imageFiles)
+                }
+                navigateUp()
+            } else {
+                vmAdd.createPost(imageFiles)
+                vm.loadCommunityList()
+            }
             navigateUp()
-            vm.loadCommunityList()
+
+
         }
     }
 
@@ -400,7 +415,17 @@ class CommunityAddPostFragment :
         val transactionType = vmAdd.postResponse.value?.postType ?: 0
         if (transactionType == 0) {
             binding.cgCommunityAddpostMethod.check(R.id.cg_community_addpost_method_giveaway)
-        } else binding.cgCommunityAddpostMethod.check(R.id.cg_community_addpost_method_sale)
+        } else {
+            binding.cgCommunityAddpostMethod.check(R.id.cg_community_addpost_method_sale)
+            val price = vmAdd.postResponse.value?.price
+            if (price != null) {
+                binding.etCommunityAddpostPrice.setText(price.toString())
+                binding.tvCommunityAddpostPrice.text =
+                    "₩ " + vmAdd.getDecimalFormat(price.toString()) + "원"
+                vmAdd.setPriceInputCompleted(price.toString())
+            }
+
+        }
 
         // 거래 희망 방식 (직/배)
         val transactionMethod =
@@ -411,20 +436,21 @@ class CommunityAddPostFragment :
             vmAdd.selectTransactionMethod(transactionMethod)
         }
 
-        if (transactionType == 1) {
-            // 가격 있어야 함
-            /*binding.etCommunityAddpostPrice.setText(vmAdd.postResponse.value?.price!!.toInt())
-            vmAdd.setFilledStatus(6, true, "")
-            val inputPriceText = binding.etCommunityAddpostPrice.text.toString()
-            binding.tvCommunityAddpostPrice.text =
-                "₩ " + vmAdd.getDecimalFormat(inputPriceText) + "원"
-            vmAdd.setPriceInputCompleted(inputPriceText)*/
-        }
 
         if (vmAdd.postResponse.value!!.deliveryType == 1) {
             // 배송비 있어야 함
+            val fee = vmAdd.postResponse.value?.deliveryFee
+            if (fee == 0) {
+                // 배송비 포함
+                binding.rbCommunityAddpostInputIncludeFee.isChecked = true
+            } else {
+                binding.rbCommunityAddpostInputExcludeFee.isChecked = true
+                val feeText = vmAdd.getDecimalFormat(fee.toString())
+                binding.tvCommunityAddpostSf.text = feeText + "원"
+            }
         } else {
             // 지역 관련
+            binding.tvCommunityAddpostRegion.text = vmAdd.postResponse.value?.address
         }
 
 
@@ -433,6 +459,13 @@ class CommunityAddPostFragment :
 
     }
 
+    private fun observeStatus() {
+        vmAdd.postResponse.observe(viewLifecycleOwner) { response ->
+            if (response != null) {
+                vmAdd.setValueIfModifyStatus()
+            }
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()

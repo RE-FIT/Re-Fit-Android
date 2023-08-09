@@ -62,6 +62,31 @@ class CommunityDataSourceImpl(private val communityApi: CommunityApi) : Communit
         return communityApi.changePostStatus(accessToken, postId)
     }
 
+    override suspend fun modifyPostIncludeImage(
+        accessToken: String,
+        image_updated: Boolean,
+        postId: Int,
+        postDto: RequestBody,
+        image: List<File>
+    ): Call<ResponseBody> {
+
+        val imageParts: List<MultipartBody.Part> = image.map { file ->
+            val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+            MultipartBody.Part.createFormData("image", file.name, requestFile)
+        }
+
+        return communityApi.modifyPostIncludeImage(accessToken, postId, postDto, image_updated, imageParts)
+    }
+
+    override suspend fun modifyPost(
+        accessToken: String,
+        image_updated: Boolean,
+        postId: Int,
+        postDto: RequestBody
+    ): Call<ResponseBody> {
+        return communityApi.modifyPost(accessToken, postId, postDto, image_updated)
+    }
+
     override suspend fun scrapPost(accessToken: String, postId: Int): Call<ResponseBody> {
         return communityApi.scrapPost(accessToken, postId)
     }
