@@ -42,11 +42,20 @@ interface CommunityApi {
 
     @Multipart
     @PUT("refit/community/{postId}")
+    fun modifyPostAndImage(
+        @Header("Authorization") accessToken: String,
+        @Path("postId") postId: Int,
+        @Part ("postDto") postDto: RequestBody,
+        @Part ("image_updated") image_updated: Boolean,
+        @Part image: List<MultipartBody.Part>
+    ): Call<ResponseBody>
+
+    @Multipart
+    @PUT("refit/community/{postId}")
     fun modifyPost(
         @Header("Authorization") accessToken: String,
         @Path("postId") postId: Int,
         @Part ("postDto") postDto: RequestBody,
-        @Part image: List<MultipartBody.Part>
     ): Call<ResponseBody>
 
     @GET("refit/community/{postId}")

@@ -342,7 +342,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginTop="5dp"
-                                android:text="@{vm.postResponse.sido == null ? @string/community_item_region_all : @string/community_item_region(vm.postResponse.sido, vm.postResponse.sigungu, vm.postResponse.bname, vm.postResponse.bname2)}"
+                                android:text="@{vm.postResponse.address == null ? @string/community_item_region_all : vm.postResponse.address }"
                                 android:textColor="@color/black"
                                 app:layout_constraintStart_toEndOf="@id/tv_community_info_item_region_txt"
                                 app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_deliveryfee_txt" />

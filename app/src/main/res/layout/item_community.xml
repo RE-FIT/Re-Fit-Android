@@ -165,7 +165,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="bottom"
-                        android:text="@{communityList.sido == null ? @string/community_item_region_all : @string/community_item_region(communityList.sido, communityList.sigungu, communityList.bname, communityList.bname2)}"
+                        android:text="@{communityList.address == null ? @string/community_item_region_all : communityList.address}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_method_txt"
                         app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_method"

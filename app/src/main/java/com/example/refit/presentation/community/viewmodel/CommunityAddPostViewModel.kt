@@ -9,8 +9,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.community.PostDTODelivery
 import com.example.refit.data.model.community.PostDTODt
+import com.example.refit.data.model.community.PostResponse
 import com.example.refit.data.repository.community.CommunityRepository
+import com.example.refit.data.repository.community.PostDataRepository
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -28,6 +31,16 @@ class CommunityAddPostViewModel(
     private val repository: CommunityRepository,
     private val ds: TokenStore
 ) : ViewModel() {
+
+    private val _isModifyPost: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isModifyPost: LiveData<Boolean>
+        get() = _isModifyPost
+
+    val postResponse: LiveData<PostResponse> = PostDataRepository.postResponse
+
+    private val _photoUris: MutableLiveData<List<String>> = MutableLiveData<List<String>>()
+    val photoUris: LiveData<List<String>>
+        get() = _photoUris
 
     private val _isTransactionMethodChip: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isTransactionMethodChip: LiveData<Boolean>
@@ -75,11 +88,20 @@ class CommunityAddPostViewModel(
     val postValue: List<LiveData<Int>>
         get() = _postValue
 
-    // ADDRESS VALUE - 시도(0), 시군구(1), bname(2), bname2(3)
-    private val _postAddressValue: List<MutableLiveData<String>> =
-        List(4) { MutableLiveData<String>() }
-    val postAddressValue: List<LiveData<String>>
+    // ADDRESS VALUE
+    private val _postAddressValue: MutableLiveData<String> = MutableLiveData<String>()
+    val postAddressValue: LiveData<String>
         get() = _postAddressValue
+
+    // VALUE - 타이틀
+    private val _postTitle: MutableLiveData<String> = MutableLiveData<String>()
+    val postTitle: LiveData<String>
+        get() = _postTitle
+
+    // VALUE - 상세 설명
+    private val _postDetail: MutableLiveData<String> = MutableLiveData<String>()
+    val postDetail: LiveData<String>
+        get() = _postDetail
 
 
     // 거래 방식-3 (가격 정보) : 입력 받지 않음 (false), 입력 예정 (true)
@@ -118,10 +140,10 @@ class CommunityAddPostViewModel(
     val isFilledValue: List<LiveData<Boolean>>
         get() = _isFilledValue
 
-    // 직거래의 경우의 필수 항목 채워짐 여부: sido(0), sigungu(1), bname(2), bname2(3)
-    val _isFilledValueDt: List<MutableLiveData<Boolean>> = List(4) { MutableLiveData<Boolean>() }
-    val isFilledValueDt: List<LiveData<Boolean>>
-        get() = _isFilledValueDt
+    // 직거래의 경우의 필수 항목 채워짐 여부: address
+    val _isFilledAddress: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFilledAddress: LiveData<Boolean>
+        get() = _isFilledAddress
 
     private val _isFilledPrice: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isFilledPrice: LiveData<Boolean>
@@ -139,6 +161,19 @@ class CommunityAddPostViewModel(
     private val _isFilledAllOptions: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isFilledAllOptions: LiveData<Boolean>
         get() = _isFilledAllOptions
+
+    private val _photoLen: MutableLiveData<Int> = MutableLiveData<Int>()
+    val photoLen: LiveData<Int>
+        get() = _photoLen
+
+    private val _token: MutableLiveData<String> = MutableLiveData<String>()
+    val token: LiveData<String>
+        get() = _token
+
+    private val _postCodeValue: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val postCodeValue: LiveData<Boolean>
+        get() = _postCodeValue
+
 
 
     fun checkTransactionType(selectedType: String, typeList: List<String>) {
@@ -175,6 +210,76 @@ class CommunityAddPostViewModel(
                 postValue[0].value?.let { setVisiblePriceStatus(true, it) }
                 setVisibleFeeStatus(false)
             }
+        }
+    }
+
+    fun setPostTitleAndDetail(title: String, detail: String) {
+        _postTitle.value = title
+        _postDetail.value = detail
+    }
+
+    fun setAddress(value: String) {
+        _postAddressValue.value = value
+        setFilledStatus(11, true, "")
+    }
+    fun setImageUris(value: List<String>) {
+        _photoUris.value = value
+        Timber.d("포토 uris: ${photoUris.value}")
+    }
+
+    fun setPhotoLen(size: Int) {
+        _photoLen.value = size
+    }
+
+    ////////////////////////// 수정 시
+    fun setValueIfModifyStatus(){
+        Timber.d("postResponse NULL")
+        if(postResponse.value != null) {
+            Timber.d("postResponse !NULL")
+
+            // 이미지 관련 처리
+            _photoUris.value = postResponse.value?.imgUrls
+            _photoLen.value = postResponse.value?.imgUrls?.size
+            for (i in 0 until _photoLen.value!!) {
+                _isFilledImageValues[i].value = true
+            }
+
+            // 제목 관련 처리
+            _postTitle.value = postResponse.value!!.title
+
+
+            // 추천 착용 성별, 카테고리, 사이즈 관련 처리
+            _isClickedOptionRG.value = true
+            _isFilledValue[2].value = true
+            _postValue[5].value = postResponse.value!!.gender
+
+            _isClickedOptionCategory.value = true
+            _isFilledValue[3].value = true
+            _postValue[3].value = postResponse.value!!.category
+
+            _isClickedOptionSize.value = true
+            _isFilledValue[4].value = true
+            _postValue[4].value = postResponse.value!!.size
+
+            // 거래 방식(나눔/판매)
+            _postValue[0].value = postResponse.value!!.postType
+            _isClickedOptionTM.value = true
+
+            // 거래 희망 방식 (직/배)
+            _isFilledValue[5].value = true
+            _postValue[1].value = postResponse.value!!.deliveryType
+
+            // 가격
+            _postValue[6].value = postResponse.value?.price
+            _isFilledPrice.value = true
+
+        }
+    }
+
+    fun setModifyOrNew(status: Boolean) {
+        _isModifyPost.value = status
+        if(status) {
+            setValueIfModifyStatus()
         }
     }
 
@@ -225,8 +330,13 @@ class CommunityAddPostViewModel(
     }
 
     fun setPostCode(data: String) {
-        _postCode.value = data
-        Timber.d("우편 API 동작 테스트 : $data")
+        viewModelScope.launch (Dispatchers.Main) {
+            if(data != null) {
+                _postCode.value = data
+                _postCodeValue.value = true
+            }
+            Timber.d("우편 API 동작 테스트 : $data")
+        }
     }
 
     fun setFilledStatus(type: Int, status: Boolean, value: String) {
@@ -254,6 +364,7 @@ class CommunityAddPostViewModel(
             8 -> _isFilledFee.value = status
             9 -> _isFilledDialogEditSF.value = status
             10 -> _isSFExclude.value = status
+            11 -> _isFilledAddress.value = status
         }
         gaugeFilledStatus()
     }
@@ -279,17 +390,16 @@ class CommunityAddPostViewModel(
 
         gauge = gauge && _isFilledValue.all { it.value == true }
         Timber.d("글 등록 가시성 value 리스트에서 $gauge")
-        Timber.d("_isFilledValue 글 등록 가시성:\n${_isFilledValue[0].value}\n" +
-                "${_isFilledValue[1].value}\n" +
-                "${_isFilledValue[2].value}\n" +
-                "${_isFilledValue[3].value}\n" +
-                "${_isFilledValue[4].value}\n" +
-                "${_isFilledValue[5].value}\n" +
-                "${_isFilledValue[6].value}")
-
+        Timber.d("_isFilledValue 글 등록 가시성:\n이미지: ${_isFilledValue[0].value}\n" +
+                "글 제목: ${_isFilledValue[1].value}\n" +
+                "성별: ${_isFilledValue[2].value}\n" +
+                "카테고리: ${_isFilledValue[3].value}\n" +
+                "사이즈: ${_isFilledValue[4].value}\n" +
+                "직배여부: ${_isFilledValue[5].value}\n" +
+                "상세설명: ${_isFilledValue[6].value}")
 
         if (dt == 0) { // 직거래인 경우
-            gauge = gauge && (_isFilledValueDt[0]?.value == true)
+            gauge = gauge && (_isFilledAddress.value == true)
             Timber.d("글 등록 가시성 직거래의 경우에서 $gauge")
         } else { // 배송인 경우
             gauge = gauge && (_isFilledFee.value == true)
@@ -336,15 +446,49 @@ class CommunityAddPostViewModel(
         return type
     }
 
+    fun conversionTypeToText(itemType: Int, value: Int): String {
+        var text = ""
+        when (itemType) {
+            2 -> when (value) {
+                0 -> text = "직거래"
+                1 -> text = "배송"
+            }
+            3 -> when (value) {
+                0 -> text = "상의"
+                1 -> text = "하의"
+                2 -> text = "아우터"
+                3 -> text = "원피스"
+                4 -> text = "신발"
+                5 -> text = "악세사리"
+            }
+            4 -> when (value) {
+                0 -> text = "XS"
+                1 -> text = "S"
+                2 -> text = "M"
+                3 -> text = "L"
+                4 -> text = "XL"
+            }
+            5 -> when (value) {
+                0 -> text = "여성복"
+                1 -> text = "남성복"
+            }
+        }
+        return text
+    }
+
     fun getDecimalFormat(number: String): String {
         val intNumber = number.toIntOrNull() ?: 0
         val decimalFormat = DecimalFormat("#,###")
         return decimalFormat.format(intNumber)
     }
 
+    fun getToken() {
+        viewModelScope.launch {
+            _token.value = ds.getAccessToken().first()
+        }
+    }
+
     fun createPost(
-        title: String,
-        detail: String,
         images: List<File>
     ) = viewModelScope.launch {
         val token = ds.getAccessToken().first()
@@ -357,7 +501,7 @@ class CommunityAddPostViewModel(
             val postDTO = when (_postValue[1].value ?: 0) {
                 0 -> {
                     PostDTODt(
-                        title = title,
+                        title = _postTitle.value ?: "",
                         gender = _postValue[5].value ?: 0,
                         postType = _postValue[0].value ?: 0,
                         price = _postValue[6].value ?: 0,
@@ -365,17 +509,18 @@ class CommunityAddPostViewModel(
                         size = _postValue[4].value ?: 0,
                         deliveryType = _postValue[1].value ?: 0,
                         deliveryFee = _postValue[2].value ?: 0,
-                        detail = detail,
-                        sido = _postAddressValue[0].value ?: "서울시",
+                        detail = _postDetail.value ?: "",
+                        address = _postAddressValue.value ?: "서울시 중랑구 묵동"
+                        /*sido = _postAddressValue[0].value ?: "서울시",
                         sigungu = _postAddressValue[1].value ?: "중랑구",
                         bname = _postAddressValue[2].value ?: "묵동",
-                        bname2 = _postAddressValue[3].value ?: "",
+                        bname2 = _postAddressValue[3].value ?: "",*/
                     )
                 }
 
                 1 -> {
                     PostDTODelivery(
-                        title = title,
+                        title = _postTitle.value ?: "",
                         gender = _postValue[5].value ?: 0,
                         postType = _postValue[0].value ?: 0,
                         price = _postValue[6].value ?: 0,
@@ -383,7 +528,7 @@ class CommunityAddPostViewModel(
                         size = _postValue[4].value ?: 0,
                         deliveryType = _postValue[1].value ?: 0,
                         deliveryFee = _postValue[2].value ?: 0,
-                        detail = detail,
+                        detail = _postDetail.value ?: "",
                     )
                 }
 
@@ -436,6 +581,10 @@ class CommunityAddPostViewModel(
         }
     }
 
+    fun setPostCodeValue(value: Boolean) {
+        _postCodeValue.value = value
+    }
+
     fun initAllStatus() {
         _isTransactionMethodChip.value = false
         _isClickedOptionRG.value = false
@@ -455,13 +604,14 @@ class CommunityAddPostViewModel(
         for (item in _isFilledValue) {
             item.value = false
         }
-        for(item in _isFilledValueDt) {
-            item.value = false
-        }
+        _isFilledAddress.value = false
         for (item in _isFilledImageValues) {
             item.value = false
         }
-
+        _postCodeValue.value = false
+        _postTitle.value = ""
+        _photoLen.value = 0
+        _isModifyPost.value = false
         _isFilledFee.value = false
         _isFilledDialogEditSF.value = false
         _isSFExclude.value = false
