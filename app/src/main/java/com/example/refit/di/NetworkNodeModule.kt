@@ -1,5 +1,6 @@
 package com.example.refit.di
 
+import com.example.refit.BuildConfig
 import com.example.refit.data.network.NetworkInterceptor
 import com.example.refit.data.network.api.ChatApi
 import com.google.gson.GsonBuilder
@@ -28,7 +29,7 @@ val networkNodeModule = module {
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .client(get(named("node")))
-            .baseUrl("http://10.0.2.2:9000/")
+            .baseUrl(BuildConfig.SUB_URL)
             .build()
     }
 
