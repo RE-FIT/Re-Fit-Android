@@ -27,21 +27,19 @@
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp">
 
-                <com.google.android.material.imageview.ShapeableImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/image"
-                    android:layout_width="40dp"
+                    android:layout_width="50dp"
                     android:src="@drawable/refit"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:scaleType="centerCrop"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.10"
-                    app:strokeColor="@android:color/transparent"
                     android:layout_marginStart="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="5dp"
                     android:id="@+id/name"
                     style="@style/MediumFontKr.12"
                     android:textStyle="bold"
@@ -57,7 +55,6 @@
                     style="@style/RegularFont.10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:text="구매 희망합니다!"
                     app:layout_constraintBottom_toBottomOf="@+id/image"
                     app:layout_constraintStart_toStartOf="@+id/name"
@@ -79,6 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
+                    android:textColor="@color/white"
                     android:background="@drawable/remain_chat_num_box"
                     android:padding="3dp"
                     android:text="160"

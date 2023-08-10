@@ -5,8 +5,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="9dp">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/my"
@@ -15,17 +14,18 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:textSize="16dp"
-                android:maxLength="20"
                 android:id="@+id/my_chat"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
+                android:maxWidth="256dp"
+                android:inputType="textMultiLine"
+                style="@style/RegularFont.14"
+                android:textColor="@color/white"
                 android:background="@drawable/chatting_box"
                 android:gravity="center_vertical"
-                android:padding="10dp"
-                android:text="asdasdas"
-                android:inputType="textMultiLine"
+                android:padding="14dp"
+                android:text="텍스트 메시지 입니다 이메세지는 너무 길어요 그죠?"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"></TextView>
 
@@ -36,7 +36,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:gravity="bottom"
-                android:text="asdasdas"
+                style="@style/RegularFont.10"
+                android:text="오전 6:00"
                 app:layout_constraintBottom_toBottomOf="@+id/my_chat"
                 app:layout_constraintEnd_toStartOf="@+id/my_chat"></TextView>
 
@@ -62,7 +63,6 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="20dp"
                     android:src="@drawable/refit"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,27 +71,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:gravity="center_vertical"
                     android:text="구매자"
-                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    style="@style/MediumFont.12"
                     app:layout_constraintStart_toEndOf="@+id/profile"
                     app:layout_constraintTop_toTopOf="@+id/profile"></TextView>
 
                 <TextView
                     android:id="@+id/other_chat"
-                    android:layout_width="wrap_content"
+                    style="@style/RegularFont.14"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/chatting_box"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/chatting_box_other"
                     android:gravity="center_vertical"
                     android:inputType="textMultiLine"
-                    android:maxLength="20"
-                    android:padding="10dp"
-                    android:text="asdasdas"
-                    android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/profile"
+                    android:maxWidth="256dp"
+                    android:padding="14dp"
+                    android:text="텍스트 메시지 입니다 이메세지는 너무 길어요 그죠?"
                     app:layout_constraintStart_toEndOf="@+id/profile"
                     app:layout_constraintTop_toBottomOf="@+id/other_name"></TextView>
 
@@ -101,8 +101,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="5dp"
+                    style="@style/RegularFont.10"
+                    android:text="오전 6:00"
                     android:gravity="bottom"
-                    android:text="asdasdas"
                     app:layout_constraintBottom_toBottomOf="@+id/other_chat"
                     app:layout_constraintStart_toEndOf="@+id/other_chat"></TextView>
 
@@ -117,16 +118,17 @@
 
                 <TextView
                     android:id="@+id/other_chat_connect"
-                    android:layout_width="wrap_content"
+                    style="@style/RegularFont.14"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="72dp"
-                    android:background="@drawable/chatting_box"
+                    android:layout_marginStart="70dp"
+                    android:background="@drawable/chatting_box_other"
+                    android:layout_marginTop="5dp"
                     android:gravity="center_vertical"
                     android:inputType="textMultiLine"
-                    android:maxLength="20"
-                    android:padding="10dp"
-                    android:text="asdasdas"
-                    android:textSize="16dp"
+                    android:maxWidth="256dp"
+                    android:padding="14dp"
+                    android:text="텍스트 메시지 입니다 이메세지는 너무 길어요 그죠?"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"></TextView>
 
@@ -137,7 +139,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="5dp"
                     android:gravity="bottom"
-                    android:text="asdasdas"
+                    android:text="오전 6:00"
+                    style="@style/RegularFont.10"
                     app:layout_constraintBottom_toBottomOf="@+id/other_chat_connect"
                     app:layout_constraintStart_toEndOf="@+id/other_chat_connect"></TextView>
 
