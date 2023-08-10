@@ -24,10 +24,12 @@ class QuizFragment : BaseFragment<FragmentQuizBinding>(R.layout.fragment_quiz) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.vm = forestViewModel
         setStatusBarColor(R.color.default_dark)
         forestViewModel.getQuiz()
         handleClickToolBarkNavigation()
         handleAnswerRequestStatus()
+        handleRequestAnswer()
     }
 
     private fun handleClickToolBarkNavigation() {
@@ -39,8 +41,14 @@ class QuizFragment : BaseFragment<FragmentQuizBinding>(R.layout.fragment_quiz) {
     private fun handleAnswerRequestStatus() {
         forestViewModel.isRequestExit.observe(viewLifecycleOwner, EventObserver {isRequestExit ->
             if(isRequestExit) {
-                navigateUp()
+                navigate(R.id.action_quizFragment_to_forestFragment)
             }
+        })
+    }
+
+    private fun handleRequestAnswer() {
+        forestViewModel.isRequestAnswer.observe(viewLifecycleOwner, EventObserver {isRequestAnswer ->
+                binding.isRequestAnswer = isRequestAnswer
         })
     }
 }

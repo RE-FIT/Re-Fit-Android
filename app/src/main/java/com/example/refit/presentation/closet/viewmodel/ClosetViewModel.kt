@@ -48,6 +48,10 @@ class ClosetViewModel(
     val isSuccessWearingClothes: LiveData<Event<Boolean>>
         get() = _isSuccessWearingClothes
 
+    private val _doubleClothingAttemptedInSingleCategory: MutableLiveData<Event<Boolean>> = MutableLiveData<Event<Boolean>>()
+    val doubleClothingAttemptedInSingleCategory: LiveData<Event<Boolean>>
+        get() = _doubleClothingAttemptedInSingleCategory
+
         // 옷장 필터링 옵션
 
     private val _selectedCategoryId: MutableLiveData<Int> = MutableLiveData<Int>(0)
@@ -93,7 +97,6 @@ class ClosetViewModel(
                                 null -> listOf()
                                 else -> response.body()
                             }
-
                             Timber.d("등록된 옷 조회 성공 : ${response.body()}")
                         } else {
                             Timber.d("등록된 옷 조회 실패1 : ${response.errorBody()}")
@@ -151,6 +154,10 @@ class ClosetViewModel(
                         if(response.code() == 200) {
                             _isSuccessWearingClothes.value = Event(true)
                             Timber.d("옷 입기 요청 성공")
+
+                        } else if(response.code() == 400) {
+                            _doubleClothingAttemptedInSingleCategory.value = Event(true)
+                            Timber.d("하나의 카테고리를 두 번 이상 입으려고 시도했습니다")
                         } else {
                             _isSuccessWearingClothes.value = Event(false)
                             Timber.d("옷 입기 요청 실패1 - ${response.errorBody()}")

@@ -8,7 +8,6 @@ import androidx.appcompat.widget.ListPopupWindow
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.refit.R
 import com.example.refit.data.model.closet.ResponseRegisteredClothes
-import com.example.refit.databinding.CustomDialogAlertBasicBinding
 import com.example.refit.databinding.FragmentClosetBinding
 import com.example.refit.presentation.closet.adapter.UserRegisteredClothesAdapter
 import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
@@ -40,6 +39,22 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         handleClickAddClothButton()
         handleSelectedRegisteredClothItem()
         handleNotificationAfterDeleteItem()
+        handleDoubleClothingSingleCategory()
+    }
+
+    private fun handleDoubleClothingSingleCategory() {
+        closetViewModel.doubleClothingAttemptedInSingleCategory.observe(
+            viewLifecycleOwner,
+            EventObserver { status ->
+                if (status) {
+                    createAlertBasicDialog(
+                        resources.getString(R.string.closet_dialog_clothing_double_single_category),
+                        null,
+                        null,
+                        null
+                    ).show(requireActivity().supportFragmentManager, null)
+                }
+            })
     }
 
     private fun handleNotificationAfterDeleteItem() {
@@ -60,10 +75,9 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         closetViewModel.selectedRegisteredClothItem.observe(
             viewLifecycleOwner,
             EventObserver { item ->
-                //TODO(이미 옷 입기가 된 아이템인지 확인 필요 -> 입었다면 옷 입기 막기 처리)
                 showClothItemSelectionDialog(item, object : ClothItemSelectionDialogListener {
                     override fun onClickMainButton(isNotCompleteGoal: Boolean) {
-                        if(isNotCompleteGoal) {
+                        if (isNotCompleteGoal) {
                             closetViewModel.wearClothes(item.id)
                             handleCompletedWearingClothes(item.id)
                         } else {
@@ -84,12 +98,14 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
     }
 
     private fun handleCompletedWearingClothes(clothId: Int) {
-        closetViewModel.isSuccessWearingClothes.observe(viewLifecycleOwner, EventObserver { isSuccess ->
-            if(isSuccess) {
-                forestViewModel.checkValidationShowingDialog(true, clothId)
-                navigate(R.id.action_nav_closet_to_forestFragment)
-            }
-        })
+        closetViewModel.isSuccessWearingClothes.observe(
+            viewLifecycleOwner,
+            EventObserver { isSuccess ->
+                if (isSuccess) {
+                    forestViewModel.checkValidationShowingDialog(true, clothId)
+                    navigate(R.id.action_nav_closet_to_forestFragment)
+                }
+            })
     }
 
     private fun handleRequestForFixCloth(clothId: Int) {

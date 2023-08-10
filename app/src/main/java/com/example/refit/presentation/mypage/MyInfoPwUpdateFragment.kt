@@ -2,15 +2,11 @@ package com.example.refit.presentation.mypage
 
 import android.content.Context
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import com.example.refit.R
 import com.example.refit.databinding.FragmentMyInfoPwUpdateBinding
-import com.example.refit.databinding.FragmentMyInfoUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
-import com.example.refit.presentation.common.DialogUtil.checkNickNameDialog
 import com.example.refit.presentation.common.DialogUtil.checkPwDialog
 import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
 import com.example.refit.presentation.common.NavigationUtil.navigate

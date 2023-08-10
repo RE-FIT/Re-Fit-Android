@@ -30,6 +30,8 @@
     <string name="cloth_item_selection_dialog_fix_info">정보 수정</string>
     <string name="cloth_item_selection_dialog_deletion">옷 삭제</string>
 
+    <string name="closet_dialog_clothing_double_single_category">하나의 카테고리에서는\n하루에 2번 이상 입기가 불가능해요!</string>
+
     <!-- Closet -->
     <string name="closet_category_first">상의</string>
     <string name="closet_category_second">하의</string>

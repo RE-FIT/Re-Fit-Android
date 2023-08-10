@@ -65,7 +65,7 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
     fun getForestInfo() {
         viewModelScope.launch {
             try {
-                val response = repository.getForestStatusInfo(dataStore.getAccessToken().first(), clothId.value!!)
+                val response = repository.getForestStatusInfo(dataStore.getAccessToken().first(), _clothId.value!!)
                 response.enqueue(object: Callback<ResponseForestStatusInfo> {
                     override fun onResponse(
                         call: Call<ResponseForestStatusInfo>,
@@ -79,7 +79,6 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
                                 stampList.add(ForestStamps(id, Random.nextInt(0, 3)))
                             }
                             _forestStamps.value = Event(stampList.toList())
-//                            _isValidShowingDialog.value = Event(false)
                             Timber.d("숲 현황 데이터 불러오기 성공 - ${response.body()}")
                         } else {
                             Timber.d("숲 현황 데이터 불러오기 실패1 - ${response.errorBody()}")
@@ -101,7 +100,8 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
     fun getQuiz() {
         viewModelScope.launch {
             try {
-                val response = repository.getQuizInfo(dataStore.getAccessToken().first(), clothId.value!!)
+                Timber.d("퀴즈 요청 id - ${_clothId.value}")
+                val response = repository.getQuizInfo(dataStore.getAccessToken().first(), _clothId.value!!)
                 response.enqueue(object: Callback<ResponseQuizInfo> {
                     override fun onResponse(
                         call: Call<ResponseQuizInfo>,

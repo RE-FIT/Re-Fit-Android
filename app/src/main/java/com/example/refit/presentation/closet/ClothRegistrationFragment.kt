@@ -3,15 +3,12 @@ package com.example.refit.presentation.closet
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.os.FileUtils
 import android.view.View
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toFile
-import androidx.core.view.get
 import com.example.refit.R
 import com.example.refit.databinding.FragmentClothRegistrationBinding
 import com.example.refit.presentation.closet.viewmodel.ClothAddViewModel
@@ -27,9 +24,7 @@ import com.example.refit.util.EventObserver
 import com.example.refit.util.FileUtil
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import retrofit2.http.Url
 import timber.log.Timber
-import java.net.URL
 
 
 class ClothRegistrationFragment :

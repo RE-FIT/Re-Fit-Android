@@ -31,7 +31,7 @@ object DialogUtil {
         title: String,
         positive: String?,
         negative: String?,
-        listener: AlertBasicDialogListener
+        listener: AlertBasicDialogListener?
     ): AlertBasicDialog {
         val icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_alert_circle_24)
         return AlertBasicDialog(icon!!, title, positive, negative, listener)
