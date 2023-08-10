@@ -55,7 +55,10 @@
                     style="@style/RegularFont.10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxWidth="180dp"
                     android:text="구매 희망합니다!"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     app:layout_constraintBottom_toBottomOf="@+id/image"
                     app:layout_constraintStart_toStartOf="@+id/name"
                     app:layout_constraintTop_toBottomOf="@+id/name"></TextView>

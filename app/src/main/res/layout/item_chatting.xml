@@ -15,7 +15,7 @@
 
             <TextView
                 android:id="@+id/my_chat"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
                 android:maxWidth="256dp"
@@ -83,7 +83,7 @@
                 <TextView
                     android:id="@+id/other_chat"
                     style="@style/RegularFont.14"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
@@ -120,7 +120,7 @@
                 <TextView
                     android:id="@+id/other_chat_connect"
                     style="@style/RegularFont.14"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="70dp"
                     android:background="@drawable/chatting_box_other"
