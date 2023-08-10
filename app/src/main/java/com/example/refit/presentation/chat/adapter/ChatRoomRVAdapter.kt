@@ -29,8 +29,17 @@ class ChatRoomRVAdapter(private val dataList: List<ChatRoom>): RecyclerView.Adap
 
         fun bind(data: ChatRoom) {
 
-            binding.itemHolder.isVisible = true
+            binding.content.isVisible = true
+            binding.time.isVisible = true
+            binding.remain.isVisible = true
+
             if (data.remain == 0) { binding.remain.isVisible = false }
+
+            if (data.message == null) {
+                binding.content.isVisible = false
+                binding.time.isVisible = false
+                binding.remain.isVisible = false
+            }
 
             binding.name.text = data.other
             binding.remain.text = data.remain.toString()

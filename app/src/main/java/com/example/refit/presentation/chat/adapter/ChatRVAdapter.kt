@@ -1,5 +1,6 @@
 package com.example.refit.presentation.chat.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -13,7 +14,7 @@ class ChatRVAdapter(private val dataList: MutableList<Chat>): RecyclerView.Adapt
 
     fun addChat(chat: Chat) {
         this.dataList.add(chat)
-        notifyDataSetChanged()
+        notifyItemInserted(dataList.size - 1)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
@@ -47,9 +48,8 @@ class ChatRVAdapter(private val dataList: MutableList<Chat>): RecyclerView.Adapt
 
         private fun handleMyMessage(data: Chat, nextData: Chat?) {
             binding.other.isVisible = false
-            binding.myChat.text = data.content
+            binding.myChat.text = data.content.trim()
             binding.myTime.text = formatToKoreanTime(data.time)
-
             // 조건에 따라 현재 메시지의 시간 숨기기
             if (nextData != null && nextData.isMy == true && nextData.username == data.username && formatToKoreanTime(nextData.time) == formatToKoreanTime(data.time)) {
                 binding.myTime.isVisible = false
@@ -62,7 +62,7 @@ class ChatRVAdapter(private val dataList: MutableList<Chat>): RecyclerView.Adapt
             if (adapterPosition == 0) {
                 binding.otherName.text = data.username
                 binding.otherConnect.isVisible = false
-                binding.otherChat.text = data.content
+                binding.otherChat.text = data.content.trim()
                 binding.otherTime.text = formatToKoreanTime(data.time)
             } else {
                 val previousData = dataList[adapterPosition - 1]
@@ -70,14 +70,14 @@ class ChatRVAdapter(private val dataList: MutableList<Chat>): RecyclerView.Adapt
                 // 메시지를 보낸 사람이 같은 경우
                 if (previousData.username == data.username) {
                     binding.otherFirst.isVisible = false
-                    binding.otherChatConnect.text = data.content
+                    binding.otherChatConnect.text = data.content.trim()
                     binding.otherTimeConnect.text = formatToKoreanTime(data.time)
 
                 } else { // 다른 경우
 
                     binding.otherName.text = data.username
                     binding.otherConnect.isVisible = false
-                    binding.otherChat.text = data.content
+                    binding.otherChat.text = data.content.trim()
                     binding.otherTime.text = formatToKoreanTime(data.time)
                 }
             }
@@ -92,6 +92,11 @@ class ChatRVAdapter(private val dataList: MutableList<Chat>): RecyclerView.Adapt
         private fun resetViews() {
             binding.other.isVisible = true
             binding.my.isVisible = true
+
+            binding.myChat.isVisible = true
+            binding.otherChat.isVisible = true
+            binding.otherChatConnect.isVisible = true
+
             binding.otherConnect.isVisible = true
             binding.otherFirst.isVisible = true
             binding.otherTimeConnect.isVisible = true

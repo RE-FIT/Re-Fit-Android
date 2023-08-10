@@ -89,7 +89,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
 
             //작성 누를 시 글 작성
             binding.writeButton.setOnClickListener {
-                sendMessage(binding.edit.text.toString())
+                sendMessage(binding.edit.text.toString().trim())
                 binding.edit.text.clear()
             }
         }
@@ -103,7 +103,9 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
     }
 
     fun sendMessage(message: String) {
-        socket.emit("message", args.roomId.toString(), args.userId.toString(), args.otherId.toString(), message)
+        if (message != "") {
+            socket.emit("message", args.roomId.toString(), args.userId.toString(), args.otherId.toString(), message)
+        }
     }
 
     override fun onPause() {
