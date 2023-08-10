@@ -51,8 +51,8 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
             val id = binding.signInLoginId.toString()
             val password = binding.signInFindIdPassword.toString()
 
-//            vm.signUpUser("admin1234", "AAaa1234!!","refit@gmail.com","어드민","2023/07/12", 0)
-            viewModel.basicLogin("admin1234", "AAaa1234!!")
+//            vm.signUpUser("admin1234", "AAaa1234!!","refit@gmail.com","테스트","2023/07/12", 0)
+            viewModel.basicLogin("admin0000", "AAaa1234!!")
 //            Timber.d("$id $password")
 //            viewModel.basicLogin(id, password)
         }
@@ -72,8 +72,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         binding.signInFindIdPassword.setOnClickListener(){
             navigate(R.id.action_signInFragment_to_findIdPasswordFragment)
         }
-
-
 
     }
 }

@@ -83,7 +83,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                                 val errorMessage = errorJson.optString("errorMessage")
                                 val errorCodeFromJson = errorJson.optInt("code")
 
-                                Timber.d("API 호출 실패: $errorCodeFromJson")
+                                Timber.d("API 호출 실패: $errorJson")
                             } else Timber.d("API 호출 실패: $errorCode")
                         }
                     }
