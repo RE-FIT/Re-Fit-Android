@@ -7,15 +7,17 @@ data class PostResponse(
     @SerializedName("title") val title: String,
     @SerializedName("author") val author: String,
     @SerializedName("imgUrls") val imgUrls: List<String>,
+    @SerializedName("gender") val gender: Int,
     @SerializedName("size") val size: Int,
+    @SerializedName("category") val category: Int,
     @SerializedName("deliveryType") val deliveryType: Int,
     @SerializedName("deliveryFee") val deliveryFee: Int,
-    @SerializedName("sido") val sido: String?,
-    @SerializedName("sigungu") val sigungu: String?,
-    @SerializedName("bname") val bname: String?,
-    @SerializedName("bname2") val bname2: String?,
+    @SerializedName("address") val address: String?,
     @SerializedName("price") val price: Int,
     @SerializedName("detail") val detail: String,
     @SerializedName("postType") val postType: Int,
-    @SerializedName("postState") val postState: Int
+    @SerializedName("postState") val postState: Int,
+    @SerializedName("createdAt") val createdAt: String,
+    @SerializedName("clickedMember") val clickedMember: String,
+    @SerializedName("scrapFlag") val scrapFlag: Boolean
 )

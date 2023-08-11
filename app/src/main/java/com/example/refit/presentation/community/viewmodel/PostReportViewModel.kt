@@ -4,12 +4,32 @@ import android.provider.Settings.Global.getString
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.refit.R
+import com.example.refit.data.datastore.TokenStore
+import com.example.refit.data.model.community.BlockDto
+import com.example.refit.data.model.community.Member
+import com.example.refit.data.model.community.PostResponse
+import com.example.refit.data.model.community.ReportedUser
 import com.example.refit.data.repository.community.CommunityRepository
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import timber.log.Timber
+import java.lang.Exception
 
 class PostReportViewModel(
-    private val communityRepository: CommunityRepository,
+    private val repository: CommunityRepository,
+    private val ds: TokenStore,
 ): ViewModel() {
+
+    private val _userName: MutableLiveData<String> = MutableLiveData<String>()
+    val userName: LiveData<String>
+        get() = _userName
 
     // 신고 사유 선택 여부
     private val _isSelectReason: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
@@ -63,7 +83,13 @@ class PostReportViewModel(
         get() = _currentLength
 
 
+    fun setUserName(name: String) {
+        _userName.value = name
+    }
 
+    fun setReasonType(value: String) {
+        _isSelectReasonType.value = value
+    }
 
     fun setSelectReasonNumber(type: Int, status: Boolean) {
         _isSelectReasonFirst.value = (type == 1 && status)
@@ -97,6 +123,10 @@ class PostReportViewModel(
         _isHideUserPost.value = _isHideUserPost.value != true
     }
 
+    fun plusHideUser() {
+        if(isHideUserPost.value == true) blockedMember()
+    }
+
     fun setCompletedInputReason(status: Boolean) {
         _isCompletedInputReason.value = status
     }
@@ -106,9 +136,92 @@ class PostReportViewModel(
         _currentLength.value = length
     }
 
+    // 사용자 차단 기능
+    fun blockedMember() = viewModelScope.launch {
+        val accessToken = ds.getAccessToken().first()
+        try {
+            val user = userName.value.toString()
+            val blockedMember = Member(name = user)
+            val blockDto = BlockDto(blockedMember)
+            val response =
+                repository.blockUser(accessToken, blockDto)
+
+            response.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    if (response.isSuccessful) {
+                        Timber.d("API 호출 성공")
+                    } else {
+                        val errorBody = response.errorBody()
+                        val errorCode = response.code()
+
+                        if (errorBody != null) {
+                            val errorJson = JSONObject(errorBody.string())
+                            val errorMessage = errorJson.optString("errorMessage")
+                            val errorCodeFromJson = errorJson.optInt("code")
+
+                            Timber.d("API 호출 실패: $errorCodeFromJson / $errorMessage")
+                        } else Timber.d("API 호출 실패: $errorCode")
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Timber.d("RESPONSE FAILURE")
+                }
+            })
+        } catch (e: Exception) {
+            "사용자 차단 과정 오류: $e"
+        }
+    }
+
+    // 글 신고하기 기능
+    fun reportUser() = viewModelScope.launch {
+        val accessToken = ds.getAccessToken().first()
+        val user = userName.value.toString()
+        val reason = isSelectReasonType.value.toString()
+
+        try {
+            val reportedMember = Member(user)
+            val reportedUser = ReportedUser(reportedMember, reason)
+            val response =
+                repository.reportUser(accessToken, reportedUser)
+
+            response.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    if (response.isSuccessful) {
+                        Timber.d("API 호출 성공")
+                    } else {
+                        val errorBody = response.errorBody()
+                        val errorCode = response.code()
+
+                        if (errorBody != null) {
+                            val errorJson = JSONObject(errorBody.string())
+                            val errorMessage = errorJson.optString("errorMessage")
+                            val errorCodeFromJson = errorJson.optInt("code")
+
+                            Timber.d("API 호출 실패: $errorCodeFromJson / $errorMessage")
+                        } else Timber.d("API 호출 실패: $errorCode")
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Timber.d("RESPONSE FAILURE")
+                }
+            })
+        } catch (e: Exception) {
+            "사용자 신고 과정 오류: $e"
+        }
+    }
+
 
     fun initAlLStatus() {
         // 초기 값 설정
+        _userName.value = ""
         _isSelectReason.value = false
         _isSelectReasonFirst.value = false
         _isSelectReasonSecond.value = false

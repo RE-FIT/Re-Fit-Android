@@ -41,7 +41,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                         View.VISIBLE
                     }
 
-                    R.id.nav_community, R.id.nav_my_page, R.id.communityInfoFragment -> {
+                    R.id.nav_community, R.id.nav_my_page -> {
                         setStatusBarColor(R.color.default_dark)
                         View.VISIBLE
                     }

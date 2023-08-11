@@ -120,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="bottom"
-                        android:text="ddd"
+                        android:text="@{vm.conversionTypeToText(3, feedList.size)}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_size_txt"
                         app:layout_constraintTop_toBottomOf="@id/ll_community_item" />
@@ -165,7 +165,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="bottom"
-                        android:text="@{feedList.address == null ? @string/community_item_region_all : @string/community_item_region_all}"                        android:textColor="@color/dark2"
+                        android:text="@{feedList.address == null ? @string/community_item_region_all : feedList.address}"
+                        android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_method_txt"
                         app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_method"
                         tools:ignore="MissingConstraints" />
