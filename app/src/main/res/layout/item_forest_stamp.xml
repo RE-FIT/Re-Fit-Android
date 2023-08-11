@@ -11,7 +11,11 @@
 
         <variable
             name="stampInfo"
-            type="com.example.refit.data.model.closet.ForestStampResponse" />
+            type="com.example.refit.data.model.closet.ForestStamps" />
+        
+        <variable
+            name="forestInfo"
+            type="com.example.refit.data.model.closet.ResponseForestStatusInfo" />
 
     </data>
 
@@ -23,20 +27,23 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> vm.handleClickItem(stampInfo)}"
+            android:onClick="@{() -> vm.handleClickItem()}"
+            android:clickable="@{forestInfo.count &lt; stampInfo.id ? false : true}"
             android:layout_margin="7dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="@android:color/transparent">
+            app:cardBackgroundColor="@{forestInfo.count == stampInfo.id ? @color/green1_opacity_10 : @color/white}"
+            app:strokeColor="@{forestInfo.count == stampInfo.id ? @color/green1 : @android:color/transparent}">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
                 android:scaleType="centerInside"
-                android:alpha="0.3"
+                android:alpha="@{forestInfo.count &lt; stampInfo.id ? 0.3F : 1.0F}"
+                setForestStampImage="@{forestInfo.count >= stampInfo.id ? stampInfo.treeImageId : 4}"
                 android:src="@drawable/ic_tree_first_65"
                 tool:src="@drawable/ic_tree_first_65" />
 

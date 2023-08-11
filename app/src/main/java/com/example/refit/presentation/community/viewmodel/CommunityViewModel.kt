@@ -5,13 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
-import com.example.refit.data.model.closet.RegisteredClothInfoResponse
 import com.example.refit.data.model.community.CommunityListItemResponse
-import com.example.refit.data.model.community.PostResponse
 import com.example.refit.data.repository.community.CommunityRepository
 import com.example.refit.util.Event
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
@@ -20,7 +17,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
-import java.lang.Exception
 
 class CommunityViewModel(
     private val repository: CommunityRepository,
