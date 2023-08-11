@@ -67,7 +67,7 @@
                     style="@style/RegularFont.14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/my_page_name"
+                    android:text="@{vm.userNickname}"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -108,7 +108,7 @@
                         android:paddingTop="13dp"
                         android:paddingEnd="0dp"
                         android:paddingBottom="13dp"
-                        android:text="@string/my_info_email"
+                        android:text="@{vm.myInfoResponse.email}"
                         android:textColor="@color/dark1" />
 
                     <TextView
@@ -132,7 +132,7 @@
                         android:paddingTop="13dp"
                         android:paddingEnd="0dp"
                         android:paddingBottom="13dp"
-                        android:text="@string/my_info_id"
+                        android:text="@{vm.myInfoResponse.loginId}"
                         android:textColor="@color/dark1" />
 
                     <TextView
@@ -155,11 +155,11 @@
                             android:layout_height="37dp"
                             android:autofillHints="name"
                             android:background="@drawable/et_mypage_round_10"
-                            android:hint="@string/my_info_name"
+                            android:hint="@{vm.myInfoResponse.name}"
                             android:inputType="textPersonName"
                             android:paddingStart="11dp"
                             android:paddingEnd="0dp"
-                            android:text="@string/my_info_name"
+                            android:text="@{vm.myInfoResponse.name}"
                             android:textColor="@color/black" />
 
                         <android.widget.Button
@@ -220,7 +220,7 @@
                         android:paddingTop="13dp"
                         android:paddingEnd="0dp"
                         android:paddingBottom="13dp"
-                        android:text="@string/my_info_date"
+                        android:text="@{vm.myInfoResponse.birth}"
                         android:textColor="@color/black" />
 
                     <TextView

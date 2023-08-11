@@ -21,10 +21,6 @@
             name="vm_search"
             type="com.example.refit.presentation.community.viewmodel.CommunitySearchViewModel" />
 
-        <variable
-            name="vm_scrap"
-            type="com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -165,7 +161,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="bottom"
-                        android:text="@{communityList.sido == null ? @string/community_item_region_all : @string/community_item_region(communityList.sido, communityList.sigungu, communityList.bname, communityList.bname2)}"
+                        android:text="@{communityList.address == null ? @string/community_item_region_all : communityList.address}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_method_txt"
                         app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_method"
@@ -177,7 +173,7 @@
                     android:layout_width="18dp"
                     android:layout_height="15dp"
                     android:layout_marginEnd="20dp"
-                    android:background="@{favToggleState ? @drawable/ic_community_heart_18 : @drawable/ic_community_blank_heart_18}"
+                    android:background="@{communityList.scrapFlag ? @drawable/ic_community_heart_18 : @drawable/ic_community_blank_heart_18}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

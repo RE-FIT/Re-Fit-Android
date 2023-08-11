@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.community.CommunityListItemResponse
 import com.example.refit.data.model.community.PostResponse
+import com.example.refit.data.model.mypage.MyScrapGiveListItemResponse
+import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
 import com.example.refit.data.repository.mypage.MyPageRepository
 import com.example.refit.util.Event
 import com.google.gson.Gson
@@ -21,6 +23,18 @@ import timber.log.Timber
 import java.lang.Exception
 
 class MyScrapViewModel(private val repository: MyPageRepository, private val ds: TokenStore) : ViewModel() {
+
+    // 스크랩 - 판매
+    private val _myScrapSellList: MutableLiveData<List<MyScrapSellListItemResponse>> =
+        MutableLiveData<List<MyScrapSellListItemResponse>>()
+    val myScrapSellList: LiveData<List<MyScrapSellListItemResponse>>
+        get() = _myScrapSellList
+
+    // 스크랩 - 나눔
+    private val _myScrapGiveList: MutableLiveData<List<MyScrapGiveListItemResponse>> =
+        MutableLiveData<List<MyScrapGiveListItemResponse>>()
+    val myScrapGiveList: LiveData<List<MyScrapGiveListItemResponse>>
+        get() = _myScrapGiveList
 
     private val _communityList: MutableLiveData<List<CommunityListItemResponse>> =
         MutableLiveData<List<CommunityListItemResponse>>()
@@ -41,33 +55,25 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
     val dropDownValue: List<MutableLiveData<Int>>
         get() = _dropDownValue
 
-    fun loadCommunityList() =
+    fun loadScrapList() =
         viewModelScope.launch {
             val accessToken = ds.getAccessToken().first()
             _isLoading.value = true
             try {
-                val postType = _dropDownValue[0].value ?: 0
-                val gender = _dropDownValue[1].value ?: 0
-                val category = _dropDownValue[2].value ?: 0
-
                 val response =
-                    repository.loadCommunityListSort(accessToken, postType, gender, category)
+                    repository.loadMyScrapSellList(accessToken)
 
-                Timber.d("postType: $postType, gender: $gender, category: $category")
-                response.enqueue(object : Callback<ResponseBody> {
+                response.enqueue(object : Callback<List<MyScrapSellListItemResponse>> {
                     override fun onResponse(
-                        call: Call<ResponseBody>,
-                        response: Response<ResponseBody>
+                        call: Call<List<MyScrapSellListItemResponse>>,
+                        response: Response<List<MyScrapSellListItemResponse>>
                     ) {
                         if (response.isSuccessful) {
                             Timber.d("API 호출 성공")
                             val responseBody = response.body()
                             if (responseBody != null) {
-                                val json = responseBody.string()
-                                val communityList = parseCommunityList(json)
-                                Timber.d("communityList : ${communityList.toString()}")
-
-                                _communityList.value = communityList
+                                _myScrapSellList.value = response.body() as List<MyScrapSellListItemResponse>
+                                Timber.d("scrapList : ${response.body()}")
                             }
                         } else {
                             val errorBody = response.errorBody()
@@ -83,36 +89,17 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
                         }
                     }
 
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        Timber.d("RESPONSE FAILURE")
+                    override fun onFailure(call: Call<List<MyScrapSellListItemResponse>>, t: Throwable) {
+                        Timber.d("실패: $t")
                     }
                 })
             } catch (e: Exception) {
-                "커뮤니티 글 목록 로딩 오류: $e"
+                "스크랩 글 목록 로딩 오류: $e"
             } finally {
                 _isLoading.value = false
             }
 
         }
-
-    fun setDropDownController(type: Int, value: String) {
-        when (type) {
-            0 -> {
-                // 글 타입 (나눔/판매)
-                _dropDownValue[0].value = conversionTextToType(0, value)
-            }
-
-            1 -> {
-                // 성별 (여성복/남성복)
-                _dropDownValue[1].value = conversionTextToType(1, value)
-            }
-
-            2 -> {
-                // 카테고리 (상의/하의/...)
-                _dropDownValue[2].value = conversionTextToType(2, value)
-            }
-        }
-    }
 
     fun handleClickItem(postId: Int) {
         _selectedPostItem.value = Event(postId)
@@ -122,31 +109,6 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
         for (item in _dropDownValue) {
             item.value = 0
         }
-    }
-
-    fun conversionTextToType(itemType: Int, value: String): Int {
-        var type = Integer.MIN_VALUE
-        when (itemType) {
-            0 -> when (value) {
-                "나눔" -> type = 0
-                "판매" -> type = 1
-            }
-
-            1 -> when (value) {
-                "여성복" -> type = 0
-                "남성복" -> type = 1
-            }
-
-            2 -> when (value) {
-                "상의" -> type = 0
-                "하의" -> type = 1
-                "아우터" -> type = 2
-                "원피스" -> type = 3
-                "신발" -> type = 4
-                "악세사리" -> type = 5
-            }
-        }
-        return type
     }
 
     fun conversionTypeToText(itemType: Int, value: String): String {
@@ -170,7 +132,3 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
     }
 }
 
-private fun parseCommunityList(json: String): List<CommunityListItemResponse> {
-    val gson = Gson()
-    return gson.fromJson(json, Array<CommunityListItemResponse>::class.java).toList()
-}

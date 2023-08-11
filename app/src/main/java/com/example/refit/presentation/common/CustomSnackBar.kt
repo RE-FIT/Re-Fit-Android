@@ -16,6 +16,8 @@ import androidx.databinding.ViewDataBinding
 import com.example.refit.R
 import com.example.refit.databinding.CustomSnackBarBasicBinding
 import com.example.refit.databinding.CustomSnackbarCommunityBasicBinding
+import com.example.refit.databinding.CustomSnackbarSignFailBinding
+import com.example.refit.databinding.CustomSnackbarSignSuccessBinding
 import com.google.android.material.snackbar.Snackbar
 
 class CustomSnackBar(view: View, @LayoutRes private val  layout: Int, @AnimRes private val animationId: Int) {
@@ -69,6 +71,18 @@ class CustomSnackBar(view: View, @LayoutRes private val  layout: Int, @AnimRes p
                 (snackBarBinding as CustomSnackbarCommunityBasicBinding).title = title
                 if (subtitle != null) snackBarBinding.subtitle = subtitle
                 else snackBarBinding.tvSnackbarCommunitySecond.visibility = View.GONE
+            }
+            R.layout.custom_snackbar_sign_fail -> {
+                val binding = snackBarBinding as CustomSnackbarSignFailBinding
+                binding.title = title
+                binding.subtitle = subtitle
+                binding.ivDialogAlertOnlyTextIcon.setImageResource(R.drawable.ic_alert_circle_24)
+            }
+            R.layout.custom_snackbar_sign_success -> {
+                val binding = snackBarBinding as CustomSnackbarSignSuccessBinding
+                binding.title = title
+                binding.subtitle = subtitle
+                binding.ivDialogAlertOnlyTextIcon.setImageResource(R.drawable.ic_check_green1_18)
             }
         }
         return this

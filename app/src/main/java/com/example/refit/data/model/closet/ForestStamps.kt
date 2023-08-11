@@ -1,6 +1,6 @@
 package com.example.refit.data.model.closet
 
-data class ForestStampResponse(
+data class ForestStamps(
     val id: Int,
-    val image: String
+    val treeImageId: Int
 )

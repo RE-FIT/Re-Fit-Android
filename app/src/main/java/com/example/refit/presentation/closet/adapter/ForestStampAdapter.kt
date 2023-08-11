@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.refit.data.model.closet.ForestStampResponse
+import com.example.refit.data.model.closet.ForestStamps
 import com.example.refit.databinding.ItemForestStampBinding
 import com.example.refit.presentation.closet.viewmodel.ForestViewModel
 
 class ForestStampAdapter(private val viewModel: ForestViewModel) :
-    ListAdapter<ForestStampResponse, ForestStampAdapter.ForestStampViewHolder>(
+    ListAdapter<ForestStamps, ForestStampAdapter.ForestStampViewHolder>(
         ForestStampDiffCallback()
     ) {
 
@@ -26,24 +26,25 @@ class ForestStampAdapter(private val viewModel: ForestViewModel) :
 
     inner class ForestStampViewHolder(private val binding: ItemForestStampBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindItems(stampInfo: ForestStampResponse) {
+        fun bindItems(stampInfo: ForestStamps) {
+            binding.forestInfo = viewModel.forestInfo.value!!.content
             binding.stampInfo = stampInfo
             binding.vm = viewModel
             binding.executePendingBindings()
         }
     }
 
-    class ForestStampDiffCallback() : DiffUtil.ItemCallback<ForestStampResponse>() {
+    class ForestStampDiffCallback() : DiffUtil.ItemCallback<ForestStamps>() {
         override fun areItemsTheSame(
-            oldItem: ForestStampResponse,
-            newItem: ForestStampResponse
+            oldItem: ForestStamps,
+            newItem: ForestStamps
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: ForestStampResponse,
-            newItem: ForestStampResponse
+            oldItem: ForestStamps,
+            newItem: ForestStamps
         ): Boolean {
             return oldItem == newItem
         }

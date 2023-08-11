@@ -202,7 +202,7 @@
                                 style="@style/ClosetSearchOption.TextCommon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{vm.selectedSeason == null ? @string/closet_search_option_first : vm.selectedSeason}" />
+                                android:text="@{vm.selectedSeason == null ? @string/closet_option_season_first : vm.selectedSeason}" />
 
                         </com.google.android.material.card.MaterialCardView>
 
@@ -218,7 +218,7 @@
                                 style="@style/ClosetSearchOption.TextCommon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{vm.selectedSortingOption == null ? @string/closet_search_option_second : vm.selectedSortingOption}" />
+                                android:text="@{vm.selectedSortingOption == null ? @string/closet_option_sort_first : vm.selectedSortingOption}" />
 
                         </com.google.android.material.card.MaterialCardView>
 

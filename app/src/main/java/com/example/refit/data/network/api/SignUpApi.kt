@@ -1,5 +1,8 @@
 package com.example.refit.data.network.api
 
+import com.example.refit.data.model.signup.FindIdRequest
+import com.example.refit.data.model.signup.FindIdResponse
+import com.example.refit.data.model.signup.FindPasswordRequest
 import com.example.refit.data.model.signup.RegisterUserRequest
 import com.example.refit.data.model.signup.RequestEmailCertification
 import com.example.refit.data.model.signup.ResponseEmailCertification
@@ -14,6 +17,16 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface SignUpApi {
+
+    @POST("auth/find/id")
+    fun findId(
+        @Body findId: FindIdRequest
+    ): Call<FindIdResponse>
+
+    @POST("auth/find/password")
+    fun findPassword(
+        @Body findId: FindPasswordRequest
+    ): Call<ResponseBody>
 
     @POST("auth/email")
     fun requestEmailCertification(

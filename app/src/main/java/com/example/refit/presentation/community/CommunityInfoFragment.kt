@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
 import com.example.refit.R
-import com.example.refit.data.model.community.PostResponse
 import com.example.refit.databinding.FragmentCommunityInfoBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.CustomSnackBar
@@ -17,17 +16,22 @@ import com.example.refit.presentation.common.DialogUtil.createAlertSirenDialog
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.common.NavigationUtil.navigateUp
+import com.example.refit.presentation.community.adapter.InfoImageAdapter
+import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
+import com.example.refit.presentation.community.viewmodel.PostReportViewModel
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.AlertNoIconDialogListener
-import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.lang.IllegalArgumentException
 
 class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layout.fragment_community_info) {
 
     private val vm: CommunityInfoViewModel by sharedViewModel()
+    private val vmAdd: CommunityAddPostViewModel by sharedViewModel()
+    private val vmPr: PostReportViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,29 +41,28 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         CommunityEtcMenuDropdown()
         handleFavIconClicked()
         observeStatus()
+        initImageList()
     }
 
     private fun CommunityEtcMenuDropdown() {
         // TODO 유저 상태에 따라 array 값 다르게 불러와야 함
-        val status = 0
         binding.cvEtcOverflow.setOnClickListener {
-            val listPopupWindow = when (status) {
-                0 -> getPopupMenu(
+            val listPopupWindow = when (vm.UserStatus.value) {
+                0 -> getPopupMenu( // 작성자 && (판매중 || 나눔중)
                     it,
                     R.array.community_info_overflow_ing_writer
-                ) // 작성자 && (판매중 || 나눔중)
-                1 -> getPopupMenu(
+                )
+                1 -> getPopupMenu( // 작성자 && 나눔완료
                     it,
-                    R.array.community_info_overflow_end_sale_writer
+                    R.array.community_info_overflow_end_giveaway_writer
                 ) // 작성자 && 판매완료
                 2 -> getPopupMenu(
                     it,
-                    R.array.community_info_overflow_end_giveaway_writer
+                    R.array.community_info_overflow_end_sale_writer
                 ) // 작성자 && 나눔완료
                 3 -> getPopupMenu(it, R.array.community_info_overflow_user) // 일반 유저
                 else -> throw IllegalArgumentException("Invalid Status Value")
             }
-            vm.classifyUserState(status)
             setPopupItemClickListener(listPopupWindow)
             listPopupWindow.show()
         }
@@ -86,6 +89,11 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
                 }
 
                 "수정하기" -> {
+                    vmAdd.setModifyOrNew(true)
+                    val postId = vm.postId.value
+                    if (postId != null) {
+                        vmAdd.setPostId(postId)
+                    }
                     navigate(R.id.action_communityInfoFragment_to_communityAddPostFragment)
                 }
 
@@ -95,7 +103,15 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
 
                 "이 사용자의 글 보지 않기" -> {
                     // TODO 사용자 id 불러오기
-                    hideUserPost(userid = "user1")
+                    val username = vm.postResponse.value?.author ?: ""
+                    vmPr.setUserName(username)
+                    hideUserPost(username = username)
+                }
+                "나눔중" -> {
+                    vm.changePostStatus()
+                }
+                "판매중" -> {
+                    vm.changePostStatus()
                 }
             }
             Timber.d(itemDescription)
@@ -103,11 +119,18 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         }
     }
 
+    private fun initImageList() {
+        val imageSliderAdapter = InfoImageAdapter(vm)
+        binding.vpCommunityInfoImage.adapter = imageSliderAdapter
+        vm.postResponse.observe(viewLifecycleOwner) {
+                postResponse -> imageSliderAdapter.sliderImageUrls = postResponse.imgUrls
+        }
+    }
+
     private fun handleFavIconClicked() {
         binding.tbCommunityInfoFav.setOnClickListener {
-            // TODO 서버에서 스크랩 여부 받아오면 toggleStatus 연결
             vm.scrapPost()
-            val toggleStatus = !binding.tbCommunityInfoFav.isChecked
+            val toggleStatus = !vm.postResponse.value?.scrapFlag!!
             if (toggleStatus) {
                 CustomSnackBar.make(
                     requireView(),
@@ -116,7 +139,7 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
                 )
                     .setTitle("스크랩을 완료하였습니다!", null).show()
             }
-            vm.setScrapState(toggleStatus)
+            vm.setScrapStatus(toggleStatus)
         }
 
         binding.fabCommunityInfoChat.setOnClickListener {
@@ -132,6 +155,8 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
                 override fun onClickPositive() {
                     // TODO 신고
                     navigate(R.id.action_communityInfoFragment_to_postReportFragment)
+                    val username = vm.postResponse.value?.author ?: ""
+                    vmPr.setUserName(username)
                 }
 
                 override fun onClickNegative() {
@@ -141,8 +166,8 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         ).show(requireActivity().supportFragmentManager, null)
     }
 
-    private fun hideUserPost(userid: String) {
-        val title = userid + resources.getString(R.string.community_info_dialog_title_third)
+    private fun hideUserPost(username: String) {
+        val title = username + resources.getString(R.string.community_info_dialog_title_third)
         createAlertBasicDialog(
             title,
             resources.getString(R.string.community_info_dialog_positive_third),
@@ -150,6 +175,7 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
             object : AlertBasicDialogListener {
                 override fun onClickPositive() {
                     // TODO 이 사용자의 글 보지 않기 (스낵바 수정하기)
+                    vmPr.blockedMember()
                     CustomSnackBar.make(
                         requireView(),
                         R.layout.custom_snackbar_community_basic,
@@ -186,6 +212,12 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
     }
 
     private fun observeStatus() {
-
+        vm.postResponse.observe(viewLifecycleOwner) { response ->
+            if (response != null) {
+                vm.checkIfAuthor()
+                vm.classifyUserState()
+                vm.setPostDate()
+            }
+        }
     }
 }

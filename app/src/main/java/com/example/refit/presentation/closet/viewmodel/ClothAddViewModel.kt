@@ -6,8 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.closet.RequestAddNewCloth
+import com.example.refit.data.model.closet.RequestResetCompletedCloth
+import com.example.refit.data.model.closet.ResponseRegisteredClothInfo
 import com.example.refit.data.repository.colset.ClosetRepository
-import com.google.gson.Gson
+import com.example.refit.util.Event
+import com.google.gson.GsonBuilder
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -84,17 +87,52 @@ class ClothAddViewModel(
     val selectedClothCategoryId: LiveData<Int>
         get() = _selectedClothCategoryId
 
-    private val _registeredClothInfo: MutableLiveData<Long> =
-        MutableLiveData<Long>()
-    val registeredClothInfo: LiveData<Long>
-        get() = _registeredClothInfo
+    private val _registeredClothId: MutableLiveData<Event<Long>> =
+        MutableLiveData<Event<Long>>()
+    val registeredClothId: LiveData<Event<Long>>
+        get() = _registeredClothId
+
+    // 옷 재등록
+
+    private val _requestedFixClothInfo: MutableLiveData<Event<ResponseRegisteredClothInfo>> =
+        MutableLiveData<Event<ResponseRegisteredClothInfo>>()
+    val requestedFixClothInfo: LiveData<Event<ResponseRegisteredClothInfo>>
+        get() = _requestedFixClothInfo
+
+    private val _isRequestedFixCloth: MutableLiveData<Event<Boolean>> =
+        MutableLiveData<Event<Boolean>>()
+    val isRequestedFixCloth: LiveData<Event<Boolean>>
+        get() = _isRequestedFixCloth
+
+    private val _isRequestedResetCompletedCloth: MutableLiveData<Event<Boolean>> =
+        MutableLiveData<Event<Boolean>>()
+    val isRequestedResetCompletedCloth: LiveData<Event<Boolean>>
+        get() = _isRequestedResetCompletedCloth
+
+    private val _isSuccessUpdatingClothInfo: MutableLiveData<Event<Boolean>> =
+        MutableLiveData<Event<Boolean>>()
+    val isSuccessUpdatingClothInfo: LiveData<Event<Boolean>>
+        get() = _isSuccessUpdatingClothInfo
+
+    fun requestRegisteringCloth(imageFile: File?, clothId: Int?) {
+        if (clothId != null) {
+            Timber.d("가자 -> ${_isRequestedFixCloth.value == Event(true)}")
+            if (_isRequestedFixCloth.value!!.content) {
+                requestFixClothToServer(clothId)
+            } else if(_isRequestedResetCompletedCloth.value!!.content) {
+                requestResetClothToServer(clothId)
+            }
+        } else if(imageFile != null) {
+            addNewCloth(imageFile)
+        }
+    }
 
     // 서버 호출
 
-    fun addNewCloth(imageFile: File) {
+    private fun addNewCloth(imageFile: File) {
         viewModelScope.launch {
             try {
-                val request = Gson().toJson(
+                val request = GsonBuilder().serializeNulls().create().toJson(
                     RequestAddNewCloth(
                         _selectedClothCategoryId.value!!,
                         _selectedSeasonId.value!!,
@@ -114,23 +152,137 @@ class ClothAddViewModel(
 
                 Timber.d("옷 등록 리퀘스트 : $request")
 
-                val response =
-                    repository.addNewCloth(dataStore.getAccessToken().first(), multipartBody, body)
+                val response = repository.addNewCloth(
+                    dataStore.getAccessToken().first(),
+                    multipartBody,
+                    body
+                )
                 response.enqueue(object : Callback<Long> {
                     override fun onResponse(
                         call: Call<Long>,
                         response: Response<Long>
                     ) {
                         if (response.isSuccessful) {
-                            _registeredClothInfo.value = response.body()
-                            Timber.d("옷 등록 성공 : ${_registeredClothInfo.value}")
+                            _registeredClothId.value = Event(response.body()!!)
+                            Timber.d("옷 등록 성공 : ${_registeredClothId.value}")
                         } else {
                             Timber.d("옷 등록 실패1 : ${(response.errorBody().toString())}")
                         }
                     }
+
                     override fun onFailure(call: Call<Long>, t: Throwable) {
                         Timber.d("옷 등록 실패2 : $t")
                     }
+                })
+            } catch (e: Throwable) {
+                Timber.d(e)
+            }
+        }
+    }
+
+    private fun requestFixClothToServer(clothId: Int) {
+        viewModelScope.launch {
+            try {
+                val request = RequestAddNewCloth(
+                    _selectedClothCategoryId.value!!,
+                    _selectedSeasonId.value!!,
+                    _selectedWearingNumberOption.value,
+                    _selectedMonthOption.value,
+                    _isValidInvalidSeasonConfirm.value!! && !_isNegativeInvalidSeasonConfirm.value!!,
+                    _recommendWearingNumberOfMonth.value,
+                    _recommendWearingNumberOfWeek.value
+                )
+                val response =
+                    repository.fixClothItem(dataStore.getAccessToken().first(), request, clothId)
+                response.enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if (response.code() == 200) {
+                            _isSuccessUpdatingClothInfo.value = Event(true)
+                            Timber.d("옷 수정 성공")
+                        } else {
+                            _isSuccessUpdatingClothInfo.value = Event(false)
+                            Timber.d("옷 수정 요청 실패1 - ${response.errorBody()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Timber.d("옷 수정 요청 실패2 - $t")
+                    }
+
+                })
+            } catch (e: Throwable) {
+                Timber.d(e)
+            }
+        }
+    }
+
+    private fun requestResetClothToServer(clothId: Int) {
+        viewModelScope.launch {
+            try {
+                val request = RequestResetCompletedCloth(
+                    _selectedSeasonId.value!!,
+                    _selectedWearingNumberOption.value,
+                    _selectedMonthOption.value,
+                    _isValidInvalidSeasonConfirm.value!! && !_isNegativeInvalidSeasonConfirm.value!!,
+                    _recommendWearingNumberOfMonth.value,
+                    _recommendWearingNumberOfWeek.value
+                )
+                val response = repository.resetCompletedCloth(
+                    dataStore.getAccessToken().first(),
+                    request,
+                    clothId
+                )
+                response.enqueue(object: Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if(response.code() == 200) {
+                            _isSuccessUpdatingClothInfo.value = Event(true)
+                            Timber.d("목표 재설정 성공")
+                        } else {
+                            _isSuccessUpdatingClothInfo.value = Event(false)
+                            Timber.d("목표 재설정 요청 실패1 - ${response.errorBody()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Timber.d("목표 재설정 요청 실패2 - $t")
+                    }
+
+                })
+            } catch (e: Throwable) {
+                Timber.d(e)
+            }
+        }
+    }
+
+    fun fixClothInfo(clothId: Int, isCompletedCloth: Boolean) {
+        viewModelScope.launch {
+            try {
+                val response =
+                    repository.getRegisteredClothInfo(dataStore.getAccessToken().first(), clothId)
+                response.enqueue(object : Callback<ResponseRegisteredClothInfo> {
+                    override fun onResponse(
+                        call: Call<ResponseRegisteredClothInfo>,
+                        response: Response<ResponseRegisteredClothInfo>
+                    ) {
+                        if (response.isSuccessful) {
+                            if(isCompletedCloth) {
+                                _isRequestedResetCompletedCloth.value = Event(true)
+                            } else {
+                                _isRequestedFixCloth.value = Event(true)
+                            }
+                            _requestedFixClothInfo.value = Event(response.body()!!)
+                            Timber.d("등록된 옷 정보 수정 요청 성공 - ${response.body()}")
+                        } else {
+                            _isRequestedResetCompletedCloth.value = Event(false)
+                            _isRequestedFixCloth.value = Event(false)
+                            Timber.d("등록된 옷 정보 수정 요청 실패1 - ${response.errorBody()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseRegisteredClothInfo>, t: Throwable) {
+                        Timber.d("등록된 옷 정보 수정 요청 실패2 - $t")
+                    }
+
                 })
             } catch (e: Throwable) {
                 Timber.d(e)
@@ -246,5 +398,4 @@ class ClothAddViewModel(
         _selectedClothCategoryId.value = categoryList.indexOf(selectedCategory)
         Timber.d("옷 카테고리 선택 : ${_selectedClothCategoryId.value}")
     }
-
 }
