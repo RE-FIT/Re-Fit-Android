@@ -31,11 +31,9 @@ interface MyPageApi {
     @PATCH("/refit/mypage/info")
     fun updateInfo(
         @Header("Authorization") token: String,
-        @Part("image") image: MultipartBody.Part?,
-        @Part("name") name: RequestBody,
-        @Part("birth") birth: RequestBody,
-        @Part("gender") gender: RequestBody,
-    ): Call<ResponseBody>
+        @Part("image") image: List<MultipartBody.Part>,
+        @Part("content") content: RequestBody,
+    )
 
     // 이름(닉네임) 중복 확인
     @GET("/refit/mypage/info/check")

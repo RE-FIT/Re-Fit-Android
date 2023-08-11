@@ -67,7 +67,7 @@
                     style="@style/RegularFont.14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{vm.userNickname}"
+                    android:text="@{vm.myInfoResponse.name}"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -216,6 +216,7 @@
                         android:autofillHints="birth"
                         android:background="@drawable/et_mypage_round_10"
                         android:inputType="date"
+                        android:maxLength="10"
                         android:paddingStart="11dp"
                         android:paddingTop="13dp"
                         android:paddingEnd="0dp"
@@ -249,8 +250,8 @@
                         android:layout_marginTop="33dp"
                         android:layout_marginBottom="32dp"
                         android:background="@drawable/btn_my_info_pw"
-                        android:backgroundTint="@{vm.isCheckUpdatedNickname() || vm.isCheckUpdatedBirth() || vm.isCheckUpdatedGender() ? @color/green1 : @color/dark1}"
-                        android:clickable="@{vm.isCheckUpdatedNickname() || vm.isCheckUpdatedBirth() || vm.isCheckUpdatedGender() ? true : false, default = false}"
+                        android:backgroundTint="@{vm.isUpdatedOptions ? @color/green1 : @color/dark1}"
+                        android:clickable="@{vm.isUpdatedOptions ? true : false, default = false}"
                         android:text="@string/my_info_btn_update"
                         android:textColor="@color/white" />
 

@@ -1,6 +1,5 @@
 package com.example.refit.presentation.mypage
 
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -11,10 +10,8 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.example.refit.R
-import com.example.refit.data.model.mypage.CheckNicknameResponse
 import com.example.refit.databinding.FragmentMyInfoUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DialogUtil
@@ -39,13 +36,11 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         binding.vm = vm
         binding.lifecycleOwner = this
 
+        vm.initAllStatus()
         vm.showMyInfoRetrofit()
-        vm.checkNicknameRetrofit()
 
         editNickname()
         editBirth()
-        pressCheckButton()
-        pressUpdateButton()
         selectGenderSpinner()
 
         // 앨범에서 사진 가져오기
@@ -53,11 +48,33 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         handleAddProfilePhoto()
 
         vm.userNickname.observe(viewLifecycleOwner, Observer {
-            binding.myInfoName.text = it.toString()
+            vm.checkNicknameRetrofit()
+            vm.updateBtn()
+            pressCheckButton()
+            pressUpdateButton(false)
+
+            vm.setUpdatedStatus(0, true)
+            vm.setUpdatedAllStatus()
         })
 
+        vm.userBirth.observe(viewLifecycleOwner, Observer {
+            vm.setUpdatedStatus(1, true)
+
+            vm.setUpdatedAllStatus()
+        })
+
+        vm.userGender.observe(viewLifecycleOwner, Observer {
+            vm.setUpdatedStatus(2, true)
+
+            vm.setUpdatedAllStatus()
+        })
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        vm.initAllStatus()
+    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -72,21 +89,24 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         ).show(requireActivity().supportFragmentManager, null)
     }
 
-    private fun pressCheckButton() {
+    fun pressCheckButton() {
         // 중복 확인 눌렀을 때
         binding.btnNickNameCheck.setOnClickListener {
             if (vm.checkNickname()) {
                 binding.ableName.visibility = View.VISIBLE
                 binding.enableName.visibility = View.GONE
-                binding.btnNickNameCheck.isEnabled = true
+                vm.initNicknameInfoStatus(false)
+                pressUpdateButton(true)
             } else {
                 binding.enableName.visibility = View.VISIBLE
                 binding.ableName.visibility = View.GONE
+
+                pressUpdateButton(false)
             }
         }
     }
 
-    private fun pressUpdateButton() {
+    private fun pressUpdateButton(flag: Boolean) {
         // 수정 버튼 눌렀을 때
         // [이름만 수정 되었을 때]
             // 1. 중복 확인 누름 - 사용 가능 / 이미 사용 중 >> 이미 사용 중일 땐 - 수정 버튼 눌러도 다이얼로그
@@ -94,15 +114,13 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
             // 3. 수정 버튼
         // [성별, 생일 수정 됐을 때] >> 수정 버튼 바로 클릭 가능
         binding.btnMyInfoUpdate.setOnClickListener {
-            vm.isCheckUpdatedBtnStatus.observe(viewLifecycleOwner) {
-                /*if (it) {
-                    binding.btnNickNameCheck.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dark1))
-                } else {
-                    showMyPageNickNameCheckDialog()
-                }*/
+            // TODO("수정")
+            if (flag) {
+                vm.initCheckBtnStatus(false)
+            } else {
+                showMyPageNickNameCheckDialog()
             }
         }
-
     }
 
     // ----------------------- 정보 수정 -----------------------
@@ -145,8 +163,9 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 // 중복 확인, 수정하기 버튼 활성화 > 색깔 바뀜
                 vm.updateNickname(s.toString())
+                pressCheckButton()
             }
-            override fun afterTextChanged(s: Editable?) { }
+            override fun afterTextChanged(s: Editable?) {  }
         })
     }
 
@@ -155,7 +174,16 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         binding.etBirthday.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // 수정하기 버튼 활성화 > 색깔 바뀜
+                val length = binding.etBirthday.text.length
+
+                if (length == 4 && before != 1) {
+                    binding.etBirthday.setText(binding.etBirthday.text.toString()+"/")
+                    binding.etBirthday.setSelection(binding.etBirthday.text.length)
+                } else if (length == 7 && before != 1) {
+                    binding.etBirthday.setText(binding.etBirthday.text.toString() + "/")
+                    binding.etBirthday.setSelection(binding.etBirthday.text.length)
+                }
+
                 vm.updateBirth(s.toString())
             }
             override fun afterTextChanged(s: Editable?) { }

@@ -1,6 +1,5 @@
 package com.example.refit.data.repository.mypage
 
-import com.example.refit.data.model.mypage.CheckNicknameResponse
 import com.example.refit.data.model.mypage.MyFeedBuyListItemResponse
 import com.example.refit.data.model.mypage.MyFeedGiveListItemResponse
 import com.example.refit.data.model.mypage.MyFeedSellListItemResponse
@@ -10,6 +9,7 @@ import com.example.refit.data.model.mypage.ShowMyInfoResponse
 import com.example.refit.data.repository.mypage.datasource.MyPageDataSource
 import okhttp3.ResponseBody
 import retrofit2.Call
+import java.io.File
 
 class MyPageRepositoryImpl(private val myPageDataSource: MyPageDataSource): MyPageRepository {
     override suspend fun checkNickname(accessToken: String, name: String): Call<Boolean> {
@@ -18,10 +18,10 @@ class MyPageRepositoryImpl(private val myPageDataSource: MyPageDataSource): MyPa
     override suspend fun showMyInfo(accessToken: String): Call<ShowMyInfoResponse> {
         return myPageDataSource.showMyInfo(accessToken)
     }
-
     override suspend fun updatePassword(accessToken: String, currentPw: String, newPw: String): Call<ResponseBody> {
         return myPageDataSource.updatePassword(accessToken, currentPw, newPw)
     }
+
     override suspend fun loadCommunityListSort(
         token: String,
         postType: Int,
