@@ -275,6 +275,7 @@
     <!-- find id -->
     <string name="find_id_name">이름(닉네임)</string>
     <string name="find_id_email">이메일</string>
+    <string name="find_pw_id">아이디</string>
 
     <!-- 온보딩  -->
     <string name="app_info_description">세상에 없던 친환경 디지털 옷장</string>
@@ -290,5 +291,13 @@
     <string name="on_boarding_third_page">잘 입진 않지만 버리기 아까운 옷은\n옷 장터 커뮤니티에 등록하고 </string>
     <string name="on_boarding_fourth_page">채팅을 통해 간편히 대화하며\n다른 이에겐 잘 맞지 않는 옷의 새 주인이 되어보세요</string>
     <string name="on_boarding_fifth_page">RE-FIT과 함께\n지속 가능하고 건강한 의류 소비 생활을\n시작해보세요!</string>
+    <string name="find_id_title">아이디 찾기</string>
+    <string name="find_id_email_text">이메일을 입력해주세요.</string>
+    <string name="find_id_name_text">이름(닉네임)을 입력해주세요.</string>
+    <string name="find_id_write_title">회원정보에 등록하신 이름(닉네임)과 이메일을 작성해주세요.</string>
+    <string name="find_id_big_title">아이디가 생각나지 않으세요?</string>
+    <string name="find_pw_write_title">회원정보에 등록하신 이름(닉네임), 아이디, 이메일을 작성해주세요.</string>
+    <string name="find_pw_big_title">비밀번호가 생각나지 않으세요?</string>
+    <string name="find_pw_title">비밀번호 찾기</string>
 
 </resources>

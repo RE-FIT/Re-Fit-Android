@@ -6,6 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.community.CommunityListItemResponse
+import com.example.refit.data.model.mypage.MyFeedBuyListItemResponse
+import com.example.refit.data.model.mypage.MyFeedGiveListItemResponse
+import com.example.refit.data.model.mypage.MyFeedSellListItemResponse
+import com.example.refit.data.model.mypage.MyScrapGiveListItemResponse
+import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
 import com.example.refit.data.repository.mypage.MyPageRepository
 import com.example.refit.util.Event
 import com.google.gson.Gson
@@ -21,13 +26,27 @@ import java.lang.Exception
 
 class MyFeedViewModel(private val repository: MyPageRepository, private val ds: TokenStore) : ViewModel() {
 
-    private val _communityList: MutableLiveData<List<CommunityListItemResponse>> =
-        MutableLiveData<List<CommunityListItemResponse>>()
-    val communityList: LiveData<List<CommunityListItemResponse>>
-    get() = _communityList
+    // 피드 - 판매
+    private val _myFeedSellList: MutableLiveData<List<MyFeedSellListItemResponse>> =
+        MutableLiveData<List<MyFeedSellListItemResponse>>()
+    val myFeedSellList: LiveData<List<MyFeedSellListItemResponse>>
+        get() = _myFeedSellList
+
+    // 피드 - 나눔
+    private val _myFeedGiveList: MutableLiveData<List<MyFeedGiveListItemResponse>> =
+        MutableLiveData<List<MyFeedGiveListItemResponse>>()
+    val myFeedGiveList: LiveData<List<MyFeedGiveListItemResponse>>
+        get() = _myFeedGiveList
+
+    // 피드 - 구매
+    private val _myFeedBuyList: MutableLiveData<List<MyFeedBuyListItemResponse>> =
+        MutableLiveData<List<MyFeedBuyListItemResponse>>()
+    val myFeedBuyList: LiveData<List<MyFeedBuyListItemResponse>>
+        get() = _myFeedBuyList
 
     private val _selectedPostItem: MutableLiveData<Event<Int>> =
         MutableLiveData<Event<Int>>()
+
     val selectedPostItem: LiveData<Event<Int>>
     get() = _selectedPostItem
 
@@ -35,38 +54,25 @@ class MyFeedViewModel(private val repository: MyPageRepository, private val ds: 
     val isLoading: LiveData<Boolean>
     get() = _isLoading
 
-    // 0 (나눔/판매), 1(여성복/남성복), 2(상의/하의/...)
-    private val _dropDownValue: List<MutableLiveData<Int>> = List(3) { MutableLiveData<Int>() }
-    val dropDownValue: List<MutableLiveData<Int>>
-    get() = _dropDownValue
-
-    fun loadCommunityList() =
+    fun loadFeedGiveList() =
         viewModelScope.launch {
             val accessToken = ds.getAccessToken().first()
             _isLoading.value = true
             try {
-                val postType = _dropDownValue[0].value ?: 0
-                val gender = _dropDownValue[1].value ?: 0
-                val category = _dropDownValue[2].value ?: 0
-
                 val response =
-                    repository.loadCommunityListSort(accessToken, postType, gender, category)
+                    repository.loadMyFeedGiveList(accessToken)
 
-                Timber.d("postType: $postType, gender: $gender, category: $category")
-                response.enqueue(object : Callback<ResponseBody> {
+                response.enqueue(object : Callback<List<MyFeedGiveListItemResponse>> {
                     override fun onResponse(
-                        call: Call<ResponseBody>,
-                        response: Response<ResponseBody>
+                        call: Call<List<MyFeedGiveListItemResponse>>,
+                        response: Response<List<MyFeedGiveListItemResponse>>
                     ) {
                         if (response.isSuccessful) {
                             Timber.d("API 호출 성공")
                             val responseBody = response.body()
                             if (responseBody != null) {
-                                val json = responseBody.string()
-                                val communityList = parseCommunityList(json)
-                                Timber.d("communityList : ${communityList.toString()}")
-
-                                _communityList.value = communityList
+                                _myFeedGiveList.value = responseBody ?: null
+                                Timber.d("scrapList : ${response.body()}")
                             }
                         } else {
                             val errorBody = response.errorBody()
@@ -82,71 +88,112 @@ class MyFeedViewModel(private val repository: MyPageRepository, private val ds: 
                         }
                     }
 
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        Timber.d("RESPONSE FAILURE")
+                    override fun onFailure(call: Call<List<MyFeedGiveListItemResponse>>, t: Throwable) {
+                        Timber.d("실패: $t")
                     }
                 })
             } catch (e: Exception) {
-                "커뮤니티 글 목록 로딩 오류: $e"
+                "스크랩 글 목록 로딩 오류: $e"
             } finally {
                 _isLoading.value = false
             }
 
         }
 
-    fun setDropDownController(type: Int, value: String) {
-        when (type) {
-            0 -> {
-                // 글 타입 (나눔/판매)
-                _dropDownValue[0].value = conversionTextToType(0, value)
+    fun loadFeedSellList() =
+        viewModelScope.launch {
+            val accessToken = ds.getAccessToken().first()
+            _isLoading.value = true
+            try {
+                val response =
+                    repository.loadMyFeedSellList(accessToken)
+
+                response.enqueue(object : Callback<List<MyFeedSellListItemResponse>> {
+                    override fun onResponse(
+                        call: Call<List<MyFeedSellListItemResponse>>,
+                        response: Response<List<MyFeedSellListItemResponse>>
+                    ) {
+                        if (response.isSuccessful) {
+                            Timber.d("API 호출 성공")
+                            val responseBody = response.body()
+                            if (responseBody != null) {
+                                _myFeedSellList.value = responseBody ?: null
+                                Timber.d("scrapList : ${response.body()}")
+                            }
+                        } else {
+                            val errorBody = response.errorBody()
+                            val errorCode = response.code()
+
+                            if (errorBody != null) {
+                                val errorJson = JSONObject(errorBody.string())
+                                val errorMessage = errorJson.optString("message")
+                                val errorCodeFromJson = errorJson.optInt("code")
+
+                                Timber.d("API 호출 실패: ${errorJson.toString()} / $errorCodeFromJson / $errorMessage")
+                            } else Timber.d("API 호출 실패 errorbody is not working : $errorCode")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<List<MyFeedSellListItemResponse>>, t: Throwable) {
+                        Timber.d("실패: $t")
+                    }
+                })
+            } catch (e: Exception) {
+                "스크랩 글 목록 로딩 오류: $e"
+            } finally {
+                _isLoading.value = false
             }
 
-            1 -> {
-                // 성별 (여성복/남성복)
-                _dropDownValue[1].value = conversionTextToType(1, value)
-            }
-
-            2 -> {
-                // 카테고리 (상의/하의/...)
-                _dropDownValue[2].value = conversionTextToType(2, value)
-            }
         }
-    }
+
+    fun loadFeedBuyList() =
+        viewModelScope.launch {
+            val accessToken = ds.getAccessToken().first()
+            _isLoading.value = true
+            try {
+                val response =
+                    repository.loadMyFeedBuyList(accessToken)
+
+                response.enqueue(object : Callback<List<MyFeedBuyListItemResponse>> {
+                    override fun onResponse(
+                        call: Call<List<MyFeedBuyListItemResponse>>,
+                        response: Response<List<MyFeedBuyListItemResponse>>
+                    ) {
+                        if (response.isSuccessful) {
+                            Timber.d("API 호출 성공")
+                            val responseBody = response.body()
+                            if (responseBody != null) {
+                                _myFeedBuyList.value = responseBody ?: null
+                                Timber.d("scrapList : ${response.body()}")
+                            }
+                        } else {
+                            val errorBody = response.errorBody()
+                            val errorCode = response.code()
+
+                            if (errorBody != null) {
+                                val errorJson = JSONObject(errorBody.string())
+                                val errorMessage = errorJson.optString("message")
+                                val errorCodeFromJson = errorJson.optInt("code")
+
+                                Timber.d("API 호출 실패: ${errorJson.toString()} / $errorCodeFromJson / $errorMessage")
+                            } else Timber.d("API 호출 실패 errorbody is not working : $errorCode")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<List<MyFeedBuyListItemResponse>>, t: Throwable) {
+                        Timber.d("실패: $t")
+                    }
+                })
+            } catch (e: Exception) {
+                "스크랩 글 목록 로딩 오류: $e"
+            } finally {
+                _isLoading.value = false
+            }
+
+        }
 
     fun handleClickItem(postId: Int) {
         _selectedPostItem.value = Event(postId)
-    }
-
-    fun initStatus() {
-        for (item in _dropDownValue) {
-            item.value = 0
-        }
-    }
-
-    fun conversionTextToType(itemType: Int, value: String): Int {
-        var type = Integer.MIN_VALUE
-        when (itemType) {
-            0 -> when (value) {
-                "나눔" -> type = 0
-                "판매" -> type = 1
-                "구매" -> type = 2
-            }
-
-            1 -> when (value) {
-                "여성복" -> type = 0
-                "남성복" -> type = 1
-            }
-
-            2 -> when (value) {
-                "상의" -> type = 0
-                "하의" -> type = 1
-                "아우터" -> type = 2
-                "원피스" -> type = 3
-                "신발" -> type = 4
-                "악세사리" -> type = 5
-            }
-        }
-        return type
     }
 
     fun conversionTypeToText(itemType: Int, value: String): String {
@@ -169,10 +216,7 @@ class MyFeedViewModel(private val repository: MyPageRepository, private val ds: 
         }
     }
 
-    private fun parseCommunityList(json: String): List<CommunityListItemResponse> {
-        val gson = Gson()
-        return gson.fromJson(json, Array<CommunityListItemResponse>::class.java).toList()
-    }
 }
+
 
 

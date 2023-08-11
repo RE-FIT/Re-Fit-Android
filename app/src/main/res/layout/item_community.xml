@@ -21,10 +21,6 @@
             name="vm_search"
             type="com.example.refit.presentation.community.viewmodel.CommunitySearchViewModel" />
 
-        <variable
-            name="vm_scrap"
-            type="com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

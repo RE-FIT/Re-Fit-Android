@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="com.example.refit.presentation.mypage.viewmodel.MyPageViewModel" />
+            type="com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel" />
 
     </data>
 
@@ -70,12 +70,13 @@
 
                 <!-- name -->
                 <TextView
+                    android:id="@+id/myPage_name"
                     style="@style/RegularFont.14"
                     android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
-                    android:text="@string/my_info_name" />
+                    android:text="@{vm.myInfoResponse.name}"/>
 
             </LinearLayout>
 
