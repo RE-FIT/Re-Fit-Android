@@ -54,6 +54,7 @@ private fun getSizeString(size: Int): String {
     }
 }
 
+
 @BindingAdapter("app:restrictText")
 fun setRestrictedText(view: TextView, text: CharSequence?) {
     val maxLength = 200

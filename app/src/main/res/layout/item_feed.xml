@@ -10,19 +10,19 @@
             type="Boolean" />
 
         <variable
-            name="communityList"
-            type="com.example.refit.data.model.community.CommunityListItemResponse" />
+            name="feedList"
+            type="com.example.refit.data.model.mypage.MyFeedGiveListItemResponse"/>
+
+        <variable
+            name="feedListSell"
+            type="com.example.refit.data.model.mypage.MyFeedSellListItemResponse" />
+
+        <variable
+            name="feedListBuy"
+            type="com.example.refit.data.model.mypage.MyFeedBuyListItemResponse" />
 
         <variable
             name="vm"
-            type="com.example.refit.presentation.community.viewmodel.CommunityViewModel" />
-
-        <variable
-            name="vm_scrap"
-            type="com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel" />
-
-        <variable
-            name="vm_feed"
             type="com.example.refit.presentation.mypage.viewmodel.MyFeedViewModel" />
 
     </data>
@@ -35,6 +35,7 @@
         android:paddingVertical="5dp">
 
         <com.google.android.material.card.MaterialCardView
+            android:onClick="@{() -> vm.handleClickItem(feedList.postId)}"
             android:id="@+id/mcv_community_item_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +43,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:cardBackgroundColor="@color/white"
             app:strokeColor="@android:color/transparent" >
-            
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,7 +54,8 @@
                     android:id="@+id/iv_community_item"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/img_temp_70"
+                    setImage="@{feedList.imgUrl}"
+                    android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.10"
                     app:strokeColor="@android:color/transparent"
                     android:layout_marginStart="10dp"
@@ -82,15 +84,16 @@
                             style="@style/BoldFontKr.12"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{communityList.component2()}"
+                            android:text="@{feedList.title}"
                             android:textColor="@color/green1" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_community_item_list_price"
                             style="@style/MediumFont.10"
+                            setVisibility="@{feedList.price == 0 ? false : true}"
+                            android:visibility="visible"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="50000원"
                             android:textColor="@color/dark2"
                             android:layout_marginLeft="15dp" />
 
@@ -117,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="bottom"
-                        android:text="M"
+                        android:text="@{vm.conversionTypeToText(3, feedList.size)}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_size_txt"
                         app:layout_constraintTop_toBottomOf="@id/ll_community_item" />
@@ -139,7 +142,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="bottom"
-                        android:text="직거래"
+                        android:text="@{feedList.deliveryType == 0 ? `직거래` : `택배`}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_method_txt"
                         app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_size"
@@ -162,7 +165,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="bottom"
-                        android:text="@{communityList.component5}"
+                        android:text="@{feedList.address == null ? @string/community_item_region_all : feedList.address}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_method_txt"
                         app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_method"

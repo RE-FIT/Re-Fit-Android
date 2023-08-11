@@ -9,8 +9,6 @@
             name="emailCertificationCode"
             type="com.example.refit.data.model.signup.ResponseEmailCertification" />
 
-
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -245,7 +243,6 @@
                     android:hint="성별을 선택해주세요"
                     android:textColorHint="@color/dark1"
                     app:boxStrokeErrorColor="@color/red"
-                    app:boxStrokeWidth="3dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.137"
                     app:layout_constraintStart_toStartOf="parent"

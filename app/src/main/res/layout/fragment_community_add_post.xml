@@ -11,14 +11,6 @@
         <import type="com.example.refit.R" />
 
         <variable
-            name="photoUris"
-            type="java.util.List&lt;java.lang.String&gt;" />
-
-        <variable
-            name="photolen"
-            type="String" />
-
-        <variable
             name="cmviewmodel"
             type="com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel" />
     </data>
@@ -93,7 +85,7 @@
                                 android:orientation="horizontal" >
 
                                 <com.google.android.material.imageview.ShapeableImageView
-                                    setImage="@{photoUris[0]}"
+                                    setImage="@{cmviewmodel.photoUris[0]}"
                                     android:layout_width="60dp"
                                     android:layout_height="60dp"
                                     android:adjustViewBounds="true"
@@ -106,7 +98,7 @@
                                     app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.10" />
 
                                 <com.google.android.material.imageview.ShapeableImageView
-                                    setImage="@{photoUris[1]}"
+                                    setImage="@{cmviewmodel.photoUris[1]}"
                                     android:layout_width="60dp"
                                     android:layout_height="60dp"
                                     android:adjustViewBounds="true"
@@ -119,7 +111,7 @@
                                     app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.10" />
 
                                 <com.google.android.material.imageview.ShapeableImageView
-                                    setImage="@{photoUris[2]}"
+                                    setImage="@{cmviewmodel.photoUris[2]}"
                                     android:layout_width="60dp"
                                     android:layout_height="60dp"
                                     android:adjustViewBounds="true"
@@ -132,7 +124,7 @@
                                     app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.10" />
 
                                 <com.google.android.material.imageview.ShapeableImageView
-                                    setImage="@{photoUris[3]}"
+                                    setImage="@{cmviewmodel.photoUris[3]}"
                                     android:layout_width="60dp"
                                     android:layout_height="60dp"
                                     android:adjustViewBounds="true"
@@ -150,7 +142,7 @@
 
                                     <com.google.android.material.imageview.ShapeableImageView
                                         android:id="@+id/iv_community_image_container"
-                                        setImage="@{photoUris[4]}"
+                                        setImage="@{cmviewmodel.photoUris[4]}"
                                         android:layout_width="60dp"
                                         android:layout_height="60dp"
                                         android:adjustViewBounds="true"
@@ -178,7 +170,7 @@
                                             style="@style/RegularFontKr.10"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@{photolen}" />
+                                            android:text="@{cmviewmodel.photoLen == null ? `0/5` : cmviewmodel.photoLen + `/5`}" />
                                     </LinearLayout>
 
                                 </FrameLayout>
@@ -233,6 +225,7 @@
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_community_addpost_recommend_gender"
                             style="@style/CommunityAddPostCardView.Common"
+                            app:strokeColor="@color/dark1"
                             CStrokeColor="@{cmviewmodel.isClickedOptionRG}"
                             android:layout_width="match_parent"
                             android:layout_height="40dp">
@@ -245,7 +238,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:gravity="center_vertical"
-                                android:text="@string/community_addpost_contents_detail_second" />
+                                android:text="@{cmviewmodel.isFilledValue[2] ? cmviewmodel.conversionTypeToText(5, cmviewmodel.postValue[5]) : @string/community_addpost_contents_detail_second}" />
                         </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
@@ -279,7 +272,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:gravity="center_vertical"
-                                android:text="@string/community_addpost_contents_detail_third" />
+                                android:text="@{cmviewmodel.isFilledValue[3] ? cmviewmodel.conversionTypeToText(3, cmviewmodel.postValue[3]) : @string/community_addpost_contents_detail_third}" />
 
                         </com.google.android.material.card.MaterialCardView>
 
@@ -314,7 +307,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:gravity="center_vertical"
-                                android:text="@string/community_addpost_contents_detail_fourth" />
+                                android:text="@{cmviewmodel.isFilledValue[4] ? cmviewmodel.conversionTypeToText(4, cmviewmodel.postValue[4]) : @string/community_addpost_contents_detail_fourth}" />
                         </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
@@ -551,7 +544,7 @@
                                     android:drawableRight="@drawable/ic_search_dark_13"
                                     android:gravity="center_vertical"
                                     android:text="@string/communtiy_addpost_contents_detail_fourth_region"
-                                    android:textColor="@{cmviewmodel.isFilledValue[2] ? @color/black : @color/dark2}" />
+                                    android:textColor="@{cmviewmodel.isFilledAddress ? @color/black : @color/dark2}" />
 
                             </com.google.android.material.card.MaterialCardView>
                         </LinearLayout>

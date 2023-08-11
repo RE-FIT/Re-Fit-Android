@@ -33,7 +33,6 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = communityViewModel
-
         communityViewModel.initStatus()
         communityViewModel.loadCommunityList()
         initCommunityList()
@@ -116,7 +115,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
     private fun setClickedButton() {
         binding.ibCommunityMail.setOnClickListener {
-            // TODO (새로운 채팅이 있으면 N)
+            navigate(R.id.action_nav_community_to_chatRoomFragment)
         }
 
         binding.ibCommunitySearch.setOnClickListener {
@@ -130,6 +129,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
     }
 
     private fun observeStatus() {
+        communityViewModel.communityList.observe(viewLifecycleOwner) { response ->
+            if (response != null) {
+                initCommunityList()
+            }
+        }
+
         communityViewModel.selectedPostItem.observe(viewLifecycleOwner, EventObserver { postId ->
             infoViewModel.clickedGetPost(postId)
             navigate(R.id.action_nav_community_to_communityInfoFragment)

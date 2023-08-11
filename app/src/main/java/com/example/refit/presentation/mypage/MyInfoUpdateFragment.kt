@@ -1,14 +1,20 @@
 package com.example.refit.presentation.mypage
 
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.example.refit.R
+import com.example.refit.data.model.mypage.CheckNicknameResponse
 import com.example.refit.databinding.FragmentMyInfoUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DialogUtil
@@ -29,66 +35,131 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val spinner = binding.spinnerGender
 
         binding.vm = vm
         binding.lifecycleOwner = this
 
-        vm.userNickname.observe(viewLifecycleOwner) { newName ->
-            binding.etNickname.setText(newName)
+        vm.showMyInfoRetrofit()
+        vm.checkNicknameRetrofit()
+
+        editNickname()
+        editBirth()
+        pressCheckButton()
+        pressUpdateButton()
+        selectGenderSpinner()
+
+        // 앨범에서 사진 가져오기
+        initGalleryLauncher()
+        handleAddProfilePhoto()
+
+        vm.userNickname.observe(viewLifecycleOwner, Observer {
+            binding.myInfoName.text = it.toString()
+        })
+
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        vm.initAllStatus()
+    }
+
+    // ----------------------- 이름(닉네임) 중복/수정 버튼 -----------------------
+    private fun showMyPageNickNameCheckDialog() {
+        checkNickNameDialog(
+            resources.getString(R.string.my_info_nickname_check)
+        ).show(requireActivity().supportFragmentManager, null)
+    }
+
+    private fun pressCheckButton() {
+        // 중복 확인 눌렀을 때
+        binding.btnNickNameCheck.setOnClickListener {
+            if (vm.checkNickname()) {
+                binding.ableName.visibility = View.VISIBLE
+                binding.enableName.visibility = View.GONE
+                binding.btnNickNameCheck.isEnabled = true
+            } else {
+                binding.enableName.visibility = View.VISIBLE
+                binding.ableName.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun pressUpdateButton() {
+        // 수정 버튼 눌렀을 때
+        // [이름만 수정 되었을 때]
+            // 1. 중복 확인 누름 - 사용 가능 / 이미 사용 중 >> 이미 사용 중일 땐 - 수정 버튼 눌러도 다이얼로그
+            // 2. 중복 확인 안 누름 > 다이얼 로그 띄우기
+            // 3. 수정 버튼
+        // [성별, 생일 수정 됐을 때] >> 수정 버튼 바로 클릭 가능
+        binding.btnMyInfoUpdate.setOnClickListener {
+            vm.isCheckUpdatedBtnStatus.observe(viewLifecycleOwner) {
+                /*if (it) {
+                    binding.btnNickNameCheck.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dark1))
+                } else {
+                    showMyPageNickNameCheckDialog()
+                }*/
+            }
         }
 
+    }
+
+    // ----------------------- 정보 수정 -----------------------
+    private fun selectGenderSpinner() {
         // 성별 선택
-        spinner.adapter = ArrayAdapter.createFromResource(this.requireContext(), R.array.my_page_myInfo_gender, R.layout.mypage_spinner_gender)
+        val spinner = binding.spinnerGender
+
+        spinner.adapter = ArrayAdapter.createFromResource(
+            this.requireContext(),
+            R.array.my_page_myInfo_gender,
+            R.layout.mypage_spinner_gender
+        )
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                when (position) {
-                    // 여자
-                    0 -> {
+                vm.userGender.observe(viewLifecycleOwner) {
+                    when (position) {
+                        0 -> {
+                            vm.updateGender(0)
+                        }
 
-                    }
-
-                    // 남자
-                    1 -> {
-
+                        1 -> {
+                            vm.updateGender(1)
+                        }
                     }
                 }
             }
         }
-
-        // 앨범에서 사진 가져오기
-        initGalleryLauncher()
-        handleAddProfilePhoto()
-
-        vm.isInfoModified.observe(viewLifecycleOwner) { isModified ->
-            binding.btnMyInfoUpdate.isEnabled = isModified
-        }
-
-
-        vm.initAllStatus()
     }
 
-    // ----------------------- 이름(닉네임) 중복 확인 -----------------------
-    private fun handleClickAddCompleteButton() {
-
-        binding.btnMyInfoUpdate.setOnClickListener {
-
-        }
+    private fun editNickname() {
+        // 이름(닉네임)
+        binding.etNickname.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // 중복 확인, 수정하기 버튼 활성화 > 색깔 바뀜
+                vm.updateNickname(s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) { }
+        })
     }
 
-    private fun showMyPageNickNameCheckDialog() {
-        checkNickNameDialog(
-            resources.getString(R.string.my_info_nickname_check)
-        ).show(requireActivity().supportFragmentManager, null)
+    private fun editBirth() {
+        // 생일
+        binding.etBirthday.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // 수정하기 버튼 활성화 > 색깔 바뀜
+                vm.updateBirth(s.toString())
+            }
+            override fun afterTextChanged(s: Editable?) { }
+        })
     }
 
     // ----------------------- 사진 및 카메라 통한 옷 이미지 등록 -----------------------
@@ -117,10 +188,5 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
                     Timber.d("선택된 사진이 없음")
                 }
             }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-//        vm.initAllStatus()
     }
 }

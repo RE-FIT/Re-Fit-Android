@@ -1,21 +1,66 @@
 package com.example.refit.presentation.mypage.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.refit.data.datastore.TokenStore
+import com.example.refit.data.model.mypage.CheckNicknameResponse
+import com.example.refit.data.model.mypage.ShowMyInfoResponse
 import com.example.refit.data.repository.mypage.MyPageRepository
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Converter
+import retrofit2.Response
+import retrofit2.Retrofit
+import timber.log.Timber
+import java.lang.reflect.Type
 
-class MyInfoViewModel(private val repository: MyPageRepository) : ViewModel() {
+class MyInfoViewModel(private val repository: MyPageRepository, private val ds: TokenStore) : ViewModel() {
 
-    // 값 수정 감지
-    private val _isInfoModified: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isInfoModified: LiveData<Boolean>
-        get() = _isInfoModified
+    // 내 정보
+    private val _myInfoResponse: MutableLiveData<ShowMyInfoResponse> = MutableLiveData<ShowMyInfoResponse>()
+    val myInfoResponse: LiveData<ShowMyInfoResponse>
+        get() = _myInfoResponse
 
     // 이름(닉네임)
     private val _userNickname: MutableLiveData<String> = MutableLiveData<String>()
     val userNickname: LiveData<String>
         get() = _userNickname
+
+    // 이름(닉네임) - 서버값 여기에 저장 - true 중복 / false 가능
+    private val _userNicknameResponse: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val userNicknameResponse: LiveData<Boolean>
+        get() = _userNicknameResponse
+
+    // 이름(닉네임) 수정됨?
+    private val _isCheckUpdatedNickname: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isCheckUpdatedNickname: LiveData<Boolean>
+        get() = _isCheckUpdatedNickname
+
+    // 중복 확인 눌림?
+    private val _isCheckUpdatedBtnStatus: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isCheckUpdatedBtnStatus: LiveData<Boolean>
+        get() = _isCheckUpdatedBtnStatus
+
+    // 생일 수정됨?
+    private val _isCheckUpdatedBirth: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isCheckUpdatedBirth: LiveData<Boolean>
+        get() = _isCheckUpdatedBirth
+
+    // 성별 수정됨?
+    private val _isCheckUpdatedGender: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isCheckUpdatedGender: LiveData<Boolean>
+        get() = _isCheckUpdatedGender
+
+    // 비밀 번호 입력됨?
+    private val _isCheckUpdatedPw: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isCheckUpdatedPw: LiveData<Boolean>
+        get() = _isCheckUpdatedPw
 
     // 이메일
     private val _userEmail: MutableLiveData<String> = MutableLiveData<String>()
@@ -28,21 +73,21 @@ class MyInfoViewModel(private val repository: MyPageRepository) : ViewModel() {
         get() = _userId
 
     // 생년 월일
-    private val _userBirth: MutableLiveData<Int> = MutableLiveData<Int>()
-    val userBirth: LiveData<Int>
+    private val _userBirth: MutableLiveData<String> = MutableLiveData<String>()
+    val userBirth: LiveData<String>
         get() = _userBirth
 
     // 성별
-    private val _userGender: MutableLiveData<String> = MutableLiveData<String>()
-    val userGender: LiveData<String>
+    private val _userGender: MutableLiveData<Int> = MutableLiveData<Int>()
+    val userGender: LiveData<Int>
         get() = _userGender
 
-    // 이름(닉네임) 중복 확인
-    private val _isCheckNicknameAvailable: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isCheckNicknameAvailable: LiveData<Boolean>
-        get() = _isCheckNicknameAvailable
+    // 입력한 현재 비밀 번호
+    private val _editCurrentPassword: MutableLiveData<String> = MutableLiveData<String>()
+    val editCurrentPassword: LiveData<String>
+        get() = _editCurrentPassword
 
-    // 현재 비밀번호, 서버 데이터랑 같은지 확인
+    //  서버에 있는 현재 비밀 번호
     private val _currentPassword: MutableLiveData<String> = MutableLiveData<String>()
     val currentPassword: LiveData<String>
         get() = _currentPassword
@@ -54,54 +99,126 @@ class MyInfoViewModel(private val repository: MyPageRepository) : ViewModel() {
 
     // -----------------------------------
 
-    // 이름(닉네임) 중복 확인
-    fun checkNickname(nickname: String) {
-
+    // 이름(닉네임) 수정 했을 때
+    fun updateNickname(newNickname: String) {
+        _userNickname.value = newNickname // 새로운 닉네임으로 저장
+        _isCheckUpdatedNickname.value = true // 닉네임이 수정되었다는 상태값 저장
     }
 
-    // 이름(닉네임) 수정
-    fun updateNickname(newNickname: String) {
-        _userNickname.value = newNickname
-        onInfoModified(true)
+    // 이름(닉네임) 중복 확인이 되었다면 true
+    fun checkNickname(): Boolean {
+        return true
+    }
+
+    // 중복 확인
+    fun updateBtn() {
+
     }
 
     // 생년 월일 수정
-    fun updateBirth(updateBirth: Int) {
+    fun updateBirth(updateBirth: String) {
         _userBirth.value = updateBirth
-        onInfoModified(true)
+        _isCheckUpdatedBirth.value = true
     }
 
     // 성별 수정
     fun updateGender(status: Int) {
-        when (status) {
-            0 -> _userGender.value = "여자"
-            1 -> _userGender.value = "남자"
-        }
-        onInfoModified(true)
+        _userGender.value = status
+        _isCheckUpdatedGender.value = true
     }
 
-    // 수정된 정보가 있을 때 해당 LiveData들을 true로 업데이트
-    private fun onInfoModified(status: Boolean) {
-        _isInfoModified.value = status
+    // 새로운 비밀 번호 수정
+    fun updateCurrentPw(currentPw: String) {
+        _newPassword.value = currentPw
+        _isCheckUpdatedPw.value = true
     }
 
-
-    // 현재 비밀번호 일치/불일치
-    fun checkCurrenPassword(status: Boolean) {
-
+    private fun initNicknameInfoStatus(status: Boolean) {
+        _isCheckUpdatedNickname.value = status
     }
 
-    // 새로운 비밀번호 조건 충족
-    fun checkNewPassword(newPw: String) {
-
+    private fun initBirthInfoStatus(status: Boolean) {
+        _isCheckUpdatedBirth.value = status
     }
 
-    private fun initInfoModifiedStatus(status: Boolean) {
-        _isInfoModified.value = status
+    private fun initGenderInfoStatus(status: Boolean) {
+        _isCheckUpdatedGender.value = status
+    }
+
+    private fun initCheckBtnStatus(status: Boolean) {
+        _isCheckUpdatedBtnStatus.value = status
     }
 
     fun initAllStatus() {
-        initInfoModifiedStatus(false)
+        initNicknameInfoStatus(false)
+        initBirthInfoStatus(false)
+        initGenderInfoStatus(false)
+        initCheckBtnStatus(false)
     }
 
+    // Retrofit
+    fun checkNicknameRetrofit() {
+        viewModelScope.launch {
+            val accessToken = ds.getAccessToken().first()
+
+            try {
+                val response = repository.checkNickname("$accessToken", "${_userNickname.value}")
+                Log.d("닉네임 값", "${_userNickname.value}")
+                Log.d("token", "$accessToken")
+
+                response.enqueue(object : Callback<Boolean> {
+                    override fun onResponse(
+                        call: Call<Boolean>,
+                        response: Response<Boolean>
+                    ) {
+                        if (response.isSuccessful){
+                            _userNicknameResponse.value = response.body() ?: false
+                            updateBtn()
+
+                            Timber.d("닉네임 중복 여부: ${_userNicknameResponse.value}")
+                        } else {
+                            Timber.e("Error: ${response.code()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                        Timber.d("401 Unauthorized: $t")
+                    }
+                })
+            } catch (e: Throwable) {
+                Timber.d("ERROR: $e")
+            }
+        }
+    }
+
+    fun showMyInfoRetrofit() {
+        viewModelScope.launch {
+            val accessToken = ds.getAccessToken().first()
+
+            try {
+                val response = repository.showMyInfo("$accessToken")
+
+                response.enqueue(object : Callback<ShowMyInfoResponse> {
+                    override fun onResponse(
+                        call: Call<ShowMyInfoResponse>,
+                        response: Response<ShowMyInfoResponse>
+                    ) {
+                        if (response.isSuccessful){
+                            _myInfoResponse.value = response.body()
+                            Log.d("내 정보 response", "${_myInfoResponse.value}")
+                            Log.d("내 정보 2", "${_myInfoResponse.value}")
+                        } else {
+                            Timber.e("Error: ${response.code()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ShowMyInfoResponse>, t: Throwable) {
+                        Timber.d("401 Unauthorized: $t")
+                    }
+                })
+            } catch (e: Throwable) {
+                Timber.d("ERROR: $e")
+            }
+        }
+    }
 }
