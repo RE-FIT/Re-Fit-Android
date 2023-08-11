@@ -5,7 +5,6 @@ import android.view.View
 import com.example.refit.R
 import com.example.refit.databinding.FragmentPostReportBinding
 import com.example.refit.presentation.common.BaseFragment
-import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.DialogUtil.showBanOnSalesDialog
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.community.viewmodel.PostReportViewModel
