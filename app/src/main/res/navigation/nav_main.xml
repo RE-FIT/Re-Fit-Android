@@ -150,7 +150,11 @@
         android:id="@+id/myPage_mySetting"
         android:name="com.example.refit.presentation.mypage.SettingFragment"
         android:label="fragment_mySetting"
-        tools:layout="@layout/fragment_setting"/>
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_myPage_mySetting_to_startingFragment"
+            app:destination="@id/startingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/clothRegistrationFragment"
         android:name="com.example.refit.presentation.closet.ClothRegistrationFragment"
