@@ -21,19 +21,34 @@ class ForestFragment : BaseFragment<FragmentForestBinding>(R.layout.fragment_for
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setStatusBarColor(R.color.green1)
-        forestViewModel.getForestStampStatus()
-        DialogUtil.showForestStampDialog().show(childFragmentManager, null)
+        forestViewModel.getForestInfo()
         initForestStampStatus()
         handleClickReturnButton()
         handleClickItem()
+        handleGetForestInfo()
     }
+
+    private fun handleGetForestInfo() {
+        forestViewModel.forestInfo.observe(viewLifecycleOwner, EventObserver {initData ->
+            binding.forestInfo = initData
+            if(initData.count < initData.targetCnt) {
+                if(forestViewModel.isValidShowingDialog.value!!.content) {
+                    DialogUtil.showForestStampDialog(initData).show(childFragmentManager, null)
+                    forestViewModel.stopShowingDialogEver()
+                }
+            } else {
+                // TODO(옷장 다 채워졌을 경우 카톡 공유할 수 있는 창으로 이동 구현)
+            }
+        })
+    }
+
 
     private fun initForestStampStatus() {
         binding.rvForestStamp.layoutManager = GridLayoutManager(requireActivity(), 3)
         binding.rvForestStamp.adapter = ForestStampAdapter(forestViewModel).apply {
-            forestViewModel.forestStamp.observe(viewLifecycleOwner) { list ->
+            forestViewModel.forestStamps.observe(viewLifecycleOwner, EventObserver {list ->
                 submitList(list)
-            }
+            })
         }
     }
 
@@ -44,8 +59,10 @@ class ForestFragment : BaseFragment<FragmentForestBinding>(R.layout.fragment_for
     }
 
     private fun handleClickItem() {
-        forestViewModel.selectedItem.observe(viewLifecycleOwner, EventObserver {slectedItem ->
-            navigate(R.id.action_forestFragment_to_quizFragment)
+        forestViewModel.isSelectItem.observe(viewLifecycleOwner, EventObserver { isSelectItem ->
+            if(isSelectItem) {
+                navigate(R.id.action_forestFragment_to_quizFragment)
+            }
         })
     }
 }

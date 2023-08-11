@@ -5,6 +5,9 @@
     tools:context=".presentation.community.CommunityFragment">
 
     <data>
+
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.example.refit.presentation.community.viewmodel.CommunityViewModel" />
@@ -29,48 +32,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <FrameLayout
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/tb_community_title"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="match_parent"
+                    android:background="@color/green1"
+                    app:layout_scrollFlags="scroll"
+                    app:title="@string/community_main_toolbar_title"
+                    app:titleCentered="true"
+                    app:titleTextAppearance="@style/BoldFont.22"
+                    app:titleTextColor="@color/white">
 
-                    <com.google.android.material.appbar.MaterialToolbar
-                        android:id="@+id/tb_community_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/default_dark"
-                        app:title="@string/community_main_toolbar_title"
-                        app:titleTextColor="@color/green1"
-                        app:titleTextAppearance="@style/BoldFont.22"
-                        app:layout_scrollFlags="scroll">
-
-                    </com.google.android.material.appbar.MaterialToolbar>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_gravity="right|center">
-
-                        <androidx.appcompat.widget.AppCompatImageButton
-                            android:id="@+id/ib_community_search"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginEnd="8dp"
-                            android:background="@drawable/ic_community_search_24" />
-
-                        <androidx.appcompat.widget.AppCompatImageButton
-                            android:id="@+id/ib_community_mail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="20dp"
-                            android:background="@{vm.isNewChat ? @drawable/ic_community_mail_up_20 : @drawable/ic_community_mail_18}" />
-
-                    </LinearLayout>
-
-
-
-                </FrameLayout>
-
+                </com.google.android.material.appbar.MaterialToolbar>
 
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -82,9 +55,9 @@
 
                 <HorizontalScrollView
                     android:id="@+id/hsv_community_search_option"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginBottom="12dp"
                     android:background="@color/default_dark"
                     android:scrollbars="none"
@@ -95,7 +68,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="left"
                         android:orientation="horizontal">
 
                         <com.google.android.material.card.MaterialCardView
@@ -147,6 +120,31 @@
 
                 </HorizontalScrollView>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@id/rv_community_list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/ib_community_search"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/ic_community_search_24" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/ib_community_mail"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@{vm.isNewChat ? @drawable/ic_community_mail_up_20 : @drawable/ic_community_mail_18}" />
+
+                </LinearLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_community_list"
                     android:layout_width="0dp"
@@ -162,8 +160,8 @@
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/fab_community_add"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
                 android:layout_gravity="bottom|end"
                 android:layout_marginEnd="17dp"
                 android:layout_marginBottom="13dp"
@@ -172,8 +170,11 @@
                 android:textAppearance="@style/RegularFontKr"
                 android:textColor="@color/white"
                 android:textSize="12sp"
+                android:paddingVertical="3dp"
+                app:cornerRadius="5dp"
                 app:icon="@drawable/ic_add_24"
-                app:iconPadding="0dp"
+                app:iconPadding="-3dp"
+                app:iconSize="20sp"
                 app:iconTint="@color/white" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

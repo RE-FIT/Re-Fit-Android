@@ -17,7 +17,7 @@ class AlertBasicDialog(
     private val title: String,
     private val positiveConfirm: String?,
     private val negativeConfirm: String?,
-    private val confirmDialogInterface: AlertBasicDialogListener
+    private val confirmDialogInterface: AlertBasicDialogListener?
 ) : BaseDialog<CustomDialogAlertBasicBinding>(R.layout.custom_dialog_alert_basic) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,14 +30,14 @@ class AlertBasicDialog(
 
     private fun handlePositiveConfirm() {
         binding.btnDialogAlertBasicPositive.setOnClickListener {
-            confirmDialogInterface.onClickPositive()
+            confirmDialogInterface?.onClickPositive()
             dismiss()
         }
     }
 
     private fun handleNegativeConfirm() {
         binding.btnDialogAlertBasicNegative.setOnClickListener {
-            confirmDialogInterface.onClickNegative()
+            confirmDialogInterface?.onClickNegative()
             dismiss()
         }
     }

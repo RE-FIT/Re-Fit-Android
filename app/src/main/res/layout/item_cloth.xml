@@ -7,7 +7,7 @@
 
         <variable
             name="clothInfo"
-            type="com.example.refit.data.model.closet.RegisteredClothInfoResponse" />
+            type="com.example.refit.data.model.closet.ResponseRegisteredClothes" />
 
         <variable
             name="vm"
@@ -21,11 +21,11 @@
         android:background="@color/default_dark">
 
         <com.google.android.material.card.MaterialCardView
-            android:onClick="@{() -> vm.handleClickItem(clothInfo)}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:clickable="true"
+            android:onClick="@{() -> vm.handleClickItem(clothInfo)}"
             app:cardBackgroundColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,12 +54,12 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_closet_item_d_day"
                         style="@style/BoldFont.12"
+                        setGoalDay="@{clothInfo.remainedDay}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
                         android:background="@color/green1"
-                        android:text="@{@string/registered_cloth_info_d_day(clothInfo.dDay)}"
                         android:textColor="@color/white"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +75,7 @@
                     android:layout_height="76dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
-                    android:src="@drawable/img_temp_67"
+                    setImage="@{clothInfo.imageUrl}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cv_closet_item_d_day_container"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.20" />
@@ -98,7 +98,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
-                    android:text="@{@string/registered_cloth_info_fit_and_goal(clothInfo.fit, clothInfo.goal)}"
+                    android:text="@{clothInfo.targetCnt > 0 ? @string/registered_cloth_info_fit_and_goal(clothInfo.count, clothInfo.targetCnt) : @string/registered_cloth_info_d_day_none_goal}"
                     android:textColor="@color/dark2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/iv_closet_item"
@@ -123,7 +123,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
-                    android:text="@{@string/registered_cloth_info_recommend_wearing(clothInfo.wearingMonth, clothInfo.wearingWeek)}"
+                    android:text="@{clothInfo.targetCnt > 0 ? @string/registered_cloth_info_recommend_wearing(clothInfo.cntPerMonth, clothInfo.cntPerWeek) : @string/registered_cloth_info_d_day_none_goal}"
                     android:textColor="@color/dark2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/iv_closet_item"
@@ -136,7 +136,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:progress="@{clothInfo.progress}"
+                    android:progress="@{clothInfo.targetCnt > 0 ? clothInfo.count*100/clothInfo.targetCnt : 0}"
                     app:indicatorColor="@color/green1"
                     app:layout_constraintBottom_toBottomOf="@id/tv_closet_item_progress_percent"
                     app:layout_constraintEnd_toEndOf="@id/tv_closet_item_progress_percent"
@@ -152,7 +152,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="@{@string/registered_cloth_info_progress(clothInfo.progress, @string/percent)}"
+                    android:text="@{clothInfo.targetCnt > 0 ? @string/registered_cloth_info_progress(clothInfo.count*100/clothInfo.targetCnt, @string/percent) : @string/empty}"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
