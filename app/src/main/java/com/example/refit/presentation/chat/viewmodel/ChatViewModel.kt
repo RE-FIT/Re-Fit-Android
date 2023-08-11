@@ -7,15 +7,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.chat.Chat
+import com.example.refit.data.model.chat.CreateRoom
+import com.example.refit.data.model.chat.ResponseCreateRoom
+import com.example.refit.data.model.common.ResponseError
 import com.example.refit.data.repository.chat.ChatRepository
+import com.example.refit.util.Event
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ChatViewModel(private val repository: ChatRepository, private val ds: TokenStore): ViewModel() {
+
+    private var _success = MutableLiveData<Event<Boolean>>()
+    val success : LiveData<Event<Boolean>>
+        get() = _success
 
     private var _chats = MutableLiveData<List<Chat>>()
     val chats : LiveData<List<Chat>>
@@ -25,8 +34,38 @@ class ChatViewModel(private val repository: ChatRepository, private val ds: Toke
     val delete : LiveData<Boolean>
         get() = _delete
 
+    private var _roomId = MutableLiveData<String>()
+    val roomId : LiveData<String>
+        get() = _roomId
+
     fun initDelete() {
         _delete.postValue(false)
+    }
+
+    fun initRoomId(data : String) {
+        _roomId.postValue(data)
+    }
+
+    /**
+     * 채팅방 생성
+     * */
+    fun room_create(room: CreateRoom) = viewModelScope.launch {
+        val accessToken = ds.getAccessToken().first()
+        val response = repository.create(accessToken, room)
+        response.enqueue(object : Callback<ResponseCreateRoom> {
+            override fun onResponse(call: Call<ResponseCreateRoom>, response: Response<ResponseCreateRoom>) {
+                if (response.isSuccessful) {
+                    Log.d("RESPONSE", response.body().toString())
+                    initRoomId(response.body()!!.roomId.toString())
+                    _success.postValue(Event(true))
+                } else {
+                    Log.d("RESPONSE", "FAIL")
+                }
+            }
+            override fun onFailure(call: Call<ResponseCreateRoom>, t: Throwable) {
+                Log.d("ContinueFail", "FAIL")
+            }
+        })
     }
 
     fun room_detail(roomId: String) = viewModelScope.launch {
