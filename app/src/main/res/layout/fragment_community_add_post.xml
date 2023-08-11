@@ -40,8 +40,14 @@
                     android:background="@color/default_dark"
                     app:title="@string/community_addpost_toolbar_title"
                     app:titleCentered="true"
+                    app:titleMarginTop="20dp"
                     app:titleTextAppearance="@style/BoldFont.20"
                     app:titleTextColor="@color/green1" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/dark1" />
 
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -57,6 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="15dp"
                     android:orientation="vertical">
 
 
@@ -138,7 +145,7 @@
 
                                 <FrameLayout
                                     android:layout_width="60dp"
-                                    android:layout_height="60dp" >
+                                    android:layout_height="60dp">
 
                                     <com.google.android.material.imageview.ShapeableImageView
                                         android:id="@+id/iv_community_image_container"
@@ -551,6 +558,7 @@
 
                     <LinearLayout
                         style="@style/Layout.CommunityItem.Margin.Common"
+                        android:layout_marginBottom="40dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -559,6 +567,7 @@
                             style="@style/BoldFontKr.12"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
                             android:text="@string/community_addpost_contents_seventh"
                             android:textColor="@color/green1" />
@@ -581,6 +590,7 @@
                         style="@style/Layout.CommunityItem.Margin.Common"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="30dp"
                         android:layout_gravity="center"
                         android:orientation="vertical">
 

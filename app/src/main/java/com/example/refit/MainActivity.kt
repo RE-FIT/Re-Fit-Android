@@ -51,6 +51,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
                         View.GONE
                     }
 
+                    R.id.communityInfoFragment, R.id.communityAddPostFragment, R.id.communitySearchFragment -> {
+                        setStatusBarColor(R.color.default_dark)
+                        View.GONE
+                    }
+
                     else -> View.GONE
                 }
         }

@@ -294,7 +294,7 @@
     </style>
 
     <style name="Layout.CommunityItem.Margin.Common" parent="">
-        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
     </style>
 
     <!-- Theme -->
