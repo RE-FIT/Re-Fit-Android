@@ -11,7 +11,7 @@ import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.signin.viewmodel.SignInViewModel
 import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import timber.log.Timber
+import retrofit2.Response
 
 class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sign_in) {
 
@@ -70,6 +70,45 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         //아이디 비밀번호 찾기 이동
         binding.signInFindIdPassword.setOnClickListener(){
             navigate(R.id.action_signInFragment_to_findIdPasswordFragment)
+        }
+
+    }
+    fun textWatcher() {
+        binding.signInPassword.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val id = binding.signInLoginId.text.toString()
+                val password = binding.signInPassword.text.toString()
+
+                //텍스트 입력시 로그인 버튼 색상 초록으로 변경
+                if (id.isEmpty() || password.isEmpty()) {
+                    binding.signInExistingLogin.setBackgroundResource(R.drawable.bg_solid_dark1_radius_10)
+                } else {
+                    binding.signInExistingLogin.setBackgroundResource(R.drawable.bg_solid_green_radius_10)
+                }
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
+    }
+
+    // 로그인 실패 시 snackBar
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.error.observe(viewLifecycleOwner) {
+            it?.let {
+                val errorView = binding.signInExistingLogin
+                CustomSnackBar.make(binding.signInExistingLogin, R.layout.custom_dialog_alert_only_text_icon_left, R.anim.anim_show_snack_bar_from_top)
+                    .setTitle("존재하지 않는 계정입니다.", null)
+                    .show()
+            }
         }
     }
 }
