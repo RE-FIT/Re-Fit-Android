@@ -231,6 +231,7 @@
         <item name="boxCornerRadiusBottomStart">@dimen/sign_up_text_input_layout_radius</item>
         <item name="boxCornerRadiusTopEnd">@dimen/sign_up_text_input_layout_radius</item>
         <item name="boxCornerRadiusTopStart">@dimen/sign_up_text_input_layout_radius</item>
+        <item name="errorIconDrawable">@null</item>
         <item name="errorEnabled">true</item>
         <item name="hintEnabled">false</item>
         <item name="android:textAppearance">@style/RegularFontKr.12</item>
@@ -242,6 +243,21 @@
         <item name="android:textColorHint">@color/dark2</item>
         <item name="android:textAppearance">@style/RegularFontKr.12</item>
         <item name="android:singleLine">true</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:padding">18dp</item>
+    </style>
+
+    <style name="TextInputLayout.SignUp.DropDown" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">@color/selector_sign_up_textinput</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/sign_up_text_input_layout_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/sign_up_text_input_layout_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/sign_up_text_input_layout_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/sign_up_text_input_layout_radius</item>
+        <item name="hintEnabled">false</item>
+        <item name="endIconDrawable">@drawable/ic_arrow_bottom_14</item>
+        <item name="endIconTint">@color/dark2</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 

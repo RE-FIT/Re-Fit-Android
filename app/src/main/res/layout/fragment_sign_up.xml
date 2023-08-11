@@ -100,10 +100,12 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_sign_up_password_title"
+                    style="@style/MediumFontKr.12"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="비밀번호"
+                    android:textColor="@color/dark2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tl_sign_up_input_id" />
@@ -124,12 +126,229 @@
                         style="@style/ThemeOverlay.Design.TextInputEditText.SignUp.Common"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="비밀번호를 입력해주세요" />
+                        android:hint="비밀번호를 입력해주세요"
+                        android:inputType="textPassword" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_sign_up_email_title"
+                    style="@style/MediumFontKr.12"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="이메일"
+                    android:textColor="@color/dark2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tl_sign_up_input_password" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tl_sign_up_input_email"
+                    style="@style/TextInputLayout.SignUp.Common"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintEnd_toStartOf="@id/btn_sign_up_email_certification"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sign_up_email_title">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_sign_up_input_email"
+                        style="@style/ThemeOverlay.Design.TextInputEditText.SignUp.Common"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="이메일을 입력해주세요" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_sign_up_email_certification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/light"
+                    android:padding="12dp"
+                    android:text="인증"
+                    android:textAppearance="@style/MediumFontKr.10"
+                    android:textColor="@color/black"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tl_sign_up_input_email"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sign_up_email_title" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_sign_up_nickname_title"
+                    style="@style/MediumFontKr.12"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="이름(닉네임)"
+                    android:textColor="@color/dark2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tl_sign_up_input_email" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tl_sign_up_input_nickname"
+                    style="@style/TextInputLayout.SignUp.Common"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintEnd_toStartOf="@id/btn_sign_up_nickname_certification"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sign_up_nickname_title">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_sign_up_input_nickname"
+                        style="@style/ThemeOverlay.Design.TextInputEditText.SignUp.Common"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="이름(닉네임)을 입력해주세요" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_sign_up_nickname_certification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/light"
+                    android:padding="12dp"
+                    android:text="중복확인"
+                    android:textAppearance="@style/MediumFontKr.10"
+                    android:textColor="@color/black"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tl_sign_up_input_nickname"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sign_up_nickname_title" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_sign_up_birth_title"
+                    style="@style/MediumFontKr.12"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="생년월일"
+                    android:textColor="@color/dark2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tl_sign_up_input_nickname" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tl_sign_up_input_birth"
+                    style="@style/TextInputLayout.SignUp.Common"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sign_up_birth_title">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_sign_up_input_birth"
+                        style="@style/ThemeOverlay.Design.TextInputEditText.SignUp.Common"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="생년월일(YYYY/MM/DD)을 입력해주세요" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_sign_up_sex_title"
+                    style="@style/MediumFontKr.12"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="성별"
+                    android:textColor="@color/dark2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tl_sign_up_input_birth" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tl_sign_up_drop_down_sex"
+                    style="@style/TextInputLayout.SignUp.DropDown"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sign_up_sex_title">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/atv_sign_up_drop_down_sex"
+                        style="@style/RegularFontKr.12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="성별을 선택해주세요"
+                        android:inputType="none"
+                        android:textColorHint="@color/dark2"
+                        app:simpleItems="@array/sign_up_gender" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
 
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cb_sign_up_request_agree"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="20dp"
+                    app:buttonIcon="@drawable/ic_round_check_24"
+                    app:buttonIconTint="@color/selector_green1_else_dark1"
+                    app:buttonTint="@android:color/transparent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_sign_up_request_agree_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tl_sign_up_drop_down_sex" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_sign_up_request_agree_title"
+                    style="@style/RegularFontKr.12"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="[필수] 이용약관 및 개인정보 수집 동의"
+                    android:textColor="@color/dark2"
+                    app:layout_constraintBottom_toBottomOf="@id/cb_sign_up_request_agree"
+                    app:layout_constraintEnd_toStartOf="@id/tv_sign_up_request_agree_description"
+                    app:layout_constraintStart_toEndOf="@id/cb_sign_up_request_agree"
+                    app:layout_constraintTop_toTopOf="@id/cb_sign_up_request_agree" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/tv_sign_up_request_agree_description"
+                    style="@style/RegularFontKr.12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/green1"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:text="내용보기"
+                    android:textColor="@color/green1"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_sign_up_request_agree_title"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_sign_up_request_agree_title"
+                    app:layout_constraintTop_toTopOf="@id/tv_sign_up_request_agree_title" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_sign_up_complete"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/dark1"
+                    android:text="가입하기"
+                    android:textAppearance="@style/RegularFontKr.14"
+                    android:textColor="@color/white"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cb_sign_up_request_agree"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.core.widget.NestedScrollView>
 
