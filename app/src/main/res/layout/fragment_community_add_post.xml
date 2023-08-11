@@ -225,7 +225,6 @@
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_community_addpost_recommend_gender"
                             style="@style/CommunityAddPostCardView.Common"
-                            app:strokeColor="@color/dark1"
                             CStrokeColor="@{cmviewmodel.isClickedOptionRG}"
                             android:layout_width="match_parent"
                             android:layout_height="40dp">
@@ -373,7 +372,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="40dp"
                                     android:gravity="center_vertical"
-                                    android:text="@string/community_addpost_contents_detail_fourth_method" />
+                                    android:text="@{cmviewmodel.isFilledValue[5] ? cmviewmodel.conversionTypeToText(2, cmviewmodel.postValue[1]) : @string/community_addpost_contents_detail_fourth_method}" />
                             </com.google.android.material.card.MaterialCardView>
                         </LinearLayout>
 
