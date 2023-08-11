@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.refit.BuildConfig
 import com.example.refit.R
 import com.example.refit.data.model.chat.Chat
 import com.example.refit.databinding.FragmentChatBinding
@@ -60,7 +61,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
             binding.rv.adapter = dataRVAdapter
             binding.rv.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
 
-            socket = IO.socket("http://10.0.2.2:9000/")
+            socket = IO.socket(BuildConfig.SUB_URL)
             socket.connect()
 
             socket.on(Socket.EVENT_CONNECT, Emitter.Listener {
