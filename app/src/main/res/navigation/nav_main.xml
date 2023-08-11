@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/findIdPasswordFragment"
-        android:name="com.example.refit.presentation.findidpassword.FindPasswordFragment"
+        android:name="com.example.refit.presentation.findidpassword.FindIdPasswordFragment"
         android:label="fragment_find_id_password"
         tools:layout="@layout/fragment_find_id_password">
         <action

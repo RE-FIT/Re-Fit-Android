@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.example.refit.R
 import com.example.refit.data.model.mypage.CheckNicknameResponse
 import com.example.refit.databinding.FragmentMyInfoUpdateBinding
@@ -38,7 +39,8 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         binding.vm = vm
         binding.lifecycleOwner = this
 
-        vm.initAllStatus()
+        vm.showMyInfoRetrofit()
+        vm.checkNicknameRetrofit()
 
         editNickname()
         editBirth()
@@ -46,13 +48,21 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         pressUpdateButton()
         selectGenderSpinner()
 
-        vm.isCheckUpdatedNickname.observe(viewLifecycleOwner) {
-            vm.checkNicknameRetrofit()
-        }
-
         // 앨범에서 사진 가져오기
         initGalleryLauncher()
         handleAddProfilePhoto()
+
+        vm.userNickname.observe(viewLifecycleOwner, Observer {
+            binding.myInfoName.text = it.toString()
+        })
+
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        vm.initAllStatus()
     }
 
     // ----------------------- 이름(닉네임) 중복/수정 버튼 -----------------------
@@ -65,9 +75,10 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
     private fun pressCheckButton() {
         // 중복 확인 눌렀을 때
         binding.btnNickNameCheck.setOnClickListener {
-            if (vm.userNicknameResponse.value == false) {
+            if (vm.checkNickname()) {
                 binding.ableName.visibility = View.VISIBLE
                 binding.enableName.visibility = View.GONE
+                binding.btnNickNameCheck.isEnabled = true
             } else {
                 binding.enableName.visibility = View.VISIBLE
                 binding.ableName.visibility = View.GONE
@@ -83,13 +94,13 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
             // 3. 수정 버튼
         // [성별, 생일 수정 됐을 때] >> 수정 버튼 바로 클릭 가능
         binding.btnMyInfoUpdate.setOnClickListener {
-            /*vm.isCheckUpdatedBtnStatus.observe(viewLifecycleOwner) {
-                if (it) {
+            vm.isCheckUpdatedBtnStatus.observe(viewLifecycleOwner) {
+                /*if (it) {
                     binding.btnNickNameCheck.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dark1))
                 } else {
                     showMyPageNickNameCheckDialog()
-                }
-            }*/
+                }*/
+            }
         }
 
     }
@@ -178,11 +189,4 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
                 }
             }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        vm.initAllStatus()
-    }
-
-
 }
