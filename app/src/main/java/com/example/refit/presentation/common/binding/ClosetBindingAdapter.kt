@@ -88,7 +88,9 @@ object ClosetBindingAdapter {
     fun setQuizCategory(view: TextView, categoryId: Int?) {
         categoryId?.let{
             val categoryList = view.context.resources.getStringArray(R.array.closet_forest_quiz_category).toList()
-            view.text = categoryList[it]
+            if(categoryId > 0) {
+                view.text = categoryList[it-1]
+            }
         }
     }
 
