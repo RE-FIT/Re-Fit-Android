@@ -225,6 +225,7 @@
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/cv_community_addpost_recommend_gender"
                             style="@style/CommunityAddPostCardView.Common"
+                            app:strokeColor="@color/dark1"
                             CStrokeColor="@{cmviewmodel.isClickedOptionRG}"
                             android:layout_width="match_parent"
                             android:layout_height="40dp">
@@ -543,7 +544,7 @@
                                     android:drawableRight="@drawable/ic_search_dark_13"
                                     android:gravity="center_vertical"
                                     android:text="@string/communtiy_addpost_contents_detail_fourth_region"
-                                    android:textColor="@{cmviewmodel.isFilledValue[2] ? @color/black : @color/dark2}" />
+                                    android:textColor="@{cmviewmodel.isFilledAddress ? @color/black : @color/dark2}" />
 
                             </com.google.android.material.card.MaterialCardView>
                         </LinearLayout>

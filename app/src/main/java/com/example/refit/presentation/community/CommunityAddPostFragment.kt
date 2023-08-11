@@ -52,6 +52,7 @@ class CommunityAddPostFragment :
     private var photoUris: List<String>? = null
 
 
+    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.cmviewmodel = vmAdd
@@ -398,8 +399,7 @@ class CommunityAddPostFragment :
         // 카테고리
         binding.tvCommunityAddpostClothesCategory.text =
              vmAdd.postResponse.value?.let { vmAdd.conversionTypeToText(3, it.category) }
-         binding.cvCommunityAddpostClothesCategory.strokeColor =
-             ContextCompat.getColor(requireContext(), R.color.white)
+
 
         // 성별
         binding.tvCommunityAddpostRecommendGender.text =

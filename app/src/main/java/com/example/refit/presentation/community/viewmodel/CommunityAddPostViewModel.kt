@@ -107,7 +107,6 @@ class CommunityAddPostViewModel(
     val postDetail: LiveData<String>
         get() = _postDetail
 
-
     // 거래 방식-3 (가격 정보) : 입력 받지 않음 (false), 입력 예정 (true)
     private val _priceCategory: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val priceCategory: LiveData<Boolean>
@@ -186,6 +185,7 @@ class CommunityAddPostViewModel(
     fun setPostId(id: Int) {
         _postId.value = id
     }
+
 
     fun checkTransactionType(selectedType: String, typeList: List<String>) {
         when (selectedType) {
