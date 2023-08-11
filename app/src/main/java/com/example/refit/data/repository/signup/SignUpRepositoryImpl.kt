@@ -1,5 +1,8 @@
 package com.example.refit.data.repository.signup
 
+import com.example.refit.data.model.signup.FindIdRequest
+import com.example.refit.data.model.signup.FindIdResponse
+import com.example.refit.data.model.signup.FindPasswordRequest
 import com.example.refit.data.model.signup.RegisterUserRequest
 import com.example.refit.data.model.signup.RequestEmailCertification
 import com.example.refit.data.model.signup.ResponseEmailCertification
@@ -28,5 +31,13 @@ class SignUpRepositoryImpl(private val signUpDataSource: SignUpDataSource) : Sig
     // 회원 가입용 임시 코드 (추후 삭제 예정)
     override suspend fun requestJoinUser(body: RegisterUserRequest): Call<ResponseBody> {
         return signUpDataSource.requestJoinUser(body)
+    }
+
+    override suspend fun findById(body: FindIdRequest): Call<FindIdResponse> {
+        return signUpDataSource.findById(body)
+    }
+
+    override suspend fun findByPassword(body: FindPasswordRequest): Call<ResponseBody> {
+        return signUpDataSource.findByPassword(body)
     }
 }
