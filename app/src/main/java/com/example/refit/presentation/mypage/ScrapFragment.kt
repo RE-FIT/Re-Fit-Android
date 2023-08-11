@@ -18,14 +18,24 @@ class ScrapFragment: BaseFragment<FragmentScrapBinding>(R.layout.fragment_scrap)
         super.onViewCreated(view, savedInstanceState)
         binding.vm = myScrapViewModel
 
-        myScrapViewModel.loadCommunityList()
-        initScrapList()
+        myScrapViewModel.initStatus()
+        myScrapViewModel.loadScrapList()
+        initSellOfScrapList()
     }
-
+/*
     private fun initScrapList() {
         binding.rvScrapList.layoutManager = LinearLayoutManager(requireActivity())
         binding.rvScrapList.adapter = MyScrapListAdapter(myScrapViewModel).apply {
             myScrapViewModel.communityList.observe(viewLifecycleOwner) { list ->
+                submitList(list)
+            }
+        }
+    }*/
+
+    private fun initSellOfScrapList() {
+        binding.rvScrapList.layoutManager = LinearLayoutManager(requireActivity())
+        binding.rvScrapList.adapter = MyScrapListAdapter(myScrapViewModel).apply {
+            myScrapViewModel.myScrapSellList.observe(viewLifecycleOwner) { list ->
                 submitList(list)
             }
         }

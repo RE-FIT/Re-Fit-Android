@@ -7,15 +7,25 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.mypage.CheckNicknameResponse
+import com.example.refit.data.model.mypage.ShowMyInfoResponse
 import com.example.refit.data.repository.mypage.MyPageRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Converter
 import retrofit2.Response
+import retrofit2.Retrofit
 import timber.log.Timber
+import java.lang.reflect.Type
 
 class MyInfoViewModel(private val repository: MyPageRepository, private val ds: TokenStore) : ViewModel() {
+
+    // 내 정보
+    private val _myInfoResponse: MutableLiveData<ShowMyInfoResponse> = MutableLiveData<ShowMyInfoResponse>()
+    val myInfoResponse: LiveData<ShowMyInfoResponse>
+        get() = _myInfoResponse
 
     // 이름(닉네임)
     private val _userNickname: MutableLiveData<String> = MutableLiveData<String>()
@@ -89,15 +99,20 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
 
     // -----------------------------------
 
-    // 이름(닉네임) 중복 확인
-    fun checkNickname(nickname: String) {
-
-    }
-
-    // 이름(닉네임) 수정했을 때
+    // 이름(닉네임) 수정 했을 때
     fun updateNickname(newNickname: String) {
         _userNickname.value = newNickname // 새로운 닉네임으로 저장
         _isCheckUpdatedNickname.value = true // 닉네임이 수정되었다는 상태값 저장
+    }
+
+    // 이름(닉네임) 중복 확인이 되었다면 true
+    fun checkNickname(): Boolean {
+        return true
+    }
+
+    // 중복 확인
+    fun updateBtn() {
+
     }
 
     // 생년 월일 수정
@@ -116,11 +131,6 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     fun updateCurrentPw(currentPw: String) {
         _newPassword.value = currentPw
         _isCheckUpdatedPw.value = true
-    }
-
-    // 중복 확인 눌림
-    fun updateBtn() {
-        _isCheckUpdatedBtnStatus.value = _isCheckUpdatedNickname.value == false
     }
 
     private fun initNicknameInfoStatus(status: Boolean) {
@@ -154,6 +164,7 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
             try {
                 val response = repository.checkNickname("$accessToken", "${_userNickname.value}")
                 Log.d("닉네임 값", "${_userNickname.value}")
+                Log.d("token", "$accessToken")
 
                 response.enqueue(object : Callback<Boolean> {
                     override fun onResponse(
@@ -171,6 +182,37 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
                     }
 
                     override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                        Timber.d("401 Unauthorized: $t")
+                    }
+                })
+            } catch (e: Throwable) {
+                Timber.d("ERROR: $e")
+            }
+        }
+    }
+
+    fun showMyInfoRetrofit() {
+        viewModelScope.launch {
+            val accessToken = ds.getAccessToken().first()
+
+            try {
+                val response = repository.showMyInfo("$accessToken")
+
+                response.enqueue(object : Callback<ShowMyInfoResponse> {
+                    override fun onResponse(
+                        call: Call<ShowMyInfoResponse>,
+                        response: Response<ShowMyInfoResponse>
+                    ) {
+                        if (response.isSuccessful){
+                            _myInfoResponse.value = response.body()
+                            Log.d("내 정보 response", "${_myInfoResponse.value}")
+                            Log.d("내 정보 2", "${_myInfoResponse.value}")
+                        } else {
+                            Timber.e("Error: ${response.code()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ShowMyInfoResponse>, t: Throwable) {
                         Timber.d("401 Unauthorized: $t")
                     }
                 })

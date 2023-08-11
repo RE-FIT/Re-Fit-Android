@@ -11,33 +11,27 @@ import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
+import com.example.refit.presentation.findidpassword.FindIdFragment
+import com.example.refit.presentation.findidpassword.FindPasswordFragment
+import com.example.refit.presentation.findidpassword.adapter.FragmentPageAdapter
 import com.example.refit.presentation.mypage.adapter.MyInfoViewpagerAdapter
+import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(R.layout.fragment_my_info) {
     private lateinit var viewPager : ViewPager2
     private lateinit var tabLayout : TabLayout
 
+    private val vm: MyInfoViewModel by sharedViewModel()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tabTitle = arrayOf("회원정보 수정", "비밀번호 변경")
-
-        viewPager = binding.viewPager // viewPager 연결
-        tabLayout = binding.tabLayout // tabLayout 연결
-
-        val adapter = MyInfoViewpagerAdapter(this)
-
-        adapter.addFragment(MyInfoUpdateFragment())
-        adapter.addFragment(MyInfoPwUpdateFragment())
-
-        viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        viewPager.adapter = adapter
-
-        TabLayoutMediator(tabLayout, viewPager
-        ) { tab, position -> tab.text = tabTitle[position] }.attach()
+        connectionTabLayout()
     }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -59,6 +53,25 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(R.layout.fragment_my_
                         }).show(requireActivity().supportFragmentManager, null)
                 }
             })
+    }
+
+    fun connectionTabLayout() {
+
+        val tabTitle = arrayOf("내 정보 수정", "비밀번호 수정")
+
+        viewPager = binding.viewPager // viewPager 연결
+        tabLayout = binding.tabLayout // tabLayout 연결
+
+        val adapter = FragmentPageAdapter(this)
+
+        adapter.addFragment(MyInfoUpdateFragment())
+        adapter.addFragment(MyInfoPwUpdateFragment())
+
+        viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        viewPager.adapter = adapter
+
+        TabLayoutMediator(tabLayout, viewPager
+        ) { tab, position -> tab.text = tabTitle[position] }.attach()
     }
 
 }

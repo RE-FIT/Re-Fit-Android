@@ -12,6 +12,7 @@ import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
 import com.example.refit.presentation.community.viewmodel.CommunitySearchViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import com.example.refit.presentation.community.viewmodel.PostReportViewModel
+import com.example.refit.presentation.findidpassword.viewModel.FindIdPasswordViewModel
 import com.example.refit.presentation.mypage.viewmodel.MyFeedViewModel
 import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
 import com.example.refit.presentation.mypage.viewmodel.MyPageViewModel
@@ -39,4 +40,5 @@ val viewModelModule = module {
     viewModel { MyInfoViewModel(get(), get()) }
     viewModel { ChatRoomViewModel(get(), get()) }
     viewModel { ChatViewModel(get(), get()) }
+    viewModel { FindIdPasswordViewModel(get(), get())}
 }
