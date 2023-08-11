@@ -115,7 +115,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
     private fun setClickedButton() {
         binding.ibCommunityMail.setOnClickListener {
-            // TODO (새로운 채팅이 있으면 N)
+            navigate(R.id.action_nav_community_to_chatRoomFragment)
         }
 
         binding.ibCommunitySearch.setOnClickListener {
