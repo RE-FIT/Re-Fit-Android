@@ -5,13 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
-import com.example.refit.data.model.closet.RegisteredClothInfoResponse
 import com.example.refit.data.model.community.CommunityListItemResponse
-import com.example.refit.data.model.community.PostResponse
 import com.example.refit.data.repository.community.CommunityRepository
 import com.example.refit.util.Event
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
@@ -20,7 +17,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
-import java.lang.Exception
 
 class CommunityViewModel(
     private val repository: CommunityRepository,
@@ -111,47 +107,6 @@ class CommunityViewModel(
 
         }
 
-    fun getPost(postId: Int) = viewModelScope.launch {
-        val accessToken = ds.getAccessToken().first()
-        try {
-            val response =
-                repository.getPost(accessToken, postId)
-            Timber.d(
-                "accessToken: ${accessToken.toString()}\n" +
-                        "postId: ${postId.toString()}"
-            )
-            response.enqueue(object : Callback<PostResponse> {
-                override fun onResponse(
-                    call: Call<PostResponse>,
-                    response: Response<PostResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        Timber.d("API 호출 성공")
-                        val json = response.body()?.toString()
-                        Timber.d("COMMUNITY POST API 호출 성공 : $json")
-                    } else {
-                        val errorBody = response.errorBody()
-                        val errorCode = response.code()
-
-                        if (errorBody != null) {
-                            val errorJson = JSONObject(errorBody.string())
-                            val errorMessage = errorJson.optString("errorMessage")
-                            val errorCodeFromJson = errorJson.optInt("code")
-
-                            Timber.d("API 호출 실패: $errorCodeFromJson / $errorMessage")
-                        } else Timber.d("API 호출 실패: $errorCode")
-                    }
-                }
-
-                override fun onFailure(call: Call<PostResponse>, t: Throwable) {
-                    Timber.d("RESPONSE FAILURE")
-                }
-            })
-        } catch (e: Exception) {
-            "커뮤니티 글 상세 페이지 로딩 오류: $e"
-        }
-    }
-
     fun setDropDownController(type: Int, value: String) {
         when (type) {
             0 -> {
@@ -205,27 +160,8 @@ class CommunityViewModel(
         }
         return type
     }
-
-    fun conversionTypeToText(itemType: Int, value: String): String {
-        return when (itemType) {
-            3 -> when (value.toInt()) {
-                0 -> "XS"
-                1 -> "S"
-                2 -> "M"
-                3 -> "L"
-                4 -> "XL"
-                else -> "Unknown"
-            }
-
-            4 -> when (value) {
-                "null" -> "전국"
-                else -> "Unknown"
-            }
-
-            else -> "Unknown"
-        }
-    }
 }
+
 
 private fun parseCommunityList(json: String): List<CommunityListItemResponse> {
     // TODO: JSON 파싱 로직을 구현하여 CommunityListItemResponse 리스트로 반환하는 부분 구현해야 함.

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.refit.data.model.common.ResponseError
 import com.example.refit.data.repository.signup.SignUpRepository
 import com.example.refit.data.datastore.TokenStore
+import com.example.refit.util.Event
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
@@ -18,16 +19,17 @@ import retrofit2.Response
 
 class SignInViewModel(private val repository: SignUpRepository, private val ds: TokenStore): ViewModel() {
 
-    private var _accessToken = MutableLiveData<String>()
-    val accessToken : LiveData<String>
+    private var _accessToken = MutableLiveData<Event<String>>()
+    val accessToken : LiveData<Event<String>>
         get() = _accessToken
 
-    private var _logoutSuccess = MutableLiveData<Boolean>()
-    val logoutSuccess : LiveData<Boolean>
+    private var _logoutSuccess = MutableLiveData<Event<Boolean>>()
+    val logoutSuccess : LiveData<Event<Boolean>>
         get() = _logoutSuccess
 
-    private var _error = MutableLiveData<ResponseError>()
-    val error : LiveData<ResponseError>
+
+    private var _error = MutableLiveData<Event<ResponseError>>()
+    val error : LiveData<Event<ResponseError>>
         get() = _error
 
     fun setAccessToken(token : String) = viewModelScope.launch {
@@ -44,13 +46,13 @@ class SignInViewModel(private val repository: SignUpRepository, private val ds: 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     val accessToken = response.headers().get("Authorization").toString()
-                    _accessToken.postValue(accessToken)
+                    _accessToken.postValue(Event(accessToken))
                     setAccessToken(accessToken)
                 } else {
                     Log.d("RESPONSE", "FAIL")
                     var jsonObject = JSONObject(response.errorBody()!!.string())
-                    _error.postValue(ResponseError(
-                        jsonObject.getInt("code"), jsonObject.getString("errorMessage")))
+                    _error.postValue(Event(ResponseError(
+                        jsonObject.getInt("code"), jsonObject.getString("errorMessage"))))
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -69,7 +71,7 @@ class SignInViewModel(private val repository: SignUpRepository, private val ds: 
                 if (response.isSuccessful) {
                     Log.d("RESPONSE", response.body().toString())
                     deleteAccessToken()
-                    _logoutSuccess.postValue(true)
+                    _logoutSuccess.postValue(Event(true))
                 } else {
                     Log.d("RESPONSE", "FAIL")
                 }

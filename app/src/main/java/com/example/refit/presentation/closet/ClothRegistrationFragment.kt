@@ -20,6 +20,7 @@ import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialogListener
+import com.example.refit.util.EventObserver
 import com.example.refit.util.FileUtil
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -34,6 +35,7 @@ class ClothRegistrationFragment :
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
     private lateinit var takePicture: ActivityResultLauncher<Uri>
     private var photoUri: Uri? = null
+    private var requestedClothIdForUpdate: Long? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -70,19 +72,35 @@ class ClothRegistrationFragment :
         handleClickWearingNumberOption()
         handleClickAddCompleteButton()
         handleSelectedClothCategory()
+        handleFixClothInfo()
+
+        clothAddViewModel.registeredClothId.observe(viewLifecycleOwner, EventObserver {
+            CustomSnackBar.make(
+                binding.root,
+                R.layout.custom_snack_bar_basic,
+                R.anim.anim_show_snack_bar_from_bottom
+            ).setTitle("옷 등록을 완료했습니다!", null).show()
+            navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
+        })
+
+        clothAddViewModel.isSuccessUpdatingClothInfo.observe(viewLifecycleOwner, EventObserver { isSuccess ->
+            if(isSuccess) {
+                CustomSnackBar.make(
+                    binding.root,
+                    R.layout.custom_snack_bar_basic,
+                    R.anim.anim_show_snack_bar_from_bottom
+                ).setTitle("정보가 수정됐습니다", null).show()
+                navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
+            }
+        })
     }
 
     private fun handleClickAddCompleteButton() {
         binding.btnClothRegisterComplete.setOnClickListener {
-//            //TODO(추후 기능 구현 때 서버 등록 요청이 정상적으로 되면 스낵 알림 호출할 것)
-//            CustomSnackBar.make(
-//                it,
-//                R.layout.custom_snack_bar_basic,
-//                R.anim.anim_show_snack_bar_from_bottom
-//            ).setTitle("옷 등록을 완료하였습니다!", null).show()
-//            navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
-            photoUri?.let {
-                clothAddViewModel.addNewCloth(FileUtil.toFile(requireActivity(), it))
+            if(photoUri != null) {
+                clothAddViewModel.requestRegisteringCloth(FileUtil.toFile(requireActivity(), photoUri!!), null)
+            } else {
+                clothAddViewModel.requestRegisteringCloth(null, requestedClothIdForUpdate?.toInt())
             }
         }
     }
@@ -199,7 +217,6 @@ class ClothRegistrationFragment :
                 if (uri != null) {
                     binding.photoUri = uri.toString()
                     photoUri = uri
-                    binding.ivClothRegisterSelectedCloth.visibility = View.VISIBLE
                 } else {
                     Timber.d("선택된 사진이 없음")
                 }
@@ -212,12 +229,22 @@ class ClothRegistrationFragment :
                 if (it) {
                     photoUri?.let {
                         binding.photoUri = photoUri.toString()
-                        binding.ivClothRegisterSelectedCloth.visibility = View.VISIBLE
                     }
                 } else {
                     Timber.d("사진 가져오기 실패")
                 }
             }
+    }
+
+    // ----------------------- 옷 재등록 -----------------------
+
+    private fun handleFixClothInfo() {
+        clothAddViewModel.requestedFixClothInfo.observe(viewLifecycleOwner, EventObserver { clothInfo ->
+            binding.photoUri = clothInfo.imageUrl
+            (binding.cgClothRegisterCategory.getChildAt(clothInfo.category) as Chip).isChecked = true
+            (binding.cgClothRegisterWearingSeason.getChildAt(clothInfo.season) as Chip).isChecked = true
+            requestedClothIdForUpdate = clothInfo.id
+        })
     }
 
     override fun onDestroy() {

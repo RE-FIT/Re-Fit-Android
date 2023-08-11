@@ -2,7 +2,6 @@ package com.example.refit.data.model.community
 
 import com.google.gson.annotations.SerializedName
 
-
 data class CommunityListItemResponse(
     @SerializedName("deliveryType")
     val deliveryType: Int,
@@ -20,12 +19,8 @@ data class CommunityListItemResponse(
     val title: String,
     @SerializedName("size")
     val size: String,
-    @SerializedName("sido")
-    val sido: String,
-    @SerializedName("sigungu")
-    val sigungu: String,
-    @SerializedName("bname")
-    val bname: String,
-    @SerializedName("bname2")
-    val bname2: String
+    @SerializedName("address")
+    val address: String,
+    @SerializedName("scrapFlag")
+    val scrapFlag: Boolean
 )

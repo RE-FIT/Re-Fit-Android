@@ -1,7 +1,10 @@
 package com.example.refit.data.repository.community
 
 import androidx.lifecycle.LiveData
+import com.example.refit.data.model.community.BlockDto
+import com.example.refit.data.model.community.Member
 import com.example.refit.data.model.community.PostResponse
+import com.example.refit.data.model.community.ReportedUser
 import com.example.refit.data.repository.community.datasource.CommunityDataSource
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -40,6 +43,51 @@ class CommunityRepositoryImpl (private val communityDataSource: CommunityDataSou
         keyword: String
     ): Call<ResponseBody> {
         return communityDataSource.loadSearchResult(accessToken, keyword)
+    }
+
+    override suspend fun modifyPostIncludeImage(
+        accessToken: String,
+        image_updated: Boolean,
+        postId: Int,
+        postDto: RequestBody,
+        image: List<File>
+    ): Call<ResponseBody> {
+        return communityDataSource.modifyPostIncludeImage(accessToken, image_updated, postId, postDto, image)
+    }
+
+    override suspend fun modifyPost(
+        accessToken: String,
+        image_updated: Boolean,
+        postId: Int,
+        postDto: RequestBody
+    ): Call<ResponseBody> {
+        return communityDataSource.modifyPost(accessToken, image_updated, postId, postDto)
+    }
+
+    override suspend fun deletePost(accessToken: String, postId: Int): Call<ResponseBody> {
+        return communityDataSource.deletePost(accessToken, postId)
+    }
+
+    override suspend fun scrapPost(accessToken: String, postId: Int): Call<ResponseBody> {
+        return communityDataSource.scrapPost(accessToken, postId)
+    }
+
+    override suspend fun blockUser(
+        accessToken: String,
+        blockDto: BlockDto
+    ): Call<ResponseBody> {
+        return communityDataSource.blockUser(accessToken, blockDto)
+    }
+
+    override suspend fun reportUser(
+        accessToken: String,
+        reportedUser: ReportedUser
+    ): Call<ResponseBody> {
+        return communityDataSource.reportUser(accessToken, reportedUser)
+    }
+
+    override suspend fun changePostStatus(accessToken: String, postId: Int): Call<PostResponse> {
+        return communityDataSource.changePostStatus(accessToken, postId)
     }
 
 

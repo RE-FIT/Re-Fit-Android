@@ -2,6 +2,7 @@ package com.example.refit
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -14,6 +15,7 @@ import com.google.android.material.shape.MaterialShapeDrawable
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
@@ -34,17 +36,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         getNavController().addOnDestinationChangedListener { _, destination, _ ->
             binding.bnvMain.visibility =
                 when (destination.id) {
-                    R.id.nav_closet -> {
+                    R.id.nav_closet, R.id.nav_community -> {
                         setStatusBarColor(R.color.green1)
                         View.VISIBLE
                     }
 
-                    R.id.nav_community, R.id.nav_my_page, R.id.communityInfoFragment -> {
+                    R.id.nav_my_page -> {
                         setStatusBarColor(R.color.default_dark)
                         View.VISIBLE
                     }
 
                     R.id.clothRegistrationFragment -> {
+                        setStatusBarColor(R.color.default_dark)
+                        View.GONE
+                    }
+
+                    R.id.communityInfoFragment, R.id.communityAddPostFragment, R.id.communitySearchFragment -> {
                         setStatusBarColor(R.color.default_dark)
                         View.GONE
                     }

@@ -3,11 +3,7 @@ package com.example.refit.presentation.community
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import com.example.refit.R
 import com.example.refit.databinding.FragmentPostReportDetailBinding
 import com.example.refit.presentation.common.BaseFragment
@@ -15,15 +11,14 @@ import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.community.viewmodel.PostReportViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import timber.log.Timber
 
 class PostReportDetailFrament :
     BaseFragment<FragmentPostReportDetailBinding>(R.layout.fragment_post_report_detail) {
-    private val postReportViewModel: PostReportViewModel by sharedViewModel()
+    private val vm: PostReportViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.vm = postReportViewModel
+        binding.vm = vm
         handleHideUserPost()
         observeEditTextChanges()
         clickedBtnReportDone()
@@ -32,13 +27,17 @@ class PostReportDetailFrament :
 
     private fun handleHideUserPost() {
         binding.tvHideUserPost.setOnClickListener {
-            postReportViewModel.setHideUserPostState()
+            vm.setHideUserPostState()
         }
     }
 
     private fun clickedBtnReportDone() {
         binding.btnPostReportNext.setOnClickListener {
-            val etcReason = binding.etEtcPostReportReason.text
+            if(vm.isSelectReasonFifth.value == true) {
+                vm.setReasonType(binding.etEtcPostReportReason.text.toString())
+            }
+            vm.reportUser()
+            vm.plusHideUser()
             navigateUp()
             navigateUp()
             CustomSnackBar.make(requireView(), R.layout.custom_snackbar_community_basic, R.anim.anim_show_snack_bar_from_top)
@@ -49,13 +48,13 @@ class PostReportDetailFrament :
     private fun observeEditTextChanges() {
         binding.etEtcPostReportReason.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                postReportViewModel.setCompletedInputReason(false)
+                vm.setCompletedInputReason(false)
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val isFilled = s?.isNotEmpty() == true
-                postReportViewModel.setCompletedInputReason(isFilled)
-                postReportViewModel.updateTextLength(s)
+                vm.setCompletedInputReason(isFilled)
+                vm.updateTextLength(s)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -66,16 +65,16 @@ class PostReportDetailFrament :
     }
 
     private fun handleDoneButton() {
-        val status: Boolean = when (postReportViewModel.isSelectReasonFifth.value) {
+        val status: Boolean = when (vm.isSelectReasonFifth.value) {
             true -> false
             false -> true
             else -> false
         }
-        postReportViewModel.setCompletedInputReason(status)
+        vm.setCompletedInputReason(status)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        postReportViewModel.initAlLStatus()
+        vm.initAlLStatus()
     }
 }

@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -20,6 +21,7 @@ android {
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
         buildConfigField "String", "BASE_URL", "\"${properties.getProperty("BASE_URL")}\""
+        buildConfigField "String", "SUB_URL", "\"${properties.getProperty("SUB_URL")}\""
     }
 
     buildFeatures {
@@ -90,4 +92,13 @@ dependencies {
 
     //Circle ImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //splash screen
+    implementation "androidx.core:core-splashscreen:1.0.1"
+    
+    //socketIo
+    implementation('io.socket:socket.io-client:1.0.1')
+    
+    // ViewPager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 }

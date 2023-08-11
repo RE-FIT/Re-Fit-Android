@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/startingFragment">
 
     <fragment
         android:id="@+id/signInFragment"
@@ -85,6 +85,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_nav_community_to_chatRoomFragment"
+            app:destination="@id/chatRoomFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_closet"
@@ -141,13 +144,17 @@
     <fragment
         android:id="@+id/myPage_myScrap"
         android:name="com.example.refit.presentation.mypage.ScrapFragment"
-        android:label="fragment_myScrap"
+        android:label="fragment_Scrap"
         tools:layout="@layout/fragment_scrap"/>
     <fragment
         android:id="@+id/myPage_mySetting"
         android:name="com.example.refit.presentation.mypage.SettingFragment"
         android:label="fragment_mySetting"
-        tools:layout="@layout/fragment_setting"/>
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_myPage_mySetting_to_startingFragment"
+            app:destination="@id/startingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/clothRegistrationFragment"
         android:name="com.example.refit.presentation.closet.ClothRegistrationFragment"
@@ -215,6 +222,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_communityInfoFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
     <fragment
         android:id="@+id/communityAddPostFragment"
@@ -250,9 +260,111 @@
         android:name="com.example.refit.presentation.community.PostcodeFragment"
         android:label="fragment_postcode"
         tools:layout="@layout/fragment_postcode" />
+
+    <fragment
+        android:id="@+id/startingFragment"
+        android:name="com.example.refit.presentation.onboarding.StartingFragment"
+        android:label="fragment_starting"
+        tools:layout="@layout/fragment_starting">
+        <action
+            android:id="@+id/action_startingFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_startingFragment_to_findIdPasswordFragment"
+            app:destination="@id/findIdPasswordFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_startingFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_startingFragment_to_introContainerFragment"
+            app:destination="@id/introContainerFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/introContainerFragment"
+        android:name="com.example.refit.presentation.onboarding.IntroContainerFragment"
+        android:label="fragment_intro_conatiner"
+        tools:layout="@layout/fragment_intro_conatiner">
+        <action
+            android:id="@+id/action_introContainerFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/onBoardingFifthFragment"
+        android:name="com.example.refit.presentation.onboarding.pages.OnBoardingFifthFragment"
+        android:label="fragment_on_boarding_fifth"
+        tools:layout="@layout/fragment_on_boarding_fifth">
+        <action
+            android:id="@+id/action_onBoardingFifthFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/communitySearchFragment"
         android:name="com.example.refit.presentation.community.CommunitySearchFragment"
         android:label="fragment_community_search"
-        tools:layout="@layout/fragment_community_search" />
+        tools:layout="@layout/fragment_community_search">
+        <action
+            android:id="@+id/action_communitySearchFragment_to_communityInfoFragment"
+            app:destination="@id/communityInfoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatRoomFragment"
+        android:name="com.example.refit.presentation.chat.ChatRoomFragment"
+        android:label="fragment_chat_room"
+        tools:layout="@layout/fragment_chat_room" >
+        <action
+            android:id="@+id/action_chatRoomFragment_to_nav_community"
+            app:destination="@id/nav_community" />
+        <action
+            android:id="@+id/action_chatRoomFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.refit.presentation.chat.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" >
+        <action
+            android:id="@+id/action_chatFragment_to_chatRoomFragment"
+            app:destination="@id/chatRoomFragment" />
+        <argument
+            android:name="userId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="roomId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="otherId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

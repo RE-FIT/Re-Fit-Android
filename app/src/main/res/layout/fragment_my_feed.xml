@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.mypage.MyScrapFragment">
+    tools:context=".presentation.mypage.MyFeedFragment">
 
     <data>
 
@@ -36,7 +36,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="27dp"
             android:background="@drawable/bg_solid_white_radius_20"
-            android:maxHeight="30dp"
             app:checkedChip="@+id/chip_sell"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,13 +48,12 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
                 android:text="@string/my_page_sell_text"
                 android:textColor="@color/selector_selected_white_else_dark2"
                 android:textSize="14sp"
                 app:chipBackgroundColor="@color/selector_selected_green1_else_white"
-                app:chipEndPadding="35dp"
-                app:chipStartPadding="35dp" />
+                app:chipEndPadding="20dp"
+                app:chipStartPadding="20dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_share"
@@ -66,8 +64,8 @@
                 android:textColor="@color/selector_selected_white_else_dark2"
                 android:textSize="14sp"
                 app:chipBackgroundColor="@color/selector_selected_green1_else_white"
-                app:chipEndPadding="35dp"
-                app:chipStartPadding="35dp" />
+                app:chipEndPadding="20dp"
+                app:chipStartPadding="20dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_buy"
@@ -78,8 +76,8 @@
                 android:textColor="@color/selector_selected_white_else_dark2"
                 android:textSize="14sp"
                 app:chipBackgroundColor="@color/selector_selected_green1_else_white"
-                app:chipEndPadding="35dp"
-                app:chipStartPadding="35dp" />
+                app:chipEndPadding="20dp"
+                app:chipStartPadding="20dp" />
 
         </com.google.android.material.chip.ChipGroup>
 

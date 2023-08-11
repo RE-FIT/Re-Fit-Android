@@ -3,6 +3,8 @@
     <!-- MainColor -->
     <color name="green1">#247535</color>
     <color name="green2">#1CDA6C</color>
+    <color name="green3">#6FAD59</color>
+    <color name="green1_opacity_10">#1A247535</color>
 
     <!-- SubColor -->
     <color name="default_dark">#F0F2F5</color>

@@ -21,14 +21,8 @@ data class PostDTODt (
     val deliveryFee: Int,
     @SerializedName("detail")
     val detail: String,
-    @SerializedName("sido")
-    val sido: String,
-    @SerializedName("sigungu")
-    val sigungu: String,
-    @SerializedName("bname")
-    val bname: String,
-    @SerializedName("bname2")
-    val bname2: String,
+    @SerializedName("address")
+    val address: String
 )
 
 data class PostDTODelivery (

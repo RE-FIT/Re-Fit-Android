@@ -76,7 +76,7 @@
 
     <style name="CommunityInfoETCCardView.Common." parent="Widget.Material3.CardView.Filled">
         <item name="cardCornerRadius">0dp</item>
-        <item name="cardBackgroundColor">@color/default_dark</item>
+        <item name="cardBackgroundColor">@android:color/transparent</item>
     </style>
 
     <!-- TextView -->
@@ -294,7 +294,7 @@
     </style>
 
     <style name="Layout.CommunityItem.Margin.Common" parent="">
-        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
     </style>
 
     <!-- Theme -->

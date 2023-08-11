@@ -20,6 +20,10 @@
             name="vm"
             type="com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel" />
 
+        <variable
+            name="checkNickname"
+            type="com.example.refit.data.model.mypage.CheckNicknameResponse" />
+
     </data>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,7 +59,7 @@
                     android:layout_marginBottom="27dp"
                     android:src="@drawable/ic_myinfo_camera"
                     app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"/>
 
                 <!-- 이름(닉네임) -->
                 <TextView
@@ -63,7 +67,7 @@
                     style="@style/RegularFont.14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/my_page_name"
+                    android:text="@{vm.userNickname}"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -104,7 +108,7 @@
                         android:paddingTop="13dp"
                         android:paddingEnd="0dp"
                         android:paddingBottom="13dp"
-                        android:text="@string/my_info_email"
+                        android:text="@{vm.myInfoResponse.email}"
                         android:textColor="@color/dark1" />
 
                     <TextView
@@ -128,7 +132,7 @@
                         android:paddingTop="13dp"
                         android:paddingEnd="0dp"
                         android:paddingBottom="13dp"
-                        android:text="@string/my_info_id"
+                        android:text="@{vm.myInfoResponse.loginId}"
                         android:textColor="@color/dark1" />
 
                     <TextView
@@ -151,11 +155,11 @@
                             android:layout_height="37dp"
                             android:autofillHints="name"
                             android:background="@drawable/et_mypage_round_10"
-                            android:hint="@string/my_info_name"
+                            android:hint="@{vm.myInfoResponse.name}"
                             android:inputType="textPersonName"
                             android:paddingStart="11dp"
                             android:paddingEnd="0dp"
-                            android:text="@string/my_info_name"
+                            android:text="@{vm.myInfoResponse.name}"
                             android:textColor="@color/black" />
 
                         <android.widget.Button
@@ -167,19 +171,17 @@
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="26dp"
                             android:background="@drawable/btn_my_info_check"
-                            android:backgroundTint="@{vm.isCheckNicknameAvailable() ? @color/green1 : @color/dark1}"
-                            android:clickable="@{vm.isCheckNicknameAvailable() == true ? true : false, default = false}"
+                            android:backgroundTint="@{vm.isCheckUpdatedNickname == true ? @color/green1 : @color/dark1}"
+                            android:clickable="@{vm.isCheckUpdatedNickname == true ? true : false, default = false}"
                             android:padding="0dp"
                             android:shadowColor="@android:color/transparent"
                             android:text="@string/my_info_isCheck_nickname"
                             android:textColor="@color/white" />
-
                     </FrameLayout>
 
                     <TextView
                         android:id="@+id/able_name"
                         style="@style/MediumFont.10"
-                        setVisibility="@{vm.isCheckNicknameAvailable() == true ? View.VISIBLE : View.GONE}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -218,7 +220,7 @@
                         android:paddingTop="13dp"
                         android:paddingEnd="0dp"
                         android:paddingBottom="13dp"
-                        android:text="@string/my_info_date"
+                        android:text="@{vm.myInfoResponse.birth}"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -239,17 +241,16 @@
                         android:drawableEnd="@drawable/ic_arrow_bottom_14"
                         android:textSize="12sp" />
 
-                    <com.google.android.material.button.MaterialButton
+                    <android.widget.Button
                         android:id="@+id/btn_my_info_update"
                         style="@style/RegularFont.14"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="41dp"
                         android:layout_marginTop="33dp"
                         android:layout_marginBottom="32dp"
                         android:background="@drawable/btn_my_info_pw"
-                        android:backgroundTint="@{vm.isInfoModified() == true ? @color/green1 : @color/dark1}"
-                        android:clickable="@{vm.isInfoModified() == true ? true : false, default = false}"
-                        android:enabled="false"
+                        android:backgroundTint="@{vm.isCheckUpdatedNickname() || vm.isCheckUpdatedBirth() || vm.isCheckUpdatedGender() ? @color/green1 : @color/dark1}"
+                        android:clickable="@{vm.isCheckUpdatedNickname() || vm.isCheckUpdatedBirth() || vm.isCheckUpdatedGender() ? true : false, default = false}"
                         android:text="@string/my_info_btn_update"
                         android:textColor="@color/white" />
 

@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="initData"
+            type="com.example.refit.data.model.closet.ResponseForestStatusInfo" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/green1"
                     android:textSize="32sp"
-                    tools:text="3" />
+                    tools:text="@{String.valueOf(initData.count)}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/MediumFontKr.18"
@@ -106,7 +113,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:gravity="end"
-                        android:text="@string/forest_dialog_title_require_tree_number"
+                        android:text="@{@string/forest_dialog_title_require_tree_number(initData.remainedCnt)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_dialog_forest_require_tree_text"

@@ -13,14 +13,13 @@
             name="communityList"
             type="com.example.refit.data.model.community.CommunityListItemResponse" />
 
-
         <variable
             name="vm"
             type="com.example.refit.presentation.community.viewmodel.CommunityViewModel" />
 
         <variable
-            name="vm_scrap"
-            type="com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel" />
+            name="vm_search"
+            type="com.example.refit.presentation.community.viewmodel.CommunitySearchViewModel" />
 
     </data>
 
@@ -32,7 +31,6 @@
         android:paddingVertical="5dp">
 
         <com.google.android.material.card.MaterialCardView
-            android:onClick="@{() -> vm.handleClickItem(communityList.postId)}"
             android:id="@+id/mcv_community_item_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,7 +76,7 @@
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_community_item_list_title"
-                            style="@style/BoldFontKr.12"
+                            style="@style/BoldFontKr.14"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{communityList.title}"
@@ -86,7 +84,7 @@
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_community_item_list_price"
-                            style="@style/MediumFont.10"
+                            style="@style/MediumFont.12"
                             setVisibility="@{communityList.price == 0 ? false : true}"
                             android:visibility="visible"
                             android:layout_width="wrap_content"
@@ -101,7 +99,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_size_txt"
-                        style="@style/RegularFontKr.9"
+                        style="@style/RegularFontKr.10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -113,19 +111,19 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_size"
-                        style="@style/RegularFontKr.9"
+                        style="@style/RegularFontKr.10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="bottom"
-                        android:text="@{vm.conversionTypeToText(3, communityList.size)}"
+                        setTextSize="@{communityList.size}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_size_txt"
                         app:layout_constraintTop_toBottomOf="@id/ll_community_item" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_method_txt"
-                        style="@style/RegularFontKr.9"
+                        style="@style/RegularFontKr.10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:minWidth="45dp"
@@ -136,7 +134,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_method"
-                        style="@style/RegularFontKr.9"
+                        style="@style/RegularFontKr.10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="bottom"
@@ -148,7 +146,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_region_txt"
-                        style="@style/RegularFontKr.9"
+                        style="@style/RegularFontKr.10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:minWidth="45dp"
@@ -159,11 +157,11 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_region"
-                        style="@style/RegularFontKr.9"
+                        style="@style/RegularFontKr.10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="bottom"
-                        android:text="@{communityList.sido == null ? @string/community_item_region_all : @string/community_item_region(communityList.sido, communityList.sigungu, communityList.bname, communityList.bname2)}"
+                        android:text="@{communityList.address == null ? @string/community_item_region_all : communityList.address}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_method_txt"
                         app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_method"
@@ -171,14 +169,11 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.appcompat.widget.AppCompatToggleButton
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="18dp"
                     android:layout_height="15dp"
                     android:layout_marginEnd="20dp"
-                    android:checked="@={favToggleState}"
-                    android:background="@{favToggleState ? @drawable/ic_community_blank_heart_18 : @drawable/ic_community_heart_18}"
-                    android:textOff=""
-                    android:textOn=""
+                    android:background="@{communityList.scrapFlag ? @drawable/ic_community_heart_18 : @drawable/ic_community_blank_heart_18}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

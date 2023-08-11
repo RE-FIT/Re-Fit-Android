@@ -4,6 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.closet.ForestFragment">
 
+    <data>
+
+        <variable
+            name="forestInfo"
+            type="com.example.refit.data.model.closet.ResponseForestStatusInfo" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -56,6 +63,7 @@
                     android:layout_marginStart="18dp"
                     android:layout_marginEnd="18dp"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.20"
+                    setImage="@{forestInfo.imageUrl}"
                     tools:src="@drawable/img_temp_67" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -110,6 +118,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/green1"
+                            android:text="@{String.valueOf(forestInfo.count)}"
                             tools:text="3" />
 
                     </LinearLayout>
@@ -143,6 +152,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/green1"
+                            android:text="@{String.valueOf(forestInfo.targetCnt)}"
                             tools:text="3" />
 
                     </LinearLayout>
@@ -176,6 +186,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/green1"
+                            android:text="@{forestInfo.targetCnt > 0 ? String.valueOf(forestInfo.count*100/forestInfo.targetCnt) + @string/percent : `0` + @string/percent}"
                             tools:text="30%" />
 
                     </LinearLayout>

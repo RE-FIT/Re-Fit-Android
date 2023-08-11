@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.refit.R
 import com.example.refit.databinding.FragmentCommunityBinding
 import com.example.refit.databinding.FragmentCommunitySearchBinding
@@ -17,14 +18,19 @@ import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.common.NavigationUtil.navigateUp
+import com.example.refit.presentation.community.adapter.CommunityListAdapter
+import com.example.refit.presentation.community.adapter.SearchListAdapter
 import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
 import com.example.refit.presentation.community.viewmodel.CommunitySearchViewModel
+import com.example.refit.presentation.community.viewmodel.CommunityViewModel
+import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
 class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.layout.fragment_community_search) {
 
     private val vm: CommunitySearchViewModel by sharedViewModel()
+    private val vminfo: CommunityInfoViewModel by sharedViewModel()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,9 +39,11 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
         binding.vm = vm
 
         vm.initStatus()
+        initSearchList()
         setOnClickedButton()
-        initCommunityOptionDropdown()
+        initSearchOptionDropdown()
         observeEditTextChanges()
+        observeStatus()
     }
 
 
@@ -47,7 +55,15 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
         binding.ibCommunitySearchButton.setOnClickListener {
             vm.setSearchingState(true)
             val keyword = binding.etCommunitySearchKeyword.text.toString()
-            vm.loadSearchResult(keyword)
+            vm.setKeyword(keyword)
+            vm.loadSearchResult()
+        }
+
+        binding.ibCommunitySearchClose.setOnClickListener {
+            binding.etCommunitySearchKeyword.setText("")
+            vm.setSearchingState(false)
+            vm.setExistResult(false)
+            vm.setExistResult(false)
         }
 
         binding.ibGoToCommunity.setOnClickListener {
@@ -55,7 +71,7 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
         }
     }
 
-    private fun initCommunityOptionDropdown() {
+    private fun initSearchOptionDropdown() {
         binding.cvCommunityOptionCategory.setOnClickListener {
             val listPopupWindow = getPopupMenu(it, R.array.community_item_search_option_category)
             setPopupItemClickListener(it.id, listPopupWindow)
@@ -76,17 +92,25 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
     }
 
     private fun setPopupItemClickListener(viewId: Int, popupMenu: ListPopupWindow) {
-        val textView: TextView = when (viewId) {
-            binding.cvCommunityOptionCategory.id -> binding.tvCommunityOptionCategory
-            binding.cvCommunityOptionType.id -> binding.tvCommunityOptionType
-            binding.cvCommunityOptionGender.id -> binding.tvCommunityOptionGender
-            else -> return
-        }
-
         popupMenu.setOnItemClickListener { _, view, _, _ ->
             val itemDescription = (view as TextView).text.toString()
-            textView.text = itemDescription
-            Timber.d(itemDescription)
+            when (viewId) {
+                binding.cvCommunityOptionType.id -> {
+                    binding.tvCommunityOptionType.text = itemDescription
+                    vm.setDropDownController(0, itemDescription)
+                }
+
+                binding.cvCommunityOptionGender.id -> {
+                    binding.tvCommunityOptionGender.text = itemDescription
+                    vm.setDropDownController(1, itemDescription)
+                }
+
+                binding.cvCommunityOptionCategory.id -> {
+                    binding.tvCommunityOptionCategory.text = itemDescription
+                    vm.setDropDownController(2, itemDescription)
+                }
+            }
+            vm.loadSearchResult()
             popupMenu.dismiss()
         }
     }
@@ -118,4 +142,22 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
             }
         })
     }
+
+    private fun initSearchList() {
+        binding.rvSearchList.layoutManager = LinearLayoutManager(requireActivity())
+        binding.rvSearchList.adapter = SearchListAdapter(vm).apply {
+            vm.searchList.observe(viewLifecycleOwner) { list ->
+                submitList(list)
+            }
+        }
+    }
+
+    private fun observeStatus() {
+        vm.selectedPostItem.observe(viewLifecycleOwner, EventObserver { postId ->
+            vminfo.clickedGetPost(postId)
+            navigate(R.id.action_communitySearchFragment_to_communityInfoFragment)
+        })
+    }
+
 }
+
