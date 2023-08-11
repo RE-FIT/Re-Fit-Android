@@ -94,15 +94,6 @@ class ClothAddViewModel(
     fun addNewCloth(imageFile: File) {
         viewModelScope.launch {
             try {
-//                val request = Gson().toJson(RequestAddNewCloth(
-//                    _selectedClothCategoryId.value!!,
-//                    _selectedSeasonId.value!!,
-//                    _selectedWearingNumberOption.value.toString(),
-//                    _selectedMonthOption.value.toString(),
-//                    _isValidShowingRecommendWearing.value!!,
-//                    _recommendWearingNumberOfMonth.value.toString(),
-//                    _recommendWearingNumberOfWeek.value.toString()
-//                ))
                 val request = Gson().toJson(
                     RequestAddNewCloth(
                         _selectedClothCategoryId.value!!,
