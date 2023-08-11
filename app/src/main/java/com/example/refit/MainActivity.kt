@@ -36,12 +36,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         getNavController().addOnDestinationChangedListener { _, destination, _ ->
             binding.bnvMain.visibility =
                 when (destination.id) {
-                    R.id.nav_closet -> {
+                    R.id.nav_closet, R.id.nav_community -> {
                         setStatusBarColor(R.color.green1)
                         View.VISIBLE
                     }
 
-                    R.id.nav_community, R.id.nav_my_page -> {
+                    R.id.nav_my_page -> {
                         setStatusBarColor(R.color.default_dark)
                         View.VISIBLE
                     }
