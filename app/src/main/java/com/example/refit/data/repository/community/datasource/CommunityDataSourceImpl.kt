@@ -1,6 +1,9 @@
 package com.example.refit.data.repository.community.datasource
 
+import com.example.refit.data.model.community.BlockDto
+import com.example.refit.data.model.community.Member
 import com.example.refit.data.model.community.PostResponse
+import com.example.refit.data.model.community.ReportedUser
 import com.example.refit.data.network.api.CommunityApi
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -40,8 +43,6 @@ class CommunityDataSourceImpl(private val communityApi: CommunityApi) : Communit
         return communityApi.createPost(accessToken, postDto, imageParts)
     }
 
-
-
     override suspend fun getPost(accessToken: String, postId: Int): Call<PostResponse> {
         return communityApi.getPost(accessToken, postId)
     }
@@ -57,8 +58,51 @@ class CommunityDataSourceImpl(private val communityApi: CommunityApi) : Communit
         return communityApi.deletePost(accessToken, postId)
     }
 
+    override suspend fun changePostStatus(accessToken: String, postId: Int): Call<PostResponse> {
+        return communityApi.changePostStatus(accessToken, postId)
+    }
+
+    override suspend fun modifyPostIncludeImage(
+        accessToken: String,
+        image_updated: Boolean,
+        postId: Int,
+        postDto: RequestBody,
+        image: List<File>
+    ): Call<ResponseBody> {
+
+        val imageParts: List<MultipartBody.Part> = image.map { file ->
+            val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+            MultipartBody.Part.createFormData("image", file.name, requestFile)
+        }
+
+        return communityApi.modifyPostIncludeImage(accessToken, postId, postDto, image_updated, imageParts)
+    }
+
+    override suspend fun modifyPost(
+        accessToken: String,
+        image_updated: Boolean,
+        postId: Int,
+        postDto: RequestBody
+    ): Call<ResponseBody> {
+        return communityApi.modifyPost(accessToken, postId, postDto, image_updated)
+    }
+
     override suspend fun scrapPost(accessToken: String, postId: Int): Call<ResponseBody> {
         return communityApi.scrapPost(accessToken, postId)
+    }
+
+    override suspend fun blockUser(
+        accessToken: String,
+        blockDto: BlockDto
+    ): Call<ResponseBody> {
+        return communityApi.blockUser(accessToken, blockDto)
+    }
+
+    override suspend fun reportUser(
+        accessToken: String,
+        reportedUser: ReportedUser
+    ): Call<ResponseBody> {
+        return communityApi.reportUser(accessToken, reportedUser)
     }
 
 }
