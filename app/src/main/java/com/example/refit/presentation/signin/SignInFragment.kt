@@ -6,6 +6,7 @@ import com.example.refit.R
 import com.example.refit.databinding.FragmentSignInBinding
 import com.example.refit.presentation.AccessTokenViewModel
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.signin.viewmodel.SignInViewModel
 import com.example.refit.presentation.signup.viewmodel.SignUpViewModel
@@ -16,11 +17,9 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
 
     private val tokenViewModel: AccessTokenViewModel by sharedViewModel()
     private val viewModel: SignInViewModel by sharedViewModel()
-    private val vm: SignUpViewModel by sharedViewModel()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //viewModel.logout()
-
         /*//엑세스 토큰 체크
         tokenViewModel.checkAccessToken()
 
@@ -38,22 +37,24 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         }
 
         viewModel.error.observe(viewLifecycleOwner) {
-            it?.let{
-                Timber.d(it.toString())
-            }
+
+            val customSnackBar = CustomSnackBar.make(
+                view = requireView(),
+                layout = R.layout.custom_snackbar_sign_fail,
+                animationId = R.anim.anim_show_snack_bar_from_bottom
+            )
+
+            customSnackBar.setTitle("존재하지 않는 계정입니다.", "아이디 또는 비밀번호를 다시 한 번 확인해주세요!")
+
+            customSnackBar.show()
         }
 
         //로그인
-        //id: admin1234
-        //password: AAaa1234!!
-
         binding.signInExistingLogin.setOnClickListener {
-            val id = binding.signInLoginId.toString()
-            val password = binding.signInFindIdPassword.toString()
-
-            /*vm.signUpUser("admin1234", "AAaa1234!!","refit@gmail.com","어드민","2023/07/12", 0)*/
-//            viewModel.basicLogin("cswcsm02", "AAaa2618!!")
+            val id = binding.signInLoginId.text.toString()
+            val password = binding.signInPassword.text.toString()
             viewModel.basicLogin(id, password)
+//            viewModel.basicLogin("admin1234", "AAaa1234!!")
         }
 
 
