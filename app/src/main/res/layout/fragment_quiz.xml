@@ -4,6 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.closet.QuizFragment">
 
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.closet.viewmodel.ForestViewModel" />
+
+        <variable
+            name="isRequestAnswer"
+            type="Boolean" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:textColor="@color/green1"
+                setQuizCategory="@{vm.quizInfo.category}"
                 tools:text="분리배출" />
 
         </com.google.android.material.card.MaterialCardView>
@@ -50,7 +64,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Q."
+            setQuizAnswer="@{vm.quizInfo.answer}"
+            isRequestAnswer="@{isRequestAnswer}"
             android:textColor="@color/green1"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,6 +74,7 @@
             tools:text="Q." />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_forest_quiz_question"
             style="@style/MediumFontKr.18"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -71,14 +87,33 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_forest_quiz_result_status"
-            tools:text="영수증은 종이가 아닌 감열지를 사용하는데, 감열지에는 염료와 유기산 등 약품 처리가 되어있어 재활용이 되지 않아요!" />
+            android:visibility="@{isRequestAnswer ? View.INVISIBLE : View.VISIBLE}"
+            android:text="@{vm.quizInfo.question}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_forest_quiz_explanation"
+            style="@style/MediumFontKr.18"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@id/btn_forest_quiz_confirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_forest_quiz_result_status"
+            android:visibility="@{isRequestAnswer ? View.VISIBLE : View.INVISIBLE}"
+            android:text="@{vm.quizInfo.explanation}" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_forest_quiz_confirm"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> isRequestAnswer != null ? vm.handleClickQuizButton(isRequestAnswer) : vm.handleClickQuizButton(false)}"
             android:background="@color/green1"
-            android:text=""
+            android:text="@{isRequestAnswer ? @string/closet_quiz_button_exit : @string/closet_quiz_button_view_answer}"
             android:textAppearance="@style/RegularFontKr.14"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

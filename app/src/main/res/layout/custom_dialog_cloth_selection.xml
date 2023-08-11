@@ -8,7 +8,23 @@
         <import type="android.view.View" />
 
         <variable
-            name="isNotCompleteGoal"
+            name="clothInfo"
+            type="com.example.refit.data.model.closet.ResponseRegisteredClothes" />
+
+        <variable
+            name="isValidGoal"
+            type="Boolean" />
+
+        <variable
+            name="isNotCompletedGoal"
+            type="Boolean" />
+
+        <variable
+            name="dialog"
+            type="com.example.refit.presentation.dialog.closet.ClothItemSelectionDialog" />
+
+        <variable
+            name="isWornToday"
             type="Boolean" />
 
     </data>
@@ -46,14 +62,17 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_dialog_cloth_selection_option_main"
+            android:backgroundTint="@color/green1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
-            android:clickable="@{isNotCompleteGoal}"
+            setButtonBackgroundTintByStatus="@{(isNotCompletedGoal &amp;&amp; !isWornToday) || !isNotCompletedGoal}"
+            android:clickable="@{(isNotCompletedGoal &amp;&amp; !isWornToday) || !isNotCompletedGoal}"
+            android:onClick="@{() -> dialog.handleClickMainButton(isNotCompletedGoal)}"
             android:textAppearance="@style/MediumFontKr.14"
-            app:backgroundTint="@color/green1"
+            android:visibility="@{isValidGoal ? View.VISIBLE : View.GONE}"
             app:cornerRadius="10dp"
-            tools:text="@{isNotCompleteGoal ? @string/cloth_item_selection_dialog_wear_today : @string/cloth_item_selection_dialog_re_update_goal}" />
+            tools:text="@{isNotCompletedGoal ? @string/cloth_item_selection_dialog_wear_today : @string/cloth_item_selection_dialog_re_update_goal}" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_dialog_cloth_selection_option_fix"
@@ -64,7 +83,7 @@
             android:text="@string/cloth_item_selection_dialog_fix_info"
             android:textAppearance="@style/MediumFontKr.14"
             android:textColor="@color/dark1"
-            android:visibility="@{isNotCompleteGoal ? View.VISIBLE : View.GONE}"
+            android:visibility="@{isNotCompletedGoal ? View.VISIBLE : View.GONE}"
             app:cornerRadius="10dp"
             app:strokeColor="@color/dark1"
             app:strokeWidth="1dp" />

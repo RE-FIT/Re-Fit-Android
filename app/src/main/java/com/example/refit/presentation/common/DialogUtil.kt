@@ -3,13 +3,13 @@ package com.example.refit.presentation.common
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.refit.R
-import com.example.refit.data.model.closet.RegisteredClothInfoResponse
+import com.example.refit.data.model.closet.ResponseForestStatusInfo
+import com.example.refit.data.model.closet.ResponseRegisteredClothes
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.dialog.AlertBasicDialog
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.AlertNoIconDialog
 import com.example.refit.presentation.dialog.AlertNoIconDialogListener
-import com.example.refit.presentation.dialog.mypage.AlertBasicNoIconDialog
 import com.example.refit.presentation.dialog.closet.ClothItemSelectionDialog
 import com.example.refit.presentation.dialog.closet.ClothItemSelectionDialogListener
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialog
@@ -18,6 +18,7 @@ import com.example.refit.presentation.dialog.closet.ForestStampDialog
 import com.example.refit.presentation.dialog.community.BanOnSalesDialog
 import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialog
 import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialogListener
+import com.example.refit.presentation.dialog.mypage.AlertBasicNoIconDialog
 import com.example.refit.presentation.dialog.mypage.MyPagePwCheckDialog
 import com.example.refit.presentation.dialog.mypage.MypageNickNameCheckDialog
 import com.example.refit.presentation.dialog.mypage.ProfileRegisterPhotoDialog
@@ -30,7 +31,7 @@ object DialogUtil {
         title: String,
         positive: String?,
         negative: String?,
-        listener: AlertBasicDialogListener
+        listener: AlertBasicDialogListener?
     ): AlertBasicDialog {
         val icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_alert_circle_24)
         return AlertBasicDialog(icon!!, title, positive, negative, listener)
@@ -41,7 +42,7 @@ object DialogUtil {
     }
 
     fun showClothItemSelectionDialog(
-        clothInfo: RegisteredClothInfoResponse,
+        clothInfo: ResponseRegisteredClothes,
         listener: ClothItemSelectionDialogListener
     ): ClothItemSelectionDialog {
         return ClothItemSelectionDialog(clothInfo, listener)
@@ -103,7 +104,7 @@ object DialogUtil {
         return ProfileRegisterPhotoDialog(listener)
     }
 
-    fun showForestStampDialog(): ForestStampDialog {
-        return ForestStampDialog()
+    fun showForestStampDialog(initData: ResponseForestStatusInfo): ForestStampDialog {
+        return ForestStampDialog(initData)
     }
 }

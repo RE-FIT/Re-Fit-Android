@@ -1,6 +1,13 @@
 package com.example.refit.data.repository.colset
 
+import com.example.refit.data.model.closet.RequestAddNewCloth
+import com.example.refit.data.model.closet.RequestRegisteredClothes
+import com.example.refit.data.model.closet.RequestResetCompletedCloth
 import com.example.refit.data.model.closet.ResponseAddNewCloth
+import com.example.refit.data.model.closet.ResponseForestStatusInfo
+import com.example.refit.data.model.closet.ResponseQuizInfo
+import com.example.refit.data.model.closet.ResponseRegisteredClothInfo
+import com.example.refit.data.model.closet.ResponseRegisteredClothes
 import com.example.refit.data.repository.colset.datasource.ClosetDataSource
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -13,4 +20,46 @@ interface ClosetRepository {
         image: MultipartBody.Part,
         request: RequestBody
     ): Call<Long>
+
+    suspend fun getRegisteredClothes(
+        token: String,
+        request: RequestRegisteredClothes
+    ): Call<List<ResponseRegisteredClothes>>
+
+    suspend fun deleteClothItem(
+        token: String,
+        clothId: Int
+    ): Call<Void>
+
+    suspend fun getRegisteredClothInfo(
+        token: String,
+        clothId: Int
+    ): Call<ResponseRegisteredClothInfo>
+
+    suspend fun fixClothItem(
+        token: String,
+        request: RequestAddNewCloth,
+        clothId: Int
+    ): Call<Void>
+
+    suspend fun resetCompletedCloth(
+        token: String,
+        request: RequestResetCompletedCloth,
+        clothId: Int
+    ): Call<Void>
+
+    suspend fun wearClothes(
+        token: String,
+        id: Int
+    ): Call<Void>
+
+    suspend fun getForestStatusInfo(
+        token: String,
+        id: Int
+    ): Call<ResponseForestStatusInfo>
+
+    suspend fun getQuizInfo(
+        token: String,
+        id: Int
+    ): Call<ResponseQuizInfo>
 }
