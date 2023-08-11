@@ -2,12 +2,16 @@ package com.example.refit.data.network.api
 
 import com.example.refit.data.model.chat.Chat
 import com.example.refit.data.model.chat.ChatRoom
+import com.example.refit.data.model.chat.CreateRoom
+import com.example.refit.data.model.chat.ResponseCreateRoom
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ChatApi {
@@ -32,4 +36,11 @@ interface ChatApi {
     @DELETE("/chat/room/{roomId}/leave")
     @Headers("content-type: application/json")
     fun delete(@Header("Authorization") accessToken: String, @Path("roomId") roomId:String):Call<ResponseBody>
+
+    /**
+     * 체팅 방 만들기 API
+     * */
+    @POST("/chat/room/create")
+    @Headers("content-type: application/json")
+    fun create(@Header("Authorization") accessToken: String, @Body request:CreateRoom):Call<ResponseCreateRoom>
 }
