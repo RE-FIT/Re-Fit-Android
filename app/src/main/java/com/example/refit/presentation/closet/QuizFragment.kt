@@ -1,19 +1,12 @@
 package com.example.refit.presentation.closet
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import com.example.refit.R
 import com.example.refit.databinding.FragmentQuizBinding
 import com.example.refit.presentation.closet.viewmodel.ForestViewModel
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.NavigationUtil.navigate
-import com.example.refit.presentation.common.NavigationUtil.navigateUp
-import com.example.refit.presentation.common.WindowUtil
-import com.example.refit.presentation.common.WindowUtil.setNavigationBarColor
 import com.example.refit.presentation.common.WindowUtil.setStatusBarColor
 import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
