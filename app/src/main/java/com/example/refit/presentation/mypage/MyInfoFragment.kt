@@ -31,7 +31,7 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(R.layout.fragment_my_
 
         connectionTabLayout()
     }
-
+/*
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -53,7 +53,7 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(R.layout.fragment_my_
                         }).show(requireActivity().supportFragmentManager, null)
                 }
             })
-    }
+    }*/
 
     fun connectionTabLayout() {
 

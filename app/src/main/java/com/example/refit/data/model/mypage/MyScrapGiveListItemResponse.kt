@@ -18,5 +18,7 @@ data class MyScrapGiveListItemResponse(
     @SerializedName("size")
     val size: String,
     @SerializedName("address")
-    val address: String
+    val address: String,
+    @SerializedName("scrapFlag")
+    val scrapFlag: Boolean
 )

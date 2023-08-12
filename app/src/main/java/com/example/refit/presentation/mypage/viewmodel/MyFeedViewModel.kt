@@ -26,6 +26,10 @@ import java.lang.Exception
 
 class MyFeedViewModel(private val repository: MyPageRepository, private val ds: TokenStore) : ViewModel() {
 
+    private val _postId: MutableLiveData<Int> = MutableLiveData<Int>()
+    val postId: LiveData<Int>
+        get() = _postId
+
     // 피드 - 판매
     private val _myFeedSellList: MutableLiveData<List<MyFeedSellListItemResponse>> =
         MutableLiveData<List<MyFeedSellListItemResponse>>()
@@ -53,6 +57,22 @@ class MyFeedViewModel(private val repository: MyPageRepository, private val ds: 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean>
     get() = _isLoading
+
+    enum class Tab {
+        SELL, GIVE, BUY
+    }
+
+    private val _selectedTab = MutableLiveData<Tab>()
+    val selectedTab: LiveData<Tab>
+        get() = _selectedTab
+
+    init {
+        _selectedTab.value = Tab.SELL // 초기 선택 탭 설정
+    }
+
+    fun setSelectedTab(tab: Tab) {
+        _selectedTab.value = tab
+    }
 
     fun loadFeedGiveList() =
         viewModelScope.launch {
@@ -93,7 +113,7 @@ class MyFeedViewModel(private val repository: MyPageRepository, private val ds: 
                     }
                 })
             } catch (e: Exception) {
-                "스크랩 글 목록 로딩 오류: $e"
+                "내 피드 나눔 글 목록 로딩 오류: $e"
             } finally {
                 _isLoading.value = false
             }
@@ -118,7 +138,7 @@ class MyFeedViewModel(private val repository: MyPageRepository, private val ds: 
                             val responseBody = response.body()
                             if (responseBody != null) {
                                 _myFeedSellList.value = responseBody ?: null
-                                Timber.d("scrapList : ${response.body()}")
+                                Timber.d("feedSellList : ${response.body()}")
                             }
                         } else {
                             val errorBody = response.errorBody()
@@ -139,7 +159,7 @@ class MyFeedViewModel(private val repository: MyPageRepository, private val ds: 
                     }
                 })
             } catch (e: Exception) {
-                "스크랩 글 목록 로딩 오류: $e"
+                "내 피드 판매 글 목록 로딩 오류: $e"
             } finally {
                 _isLoading.value = false
             }
@@ -196,9 +216,9 @@ class MyFeedViewModel(private val repository: MyPageRepository, private val ds: 
         _selectedPostItem.value = Event(postId)
     }
 
-    fun conversionTypeToText(itemType: Int, value: String): String {
+    fun conversionTypeToText(itemType: Int?, value: String?): String {
         return when (itemType) {
-            3 -> when (value.toInt()) {
+            3 -> when (value?.toInt()) {
                 0 -> "XS"
                 1 -> "S"
                 2 -> "M"
