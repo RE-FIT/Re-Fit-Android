@@ -35,11 +35,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
             }
         }*/
 
-        /*tokenViewModel.error.observe(viewLifecycleOwner) {
-            it?.let {
-                Timber.d(it.toString())
-            }
-        }*/
 
         viewModel.error.observe(viewLifecycleOwner, EventObserver{
             val customSnackBar = CustomSnackBar.make(
