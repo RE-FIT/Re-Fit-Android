@@ -12,84 +12,70 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/default_dark">
-
-        <ScrollView
+    <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/default_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:paddingBottom="26dp"
-                android:background="@drawable/layout_my_page_background">
-
-                <TextView
-                    android:id="@+id/my_page_title"
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/appBarLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/my_page_title"
-                    android:layout_marginTop="33dp"
-                    style="@style/BoldFont.22"
-                    android:textColor="@color/white"
-                    android:gravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_scrollFlags="scroll"/>
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <!-- 캐릭터 -->
+                    <com.google.android.material.appbar.MaterialToolbar
+                        android:id="@+id/tb_community_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/green1"
+                        app:layout_scrollFlags="scroll"
+                        app:title="@string/my_page_title"
+                        app:titleCentered="true"
+                        app:titleTextAppearance="@style/BoldFont.22"
+                        app:titleTextColor="@color/white">
+
+                    </com.google.android.material.appbar.MaterialToolbar>
+
+                </com.google.android.material.appbar.AppBarLayout>
+
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="13dp"
-                    android:background="@drawable/ic_white_100">
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/ic_white_100"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_mypage_woman"/>
-
+                        android:src="@drawable/ic_mypage_woman" />
                 </FrameLayout>
 
-                <!-- name -->
-                <TextView
-                    android:id="@+id/myPage_name"
-                    style="@style/RegularFont.14"
-                    android:textColor="@color/white"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:text="@{vm.myInfoResponse.name}"/>
-
-            </LinearLayout>
-
-                <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="212dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.496"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                    android:layout_gravity="center"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="212dp"
+                    android:layout_marginEnd="40dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                 <!-- 환경 지키기 D+day -->
                 <LinearLayout
@@ -102,113 +88,123 @@
                     android:gravity="center"
                     android:background="@drawable/ic_white_rectangle_90">
 
-                    <TextView
-                        style="@style/MediumFont.12"
-                        android:textColor="@color/black"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="19dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:text="@string/my_page_d_day_title"/>
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/myPageName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{vm.myInfoResponse.name}"
+                            android:textAppearance="@style/MediumFontKr.12" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/my_page_d_day_title"
+                            android:textAppearance="@style/MediumFontKr.12"
+                            android:textColor="@color/black" />
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
-<!--
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="D + "
-                            android:textColor="@color/green1"/>-->
 
                         <TextView
                             android:id="@+id/dDay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_solid_gray_radius_6"
-                            android:text="@string/my_page_dDay"
                             android:padding="8dp"
-                            android:textColor="@color/green1"/>
+                            android:text="@string/my_page_dDay"
+                            android:textAppearance="@style/RegularFontKr.12"
+                            android:textColor="@color/green1" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="@string/my_page_d_day_content"
-                            android:textColor="@color/dark2"/>
+                            android:textAppearance="@style/RegularFontKr.12"
+                            android:textColor="@color/dark2" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <android.widget.Button
-                    android:id="@+id/myPage_btn_myInfo"
-                    style="@style/RegularFontKr.12"
-                    android:layout_width="284dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:background="@drawable/btn_my_page_round"
-                    android:backgroundTint="@color/white"
-                    android:drawableTop="@drawable/ic_my_info_30"
-                    android:padding="12dp"
-                    android:text="@string/my_info_myInfo"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/myPage_dDay" />
+                <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/myPage_btn_myInfo"
+                        style="@style/RegularFontKr.12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/btn_my_page_round"
+                        android:backgroundTint="@color/white"
+                        android:drawableTop="@drawable/ic_my_info_20"
+                        android:drawablePadding="6dp"
+                        android:padding="12dp"
+                        android:text="@string/my_info_myInfo"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/myPage_dDay" />
 
-                <android.widget.Button
-                    android:id="@+id/myPage_btn_myFeed"
-                    android:layout_width="284dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:background="@drawable/btn_my_page_round"
-                    android:drawableTop="@drawable/ic_my_feed_30"
-                    android:padding="12dp"
-                    android:text="@string/my_page_myFeed"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/myPage_dDay" />
+                <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/myPage_btn_myFeed"
+                        style="@style/RegularFontKr.12"
+                        android:layout_width="284dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/btn_my_page_round"
+                        android:drawableTop="@drawable/ic_my_feed_30"
+                        android:drawablePadding="6dp"
+                        android:padding="12dp"
+                        android:text="@string/my_page_myFeed"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/myPage_dDay" />
 
-                <android.widget.Button
-                    android:id="@+id/myPage_btn_scrap"
-                    android:layout_width="284dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:background="@drawable/btn_my_page_round"
-                    android:drawableTop="@drawable/ic_scrap_30"
-                    android:padding="12dp"
-                    android:text="@string/my_page_scrap"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/myPage_dDay" />
+                <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/myPage_btn_scrap"
+                        style="@style/RegularFontKr.12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/btn_my_page_round"
+                        android:drawableTop="@drawable/ic_scrap_20"
+                        android:drawablePadding="6dp"
+                        android:padding="12dp"
+                        android:text="@string/my_page_scrap"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/myPage_dDay" />
 
-                <android.widget.Button
-                    android:id="@+id/myPage_btn_setting"
-                    android:layout_width="284dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:layout_marginBottom="19dp"
-                    android:background="@drawable/btn_my_page_round"
-                    android:drawableTop="@drawable/ic_setting_30"
-                    android:padding="12dp"
-                    android:text="@string/my_page_setting"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/myPage_dDay" />
+                <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/myPage_btn_setting"
+                        style="@style/RegularFontKr.12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="19dp"
+                        android:background="@drawable/btn_my_page_round"
+                        android:drawableTop="@drawable/ic_setting_30"
+                        android:drawablePadding="6dp"
+                        android:padding="12dp"
+                        android:text="@string/my_page_setting"
+                        android:textColor="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/myPage_dDay" />
 
             </LinearLayout>
 
-            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </ScrollView>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </layout>
