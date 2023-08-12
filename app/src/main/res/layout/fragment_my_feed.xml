@@ -19,12 +19,11 @@
 
         <TextView
             android:id="@+id/my_feed_title"
-            style="@style/BoldFontKr.18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="53dp"
+            android:layout_marginTop="56dp"
             android:text="@string/my_page_myFeed"
+            android:textAppearance="@style/BoldFontKr.18"
             android:textColor="@color/green1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/my_page_sell_text"
                 android:textColor="@color/selector_selected_white_else_dark2"
-                android:textSize="14sp"
+                android:textAppearance="@style/MediumFontKr.14"
                 app:chipBackgroundColor="@color/selector_selected_green1_else_white"
                 app:chipEndPadding="20dp"
                 app:chipStartPadding="20dp" />
@@ -61,8 +60,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/my_page_share_text"
+                android:textAppearance="@style/MediumFontKr.14"
                 android:textColor="@color/selector_selected_white_else_dark2"
-                android:textSize="14sp"
                 app:chipBackgroundColor="@color/selector_selected_green1_else_white"
                 app:chipEndPadding="20dp"
                 app:chipStartPadding="20dp" />
@@ -73,8 +72,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/my_page_buy_text"
+                android:textAppearance="@style/MediumFontKr.14"
                 android:textColor="@color/selector_selected_white_else_dark2"
-                android:textSize="14sp"
                 app:chipBackgroundColor="@color/selector_selected_green1_else_white"
                 app:chipEndPadding="20dp"
                 app:chipStartPadding="20dp" />
