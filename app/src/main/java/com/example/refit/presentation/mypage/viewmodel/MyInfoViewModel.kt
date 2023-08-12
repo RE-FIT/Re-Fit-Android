@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.mypage.PasswordUpdateRequest
-import com.example.refit.data.model.mypage.PasswordUpdateResponse
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
 import com.example.refit.data.repository.mypage.MyPageRepository
 import kotlinx.coroutines.flow.first
@@ -70,12 +69,12 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     val userGender: LiveData<Int>
         get() = _userGender
 
-    // 입력한 현재 비밀 번호
-    private val _editCurrentPassword: MutableLiveData<String> = MutableLiveData<String>()
-    val editCurrentPassword: LiveData<String>
-        get() = _editCurrentPassword
+    // 비밀 번호 수정 완료
+    private val _isUpdatedPwStatus: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isUpdatedPwStatus: LiveData<Boolean>
+        get() = _isUpdatedPwStatus
 
-    //  서버에 있는 현재 비밀 번호
+    // 현재 비밀번호
     private val _currentPassword: MutableLiveData<String> = MutableLiveData<String>()
     val currentPassword: LiveData<String>
         get() = _currentPassword
@@ -150,10 +149,13 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
         _userGender.value = status
     }
 
-    // 새로운 비밀 번호 수정
-    fun updateCurrentPw(newNickname: String) {
+    fun updateCurrentPw(nickname: String) {
+        _currentPassword.value = nickname
         _isCheckUpdatedPw.value = true
-        _newPassword.value = newNickname
+    }
+    fun updateNewPw(nickname: String) {
+        _isCheckUpdatedPw.value = true
+        _newPassword.value = nickname
     }
 
     fun setUpdatedPasswordStatus(type: Int, status: Boolean) {
@@ -178,9 +180,14 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
         _isCheckUpdatedBtnStatus.value = status
     }
 
+    fun initUpdatedPwStatus(status: Boolean) {
+        _isUpdatedPwStatus.value = status
+    }
+
     fun initAllStatus() {
         initNicknameInfoStatus(false)
         initCheckBtnStatus(false)
+        initUpdatedPwStatus(false)
     }
 
     // Retrofit
@@ -200,7 +207,7 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
                         response: Response<Boolean>
                     ) {
                         if (response.isSuccessful) {
-                            _userNicknameResponse.value = response.body() ?: false
+                            _userNicknameResponse.value = response.body()
 
                             Timber.d("닉네임 중복 여부: ${_userNicknameResponse.value}")
                         } else {
@@ -259,28 +266,36 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
 
                 val response = repository.updatePassword("$accessToken", request)
 
-                response.enqueue(object : Callback<PasswordUpdateResponse> {
+                response.enqueue(object : Callback<Response<Void>> {
                     override fun onResponse(
-                        call: Call<PasswordUpdateResponse>,
-                        response: Response<PasswordUpdateResponse>
+                        call: Call<Response<Void>>,
+                        response: Response<Response<Void>>
                     ) {
                         if (response.isSuccessful) {
-                            _currentPassword.value = response.body().toString()
+                            _isCheckUpdatedPw.value = false
+                            _isUpdatedPwStatus.value = true
 
-                            Timber.d("비밀번호 수정 API 호출 성공: ${currentPassword.value}")
+                            Timber.d("비밀번호 수정 API 호출 성공: ${newPassword.value}")
                         } else {
-                            Timber.e("Error: ${response.code()}")
+                            _isUpdatedPwStatus.value = false
+
+                            Timber.e("Error: ${response.code()} 비밀번호 일치 X")
                         }
                     }
 
-                    override fun onFailure(call: Call<PasswordUpdateResponse>, t: Throwable) {
+                    override fun onFailure(call: Call<Response<Void>>, t: Throwable) {
                         Timber.d("401 Unauthorized: $t")
-                        // 에러 처리
                     }
                 })
             } catch (e: Throwable) {
                 Timber.d("ERROR: $e")
             }
+        }
+    }
+
+    fun updateMyInfoRetrofit() {
+        viewModelScope.launch {
+
         }
     }
 }

@@ -5,9 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.refit.data.model.community.CommunityListItemResponse
 import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
-import com.example.refit.databinding.ItemScrapBinding
 import com.example.refit.databinding.ItemScrapSellBinding
 import com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel
 
