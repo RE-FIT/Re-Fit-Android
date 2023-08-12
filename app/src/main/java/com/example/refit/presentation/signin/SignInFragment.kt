@@ -1,6 +1,8 @@
 package com.example.refit.presentation.signin
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import com.example.refit.R
 import com.example.refit.databinding.FragmentSignInBinding
@@ -30,11 +32,11 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
             }
         }*/
 
-        tokenViewModel.error.observe(viewLifecycleOwner) {
+        /*tokenViewModel.error.observe(viewLifecycleOwner) {
             it?.let {
                 Timber.d(it.toString())
             }
-        }
+        }*/
 
         viewModel.error.observe(viewLifecycleOwner, EventObserver{
             val customSnackBar = CustomSnackBar.make(
@@ -74,7 +76,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
 
     }
     fun textWatcher() {
-        binding.signInPassword.addTextChangedListener(object : TextWatcher{
+        binding.signInPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
