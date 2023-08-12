@@ -29,10 +29,6 @@ class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_f
         myFeedViewModel.loadFeedSellList()
         myFeedViewModel.loadFeedBuyList()
 
-        initFeedGiveList()
-        initFeedSellList()
-        initFeedBuyList()
-
         myFeedViewModel.selectedTab.observe(viewLifecycleOwner, Observer { tab ->
             when (tab) {
                 MyFeedViewModel.Tab.GIVE -> {

@@ -11,7 +11,7 @@
 
         <variable
             name="scrapList"
-            type="com.example.refit.data.model.mypage.MyScrapSellListItemResponse" />
+            type="com.example.refit.data.model.mypage.MyScrapSellListItemResponse"/>
 
         <variable
             name="vm"
@@ -27,6 +27,7 @@
         android:paddingVertical="5dp">
 
         <com.google.android.material.card.MaterialCardView
+            android:onClick="@{() -> vm.handleClickItem(scrapList.postId)}"
             android:id="@+id/mcv_community_item_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,7 +86,6 @@
                             android:visibility="visible"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{scrapList.price + `원`}"
                             android:textColor="@color/dark2"
                             android:layout_marginLeft="15dp" />
 
@@ -112,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="bottom"
-                        setTextSize="@{scrapList.size}"
+                        android:text="@{vm.conversionTypeToText(3, scrapList.size)}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_size_txt"
                         app:layout_constraintTop_toBottomOf="@id/ll_community_item" />

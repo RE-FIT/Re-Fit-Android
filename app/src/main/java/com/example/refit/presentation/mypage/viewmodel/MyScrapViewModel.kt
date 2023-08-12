@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.community.CommunityListItemResponse
+import com.example.refit.data.model.mypage.MyFeedGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
 import com.example.refit.data.repository.mypage.MyPageRepository
@@ -52,16 +53,20 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
     val dropDownValue: List<MutableLiveData<Int>>
         get() = _dropDownValue
 
-    private val _selectedTab = MutableLiveData<MyFeedViewModel.Tab>()
-    val selectedTab: LiveData<MyFeedViewModel.Tab>
-        get() = _selectedTab
-
-    init {
-        _selectedTab.value = MyFeedViewModel.Tab.SELL // 초기 선택 탭 설정
+    enum class Tab2 {
+        SELL, GIVE
     }
 
-    fun setSelectedTab(tab: MyFeedViewModel.Tab) {
-        _selectedTab.value = tab
+    private val _selectedTab2 = MutableLiveData<Tab2>()
+    val selectedTab2: LiveData<Tab2>
+        get() = _selectedTab2
+
+    init {
+        _selectedTab2.value = Tab2.SELL // 초기 선택 탭 설정
+    }
+
+    fun setSelectedTab(tab: Tab2) {
+        _selectedTab2.value = tab
     }
 
     fun loadScrapSellList() =
@@ -81,7 +86,7 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
                             Timber.d("API 호출 성공")
                             val responseBody = response.body()
                             if (responseBody != null) {
-                                _myScrapSellList.value = response.body() as List<MyScrapSellListItemResponse>
+                                _myScrapSellList.value = response.body() ?: null
                                 Timber.d("scrapSellList : ${response.body()}")
                             }
                         } else {
@@ -127,8 +132,8 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
                             Timber.d("API 호출 성공")
                             val responseBody = response.body()
                             if (responseBody != null) {
-                                _myScrapGiveList.value = response.body() as List<MyScrapGiveListItemResponse>
-                                Timber.d("scrapList : ${response.body()}")
+                                _myScrapGiveList.value = response.body() ?: null
+                                Timber.d("scrapSellList : ${response.body()}")
                             }
                         } else {
                             val errorBody = response.errorBody()
@@ -166,34 +171,24 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
         }
     }
 
-    fun conversionTypeToText(itemType: Int, value: Int): String {
-        var text = ""
-        when (itemType) {
-            2 -> when (value) {
-                0 -> text = "직거래"
-                1 -> text = "배송"
+    fun conversionTypeToText(itemType: Int?, value: String?): String {
+        return when (itemType) {
+            3 -> when (value?.toInt()) {
+                0 -> "XS"
+                1 -> "S"
+                2 -> "M"
+                3 -> "L"
+                4 -> "XL"
+                else -> "Unknown"
             }
-            3 -> when (value) {
-                0 -> text = "상의"
-                1 -> text = "하의"
-                2 -> text = "아우터"
-                3 -> text = "원피스"
-                4 -> text = "신발"
-                5 -> text = "악세사리"
-            }
+
             4 -> when (value) {
-                0 -> text = "XS"
-                1 -> text = "S"
-                2 -> text = "M"
-                3 -> text = "L"
-                4 -> text = "XL"
+                "null" -> "전국"
+                else -> "Unknown"
             }
-            5 -> when (value) {
-                0 -> text = "여성복"
-                1 -> text = "남성복"
-            }
+
+            else -> "Unknown"
         }
-        return text
     }
 }
 
