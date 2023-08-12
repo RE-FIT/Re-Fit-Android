@@ -18,6 +18,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 
 class SignInViewModel(private val repository: SignUpRepository, private val ds: TokenStore): ViewModel() {
 

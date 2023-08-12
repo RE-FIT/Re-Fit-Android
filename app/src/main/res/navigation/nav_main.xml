@@ -9,7 +9,7 @@
         android:id="@+id/signInFragment"
         android:name="com.example.refit.presentation.signin.SignInFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" >
+        tools:layout="@layout/fragment_sign_up" >
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment"
@@ -83,6 +83,9 @@
         <action
             android:id="@+id/action_signUpFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_signUpCompleteFragment"
+            app:destination="@id/signUpCompleteFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_community"
@@ -413,5 +416,14 @@
             android:name="postType"
             app:argType="string"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpCompleteFragment"
+        android:name="com.example.refit.presentation.signup.SignUpCompleteFragment"
+        android:label="fragment_sign_up_complete"
+        tools:layout="@layout/fragment_sign_up_complete" >
+        <action
+            android:id="@+id/action_signUpCompleteFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
 </navigation>

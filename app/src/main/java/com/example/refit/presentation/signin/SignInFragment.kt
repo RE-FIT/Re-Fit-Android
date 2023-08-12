@@ -49,11 +49,12 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         })
 
         //로그인
+        //로그인
         binding.signInExistingLogin.setOnClickListener {
             val id = binding.signInLoginId.text.toString()
             val password = binding.signInPassword.text.toString()
             viewModel.basicLogin(id, password)
-//            viewModel.basicLogin("admin1234", "AAaa1234!!")
+//            viewModel.basicLogin("admin0000", "AAaa1234!!")
         }
 
 
