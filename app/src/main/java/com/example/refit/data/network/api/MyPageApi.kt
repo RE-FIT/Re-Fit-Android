@@ -1,16 +1,17 @@
 package com.example.refit.data.network.api
 
-import com.example.refit.data.model.community.CommunityListItemResponse
 import com.example.refit.data.model.mypage.MyFeedBuyListItemResponse
 import com.example.refit.data.model.mypage.MyFeedGiveListItemResponse
 import com.example.refit.data.model.mypage.MyFeedSellListItemResponse
 import com.example.refit.data.model.mypage.MyScrapGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
+import com.example.refit.data.model.mypage.PasswordUpdateRequest
+import com.example.refit.data.model.mypage.PasswordUpdateResponse
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -31,11 +32,9 @@ interface MyPageApi {
     @PATCH("/refit/mypage/info")
     fun updateInfo(
         @Header("Authorization") token: String,
-        @Part("image") image: MultipartBody.Part?,
-        @Part("name") name: RequestBody,
-        @Part("birth") birth: RequestBody,
-        @Part("gender") gender: RequestBody,
-    ): Call<ResponseBody>
+        @Part("image") image: List<MultipartBody.Part>,
+        @Part("content") content: RequestBody,
+    )
 
     // 이름(닉네임) 중복 확인
     @GET("/refit/mypage/info/check")
@@ -47,9 +46,8 @@ interface MyPageApi {
     @PATCH("/refit/mypage/info/password")
     fun updatePassword(
         @Header("Authorization") accessToken: String,
-        @Field("currentPassword") currentPassword: String,
-        @Field("newPassword") newPassword: String,
-    ): Call<ResponseBody>
+        @Body request: PasswordUpdateRequest
+    ): Call<PasswordUpdateResponse>
 
     // 내 피드 나눔
     @GET("/refit/mypage/myfeed/give")

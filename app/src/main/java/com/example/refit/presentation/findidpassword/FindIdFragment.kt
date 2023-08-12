@@ -9,7 +9,9 @@ import com.example.refit.R
 import com.example.refit.databinding.FragmentFindIdBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.findidpassword.viewModel.FindIdPasswordViewModel
+import com.example.refit.presentation.findidpassword.viewModel.FindIdPwViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FindIdFragment : BaseFragment<FragmentFindIdBinding>(R.layout.fragment_find_id) {
 
@@ -19,6 +21,10 @@ class FindIdFragment : BaseFragment<FragmentFindIdBinding>(R.layout.fragment_fin
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = vm
+
+        binding.btnFindIdBtn.setOnClickListener(){
+
+        }
 
         editNickname()
         editEmail()
@@ -45,4 +51,6 @@ class FindIdFragment : BaseFragment<FragmentFindIdBinding>(R.layout.fragment_fin
             override fun afterTextChanged(s: Editable?) { vm.setFindIdAllFilledStatus() }
         })
     }
+
+
 }

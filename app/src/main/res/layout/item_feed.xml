@@ -14,14 +14,6 @@
             type="com.example.refit.data.model.mypage.MyFeedGiveListItemResponse"/>
 
         <variable
-            name="feedListSell"
-            type="com.example.refit.data.model.mypage.MyFeedSellListItemResponse" />
-
-        <variable
-            name="feedListBuy"
-            type="com.example.refit.data.model.mypage.MyFeedBuyListItemResponse" />
-
-        <variable
             name="vm"
             type="com.example.refit.presentation.mypage.viewmodel.MyFeedViewModel" />
 
