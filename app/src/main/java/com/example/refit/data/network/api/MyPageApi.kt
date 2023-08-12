@@ -73,7 +73,7 @@ interface MyPageApi {
     ): Call<List<MyScrapGiveListItemResponse>>
 
     // 내 스크랩 판매
-    @GET("/refit/mypage/myfeed/sell")
+    @GET("/refit/mypage/scrap/sell")
     fun showMyScrapSell(
         @Header("Authorization") token: String
     ): Call<List<MyScrapSellListItemResponse>>

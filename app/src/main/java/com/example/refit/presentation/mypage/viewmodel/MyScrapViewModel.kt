@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.community.CommunityListItemResponse
+import com.example.refit.data.model.mypage.MyFeedGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
 import com.example.refit.data.repository.mypage.MyPageRepository
@@ -85,7 +86,7 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
                             Timber.d("API 호출 성공")
                             val responseBody = response.body()
                             if (responseBody != null) {
-                                _myScrapSellList.value = response.body() as List<MyScrapSellListItemResponse>
+                                _myScrapSellList.value = response.body() ?: null
                                 Timber.d("scrapSellList : ${response.body()}")
                             }
                         } else {
@@ -131,8 +132,8 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
                             Timber.d("API 호출 성공")
                             val responseBody = response.body()
                             if (responseBody != null) {
-                                _myScrapGiveList.value = response.body() as List<MyScrapGiveListItemResponse>
-                                Timber.d("scrapList : ${response.body()}")
+                                _myScrapGiveList.value = response.body() ?: null
+                                Timber.d("scrapSellList : ${response.body()}")
                             }
                         } else {
                             val errorBody = response.errorBody()

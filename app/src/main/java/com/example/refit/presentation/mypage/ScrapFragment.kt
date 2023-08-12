@@ -28,19 +28,16 @@ class ScrapFragment: BaseFragment<FragmentScrapBinding>(R.layout.fragment_scrap)
         var chipGroup = binding.chipGroupSell
         binding.vm = myScrapViewModel
 
-        myScrapViewModel.loadScrapGiveList()
-        myScrapViewModel.loadScrapSellList()
-
-        initScrapGiveList()
-        initScrapSellList()
 
         myScrapViewModel.selectedTab2.observe(viewLifecycleOwner, Observer { tab ->
             when (tab) {
-                MyScrapViewModel.Tab2.GIVE -> {
-                    initScrapGiveList()
-                }
                 MyScrapViewModel.Tab2.SELL -> {
                     initScrapSellList()
+                    myScrapViewModel.loadScrapSellList()
+                }
+                MyScrapViewModel.Tab2.GIVE -> {
+                    initScrapGiveList()
+                    myScrapViewModel.loadScrapGiveList()
                 }
             }
         })
