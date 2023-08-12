@@ -156,6 +156,10 @@ class CommunityAddPostViewModel(
     val isFilledFee: LiveData<Boolean>
         get() = _isFilledFee
 
+    private val _isFilledFeeStatus: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isFIlledFeeStatus: LiveData<Boolean>
+        get() = _isFilledFeeStatus
+
     private val _isFilledDialogEditSF: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isFilledDialogEditSF: LiveData<Boolean>
         get() = _isFilledDialogEditSF
@@ -182,10 +186,19 @@ class CommunityAddPostViewModel(
     val modifyImageStatus: LiveData<Boolean>
         get() = _modifyImageStatus
 
+    private val _textIfShoesOrAcc: MutableLiveData<String> = MutableLiveData<String>()
+    val textIfShoesOrAcc: LiveData<String>
+        get() = _textIfShoesOrAcc
+
     fun setPostId(id: Int) {
         _postId.value = id
     }
 
+    fun setFeeStatus() {
+        if(isFilledFee.value == true && (postValue[2].value == null || postValue[2].value == 0)) {
+            _isFilledFeeStatus.value = true
+        } else _isFilledFeeStatus.value = false
+    }
 
     fun checkTransactionType(selectedType: String, typeList: List<String>) {
         when (selectedType) {
@@ -456,6 +469,7 @@ class CommunityAddPostViewModel(
                 "M" -> type = 2
                 "L" -> type = 3
                 "XL" -> type = 4
+                "상세설명 입력" -> type = 5
             }
 
             5 -> when (value) {
@@ -489,6 +503,7 @@ class CommunityAddPostViewModel(
                 2 -> text = "M"
                 3 -> text = "L"
                 4 -> text = "XL"
+                5 -> text = "상세설명 입력"
             }
             5 -> when (value) {
                 0 -> text = "여성복"
@@ -496,6 +511,22 @@ class CommunityAddPostViewModel(
             }
         }
         return text
+    }
+
+    fun gaugeShoesOrAcc(): Boolean {
+        return (postValue[3].value == 4 || postValue[3].value == 5)
+    }
+
+    fun setTextIfShoesOrAcc(): String {
+        if(isFilledValue[4].value == true) {
+            if(postValue[4].value == 4 || postValue[4].value == 5) {
+                _isFilledValue[4].value == true
+                _textIfShoesOrAcc.value = "상세설명 입력"
+            } else {
+                _textIfShoesOrAcc.value = conversionTypeToText(4, postValue[4].value!!)
+            }
+        } else _textIfShoesOrAcc.value = "사이즈를 입력해주세요"
+        return textIfShoesOrAcc.value.toString()
     }
 
     fun getDecimalFormat(number: String): String {
@@ -528,11 +559,11 @@ class CommunityAddPostViewModel(
                         postType = _postValue[0].value ?: 0,
                         price = _postValue[6].value ?: 0,
                         category = _postValue[3].value ?: 0,
-                        size = _postValue[4].value ?: 0,
+                        size = _postValue[4].value ?: 5,
                         deliveryType = _postValue[1].value ?: 0,
                         deliveryFee = _postValue[2].value ?: 0,
                         detail = _postDetail.value ?: "",
-                        address = _postAddressValue.value ?: "서울시 중랑구 묵동"
+                        address = _postAddressValue.value ?: "00시 00구 00동"
                     )
                 }
 
@@ -543,7 +574,7 @@ class CommunityAddPostViewModel(
                         postType = _postValue[0].value ?: 0,
                         price = _postValue[6].value ?: 0,
                         category = _postValue[3].value ?: 0,
-                        size = _postValue[4].value ?: 0,
+                        size = _postValue[4].value ?: 5,
                         deliveryType = _postValue[1].value ?: 0,
                         deliveryFee = _postValue[2].value ?: 0,
                         detail = _postDetail.value ?: "",

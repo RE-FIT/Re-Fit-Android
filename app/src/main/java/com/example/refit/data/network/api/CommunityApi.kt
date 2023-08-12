@@ -25,6 +25,11 @@ import java.io.IOException
 interface CommunityApi {
 
     @GET("refit/community")
+    fun initCommunityList(
+        @Header("Authorization") accessToken: String,
+    ): Call<ResponseBody>
+
+    @GET("refit/community")
     fun loadCommunityList(
         @Header("Authorization") accessToken: String,
         @Query("postType") postType: Int = 0,

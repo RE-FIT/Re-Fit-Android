@@ -522,7 +522,7 @@
                                 android:layout_marginLeft="5dp"
                                 android:enabled="@{cmviewmodel.isSFExclude()}"
                                 android:gravity="center_vertical"
-                                android:text="@{cmviewmodel.isFilledFee ? @string/community_addpost_contents_detail_fourth_input_2 : @string/community_addpost_contents_detail_fourth_input}"
+                                android:text="@{cmviewmodel.isFIlledFeeStatus ? @string/community_addpost_contents_detail_fourth_input_2 : @string/community_addpost_contents_detail_fourth_input}"
                                 android:textColor="@color/dark2" />
                         </LinearLayout>
 

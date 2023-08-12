@@ -1,8 +1,13 @@
 package com.example.refit.presentation.chat
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.TextView
+import androidx.annotation.ArrayRes
+import androidx.appcompat.widget.ListPopupWindow
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +19,7 @@ import com.example.refit.databinding.FragmentChatBinding
 import com.example.refit.presentation.chat.adapter.ChatRVAdapter
 import com.example.refit.presentation.chat.viewmodel.ChatViewModel
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import io.socket.client.IO
 import io.socket.client.Socket
@@ -30,25 +36,25 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
     private lateinit var socket: Socket
     private val viewModel: ChatViewModel by sharedViewModel()
 
-    val args : ChatFragmentArgs by navArgs()
+    val args: ChatFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val userId = args.userId.toString()
         val roomId = args.roomId.toString()
+        val sellerId = args.sellerId.toString()
+
+        viewModel.setUserStatus(userId, sellerId)
 
         binding.cancel.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        binding.out.setOnClickListener {
-            viewModel.room_delete(roomId)
-        }
 
         viewModel.room_detail(roomId)
 
-        viewModel.delete.observe(viewLifecycleOwner){
+        viewModel.delete.observe(viewLifecycleOwner) {
             if (it === true) {
                 viewModel.initDelete()
                 findNavController().popBackStack()
@@ -59,10 +65,13 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
 
             val dataRVAdapter = ChatRVAdapter(it.toMutableList())
             binding.rv.adapter = dataRVAdapter
-            binding.rv.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            binding.rv.layoutManager =
+                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
 
             socket = IO.socket(BuildConfig.SUB_URL)
             socket.connect()
+
+            chatEtcMenuDropdown()
 
             socket.on(Socket.EVENT_CONNECT, Emitter.Listener {
 
@@ -93,7 +102,9 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
                 sendMessage(binding.edit.text.toString().trim())
                 binding.edit.text.clear()
             }
+
         }
+
     }
 
     override fun onResume() {
@@ -105,7 +116,13 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
 
     fun sendMessage(message: String) {
         if (message != "") {
-            socket.emit("message", args.roomId.toString(), args.userId.toString(), args.otherId.toString(), message)
+            socket.emit(
+                "message",
+                args.roomId.toString(),
+                args.userId.toString(),
+                args.otherId.toString(),
+                message
+            )
         }
     }
 
@@ -118,4 +135,55 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
             socket.disconnect()
         }
     }
+
+
+    private fun chatEtcMenuDropdown() {
+        binding.out.setOnClickListener {
+            val listPopupWindow = when (viewModel.userStatus.value) {
+                0 -> getPopupMenu( // 판매자
+                    it,
+                    R.array.chat_overflow_seller
+                )
+
+                1 -> getPopupMenu( // 구매 희망자
+                    it,
+                    R.array.chat_overflow_user
+                )
+
+                else -> throw IllegalArgumentException("Invalid Status Value")
+            }
+            setPopupItemClickListener(listPopupWindow)
+            listPopupWindow.show()
+        }
+    }
+
+    private fun getPopupMenu(
+        anchorView: View,
+        @ArrayRes items: Int,
+    ): ListPopupWindow {
+        return DropdownMenuManager.createPopupMenu(
+            anchorView,
+            R.style.ListPopupMenuWindow_CommunityInfoOption,
+            R.layout.list_popup_window_item_white,
+            items
+        )
+    }
+
+    private fun setPopupItemClickListener(popupMenu: ListPopupWindow) {
+        popupMenu.setOnItemClickListener { _, view, _, _ ->
+            val itemDescription = (view as TextView).text.toString()
+            when (itemDescription) {
+                "채팅방 나가기" -> {
+                    viewModel.roomId.value?.let { viewModel.room_delete(it) }
+                }
+
+                "거래 완료" -> {
+
+                }
+            }
+            Timber.d(itemDescription)
+            popupMenu.dismiss()
+        }
+    }
+
 }

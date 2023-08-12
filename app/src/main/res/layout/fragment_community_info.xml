@@ -5,6 +5,7 @@
     tools:context=".presentation.community.CommunityInfoFragment">
 
     <data>
+
         <variable
             name="vm"
             type="com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel" />
@@ -76,8 +77,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
-                    android:layout_marginHorizontal="15dp">
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="5dp">
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
@@ -180,8 +181,8 @@
                                 android:id="@+id/fl_community_info_image"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
                                 android:layout_marginHorizontal="10dp"
+                                android:layout_marginTop="10dp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_datetitme">
 
@@ -193,19 +194,19 @@
 
                                 <com.google.android.material.imageview.ShapeableImageView
                                     android:id="@+id/iv_arrow_left"
+                                    setVisibility="@{vm.postResponse.imgUrls.size > 1}"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
-                                    setVisibility="@{vm.postResponse.imgUrls.size > 1}"
                                     android:paddingLeft="15dp"
                                     android:src="@drawable/ic_community_info_arrow_left_7" />
 
 
                                 <com.google.android.material.imageview.ShapeableImageView
                                     android:id="@+id/iv_arrow_right"
+                                    setVisibility="@{vm.postResponse.imgUrls.size > 1}"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="end"
-                                    setVisibility="@{vm.postResponse.imgUrls.size > 1}"
                                     android:paddingRight="15dp"
                                     android:src="@drawable/ic_community_info_arrow_right_7" />
 
@@ -223,129 +224,161 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/fl_community_info_image" />
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tv_community_info_item_size_txt"
-                                style="@style/RegularFontKr.14"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:text="@string/community_info_contents_first"
-                                android:textColor="@color/black"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_first" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tv_community_info_item_size"
-                                style="@style/RegularFontKr.14"
-                                setTextSizeInt="@{vm.postResponse.size}"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginTop="10dp"
-                                android:text="size"
-                                android:textColor="@color/black"
-                                app:layout_constraintStart_toEndOf="@id/tv_community_info_item_size_txt"
-                                app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_first" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tv_community_info_item_method_txt"
-                                style="@style/RegularFont.14"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="@string/community_info_contents_second"
-                                android:textColor="@color/black"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_price_txt" />
-
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tv_community_info_item_method"
-                                style="@style/RegularFontKr.14"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginTop="5dp"
-                                android:text="@{vm.postResponse.deliveryType == 0 ? `직거래` : `택배`}"
-                                android:textColor="@color/black"
-                                app:layout_constraintStart_toEndOf="@id/tv_community_info_item_method_txt"
-                                app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_price_txt" />
-
                             <LinearLayout
-                                android:id="@+id/tv_community_info_item_price_txt"
-                                setVisibility="@{vm.postResponse.postType == 0 ? false : true}"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:visibility="gone"
+                                android:orientation="vertical"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_size_txt">
+                                app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_first"
+                                app:layout_constraintEnd_toEndOf="parent" >
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/RegularFont.14"
+                                <LinearLayout
+                                    android:id="@+id/ll_community_info_size"
+                                    setVisibility="@{vm.postResponse.size == 5 ? false : true}"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:visibility="gone" >
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tv_community_info_item_size_txt"
+                                        style="@style/RegularFontKr.14"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:text="@string/community_info_contents_first"
+                                        android:textColor="@color/black" />
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tv_community_info_item_size"
+                                        style="@style/RegularFontKr.14"
+                                        setTextSizeInt="@{vm.postResponse.size}"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginTop="10dp"
+                                        android:text="size"
+                                        android:textColor="@color/black" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tv_community_info_item_method_txt"
+                                        style="@style/RegularFont.14"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dp"
+                                        android:text="@string/community_info_contents_second"
+                                        android:textColor="@color/black"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_price_txt" />
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tv_community_info_item_method"
+                                        style="@style/RegularFontKr.14"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="@{vm.postResponse.deliveryType == 0 ? `직거래` : `택배`}"
+                                        android:textColor="@color/black"
+                                        app:layout_constraintStart_toEndOf="@id/tv_community_info_item_method_txt"
+                                        app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_price_txt" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/tv_community_info_item_price_txt"
+                                    setVisibility="@{vm.postResponse.postType == 0 ? false : true}"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:text="@string/community_info_contents_fifth"
-                                    android:textColor="@color/black" />
+                                    android:orientation="horizontal"
+                                    android:visibility="gone">
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tv_community_info_item_price"
-                                    style="@style/RegularFontKr.14"
-                                    android:layout_width="wrap_content"
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        style="@style/RegularFont.14"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dp"
+                                        android:text="@string/community_info_contents_fifth"
+                                        android:textColor="@color/black" />
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tv_community_info_item_price"
+                                        style="@style/RegularFontKr.14"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="@{vm.postResponse.price + `원`}"
+                                        android:textColor="@color/black" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_marginTop="5dp"
-                                    android:text="@{vm.postResponse.price + `원`}"
-                                    android:textColor="@color/black" />
+                                    android:orientation="horizontal">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tv_community_info_item_deliveryfee_txt"
+                                        style="@style/RegularFont.14"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dp"
+                                        android:text="@string/community_info_contents_third"
+                                        android:textColor="@color/black" />
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tv_community_info_item_deliveryfee"
+                                        style="@style/RegularFontKr.14"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="@{vm.postResponse.deliveryFee + `원`}"
+                                        android:textColor="@color/black" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tv_community_info_item_region_txt"
+                                        style="@style/RegularFont.14"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="5dp"
+                                        android:text="@string/community_info_contents_fourth"
+                                        android:textColor="@color/black" />
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tv_community_info_item_region"
+                                        style="@style/RegularFontKr.14"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginTop="5dp"
+                                        android:text="@{vm.postResponse.address == null ? @string/community_item_region_all : vm.postResponse.address }"
+                                        android:textColor="@color/black" />
+
+                                </LinearLayout>
+
 
                             </LinearLayout>
 
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tv_community_info_item_deliveryfee_txt"
-                                style="@style/RegularFont.14"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="@string/community_info_contents_third"
-                                android:textColor="@color/black"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_method_txt" />
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tv_community_info_item_deliveryfee"
-                                style="@style/RegularFontKr.14"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginTop="5dp"
-                                android:text="@{vm.postResponse.deliveryFee + `원`}"
-                                android:textColor="@color/black"
-                                app:layout_constraintStart_toEndOf="@id/tv_community_info_item_deliveryfee_txt"
-                                app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_method_txt" />
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tv_community_info_item_region_txt"
-                                style="@style/RegularFont.14"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="@string/community_info_contents_fourth"
-                                android:textColor="@color/black"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_deliveryfee_txt" />
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tv_community_info_item_region"
-                                style="@style/RegularFontKr.14"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:layout_marginTop="5dp"
-                                android:text="@{vm.postResponse.address == null ? @string/community_item_region_all : vm.postResponse.address }"
-                                android:textColor="@color/black"
-                                app:layout_constraintStart_toEndOf="@id/tv_community_info_item_region_txt"
-                                app:layout_constraintTop_toBottomOf="@id/tv_community_info_item_deliveryfee_txt" />
 
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -405,18 +438,18 @@
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/fab_community_info_chat"
+                setVisibility="@{vm.isPostAuthor ? false : true}"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                setVisibility="@{vm.isPostAuthor ? false : true}"
                 android:layout_gravity="bottom|end"
                 android:layout_marginEnd="17dp"
                 android:layout_marginBottom="13dp"
                 android:backgroundTint="@color/green1"
+                android:paddingVertical="3dp"
                 android:text="@string/community_info_fab_bottom_end"
                 android:textAppearance="@style/RegularFontKr.12"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                android:paddingVertical="3dp"
                 app:cornerRadius="3dp"
                 app:icon="@drawable/ic_community_mail_18"
                 app:iconPadding="1dp"
