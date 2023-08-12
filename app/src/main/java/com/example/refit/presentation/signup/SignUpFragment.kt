@@ -43,6 +43,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
         handleBirthDate()
         initSexDropDownMenu()
         handleSignUpAgreeCheckBox()
+        handleClickSignUpButton()
     }
 
     private fun handleInputId() {
@@ -102,7 +103,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
             override fun afterTextChanged(text: Editable?) {
                 super.afterTextChanged(text)
                 signUpViewModel.checkValidationNickname(
-                    "^[A-Za-z가-힣]+\$".toRegex(),
+                    "^\\S+\$".toRegex(),
                     text.toString()
                 )
 
@@ -136,12 +137,24 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
 
     private fun handleSignUpAgreeCheckBox() {
         binding.cbSignUpRequestAgree.addOnCheckedStateChangedListener { checkBox, state ->
-            if (checkBox.isChecked) {
-            }
+            signUpViewModel.checkValidationAgree(checkBox.isChecked)
         }
-
         binding.etSignUpRequestAgreeDescription.setOnClickListener {
             SignUpAgreeDialog().show(requireActivity().supportFragmentManager, null)
+        }
+    }
+
+    private fun handleClickSignUpButton() {
+        binding.btnSignUpComplete.setOnClickListener {
+            signUpViewModel.signUpUser(
+                binding.etSignUpInputId.text.toString(),
+                binding.etSignUpInputPassword.text.toString(),
+                binding.etSignUpInputEmail.text.toString(),
+                binding.etSignUpInputNickname.text.toString(),
+                binding.etSignUpInputBirth.text.toString(),
+                resources.getStringArray(R.array.sign_up_gender).toList()
+                    .indexOf(binding.atvSignUpDropDownSex.text.toString())
+            )
         }
     }
 
@@ -160,4 +173,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
             }
         }
     }
+
+
 }

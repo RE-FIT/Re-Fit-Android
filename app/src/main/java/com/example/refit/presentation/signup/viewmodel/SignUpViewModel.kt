@@ -80,6 +80,10 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     val isValidSex: LiveData<Boolean>
         get() = _isValidSex
 
+    private var _isValidAgree = MutableLiveData<Boolean>()
+    val isValidAgree: LiveData<Boolean>
+        get() = _isValidAgree
+
 
 
 
@@ -125,6 +129,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                             Timber.d("사용 가능한 닉네임입니다")
                         } else if(response.code() == 400) {
                             val jsonObject = JSONObject(response.errorBody()!!.string())
+                            _isValidNickname.value = false
                             _errorResponseNickname.value = ResponseError(
                                 jsonObject.getInt("code"),
                                 jsonObject.getString("message")
@@ -157,7 +162,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                         response: Response<ResponseBody>
                     ) {
                         if (response.isSuccessful) {
-                            Timber.d("API 호출 성공")
+                            Timber.d("회원가입 성공")
                         } else {
                             val errorBody = response.errorBody()
                             val errorCode = response.code()
@@ -214,6 +219,10 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
 
     fun checkValidationSex(isChecked: Boolean) {
         _isValidSex.value = isChecked
+    }
+
+    fun checkValidationAgree(isChecked: Boolean) {
+        _isValidAgree.value = isChecked
     }
 
 

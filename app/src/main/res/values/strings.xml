@@ -36,8 +36,6 @@
 
 
     <!-- Sign Up -->
-    <string name="sign_up_id_regex">^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,16}$</string>
-
     <string name="sign_up_valid_id">사용 가능한 아이디입니다</string>
     <string name="sign_up_valid_password">사용 가능한 비밀번호입니다</string>
     <string name="sign_up_valid_email">사용 가능한 이메일입니다</string>
@@ -48,7 +46,8 @@
     <string name="sign_up_invalid_password">* 영문 대문자, 소문자, 숫자, 특수기호 !, -, _ 중 모두 포함하며 8글자 이상 16글자 이하여야 합니다</string>
     <string name="sign_up_invalid_email">* 이메일 양식을 정확하게 입력해주세요</string>
     <string name="sign_up_invalid_email_code">* 인증번호를 다시 한 번 확인해주세요.</string>
-    <string name="sign_up_invalid_nickname">사용 가능한 닉네임입니다</string>
+    <string name="sign_up_invalid_nickname">* 이미 존재하는 닉네임입니다</string>
+    <string name="sign_up_invalid_nickname_format">* 이미 존재하는 닉네임입니다</string>
     <string name="sign_up_invalid_birth">* YYYY/MM/DD 형식으로 작성해야 합니다</string>
 
     <!-- Closet -->
