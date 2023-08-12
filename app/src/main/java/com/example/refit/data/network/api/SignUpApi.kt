@@ -5,6 +5,7 @@ import com.example.refit.data.model.signup.FindIdResponse
 import com.example.refit.data.model.signup.FindPasswordRequest
 import com.example.refit.data.model.signup.RegisterUserRequest
 import com.example.refit.data.model.signup.RequestEmailCertification
+import com.example.refit.data.model.signup.RequestNicknameValidation
 import com.example.refit.data.model.signup.ResponseEmailCertification
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -55,4 +56,9 @@ interface SignUpApi {
     fun requestJoinUser(
         @Body requestBody: RegisterUserRequest
     ): Call<ResponseBody>
+
+    @POST("auth/join/name")
+    fun checkNicknameValidation(
+        @Body requestBody: RequestNicknameValidation
+    ): Call<Void>
 }

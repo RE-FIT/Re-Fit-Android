@@ -5,6 +5,7 @@ import com.example.refit.data.model.signup.FindIdResponse
 import com.example.refit.data.model.signup.FindPasswordRequest
 import com.example.refit.data.model.signup.RegisterUserRequest
 import com.example.refit.data.model.signup.RequestEmailCertification
+import com.example.refit.data.model.signup.RequestNicknameValidation
 import com.example.refit.data.model.signup.ResponseEmailCertification
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -26,4 +27,6 @@ interface SignUpDataSource {
 
     //findByPasswprd
     suspend fun findByPassword(body: FindPasswordRequest): Call<ResponseBody>
+
+    suspend fun checkNicknameValidation(body: RequestNicknameValidation): Call<Void>
 }

@@ -1,21 +1,51 @@
 package com.example.refit.presentation.common.binding
 
 import androidx.databinding.BindingAdapter
-import com.example.refit.data.model.common.ResponseError
+import com.example.refit.R
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 
 object SignUpBindingAdapter {
 
     @JvmStatic
-    @BindingAdapter("handleEmailCertificationError")
-    fun handleEmailCertificationError(view: TextInputLayout, error: ResponseError?) {
+    @BindingAdapter("handleErrorMessage")
+    fun handleErrorMessage(view: TextInputLayout, error: String?) {
         error?.let {
-            val errorMessage = when(error.code) {
-                10017 -> { "이미 존재하는 이메일입니다" }
-                10018 -> { "이메일 형식이 올바르지 않습니다" }
-                else -> { "이메일은 필수 정보입니다" }
-            }
-            view.error = errorMessage
+            view.error = error
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("handleValidMessage")
+    fun handleValidMessage(view: TextInputLayout, validMessage: String?) {
+        validMessage?.let {
+            view.error = null
+            view.boxStrokeWidth = 4
+            view.helperText = validMessage
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("handleInvalidMessage")
+    fun handleInvalidMessage(view: TextInputLayout, invalidMessage: String?) {
+        invalidMessage?.let{
+            view.helperText = null
+            view.boxStrokeWidth = 4
+            view.error = invalidMessage
+        }
+
+    }
+
+    @JvmStatic
+    @BindingAdapter("setActivationButtonByStatus")
+    fun setActivationButtonByStatus(view: MaterialButton, isValid: Boolean) {
+        if (isValid) {
+            view.setBackgroundColor(view.context.resources.getColor(R.color.green1, null))
+            view.setTextColor(view.context.resources.getColor(R.color.white, null))
+        } else {
+            view.setBackgroundColor(view.context.resources.getColor(R.color.light, null))
+            view.setTextColor(view.context.resources.getColor(R.color.black, null))
+        }
+    }
+
 }
