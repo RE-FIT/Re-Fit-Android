@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:background="@drawable/bg_dialog_alert_basic"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/default_dark"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.SignUpDialog.CardView.Corners"
+            app:strokeWidth="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/default_dark"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_dialog_sign_up_title"
+                    style="@style/RegularFontKr.12"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="이용약관 및 개인정보 수집 동의 (필수)"
+                    android:textColor="@color/green1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_dialog_sign_up_close"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_dialog_sign_up_close"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="end"
+                    android:drawableEnd="@drawable/ic_close_24"
+                    android:drawableTint="@color/dark2"
+                    android:src="@drawable/ic_close_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_dialog_sign_up_title"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign_up_agree_description" />
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+    </LinearLayout>
+
+
+</layout>

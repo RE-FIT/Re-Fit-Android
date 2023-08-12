@@ -2,6 +2,8 @@
     <string name="app_name">ReFit</string>
     <string name="empty" />
     <string name="percent">%</string>
+    <string name="sign_up_agree_description">개정일자 : 2023.06.11\n\n제1조 (목적)\n이 약관은 RE-FIT ( 이하 ‘ 회사 ’ 라고 합니다 )이 제공하는 제반 서비스의 이용과 관련하여 회사와 회원과의 관리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.\n\n제2조 (정의)\n이 약관에서 사용하는 주요 용어의 정의는 다음과 같습니다.\n\n1. ’서비스’ 라 함은 구현되는 단말기 (pc, TV, 휴대형단말기 등의 각종 유무선 장치를 포함 ) 와 상관없이 ‘이용자’ 가 이용할 수 있는 회사가 제공하는 제반 서비스를 의미합니다.\n\n2. ‘이용자’ 란 이 약관에 따라 회사가 제공하는 서비스를 받는 ‘ 개인회원’, ‘기업회원’ 및 ‘비회원’ 을 말합니다.\n\n3. ‘개인회원’ 은 회사에 개인정보를 제공하여 회원등록을 한 사람으로, 회사로부터 지속적으로 정보를 제공받고 ‘ 회사 ’ 가 제공하는 서비스를 계속적으로 이용할 수 있는 자를 말합니다.\n\n4. ‘기업회원’ 은 회사에 기업정보 및 개인정보를 제공하여 회원등록을 한 사람으로, 회사로부터 지속적으로 정보를 제공받고 회사가 제공하는 서비스를 계속적으로 이용할 수 있는 자를 말합니다.\n\n5. ‘비회원’ 은 회원가입 없이 회사가 제공하는 서비스를 이용하는 자를 말합니다.
+    </string>
     <!-- dialog -->
     <string name="closet_dialog_cloth_delete_title">삭제 시 그동안 심은 나무와\n입력한 정보들이 다 삭제돼요!\n해당 옷을 삭제하시겠어요?</string>
     <string name="closet_dialog_cloth_delete_positive">네, 삭제할래요</string>
@@ -31,6 +33,9 @@
     <string name="cloth_item_selection_dialog_deletion">옷 삭제</string>
 
     <string name="closet_dialog_clothing_double_single_category">하나의 카테고리에서는\n하루에 2번 이상 입기가 불가능해요!</string>
+
+
+    <!-- Sign Up -->
 
     <!-- Closet -->
     <string name="closet_category_first">상의</string>

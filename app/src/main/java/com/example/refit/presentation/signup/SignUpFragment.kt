@@ -17,12 +17,14 @@ import com.example.refit.R
 import com.example.refit.databinding.FragmentSignUpBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.NavigationUtil.navigate
+import com.example.refit.presentation.dialog.signup.SignUpAgreeDialog
 import com.example.refit.presentation.signin.viewmodel.SignInViewModel
 import com.example.refit.presentation.signup.viewmodel.SignUpViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import timber.log.Timber
 import java.util.regex.Pattern
+import kotlin.math.sign
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sign_up) {
 
@@ -30,11 +32,14 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
     private val viewModel: SignInViewModel by sharedViewModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.vm = signUpViewModel
         handleInputId()
         handleInputPassword()
         handleInputEmail()
+        handleEmailCodeCertification()
+        handleBirthDate()
         initSexDropDownMenu()
+        handleSignUpAgreeCheckBox()
     }
 
     private fun handleInputId() {
@@ -81,7 +86,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
                         binding.tlSignUpInputPassword.helperText = "맞는데용?"
                     }
                 }
-
             }
         })
     }
@@ -111,15 +115,61 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
                     }
                 }
             }
-
         })
     }
 
+    private fun handleEmailCodeCertification() {
+        binding.etSignUpInputEmailCertificationCode.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(text: Editable?) {
+                text?.let {
+                    if(it.isEmpty()) {
+                        binding.tlSignUpInputEmailCertificationCode.error = null
+                        binding.tlSignUpInputEmailCertificationCode.boxStrokeWidth = 0
+                        binding.tlSignUpInputEmailCertificationCode.helperText = null
+                        binding.btnSignUpEmailCodeCertification.setBackgroundColor(resources.getColor(R.color.light, null))
+                        binding.btnSignUpEmailCodeCertification.setTextColor(resources.getColor(R.color.black, null))
+                    } else {
+                        binding.btnSignUpEmailCodeCertification.setBackgroundColor(resources.getColor(R.color.green1, null))
+                        binding.btnSignUpEmailCodeCertification.setTextColor(resources.getColor(R.color.white, null))
+                        binding.tlSignUpInputEmailCertificationCode.boxStrokeWidth = 4
+                    }
+                }
+            }
+        })
 
-    private fun handleRequestEmailCertification() {
-        signUpViewModel.emailCode.observe(viewLifecycleOwner) { emailCertificationResponse ->
-            binding.emailCertificationCode = emailCertificationResponse
+        signUpViewModel.isValidEmail.observe(viewLifecycleOwner) {isValid ->
+            if(isValid) {
+                binding.tlSignUpInputEmailCertificationCode.helperText = "올바른 인증번호입니다"
+            } else {
+                binding.tlSignUpInputEmailCertificationCode.error = "인증번호를 다시 한 번 확인해주세요"
+                binding.tlSignUpInputEmailCertificationCode.helperText = null
+            }
         }
+    }
+
+    private fun handleBirthDate() {
+        binding.etSignUpInputBirth.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(text: Editable?) {
+                text?.let {
+                    val regex = "^(?:19|20)\\d\\d/(?:0[1-9]|1[0-2])/(?:0[1-9]|[12][0-9]|3[01])\$".toRegex()
+                    if(it.isEmpty()) {
+                        binding.tlSignUpInputBirth.error = null
+                        binding.tlSignUpInputBirth.boxStrokeWidth = 0
+                        binding.tlSignUpInputBirth.helperText = null
+                    } else if(!regex.matches(it)) {
+                        binding.tlSignUpInputBirth.error = "* YYYY/MM/DD 형식으로 작성해야 합니다."
+                        binding.tlSignUpInputBirth.boxStrokeWidth = 4
+                    } else {
+                        binding.tlSignUpInputBirth.error = null
+                        binding.tlSignUpInputBirth.boxStrokeWidth = 4
+                    }
+                }
+            }
+        })
     }
 
     private fun initSexDropDownMenu() {
@@ -133,4 +183,16 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
             binding.tlSignUpDropDownSex.boxStrokeWidth = 4
         }
     }
+
+    private fun handleSignUpAgreeCheckBox() {
+        binding.cbSignUpRequestAgree.addOnCheckedStateChangedListener { checkBox, state ->
+            if(checkBox.isChecked) {
+            }
+        }
+
+        binding.etSignUpRequestAgreeDescription.setOnClickListener {
+            SignUpAgreeDialog().show(requireActivity().supportFragmentManager, null)
+        }
+    }
+
 }

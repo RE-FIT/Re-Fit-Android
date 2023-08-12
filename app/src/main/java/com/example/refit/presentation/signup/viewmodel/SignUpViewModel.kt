@@ -29,6 +29,10 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     val emailCode: LiveData<ResponseEmailCertification>
         get() = _emailCode
 
+    private var _isValidEmail = MutableLiveData<Boolean>()
+    val isValidEmail: LiveData<Boolean>
+        get() = _isValidEmail
+
     
 
     fun certificateEmail(email: String) {
@@ -99,4 +103,9 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         }
     }
 
+    fun checkValidationEmailCertificationCode(code: String) {
+        _emailCode.value?.let {
+            _isValidEmail.value = it.code == code
+        }
+    }
 }

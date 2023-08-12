@@ -377,6 +377,14 @@
         <item name="cornerSizeTopRight">0dp</item>
     </style>
 
+    <style name="ShapeAppearance.SignUpDialog.CardView.Corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
+    </style>
+
     <style name="ShapeAppearance.Circle" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
