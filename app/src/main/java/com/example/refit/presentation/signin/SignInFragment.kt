@@ -1,6 +1,9 @@
 package com.example.refit.presentation.signin
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import com.example.refit.R
 import com.example.refit.databinding.FragmentSignInBinding
@@ -20,6 +23,8 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        textWatcher()
         /*//엑세스 토큰 체크
         tokenViewModel.checkAccessToken()
 
@@ -30,11 +35,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
             }
         }*/
 
-        tokenViewModel.error.observe(viewLifecycleOwner) {
-            it?.let {
-                Timber.d(it.toString())
-            }
-        }
 
         viewModel.error.observe(viewLifecycleOwner, EventObserver{
             val customSnackBar = CustomSnackBar.make(
@@ -74,7 +74,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
 
     }
     fun textWatcher() {
-        binding.signInPassword.addTextChangedListener(object : TextWatcher{
+        binding.signInPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
@@ -89,7 +89,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
                 } else {
                     binding.signInExistingLogin.setBackgroundResource(R.drawable.bg_solid_green_radius_10)
                 }
-
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -105,7 +104,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         viewModel.error.observe(viewLifecycleOwner) {
             it?.let {
                 val errorView = binding.signInExistingLogin
-                CustomSnackBar.make(binding.signInExistingLogin, R.layout.custom_dialog_alert_only_text_icon_left, R.anim.anim_show_snack_bar_from_top)
+                CustomSnackBar.make(errorView, R.layout.custom_dialog_alert_only_text_icon_left, R.anim.anim_show_snack_bar_from_top)
                     .setTitle("존재하지 않는 계정입니다.", null)
                     .show()
             }
