@@ -233,7 +233,7 @@
 
     <string name="my_page_genderTxt">성별</string>
     <string name="my_page_title">MY PAGE</string>
-    <string name="my_page_setting">설정</string>
+    <string name="my_page_setting">환경설정</string>
 
     <string name="setting_title">설정</string>
     <string name="my_setting_stringTxt">정책</string>
