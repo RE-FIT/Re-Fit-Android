@@ -10,12 +10,12 @@
             type="Boolean" />
 
         <variable
-            name="feedList"
-            type="com.example.refit.data.model.mypage.MyFeedGiveListItemResponse"/>
+            name="scrapList"
+            type="com.example.refit.data.model.mypage.MyScrapSellListItemResponse"/>
 
         <variable
             name="vm"
-            type="com.example.refit.presentation.mypage.viewmodel.MyFeedViewModel" />
+            type="com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel" />
 
     </data>
 
@@ -27,7 +27,7 @@
         android:paddingVertical="5dp">
 
         <com.google.android.material.card.MaterialCardView
-            android:onClick="@{() -> vm.handleClickItem(feedList.postId)}"
+            android:onClick="@{() -> vm.handleClickItem(scrapList.postId)}"
             android:id="@+id/mcv_community_item_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
                     android:id="@+id/iv_community_item"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    setImage="@{feedList.imgUrl}"
+                    setImage="@{scrapList.imgUrl}"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.10"
                     app:strokeColor="@android:color/transparent"
@@ -76,13 +76,13 @@
                             style="@style/BoldFontKr.12"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{feedList.title}"
+                            android:text="@{scrapList.title}"
                             android:textColor="@color/green1" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_community_item_list_price"
                             style="@style/MediumFont.10"
-                            setVisibility="@{feedList.price == 0 ? false : true}"
+                            setVisibility="@{scrapList.price == 0 ? false : true}"
                             android:visibility="visible"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="bottom"
-                        android:text="@{vm.conversionTypeToText(3, feedList.size)}"
+                        android:text="@{vm.conversionTypeToText(3, scrapList.size)}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_size_txt"
                         app:layout_constraintTop_toBottomOf="@id/ll_community_item" />
@@ -134,7 +134,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="bottom"
-                        android:text="@{feedList.deliveryType == 0 ? `직거래` : `택배`}"
+                        android:text="@{scrapList.deliveryType == 0 ? `직거래` : `택배`}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_method_txt"
                         app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_size"
@@ -157,13 +157,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="bottom"
-                        android:text="@{feedList.address == null ? @string/community_item_region_all : feedList.address}"
+                        android:text="@{scrapList.address == null ? @string/community_item_region_all : scrapList.address}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_method_txt"
                         app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_method"
                         tools:ignore="MissingConstraints" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="18dp"
+                    android:layout_height="15dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@{scrapList.scrapFlag ? @drawable/ic_community_heart_18 : @drawable/ic_community_blank_heart_18}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
