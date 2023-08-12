@@ -34,21 +34,7 @@ class ScrapFragment: BaseFragment<FragmentScrapBinding>(R.layout.fragment_scrap)
         initSellOfScrapList()
         initGiveOfScrapList()
 
-        chipGroup.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.chip_share_scrap -> {
-                    myScrapViewModel.setSelectedTab(MyFeedViewModel.Tab.SELL)
-                }
-                R.id.chip_share_scrap -> {
-                    myScrapViewModel.setSelectedTab(MyFeedViewModel.Tab.GIVE)
-                }
-                else -> {
-                    myScrapViewModel.setSelectedTab(MyFeedViewModel.Tab.SELL)
-                }
-            }
-        }
-
-        myFeedViewModel.selectedTab.observe(viewLifecycleOwner, Observer { tab ->
+        myScrapViewModel.selectedTab.observe(viewLifecycleOwner, Observer { tab ->
             when (tab) {
                 MyFeedViewModel.Tab.SELL -> {
                     initSellOfScrapList()
@@ -61,6 +47,17 @@ class ScrapFragment: BaseFragment<FragmentScrapBinding>(R.layout.fragment_scrap)
                 }
             }
         })
+
+        chipGroup.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.chip_share_scrap -> {
+                    myScrapViewModel.setSelectedTab(MyFeedViewModel.Tab.GIVE)
+                }
+                R.id.chip_sell_scrap -> {
+                    myScrapViewModel.setSelectedTab(MyFeedViewModel.Tab.SELL)
+                }
+            }
+        }
     }
 
     private fun initGiveOfScrapList() {

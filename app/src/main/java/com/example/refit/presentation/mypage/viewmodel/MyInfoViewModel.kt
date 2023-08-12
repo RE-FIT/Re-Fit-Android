@@ -6,22 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
-import com.example.refit.data.model.community.PostResponse
+import com.example.refit.data.model.mypage.PasswordUpdateRequest
+import com.example.refit.data.model.mypage.PasswordUpdateResponse
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
 import com.example.refit.data.repository.mypage.MyPageRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.ResponseBody
-import org.json.JSONException
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
-import java.io.File
-import java.lang.Exception
 
 class MyInfoViewModel(private val repository: MyPageRepository, private val ds: TokenStore) : ViewModel() {
 
@@ -103,6 +97,17 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     val isUpdatedOptions: LiveData<Boolean>
         get() = _isUpdatedOptions
 
+    // 항목 입력 여부
+    // 현재 pw(0) 새로운 pw(1)
+    private val _isUpdatedPwValue: List<MutableLiveData<Boolean>> =
+        List(2) { MutableLiveData<Boolean>() }
+    val isUpdatedPwValue: List<LiveData<Boolean>>
+        get() = _isUpdatedPwValue
+
+    private val _isUpdatedPwOptions: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isUpdatedPwOptions: LiveData<Boolean>
+        get() = _isUpdatedPwOptions
+
     // -----------------------------------
     fun setUpdatedStatus(type: Int, status: Boolean) {
         when (type) {
@@ -146,9 +151,23 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     }
 
     // 새로운 비밀 번호 수정
-    fun updateCurrentPw(currentPw: String) {
-        _newPassword.value = currentPw
+    fun updateCurrentPw(newNickname: String) {
         _isCheckUpdatedPw.value = true
+        _newPassword.value = newNickname
+    }
+
+    fun setUpdatedPasswordStatus(type: Int, status: Boolean) {
+        when (type) {
+            0 -> {
+                _isUpdatedPwValue[0].value = status
+            }
+            1 -> _isUpdatedPwValue[1].value = status
+        }
+    }
+
+    fun setUpdatedPasswordAllStatus() {
+        _isUpdatedPwOptions.value =
+            _isUpdatedPwValue[0].value == true && _isUpdatedPwValue[1].value == true
     }
 
     fun initNicknameInfoStatus(status: Boolean) {
@@ -230,45 +249,38 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
         }
     }
 
-    /*fun updatePasswordRetrofit() = viewModelScope.launch {
-        val accessToken = ds.getAccessToken().first()
+    fun updatePasswordRetrofit() {
+        viewModelScope.launch {
+            val accessToken = ds.getAccessToken().first()
 
-        try {
-            val response =
-                repository.updatePassword(accessToken, currentPassword.value, newPassword.value)
+            try {
+                val request = PasswordUpdateRequest(currentPassword.value, newPassword.value)
+                Timber.d("$request")
 
-            response.enqueue(object : Callback<PostResponse> {
-                override fun onResponse(
-                    call: Call<PostResponse>,
-                    response: Response<PostResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        Timber.d("API 호출 성공")
-                        val postResponse = response.body()
-                        val json = postResponse.toString()
+                val response = repository.updatePassword("$accessToken", request)
 
+                response.enqueue(object : Callback<PasswordUpdateResponse> {
+                    override fun onResponse(
+                        call: Call<PasswordUpdateResponse>,
+                        response: Response<PasswordUpdateResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            _currentPassword.value = response.body().toString()
 
-                        Timber.d("MY PAGE PATCH API 호출 성공 : $json")
-                    } else {
-                        val errorBody = response.errorBody()
-                        val errorCode = response.code()
-
-                        if (errorBody != null) {
-                            val errorJson = JSONObject(errorBody.string())
-                            val errorMessage = errorJson.optString("errorMessage")
-                            val errorCodeFromJson = errorJson.optInt("code")
-
-                            Timber.d("API 호출 실패: $errorCodeFromJson / $errorMessage")
-                        } else Timber.d("API 호출 실패: $errorCode")
+                            Timber.d("비밀번호 수정 API 호출 성공: ${currentPassword.value}")
+                        } else {
+                            Timber.e("Error: ${response.code()}")
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<PostResponse>, t: Throwable) {
-                    Timber.d("RESPONSE FAILURE")
-                }
-            })
-        } catch (e: Exception) {
-            "$e"
+                    override fun onFailure(call: Call<PasswordUpdateResponse>, t: Throwable) {
+                        Timber.d("401 Unauthorized: $t")
+                        // 에러 처리
+                    }
+                })
+            } catch (e: Throwable) {
+                Timber.d("ERROR: $e")
+            }
         }
-    }*/
+    }
 }

@@ -5,6 +5,8 @@ import com.example.refit.data.model.mypage.MyFeedGiveListItemResponse
 import com.example.refit.data.model.mypage.MyFeedSellListItemResponse
 import com.example.refit.data.model.mypage.MyScrapGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
+import com.example.refit.data.model.mypage.PasswordUpdateRequest
+import com.example.refit.data.model.mypage.PasswordUpdateResponse
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -13,7 +15,7 @@ import java.io.File
 interface MyPageRepository {
     suspend fun checkNickname(accessToken: String, name: String): Call<Boolean>
     suspend fun showMyInfo(accessToken: String): Call<ShowMyInfoResponse>
-    suspend fun updatePassword(accessToken: String, currentPw: String, newPw: String): Call<ResponseBody>
+    suspend fun updatePassword(accessToken: String, request: PasswordUpdateRequest): Call<PasswordUpdateResponse>
     suspend fun loadCommunityListSort(
         token: String,
         postType: Int,
