@@ -329,5 +329,7 @@
     <string name="find_pw_write_title">회원정보에 등록하신 이름(닉네임), 아이디, 이메일을 작성해주세요.</string>
     <string name="find_pw_big_title">비밀번호가 생각나지 않으세요?</string>
     <string name="find_pw_title">비밀번호 찾기</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

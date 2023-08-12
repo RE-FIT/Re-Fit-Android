@@ -15,6 +15,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 
 class SignInViewModel(private val repository: SignUpRepository, private val ds: TokenStore): ViewModel() {
 
@@ -51,6 +52,7 @@ class SignInViewModel(private val repository: SignUpRepository, private val ds: 
                     var jsonObject = JSONObject(response.errorBody()!!.string())
                     _error.postValue(ResponseError(
                         jsonObject.getInt("code"), jsonObject.getString("errorMessage")))
+                    Timber.d("로그인 실패 - ${jsonObject}")
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

@@ -21,6 +21,7 @@ import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.dialog.signup.SignUpAgreeDialog
 import com.example.refit.presentation.signin.viewmodel.SignInViewModel
 import com.example.refit.presentation.signup.viewmodel.SignUpViewModel
+import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputLayout
@@ -44,6 +45,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
         initSexDropDownMenu()
         handleSignUpAgreeCheckBox()
         handleClickSignUpButton()
+        handleCompleteSignUp()
     }
 
     private fun handleInputId() {
@@ -156,6 +158,14 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
                     .indexOf(binding.atvSignUpDropDownSex.text.toString())
             )
         }
+    }
+
+    private fun handleCompleteSignUp() {
+        signUpViewModel.isSuccessSignUp.observe(viewLifecycleOwner, EventObserver{isSuccess ->
+            if(isSuccess) {
+                navigate(R.id.action_signUpFragment_to_signUpCompleteFragment)
+            }
+        })
     }
 
     abstract inner class SignUpInputTextWatcher(

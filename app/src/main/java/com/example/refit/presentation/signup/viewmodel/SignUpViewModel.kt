@@ -10,6 +10,7 @@ import com.example.refit.data.model.signup.RequestEmailCertification
 import com.example.refit.data.model.signup.RequestNicknameValidation
 import com.example.refit.data.model.signup.ResponseEmailCertification
 import com.example.refit.data.repository.signup.SignUpRepository
+import com.example.refit.util.Event
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -84,6 +85,9 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     val isValidAgree: LiveData<Boolean>
         get() = _isValidAgree
 
+    private var _isSuccessSignUp = MutableLiveData<Event<Boolean>>()
+    val isSuccessSignUp: LiveData<Event<Boolean>>
+        get() = _isSuccessSignUp
 
 
 
@@ -162,6 +166,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                         response: Response<ResponseBody>
                     ) {
                         if (response.isSuccessful) {
+                            _isSuccessSignUp.value = Event(true)
                             Timber.d("회원가입 성공")
                         } else {
                             val errorBody = response.errorBody()
