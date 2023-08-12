@@ -6,13 +6,12 @@ import com.example.refit.data.model.mypage.MyFeedSellListItemResponse
 import com.example.refit.data.model.mypage.MyScrapGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
 import com.example.refit.data.model.mypage.PasswordUpdateRequest
-import com.example.refit.data.model.mypage.PasswordUpdateResponse
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
@@ -34,7 +33,7 @@ interface MyPageApi {
         @Header("Authorization") token: String,
         @Part("image") image: List<MultipartBody.Part>,
         @Part("content") content: RequestBody,
-    )
+    ) : Call<Response<Void>>
 
     // 이름(닉네임) 중복 확인
     @GET("/refit/mypage/info/check")
@@ -47,7 +46,7 @@ interface MyPageApi {
     fun updatePassword(
         @Header("Authorization") accessToken: String,
         @Body request: PasswordUpdateRequest
-    ): Call<PasswordUpdateResponse>
+    ): Call<Response<Void>>
 
     // 내 피드 나눔
     @GET("/refit/mypage/myfeed/give")
@@ -73,7 +72,7 @@ interface MyPageApi {
         @Header("Authorization") token: String
     ): Call<List<MyScrapGiveListItemResponse>>
 
-    // 내 스크랩 구매
+    // 내 스크랩 판매
     @GET("/refit/mypage/myfeed/sell")
     fun showMyScrapSell(
         @Header("Authorization") token: String

@@ -17,7 +17,6 @@ import timber.log.Timber
 class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.layout.fragment_my_info_pw_update) {
 
     private val vm: MyInfoViewModel by sharedViewModel()
-    private var str: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,6 +29,8 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
 
         binding.btnPwUpdate.setOnClickListener {
             vm.updatePasswordRetrofit()
+
+            onDestroyView()
         }
     }
 
@@ -41,9 +42,10 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
     }
 
     private fun editCurrentPassword() {
-        binding.newPw.addTextChangedListener(object : TextWatcher {
+        binding.currentPw.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                vm.updateCurrentPw(s.toString())
                 vm.setUpdatedPasswordStatus(0, true)
             }
             override fun afterTextChanged(s: Editable?) {
@@ -57,7 +59,7 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
         binding.newPw.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                vm.updateCurrentPw(s.toString())
+                vm.updateNewPw(s.toString())
                 vm.setUpdatedPasswordStatus(1, true)
             }
             override fun afterTextChanged(s: Editable?) {
