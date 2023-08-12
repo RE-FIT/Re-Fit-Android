@@ -26,20 +26,6 @@ class FindIdFinishFragment : BaseFragment<FragmentFindIdFinishBinding>(R.layout.
         binding.findIdFindPwBtn.setOnClickListener(){}
         navigate(R.id.action_findIdFinishFragment_to_findPasswordFragment)
 
-        val maskedUserId = maskLastThreeCharacters(vm.userId.toString())
-        binding.findIdFinishId.text = maskedUserId
-    }
-
-    fun maskLastThreeCharacters(input: String): String {
-        val length = input.length
-        if (length <= 3) {
-            return "***"
-        }
-
-        val maskedPart = "***" // Masked characters
-        val unmaskedPart = input.substring(length - 3) // Last 3 characters
-
-        return maskedPart + unmaskedPart
     }
 
 }
