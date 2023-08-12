@@ -31,7 +31,7 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(R.layout.fragment_my_
 
         connectionTabLayout()
     }
-
+/*
     override fun onAttach(context: Context) {
         super.onAttach(context)
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -53,11 +53,11 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(R.layout.fragment_my_
                         }).show(requireActivity().supportFragmentManager, null)
                 }
             })
-    }
+    }*/
 
     fun connectionTabLayout() {
 
-        val tabTitle = arrayOf("내 정보 수정", "비밀번호 수정")
+        val tabTitle = arrayOf("회원정보 수정", "비밀번호 수정")
 
         viewPager = binding.viewPager // viewPager 연결
         tabLayout = binding.tabLayout // tabLayout 연결

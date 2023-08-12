@@ -30,6 +30,45 @@
         <action
             android:id="@+id/action_findIdPasswordFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_findIdPasswordFragment_to_findIdFinishFragment"
+            app:destination="@id/findIdFinishFragment" />
+        <action
+            android:id="@+id/action_findIdPasswordFragment_to_findPasswordFinishFragment"
+            app:destination="@id/findPasswordFinishFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/findIdFinishFragment"
+        android:name="com.example.refit.presentation.findidpassword.FindIdFinishFragment"
+        android:label="fragment_find_id_finish"
+        tools:layout="@layout/fragment_find_id_finish">
+        <action
+            android:id="@+id/action_findIdFinishFragment_to_findIdFragment"
+            app:destination="@id/findIdFragment" />
+        <action
+            android:id="@+id/action_findIdFinishFragment_to_findPasswordFragment"
+            app:destination="@id/findPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/findPasswordFinishFragment"
+        android:name="com.example.refit.presentation.findidpassword.FindPasswordFinishFragment"
+        android:label="fragment_find_passowrd_finish"
+        tools:layout="@layout/fragment_find_password_finish">
+        <action
+            android:id="@+id/action_findPasswordFinishFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/findIdFragment"
+        android:name="com.example.refit.presentation.findidpassword.FindIdFragment"
+        android:label="fragment_find_id"
+        tools:layout="@layout/fragment_find_id">
+    </fragment>
+    <fragment
+        android:id="@+id/findPasswordFragment"
+        android:name="com.example.refit.presentation.findidpassword.FindPasswordFragment"
+        android:label="fragment_find_password"
+        tools:layout="@layout/fragment_find_password">
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -153,7 +192,11 @@
         android:id="@+id/myPage_mySetting"
         android:name="com.example.refit.presentation.mypage.SettingFragment"
         android:label="fragment_mySetting"
-        tools:layout="@layout/fragment_setting"/>
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_myPage_mySetting_to_startingFragment"
+            app:destination="@id/startingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/clothRegistrationFragment"
         android:name="com.example.refit.presentation.closet.ClothRegistrationFragment"
@@ -221,6 +264,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_communityInfoFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
     <fragment
         android:id="@+id/communityAddPostFragment"
@@ -360,6 +406,14 @@
             app:nullable="true" />
         <argument
             android:name="otherId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="sellerId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="postType"
             app:argType="string"
             app:nullable="true" />
     </fragment>

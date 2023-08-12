@@ -123,6 +123,18 @@ class CommunityAddPostFragment :
                     binding.tvCommunityAddpostClothesCategory.text = itemDescription
                     binding.cvCommunityAddpostClothesCategory.strokeColor =
                         ContextCompat.getColor(requireContext(), R.color.white)
+                    if(itemDescription == "신발" || itemDescription == "악세사리") {
+                        binding.cvCommuntiyAddpostSize.isClickable = false
+                        binding.tvCommuntiyAddpostSize.text = "상세설명 입력"
+                        binding.cvCommuntiyAddpostSize.strokeColor =
+                            ContextCompat.getColor(requireContext(), R.color.white)
+                        binding.tvCommuntiyAddpostSize.setTextColor(ContextCompat.getColor(requireContext(), R.color.green1))
+                        vmAdd.setFilledStatus(4, true, "상세설명 입력")
+                    } else {
+                        vmAdd.setClickedOptionSize(false)
+                        binding.cvCommuntiyAddpostSize.isClickable = true
+                        binding.tvCommuntiyAddpostSize.text = "사이즈를 선택해주세요"
+                    }
                     vmAdd.setFilledStatus(3, true, itemDescription)
                 }
 
@@ -182,11 +194,13 @@ class CommunityAddPostFragment :
                     binding.tvCommunityAddpostSf.text = ""
                     binding.tvCommunityAddpostFeeInput.text =
                         getString(R.string.community_addpost_contents_detail_fourth_input)
+                    vmAdd.setFeeStatus()
                     false
                 }
 
                 R.id.rb_community_addpost_input_exclude_fee -> {
                     vmAdd.setFilledStatus(8, false, "")
+                    vmAdd.setFeeStatus()
                     true
                 }
 
@@ -202,6 +216,7 @@ class CommunityAddPostFragment :
                 override fun onClickDone(fee: Int) {
                     vmAdd.setFilledStatus(8, status = true, "")
                     vmAdd.setShippingFee(fee)
+                    vmAdd.setFeeStatus()
                     val feeText = vmAdd.getDecimalFormat(fee.toString())
                     binding.tvCommunityAddpostSf.text = feeText + "원"
                 }
@@ -272,13 +287,14 @@ class CommunityAddPostFragment :
         }
 
         vmAdd.postCode.observe(viewLifecycleOwner) { address ->
-            if(vmAdd.postCodeValue.value == true) {
+            if (vmAdd.postCodeValue.value == true) {
                 binding.tvCommunityAddpostRegion.text = address
                 vmAdd.setAddress(address)
                 val tm = vmAdd.postValue[1].value?.let { vmAdd.conversionTypeToText(2, it) }
                 if (tm != null) {
                     binding.tvCommunityAddpostTransactionMethod.text = tm
                     vmAdd.selectTransactionMethod(tm)
+                    initStrokeColorIfModify()
                 }
                 vmAdd.setPostCodeValue(false)
             }
@@ -396,20 +412,6 @@ class CommunityAddPostFragment :
         // 제목
         binding.etCommunityAddpostTitle.setText(vmAdd.postResponse.value?.title ?: "UnKnown")
 
-        // 카테고리
-        binding.tvCommunityAddpostClothesCategory.text =
-             vmAdd.postResponse.value?.let { vmAdd.conversionTypeToText(3, it.category) }
-
-
-        // 성별
-        binding.tvCommunityAddpostRecommendGender.text =
-            vmAdd.postResponse.value?.let { vmAdd.conversionTypeToText(5, it.gender) }
-        binding.cvCommunityAddpostRecommendGender.strokeColor = R.color.white
-
-        // 사이즈
-        binding.tvCommuntiyAddpostSize.text =
-            vmAdd.postResponse.value?.let { vmAdd.conversionTypeToText(4, it.size) }
-        binding.cvCommunityAddpostRecommendGender.strokeColor = R.color.white
 
         // 거래 방식 (나눔/판매)
         val transactionType = vmAdd.postResponse.value?.postType ?: 0
@@ -424,18 +426,21 @@ class CommunityAddPostFragment :
                     "₩ " + vmAdd.getDecimalFormat(price.toString()) + "원"
                 vmAdd.setPriceInputCompleted(price.toString())
             }
-
         }
 
         // 거래 희망 방식 (직/배)
         val transactionMethod =
             vmAdd.postResponse.value?.let { vmAdd.conversionTypeToText(2, it.deliveryType) }
         binding.tvCommunityAddpostTransactionMethod.text = transactionMethod
-        binding.tvCommunityAddpostTransactionMethod.setTextColor(R.color.green1)
+        binding.tvCommunityAddpostTransactionMethod.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.green1
+            )
+        )
         if (transactionMethod != null) {
             vmAdd.selectTransactionMethod(transactionMethod)
         }
-
 
         if (vmAdd.postResponse.value!!.deliveryType == 1) {
             // 배송비 있어야 함
@@ -445,6 +450,9 @@ class CommunityAddPostFragment :
                 binding.rbCommunityAddpostInputIncludeFee.isChecked = true
             } else {
                 binding.rbCommunityAddpostInputExcludeFee.isChecked = true
+                vmAdd.setFilledStatus(8, true, "")
+                vmAdd.setShippingFee(fee!!)
+                vmAdd.setFeeStatus()
                 val feeText = vmAdd.getDecimalFormat(fee.toString())
                 binding.tvCommunityAddpostSf.text = feeText + "원"
             }
@@ -459,12 +467,44 @@ class CommunityAddPostFragment :
 
     }
 
+    private fun initStrokeColorIfModify() {
+        if (vmAdd.isFilledValue[3].value == true) {
+            Timber.d("postCodeValue initStrokeColorIfModify true")
+            binding.cvCommunityAddpostClothesCategory.strokeColor =
+                ContextCompat.getColor(requireContext(), R.color.white)
+        }
+        if (vmAdd.isFilledValue[2].value == true) {
+            binding.cvCommunityAddpostRecommendGender.strokeColor =
+                ContextCompat.getColor(requireContext(), R.color.white)
+        }
+        if (vmAdd.isFilledValue[4].value == true) {
+            binding.cvCommuntiyAddpostSize.strokeColor =
+                ContextCompat.getColor(requireContext(), R.color.white)
+        }
+        if (vmAdd.isFilledValue[5].value != null) {
+            binding.tvCommunityAddpostTransactionMethod.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.green1
+                )
+            )
+        }
+        if(vmAdd.postResponse.value?.deliveryFee == 0) {
+            binding.tvCommunityAddpostFeeInput.text = "입력"
+        }
+    }
+
     private fun observeStatus() {
         vmAdd.postResponse.observe(viewLifecycleOwner) { response ->
             if (response != null) {
-                vmAdd.setValueIfModifyStatus()
+                initStrokeColorIfModify()
             }
         }
+        /*vmAdd.postValue[3].observe(viewLifecycleOwner) { response ->
+            if(response != null) {
+                vmAdd.gaugeShoesOrAcc()
+            }
+        }*/
     }
 
     override fun onDestroy() {

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <data>
+
+        <variable
+            name="favToggleState"
+            type="Boolean" />
+
+        <variable
+            name="scrapList"
+            type="com.example.refit.data.model.mypage.MyScrapSellListItemResponse"/>
+
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/default_dark"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="5dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:onClick="@{() -> vm.handleClickItem(scrapList.postId)}"
+            android:id="@+id/mcv_community_item_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@android:color/transparent" >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_community_item"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    setImage="@{scrapList.imgUrl}"
+                    android:scaleType="centerCrop"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.10"
+                    app:strokeColor="@android:color/transparent"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_community_item"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:id="@+id/ll_community_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" >
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_community_item_list_title"
+                            style="@style/BoldFontKr.12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{scrapList.title}"
+                            android:textColor="@color/green1" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_community_item_list_price"
+                            style="@style/MediumFont.10"
+                            setVisibility="@{scrapList.price == 0 ? false : true}"
+                            android:visibility="visible"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/dark2"
+                            android:layout_marginLeft="15dp" />
+
+                    </LinearLayout>
+
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_community_item_list_size_txt"
+                        style="@style/RegularFontKr.9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:minWidth="45dp"
+                        android:text="@string/community_item_text_first"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ll_community_item" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_community_item_list_size"
+                        style="@style/RegularFontKr.9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="bottom"
+                        android:text="@{vm.conversionTypeToText(3, scrapList.size)}"
+                        android:textColor="@color/dark2"
+                        app:layout_constraintStart_toEndOf="@id/tv_community_item_list_size_txt"
+                        app:layout_constraintTop_toBottomOf="@id/ll_community_item" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_community_item_list_method_txt"
+                        style="@style/RegularFontKr.9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="45dp"
+                        android:text="@string/community_item_text_second"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_size_txt" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_community_item_list_method"
+                        style="@style/RegularFontKr.9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom"
+                        android:text="@{scrapList.deliveryType == 0 ? `직거래` : `택배`}"
+                        android:textColor="@color/dark2"
+                        app:layout_constraintStart_toEndOf="@id/tv_community_item_list_method_txt"
+                        app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_size"
+                        tools:ignore="MissingConstraints" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_community_item_list_region_txt"
+                        style="@style/RegularFontKr.9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="45dp"
+                        android:text="@string/community_item_text_third"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_method_txt" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_community_item_list_region"
+                        style="@style/RegularFontKr.9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom"
+                        android:text="@{scrapList.address == null ? @string/community_item_region_all : scrapList.address}"
+                        android:textColor="@color/dark2"
+                        app:layout_constraintStart_toEndOf="@id/tv_community_item_list_method_txt"
+                        app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_method"
+                        tools:ignore="MissingConstraints" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="18dp"
+                    android:layout_height="15dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@{scrapList.scrapFlag ? @drawable/ic_community_heart_18 : @drawable/ic_community_blank_heart_18}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

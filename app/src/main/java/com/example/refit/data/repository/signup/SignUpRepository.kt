@@ -13,7 +13,7 @@ import retrofit2.Call
 interface SignUpRepository {
     suspend fun requestEmailCertification(body: RequestEmailCertification): Call<ResponseEmailCertification>
 
-    suspend fun requestLoginCertification(loginId: String, password: String): Call<ResponseBody>
+    suspend fun requestLoginCertification(loginId: String, password: String, fcm: String): Call<ResponseBody>
 
     suspend fun checkAccessToken(accessToken: String): Call<ResponseBody>
 

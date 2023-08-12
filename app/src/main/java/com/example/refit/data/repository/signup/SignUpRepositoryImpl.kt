@@ -18,8 +18,8 @@ class SignUpRepositoryImpl(private val signUpDataSource: SignUpDataSource) : Sig
         return signUpDataSource.requestEmailCertification(body)
     }
 
-    override suspend fun requestLoginCertification(loginId: String, password: String): Call<ResponseBody> {
-        return signUpDataSource.requestLoginCertification(loginId, password)
+    override suspend fun requestLoginCertification(loginId: String, password: String, fcm: String): Call<ResponseBody> {
+        return signUpDataSource.requestLoginCertification(loginId, password, fcm)
     }
 
     override suspend fun checkAccessToken(accessToken: String): Call<ResponseBody> {

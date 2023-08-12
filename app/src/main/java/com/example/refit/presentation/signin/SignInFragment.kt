@@ -1,6 +1,9 @@
 package com.example.refit.presentation.signin
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import com.example.refit.R
 import com.example.refit.databinding.FragmentSignInBinding
@@ -9,9 +12,9 @@ import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.signin.viewmodel.SignInViewModel
-import com.example.refit.presentation.signup.viewmodel.SignUpViewModel
+import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import timber.log.Timber
+import retrofit2.Response
 
 class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sign_in) {
 
@@ -20,6 +23,8 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        textWatcher()
         /*//엑세스 토큰 체크
         tokenViewModel.checkAccessToken()
 
@@ -30,14 +35,8 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
             }
         }*/
 
-        tokenViewModel.error.observe(viewLifecycleOwner) {
-            it?.let {
-                Timber.d(it.toString())
-            }
-        }
 
-        viewModel.error.observe(viewLifecycleOwner) {
-
+        viewModel.error.observe(viewLifecycleOwner, EventObserver{
             val customSnackBar = CustomSnackBar.make(
                 view = requireView(),
                 layout = R.layout.custom_snackbar_sign_fail,
@@ -47,7 +46,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
             customSnackBar.setTitle("존재하지 않는 계정입니다.", "아이디 또는 비밀번호를 다시 한 번 확인해주세요!")
 
             customSnackBar.show()
-        }
+        })
 
         //로그인
         //로그인
@@ -60,9 +59,9 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
 
 
         //로그인 시 이동
-        viewModel.accessToken.observe(viewLifecycleOwner) {
+        viewModel.accessToken.observe(viewLifecycleOwner, EventObserver {
             navigate(R.id.action_signInFragment_to_communityFragment)
-        }
+        })
 
         //회원가입 이동
         binding.join.setOnClickListener(){
@@ -72,6 +71,44 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         //아이디 비밀번호 찾기 이동
         binding.signInFindIdPassword.setOnClickListener(){
             navigate(R.id.action_signInFragment_to_findIdPasswordFragment)
+        }
+
+    }
+    fun textWatcher() {
+        binding.signInPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val id = binding.signInLoginId.text.toString()
+                val password = binding.signInPassword.text.toString()
+
+                //텍스트 입력시 로그인 버튼 색상 초록으로 변경
+                if (id.isEmpty() || password.isEmpty()) {
+                    binding.signInExistingLogin.setBackgroundResource(R.drawable.bg_solid_dark1_radius_10)
+                } else {
+                    binding.signInExistingLogin.setBackgroundResource(R.drawable.bg_solid_green_radius_10)
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
+    }
+
+    // 로그인 실패 시 snackBar
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        viewModel.error.observe(viewLifecycleOwner) {
+            it?.let {
+                val errorView = binding.signInExistingLogin
+                CustomSnackBar.make(errorView, R.layout.custom_dialog_alert_only_text_icon_left, R.anim.anim_show_snack_bar_from_top)
+                    .setTitle("존재하지 않는 계정입니다.", null)
+                    .show()
+            }
         }
     }
 }

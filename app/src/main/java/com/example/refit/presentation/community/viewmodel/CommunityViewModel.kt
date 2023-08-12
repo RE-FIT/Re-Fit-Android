@@ -53,6 +53,51 @@ class CommunityViewModel(
         _isNewChat.value = status
     }
 
+    fun initCommunityList() =  viewModelScope.launch {
+        val accessToken = ds.getAccessToken().first()
+        _isLoading.value = true
+        try {
+            val response =
+                repository.initCommunityList(accessToken)
+
+            response.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    if (response.isSuccessful) {
+                        Timber.d("init API 호출 성공")
+                        val responseBody = response.body()
+                        if (responseBody != null) {
+                            val json = responseBody.string()
+                            val communitylist = parseCommunityList(json)
+                            Timber.d("communitylist 초기 : ${communitylist.toString()}")
+                            _communityList.value = communitylist
+                        }
+                    } else {
+                        val errorBody = response.errorBody()
+                        val errorCode = response.code()
+
+                        if (errorBody != null) {
+                            val errorJson = JSONObject(errorBody.string())
+
+                            Timber.d("API 호출 실패: ${errorJson.toString()}")
+                        } else Timber.d("API 호출 실패 errorbody is not working : $errorCode")
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Timber.d("RESPONSE FAILURE")
+                }
+            })
+        } catch (e: Exception) {
+            "커뮤니티 글 목록 초기 로딩 오류: $e"
+        } finally {
+
+        }
+
+    }
+
     fun loadCommunityList() =
         viewModelScope.launch {
             val accessToken = ds.getAccessToken().first()

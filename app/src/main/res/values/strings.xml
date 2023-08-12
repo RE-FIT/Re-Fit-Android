@@ -136,9 +136,9 @@
 
     <!--Community-->
     <string name="community_main_toolbar_title">Green Community</string>
-    <string name="community_search_option_first">나눔</string>
-    <string name="community_search_option_second">여성복</string>
-    <string name="community_search_option_third">상의</string>
+    <string name="community_search_option_first">종류</string>
+    <string name="community_search_option_second">성별</string>
+    <string name="community_search_option_third">카테고리</string>
     <string name="community_main_fab_bottom_end">글쓰기</string>
     <string name="community_item_text_first">사이즈</string>
     <string name="community_item_text_second">거래방식</string>
@@ -210,7 +210,8 @@
     <string name="community_post_report_contents_fourth">사기가 의심돼요</string>
     <string name="community_post_report_contents_fifth">기타</string>
     <string name="community_post_report_ban_on_sales_titles">판매 금지 물품</string>
-    <string name="community_post_report_ban_on_sales_contents">· 음란물 (청소년 유해 매체물)\n· 청소년 유해 상품 (청소년 유해 매체물)\n· 게임 아이템 거래 (청소년 유해 매체물)\n· 렌탈 제품\n· 개인정보\n· 경찰용품 (경찰제복, 경찰기동화, 경찰장구류 등)\n· 군용품 (군복, 군화, 군용장구류 등), 군마트용품\n· 나라미, 정부 지원 생필품, 지역 상품권, 문화누리카드, 에너지바우처 등 법률에 의해 재판매 할 수 없는 물품\n· 국가기관 인증을 받지 않고 친환경, 무농약, 유기농, 오가닉, 무공해 라는 표현을 사용하여 판매하는 행위 \n· 100만 원 이상 금 제품 (골드바, 금괴, 금으로 제작된 목걸이, 팔찌, 귀걸이 등)\n· 현금을 거래하는 행위 (돈을 빌리거나, 빌려주는 행위)\n· 이외 법률을 위반하는 모든 물품 \n· 모든 홍보 / 광고 </string>
+    <string name="community_post_report_dot">·\n·\n·\n·\n·\n·\n·\n·\n\n·\n\n·\n\n·\n·\n·</string>
+    <string name="community_post_report_ban_on_sales_contents">음란물 (청소년 유해 매체물)\n청소년 유해 상품 (청소년 유해 매체물)\n게임 아이템 거래 (청소년 유해 매체물)\n렌탈 제품\n개인정보\n경찰용품 (경찰제복, 경찰기동화, 경찰장구류 등)\n군용품 (군복, 군화, 군용장구류 등), 군마트용품\n나라미, 정부 지원 생필품, 지역 상품권, 문화누리카드, 에너지바우처 등 법률에 의해 재판매 할 수 없는 물품\n국가기관 인증을 받지 않고 친환경, 무농약, 유기농, 오가닉, 무공해 라는 표현을 사용하여 판매하는 행위 \n100만 원 이상 금 제품 (골드바, 금괴, 금으로 제작된 목걸이, 팔찌, 귀걸이 등)\n현금을 거래하는 행위 (돈을 빌리거나, 빌려주는 행위)\n이외 법률을 위반하는 모든 물품 \n모든 홍보 / 광고 </string>
     <string name="community_post_report_next">다음</string>
     <string name="community_post_report_ban_on_sales_contents_second">한 번 신고하면 취소가 불가능하니,\n신고 사유를 다시 한 번 확인해주세요!</string>
     <string name="community_post_report_ban_on_sales_contents_third">[신고 사유]</string>
@@ -251,7 +252,7 @@
 
     <string name="my_page_genderTxt">성별</string>
     <string name="my_page_title">MY PAGE</string>
-    <string name="my_page_setting">설정</string>
+    <string name="my_page_setting">환경설정</string>
 
     <string name="setting_title">설정</string>
     <string name="my_setting_stringTxt">정책</string>
@@ -285,7 +286,7 @@
     <string name="my_page_buy_text">구매</string>
 
     <string name="my_page_d_day">D + %1$d</string>
-    <string name="my_page_d_day_title">환경 지키기</string>
+    <string name="my_page_d_day_title">님의 환경 지키기</string>
     <string name="my_page_d_day_content">일째 되는 날이에요!</string>
     <string name="my_info_available_nickname">* 사용 가능한 이름(닉네임)입니다.</string>
     <string name="my_info_unavailable_nickname">* 이미 존재하는 이름(닉네임)입니다.</string>
@@ -306,6 +307,7 @@
     <string name="find_id_name">이름(닉네임)</string>
     <string name="find_id_email">이메일</string>
     <string name="find_pw_id">아이디</string>
+    <string name="find_id_finish_id">회원님의 아이디는\n%s입니다.</string>
 
     <!-- 온보딩  -->
     <string name="app_info_description">세상에 없던 친환경 디지털 옷장</string>
@@ -331,5 +333,8 @@
     <string name="find_pw_title">비밀번호 찾기</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- 채팅 -->
+    <string name="chat_overflow_text">채팅방 나가기</string>
 
 </resources>

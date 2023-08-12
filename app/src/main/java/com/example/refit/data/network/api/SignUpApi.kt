@@ -37,7 +37,8 @@ interface SignUpApi {
     @POST("/auth/login")
     fun requestLoginCertification(
         @Query("loginId") loginId: String,
-        @Query("password") password: String
+        @Query("password") password: String,
+        @Query("fcm") fcm: String
     ): Call<ResponseBody>
 
     @GET("auth/token/check")

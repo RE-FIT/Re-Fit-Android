@@ -30,7 +30,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroup"
+            android:id="@+id/chipGroup_sell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="27dp"
@@ -44,7 +44,7 @@
             app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_sell"
+                android:id="@+id/chip_sell_scrap"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                 app:chipStartPadding="35dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_share"
+                android:id="@+id/chip_give_scrap"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,8 +80,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chipGroup"
-            tools:listitem="@layout/item_feed" />
+            app:layout_constraintTop_toBottomOf="@+id/chipGroup_sell"
+            tools:listitem="@layout/item_scrap_sell" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

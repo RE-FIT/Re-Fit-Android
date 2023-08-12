@@ -94,8 +94,8 @@ class CommunityInfoViewModel (
 
     fun conversionType(value: Int): String {
         return when (value) {
-            0 -> "나눔 중"
-            1 -> "판매 중"
+            0 -> "나눔 진행중"
+            1 -> "판매 진행중"
             2 -> "나눔 완료"
             3 -> "판매 완료"
             else -> "UnKnown Data"

@@ -7,9 +7,16 @@ import com.example.refit.databinding.FragmentSettingBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
 import com.example.refit.presentation.common.DialogUtil.createAlertBasicNoIconDialog
+import com.example.refit.presentation.common.NavigationUtil.navigate
+import com.example.refit.presentation.dialog.AlertBasicDialog
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
+import com.example.refit.presentation.signin.viewmodel.SignInViewModel
+import com.example.refit.util.EventObserver
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SettingFragment: BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting) {
+
+    private val viewModel: SignInViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -21,6 +28,10 @@ class SettingFragment: BaseFragment<FragmentSettingBinding>(R.layout.fragment_se
         binding.btnDelete.setOnClickListener {
             showMyPageDeleteDialog()
         }
+
+        viewModel.logoutSuccess.observe(viewLifecycleOwner, EventObserver {
+            navigate(R.id.action_myPage_mySetting_to_startingFragment)
+        })
     }
 
     private fun showMyPageLogoutDialog() {
@@ -30,7 +41,7 @@ class SettingFragment: BaseFragment<FragmentSettingBinding>(R.layout.fragment_se
             resources.getString(R.string.setting_negative),
             object : AlertBasicDialogListener {
                 override fun onClickPositive() {
-                    // 로그아웃
+                    viewModel.logout()
                 }
 
                 override fun onClickNegative() {

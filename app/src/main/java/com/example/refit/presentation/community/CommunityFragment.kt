@@ -34,7 +34,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         super.onViewCreated(view, savedInstanceState)
         binding.vm = communityViewModel
         communityViewModel.initStatus()
-        communityViewModel.loadCommunityList()
+        communityViewModel.initCommunityList()
         initCommunityList()
         initCommunityOptionDropdown()
         setClickedButton()
@@ -44,7 +44,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
     override fun onResume() {
         super.onResume()
         Timber.d("onResume")
-        communityViewModel.loadCommunityList()
+        communityViewModel.initCommunityList()
         initCommunityList()
     }
 
@@ -75,6 +75,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
                 binding.cvCommunityOptionType.id -> {
                     binding.tvCommunityOptionType.text = itemDescription
                     communityViewModel.setDropDownController(0, itemDescription)
+                    communityViewModel.loadCommunityList()
                 }
 
                 binding.cvCommunityOptionGender.id -> {
@@ -87,7 +88,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
                     communityViewModel.setDropDownController(2, itemDescription)
                 }
             }
-            communityViewModel.loadCommunityList()
+
             popupMenu.dismiss()
         }
     }

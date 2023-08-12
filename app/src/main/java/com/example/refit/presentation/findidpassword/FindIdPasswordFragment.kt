@@ -33,6 +33,7 @@ class FindIdPasswordFragment : BaseFragment<FragmentFindIdPasswordBinding>(R.lay
         binding.lifecycleOwner = this
 
         connectionTabLayout()
+
     }
 
     override fun onDestroy() {
