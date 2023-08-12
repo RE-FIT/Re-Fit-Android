@@ -6,24 +6,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
-import com.example.refit.data.model.mypage.CheckNicknameResponse
+import com.example.refit.data.model.mypage.PasswordUpdateRequest
+import com.example.refit.data.model.mypage.PasswordUpdateResponse
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
 import com.example.refit.data.repository.mypage.MyPageRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.Converter
 import retrofit2.Response
-import retrofit2.Retrofit
 import timber.log.Timber
-import java.lang.reflect.Type
 
 class MyInfoViewModel(private val repository: MyPageRepository, private val ds: TokenStore) : ViewModel() {
 
     // 내 정보
-    private val _myInfoResponse: MutableLiveData<ShowMyInfoResponse> = MutableLiveData<ShowMyInfoResponse>()
+    private val _myInfoResponse: MutableLiveData<ShowMyInfoResponse> =
+        MutableLiveData<ShowMyInfoResponse>()
     val myInfoResponse: LiveData<ShowMyInfoResponse>
         get() = _myInfoResponse
 
@@ -46,16 +44,6 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     private val _isCheckUpdatedBtnStatus: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isCheckUpdatedBtnStatus: LiveData<Boolean>
         get() = _isCheckUpdatedBtnStatus
-
-    // 생일 수정됨?
-    private val _isCheckUpdatedBirth: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isCheckUpdatedBirth: LiveData<Boolean>
-        get() = _isCheckUpdatedBirth
-
-    // 성별 수정됨?
-    private val _isCheckUpdatedGender: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isCheckUpdatedGender: LiveData<Boolean>
-        get() = _isCheckUpdatedGender
 
     // 비밀 번호 입력됨?
     private val _isCheckUpdatedPw: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
@@ -97,7 +85,44 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     val newPassword: LiveData<String>
         get() = _newPassword
 
+    // 입력 항목들 수정 여부
+    // 이름/닉네임(0) 생년 월일(1) 성별(2)
+    private val _isUpdatedValue: List<MutableLiveData<Boolean>> =
+        List(3) { MutableLiveData<Boolean>() }
+    val isUpdatedValue: List<LiveData<Boolean>>
+        get() = _isUpdatedValue
+
+    // 값이 하나라도 수정이 되었는가?
+    private val _isUpdatedOptions: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isUpdatedOptions: LiveData<Boolean>
+        get() = _isUpdatedOptions
+
+    // 항목 입력 여부
+    // 현재 pw(0) 새로운 pw(1)
+    private val _isUpdatedPwValue: List<MutableLiveData<Boolean>> =
+        List(2) { MutableLiveData<Boolean>() }
+    val isUpdatedPwValue: List<LiveData<Boolean>>
+        get() = _isUpdatedPwValue
+
+    private val _isUpdatedPwOptions: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isUpdatedPwOptions: LiveData<Boolean>
+        get() = _isUpdatedPwOptions
+
     // -----------------------------------
+    fun setUpdatedStatus(type: Int, status: Boolean) {
+        when (type) {
+            0 -> _isUpdatedValue[0].value = status// 이름(닉네임)
+            1 -> _isUpdatedValue[1].value = status // 생년 월일
+            2 -> _isUpdatedValue[2].value = status // 성별
+        }
+    }
+
+    fun setUpdatedAllStatus() {
+        _isUpdatedOptions.value =
+            _isUpdatedValue[0].value == true || _isUpdatedValue[1].value == true || _isUpdatedValue[2].value == true
+
+        Log.d("options", "${isUpdatedOptions.value}")
+    }
 
     // 이름(닉네임) 수정 했을 때
     fun updateNickname(newNickname: String) {
@@ -107,52 +132,54 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
 
     // 이름(닉네임) 중복 확인이 되었다면 true
     fun checkNickname(): Boolean {
-        return true
+        return isCheckUpdatedBtnStatus.value == true && userNicknameResponse.value == false
     }
 
-    // 중복 확인
+    // 중복 확인 눌림
     fun updateBtn() {
-
+        _isCheckUpdatedBtnStatus.value = _isCheckUpdatedNickname.value == true
     }
 
     // 생년 월일 수정
     fun updateBirth(updateBirth: String) {
         _userBirth.value = updateBirth
-        _isCheckUpdatedBirth.value = true
     }
 
     // 성별 수정
     fun updateGender(status: Int) {
         _userGender.value = status
-        _isCheckUpdatedGender.value = true
     }
 
     // 새로운 비밀 번호 수정
-    fun updateCurrentPw(currentPw: String) {
-        _newPassword.value = currentPw
+    fun updateCurrentPw(newNickname: String) {
         _isCheckUpdatedPw.value = true
+        _newPassword.value = newNickname
     }
 
-    private fun initNicknameInfoStatus(status: Boolean) {
+    fun setUpdatedPasswordStatus(type: Int, status: Boolean) {
+        when (type) {
+            0 -> {
+                _isUpdatedPwValue[0].value = status
+            }
+            1 -> _isUpdatedPwValue[1].value = status
+        }
+    }
+
+    fun setUpdatedPasswordAllStatus() {
+        _isUpdatedPwOptions.value =
+            _isUpdatedPwValue[0].value == true && _isUpdatedPwValue[1].value == true
+    }
+
+    fun initNicknameInfoStatus(status: Boolean) {
         _isCheckUpdatedNickname.value = status
     }
 
-    private fun initBirthInfoStatus(status: Boolean) {
-        _isCheckUpdatedBirth.value = status
-    }
-
-    private fun initGenderInfoStatus(status: Boolean) {
-        _isCheckUpdatedGender.value = status
-    }
-
-    private fun initCheckBtnStatus(status: Boolean) {
+    fun initCheckBtnStatus(status: Boolean) {
         _isCheckUpdatedBtnStatus.value = status
     }
 
     fun initAllStatus() {
         initNicknameInfoStatus(false)
-        initBirthInfoStatus(false)
-        initGenderInfoStatus(false)
         initCheckBtnStatus(false)
     }
 
@@ -162,7 +189,8 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
             val accessToken = ds.getAccessToken().first()
 
             try {
-                val response = repository.checkNickname("$accessToken", "${_userNickname.value}")
+                val response =
+                    repository.checkNickname("$accessToken", "${_userNickname.value}")
                 Log.d("닉네임 값", "${_userNickname.value}")
                 Log.d("token", "$accessToken")
 
@@ -171,9 +199,8 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
                         call: Call<Boolean>,
                         response: Response<Boolean>
                     ) {
-                        if (response.isSuccessful){
+                        if (response.isSuccessful) {
                             _userNicknameResponse.value = response.body() ?: false
-                            updateBtn()
 
                             Timber.d("닉네임 중복 여부: ${_userNicknameResponse.value}")
                         } else {
@@ -203,7 +230,7 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
                         call: Call<ShowMyInfoResponse>,
                         response: Response<ShowMyInfoResponse>
                     ) {
-                        if (response.isSuccessful){
+                        if (response.isSuccessful) {
                             _myInfoResponse.value = response.body()
                             Log.d("내 정보 response", "${_myInfoResponse.value}")
                             Log.d("내 정보 2", "${_myInfoResponse.value}")
@@ -214,6 +241,41 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
 
                     override fun onFailure(call: Call<ShowMyInfoResponse>, t: Throwable) {
                         Timber.d("401 Unauthorized: $t")
+                    }
+                })
+            } catch (e: Throwable) {
+                Timber.d("ERROR: $e")
+            }
+        }
+    }
+
+    fun updatePasswordRetrofit() {
+        viewModelScope.launch {
+            val accessToken = ds.getAccessToken().first()
+
+            try {
+                val request = PasswordUpdateRequest(currentPassword.value, newPassword.value)
+                Timber.d("$request")
+
+                val response = repository.updatePassword("$accessToken", request)
+
+                response.enqueue(object : Callback<PasswordUpdateResponse> {
+                    override fun onResponse(
+                        call: Call<PasswordUpdateResponse>,
+                        response: Response<PasswordUpdateResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            _currentPassword.value = response.body().toString()
+
+                            Timber.d("비밀번호 수정 API 호출 성공: ${currentPassword.value}")
+                        } else {
+                            Timber.e("Error: ${response.code()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<PasswordUpdateResponse>, t: Throwable) {
+                        Timber.d("401 Unauthorized: $t")
+                        // 에러 처리
                     }
                 })
             } catch (e: Throwable) {

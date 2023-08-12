@@ -14,7 +14,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:background="@color/default_dark">
 
         <TextView
             android:id="@+id/find_id_title"
@@ -39,20 +40,97 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/find_id_title" />
 
-        <android.widget.Button
-            android:id="@+id/btn_find_id_btn"
-            style="@style/RegularFont.14"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView"
+            style="@style/RegularFontKr.14"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="252dp"
-            android:background="@drawable/btn_my_info_pw"
-            android:backgroundTint="@color/green1"
-            android:clickable="true"
-            android:text="@string/find_id_title"
-            android:textColor="@color/white"
+            android:layout_marginTop="31dp"
+            android:text="아이디 찾기가 완료되었습니다."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="34dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/bg_solid_white_radius_10"
+            app:layout_constraintBottom_toTopOf="@+id/btn_find_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView2"
+                style="@style/RegularFontKr.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="회원님의 아이디는"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/userId_txt"
+                style="@style/RegularFontKr.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:text="vm.userId"
+                android:textColor="@color/green1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textView3"
+                style="@style/RegularFontKr.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="입니다."
+                app:layout_constraintStart_toEndOf="@+id/userId_txt"
+                app:layout_constraintTop_toTopOf="@+id/userId_txt" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <android.widget.Button
+            android:id="@+id/btn_find_id"
+            style="@style/RegularFont.14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/btn_my_info_pw"
+            android:backgroundTint="@color/green1"
+            android:clickable="true"
+            android:text="로그인 하러가기"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+        <android.widget.Button
+            android:id="@+id/btn_find_pw"
+            style="@style/RegularFont.14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/bg_solid_white_radius_10"
+            android:clickable="true"
+            android:text="비밀번호 찾기"
+            android:textColor="@color/green1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_find_id" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

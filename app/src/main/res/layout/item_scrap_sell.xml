@@ -11,7 +11,7 @@
 
         <variable
             name="scrapList"
-            type="com.example.refit.data.model.mypage.MyScrapGiveListItemResponse" />
+            type="com.example.refit.data.model.mypage.MyScrapSellListItemResponse" />
 
         <variable
             name="vm"

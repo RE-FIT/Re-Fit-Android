@@ -44,7 +44,7 @@
             app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_sell"
+                android:id="@+id/chip_sell_scrap"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                 app:chipStartPadding="35dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip_share"
+                android:id="@+id/chip_share_scrap"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

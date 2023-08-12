@@ -51,22 +51,6 @@ class FindIdPasswordViewModel (private val repository: SignUpRepository, private
     val isFilledAllOptions: LiveData<Boolean>
         get() = _isFilledAllOptions
 
-/*
-    fun editNickname(newName: String) {
-        _userNickname.value = newName
-        _isFilledValue[0].value = true
-    }
-
-    fun editId(newId: String) {
-        _userId.value = newId
-        _isFilledValue[1].value = true
-    }
-
-    fun editEmail(newEmail: String) {
-        _userEmail.value = newEmail
-        _isFilledValue[2].value = true
-    }*/
-
     fun setFindIdFilledStatus(type: Int, status: Boolean, value: String) {
         when (type) {
             0 -> { // 이름(닉네임)
