@@ -23,6 +23,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         textWatcher()
         /*//엑세스 토큰 체크
         tokenViewModel.checkAccessToken()
@@ -34,11 +35,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
             }
         }*/
 
-        /*tokenViewModel.error.observe(viewLifecycleOwner) {
-            it?.let {
-                Timber.d(it.toString())
-            }
-        }*/
 
         viewModel.error.observe(viewLifecycleOwner, EventObserver{
             val customSnackBar = CustomSnackBar.make(

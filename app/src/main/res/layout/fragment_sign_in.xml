@@ -21,7 +21,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.104" />
+            app:layout_constraintVertical_bias="0.073" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/sign_in_login_join_text"
@@ -93,8 +93,10 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/sign_in_existing_login"
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
             android:background="@drawable/bg_solid_dark1_radius_10"
             android:text="기존 회원 로그인"
             android:textColor="@color/white"
@@ -113,6 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:background="#00ff0000"
             android:minWidth="0dp"
             android:minHeight="0dp"
@@ -129,18 +132,18 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/join"
             style="@style/RegularFontKr.12"
-            android:layout_width="75dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="#00ff0000"
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="0dp"
             android:text="|   회원가입"
             android:textColor="@color/dark2"
-            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.67"
+            app:layout_constraintHorizontal_bias="0.664"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sign_in_existing_login"
             app:layout_constraintVertical_bias="0.0" />
