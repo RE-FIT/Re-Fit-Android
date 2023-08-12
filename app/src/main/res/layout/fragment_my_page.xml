@@ -96,17 +96,17 @@
                             android:id="@+id/myPageName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{vm.myInfoResponse.name}"/>
+                            android:text="@{vm.myInfoResponse.name}"
+                            android:textAppearance="@style/MediumFontKr.12" />
 
                         <TextView
-                            style="@style/MediumFont.12"
-                            android:textColor="@color/black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingBottom="18dp"
-                            android:gravity="center"
                             android:layout_gravity="center"
-                            android:text="@string/my_page_d_day_title"/>
+                            android:gravity="center"
+                            android:text="@string/my_page_d_day_title"
+                            android:textAppearance="@style/MediumFontKr.12"
+                            android:textColor="@color/black" />
 
                     </LinearLayout>
 
@@ -119,16 +119,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_solid_gray_radius_6"
-                            android:text="@string/my_page_dDay"
                             android:padding="8dp"
-                            android:textColor="@color/green1"/>
+                            android:text="@string/my_page_dDay"
+                            android:textAppearance="@style/RegularFontKr.12"
+                            android:textColor="@color/green1" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="@string/my_page_d_day_content"
-                            android:textColor="@color/dark2"/>
+                            android:textAppearance="@style/RegularFontKr.12"
+                            android:textColor="@color/dark2" />
 
                     </LinearLayout>
 
