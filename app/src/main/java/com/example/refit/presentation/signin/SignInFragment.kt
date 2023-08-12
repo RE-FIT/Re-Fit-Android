@@ -23,6 +23,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         textWatcher()
         /*//엑세스 토큰 체크
         tokenViewModel.checkAccessToken()
