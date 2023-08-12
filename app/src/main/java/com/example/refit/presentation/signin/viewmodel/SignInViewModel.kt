@@ -9,8 +9,10 @@ import com.example.refit.data.model.common.ResponseError
 import com.example.refit.data.repository.signup.SignUpRepository
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.util.Event
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
@@ -40,8 +42,17 @@ class SignInViewModel(private val repository: SignUpRepository, private val ds: 
         ds.deleteAccessToken()
     }
 
+    suspend fun fcmToken(): String? {
+        return try {
+            FirebaseMessaging.getInstance().token.await()
+        } catch (e: Exception) {
+            null
+        }
+    }
+
     fun basicLogin(loginId: String, password: String) = viewModelScope.launch {
-        val response = repository.requestLoginCertification(loginId, password)
+        val fcmToken = fcmToken().toString()
+        val response = repository.requestLoginCertification(loginId, password, fcmToken)
         response.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
