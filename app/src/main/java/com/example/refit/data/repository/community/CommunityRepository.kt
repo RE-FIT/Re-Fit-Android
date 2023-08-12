@@ -12,7 +12,7 @@ import retrofit2.Call
 import java.io.File
 
 interface CommunityRepository {
-    suspend fun loadCommunityList(accessToken: String): Call<ResponseBody>
+    suspend fun initCommunityList(accessToken: String): Call<ResponseBody>
 
     suspend fun loadCommuintyListSort(accessToken: String, postType: Int, gender: Int, category: Int): Call<ResponseBody>
 

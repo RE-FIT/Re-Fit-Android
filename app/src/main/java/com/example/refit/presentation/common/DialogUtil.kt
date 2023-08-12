@@ -18,6 +18,7 @@ import com.example.refit.presentation.dialog.closet.ForestStampDialog
 import com.example.refit.presentation.dialog.community.BanOnSalesDialog
 import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialog
 import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialogListener
+import com.example.refit.presentation.dialog.community.CommunityNoIconDialog
 import com.example.refit.presentation.dialog.mypage.AlertBasicNoIconDialog
 import com.example.refit.presentation.dialog.mypage.MyPagePwCheckDialog
 import com.example.refit.presentation.dialog.mypage.MypageNickNameCheckDialog
@@ -72,8 +73,8 @@ object DialogUtil {
         positive: String,
         negative: String,
         listener: AlertNoIconDialogListener
-    ): AlertNoIconDialog {
-        return AlertNoIconDialog(title, positive, negative, listener)
+    ): CommunityNoIconDialog {
+        return CommunityNoIconDialog(title, positive, negative, listener)
     }
 
     fun Fragment.createAlertBasicNoIconDialog(

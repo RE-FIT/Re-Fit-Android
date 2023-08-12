@@ -13,8 +13,8 @@ import retrofit2.Call
 import java.io.File
 
 class CommunityRepositoryImpl (private val communityDataSource: CommunityDataSource): CommunityRepository {
-    override suspend fun loadCommunityList(accessToken: String): Call<ResponseBody> {
-        return communityDataSource.loadCommunityList(accessToken)
+    override suspend fun initCommunityList(accessToken: String): Call<ResponseBody> {
+        return communityDataSource.initCommunityList(accessToken)
     }
 
     override suspend fun loadCommuintyListSort(

@@ -11,7 +11,7 @@ import retrofit2.Call
 import java.io.File
 
 interface CommunityDataSource {
-    suspend fun loadCommunityList(accessToken: String): Call<ResponseBody>
+    suspend fun initCommunityList(accessToken: String): Call<ResponseBody>
 
     suspend fun loadCommunityListSort(
         accessToken: String,

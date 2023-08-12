@@ -16,8 +16,8 @@ import java.io.File
 
 class CommunityDataSourceImpl(private val communityApi: CommunityApi) : CommunityDataSource {
 
-    override suspend fun loadCommunityList(accessToken: String): Call<ResponseBody> {
-        return communityApi.loadCommunityList(accessToken)
+    override suspend fun initCommunityList(accessToken: String): Call<ResponseBody> {
+        return communityApi.initCommunityList(accessToken)
     }
 
     override suspend fun loadCommunityListSort(

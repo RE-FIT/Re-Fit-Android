@@ -405,5 +405,13 @@
             android:name="otherId"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="sellerId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="postType"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>
