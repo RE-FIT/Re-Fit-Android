@@ -26,17 +26,14 @@ class FindIdFragment : BaseFragment<FragmentFindIdBinding>(R.layout.fragment_fin
 
         binding.vm = vm
 
-        viewModel.error.observe(viewLifecycleOwner) {
-            it?.let {
-                binding.btnFindIdBtn.setOnClickListener(){
-                    val id = binding.findIdEditName.text.toString()
-                    val email = binding.findIdEditEmail.text.toString()
-                    val findIdRequest = FindIdRequest(id, email)
+        //아이디 찾기
+        binding.btnFindIdBtn.setOnClickListener(){
+            val id = binding.findIdEditName.text.toString()
+            val email = binding.findIdEditEmail.text.toString()
+            val findIdRequest = FindIdRequest(id, email)
 
-                    viewModel.findById(findIdRequest)
-                    /*Log.e("아이디", id)
-                    Log.e("이메일", email)*/
-                }
+            if(id.isNotEmpty() && email.isNotEmpty()){
+                viewModel.findById(findIdRequest)
             }
         }
 

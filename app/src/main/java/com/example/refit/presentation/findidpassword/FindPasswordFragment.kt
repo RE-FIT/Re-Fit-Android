@@ -24,20 +24,19 @@ class FindPasswordFragment : BaseFragment<FragmentFindPasswordBinding>(R.layout.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.error.observe(viewLifecycleOwner) {
-            it?.let {
-                binding.btnFindPw.setOnClickListener(){
-                    val name = binding.findIdEditName.text.toString()
-                    val id = binding.findPwEditId.text.toString()
-                    val email = binding.findIdEditEmail.text.toString()
-                    val findPasswordRequest = FindPasswordRequest(name, id, email)
+        //비밀번호 찾기
+        binding.btnFindPw.setOnClickListener(){
+            val name = binding.findIdEditName.text.toString()
+            val id = binding.findPwEditId.text.toString()
+            val email = binding.findIdEditEmail.text.toString()
+            val findPasswordRequest = FindPasswordRequest(name, id, email)
 
-                    viewModel.findByPassword(findPasswordRequest)
-                }
+            if(name.isNotEmpty() && id.isNotEmpty() && email.isNotEmpty()){
+                viewModel.findByPassword(findPasswordRequest)
             }
         }
 
-        //아이디 찾기 성공 시 이동
+        //비밀번호 찾기 성공 시 이동
         viewModel.idSuccess.observe(viewLifecycleOwner, Observer {
             navigate(R.id.action_findIdPasswordFragment_to_findPasswordFinishFragment)
         })
@@ -92,12 +91,6 @@ class FindPasswordFragment : BaseFragment<FragmentFindPasswordBinding>(R.layout.
             }
             override fun afterTextChanged(s: Editable?) { vm.setFindPwAllFilledStatus() }
         })
-    }
-
-    private fun clickFindPwBtn() {
-        binding.btnFindPw.setOnClickListener {
-
-        }
     }
 
 }
