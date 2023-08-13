@@ -42,12 +42,10 @@
         android:name="com.example.refit.presentation.findidpassword.FindIdFinishFragment"
         android:label="fragment_find_id_finish"
         tools:layout="@layout/fragment_find_id_finish">
+
         <action
-            android:id="@+id/action_findIdFinishFragment_to_findIdFragment"
-            app:destination="@id/findIdFragment" />
-        <action
-            android:id="@+id/action_findIdFinishFragment_to_findPasswordFragment"
-            app:destination="@id/findPasswordFragment" />
+            android:id="@+id/action_findIdFinishFragment_to_findIdPasswordFragment"
+            app:destination="@id/findIdPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/findPasswordFinishFragment"
@@ -57,18 +55,6 @@
         <action
             android:id="@+id/action_findPasswordFinishFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/findIdFragment"
-        android:name="com.example.refit.presentation.findidpassword.FindIdFragment"
-        android:label="fragment_find_id"
-        tools:layout="@layout/fragment_find_id">
-    </fragment>
-    <fragment
-        android:id="@+id/findPasswordFragment"
-        android:name="com.example.refit.presentation.findidpassword.FindPasswordFragment"
-        android:label="fragment_find_password"
-        tools:layout="@layout/fragment_find_password">
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
