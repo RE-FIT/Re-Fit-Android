@@ -21,13 +21,22 @@ abstract class CommunityBaseDialog<T: ViewDataBinding>(@LayoutRes private val la
 
     override fun onStart() {
         super.onStart()
-        val params: ViewGroup.LayoutParams? = dialog?.window?.attributes
+        val dialogWindow = dialog?.window
+        val dialogParams = dialogWindow?.attributes
+
         val deviceWidth = Resources.getSystem().displayMetrics.widthPixels
         val deviceHeight = Resources.getSystem().displayMetrics.heightPixels
-        params?.width = (deviceWidth * 0.8).toInt()
-        dialog?.window?.attributes = params as WindowManager.LayoutParams
 
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialogParams?.width = (deviceWidth * 0.8).toInt()
+        dialogParams?.height = ViewGroup.LayoutParams.WRAP_CONTENT
+
+        dialogParams?.y = (deviceHeight * 0.15).toInt() * -1
+
+
+        dialogWindow?.attributes = dialogParams
+
+        dialogWindow?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
     override fun onCreateView(
