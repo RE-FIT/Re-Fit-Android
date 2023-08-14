@@ -190,6 +190,10 @@ class CommunityAddPostViewModel(
     val textIfShoesOrAcc: LiveData<String>
         get() = _textIfShoesOrAcc
 
+    private val _updateStatus: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val updateStatus: LiveData<Boolean>
+        get() = _updateStatus
+
     fun setPostId(id: Int) {
         _postId.value = id
     }
@@ -771,6 +775,7 @@ class CommunityAddPostViewModel(
                     if (response.isSuccessful) {
                         val json = response.body()?.string()
                         Timber.d("COMMUNITY PUT API 호출 성공 : $json")
+                        _updateStatus.value = true
                     } else {
                         try {
                             val errorBody = response.errorBody()
@@ -804,6 +809,7 @@ class CommunityAddPostViewModel(
     }
 
     fun initAllStatus() {
+        _updateStatus.value = false
         _isTransactionMethodChip.value = false
         _isClickedOptionRG.value = false
         _isClickedOptionCategory.value = false

@@ -98,16 +98,19 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
                 binding.cvCommunityOptionType.id -> {
                     binding.tvCommunityOptionType.text = itemDescription
                     vm.setDropDownController(0, itemDescription)
+                    vm.loadSearchResult()
                 }
 
                 binding.cvCommunityOptionGender.id -> {
                     binding.tvCommunityOptionGender.text = itemDescription
                     vm.setDropDownController(1, itemDescription)
+                    vm.loadSearchResult()
                 }
 
                 binding.cvCommunityOptionCategory.id -> {
                     binding.tvCommunityOptionCategory.text = itemDescription
                     vm.setDropDownController(2, itemDescription)
+                    vm.loadSearchResult()
                 }
             }
             vm.loadSearchResult()
