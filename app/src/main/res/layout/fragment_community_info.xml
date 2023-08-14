@@ -5,7 +5,6 @@
     tools:context=".presentation.community.CommunityInfoFragment">
 
     <data>
-
         <variable
             name="vm"
             type="com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel" />
