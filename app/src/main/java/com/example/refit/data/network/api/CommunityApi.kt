@@ -86,6 +86,8 @@ interface CommunityApi {
         @Part image: List<MultipartBody.Part>
     ): Call<ResponseBody>
 
+
+    // # 글 수정 PUT API 메서드
     @Multipart
     @PUT("refit/community/{postId}/update")
     fun modifyPostIncludeImage(
@@ -105,24 +107,82 @@ interface CommunityApi {
         @Part("image_updated") image_updated: Boolean,
     ): Call<ResponseBody>
 
+    // # 글 조회 GET API 메서드
     @GET("refit/community/{postId}")
     fun getPost(
         @Header("Authorization") accessToken: String,
         @Path("postId") postId: Int
     ): Call<PostResponse>
 
+    // # 검색 조회 GET API 메서드
     @GET("refit/community/search")
     fun loadSearchResult(
         @Header("Authorization") accessToken: String,
-        @Query("keyword") postType: String,
+        @Query("keyword") keyword: String,
     ): Call<ResponseBody>
 
+    @GET("refit/community/search")
+    fun loadSearchResultAll(
+        @Header("Authorization") accessToken: String,
+        @Query("keyword") keyword: String,
+        @Query("postType") postType: Int = 0,
+        @Query("gender") gender: Int = 0,
+        @Query("category") category: Int = 0,
+    ): Call<ResponseBody>
+
+    @GET("refit/community/search")
+    fun loadSearchResulttOnlyPostType(
+        @Header("Authorization") accessToken: String,
+        @Query("keyword") keyword: String,
+        @Query("postType") postType: Int = 0,
+    ): Call<ResponseBody>
+
+    @GET("refit/community/search")
+    fun loadSearchResultOnlyGender(
+        @Header("Authorization") accessToken: String,
+        @Query("keyword") keyword: String,
+        @Query("gender") gender: Int = 0,
+    ): Call<ResponseBody>
+
+    @GET("refit/community/search")
+    fun loadSearchResultOnlyCategory(
+        @Header("Authorization") accessToken: String,
+        @Query("keyword") keyword: String,
+        @Query("category") category: Int = 0,
+    ): Call<ResponseBody>
+
+    @GET("refit/community/search")
+    fun loadSearchResultPTAndGender(
+        @Header("Authorization") accessToken: String,
+        @Query("keyword") keyword: String,
+        @Query("postType") postType: Int = 0,
+        @Query("gender") gender: Int = 0,
+    ): Call<ResponseBody>
+
+    @GET("refit/community/search")
+    fun loadSearchResultPTAndCategory(
+        @Header("Authorization") accessToken: String,
+        @Query("keyword") keyword: String,
+        @Query("postType") postType: Int = 0,
+        @Query("category") category: Int = 0,
+    ): Call<ResponseBody>
+
+    @GET("refit/community")
+    fun loadSearchResultGenderAndCategory(
+        @Header("Authorization") accessToken: String,
+        @Query("keyword") keyword: String,
+        @Query("gender") gender: Int = 0,
+        @Query("category") category: Int = 0,
+    ): Call<ResponseBody>
+
+    // # 글 삭제 DELETE API 메서드
     @DELETE("refit/community/{postId}")
     fun deletePost(
         @Header("Authorization") accessToken: String,
         @Path("postId") postId: Int
     ): Call<ResponseBody>
 
+    // # 글 상태 변경 PATCH API 메서드
     @PATCH("refit/community/{postId}")
     fun changePostStatus(
         @Header("Authorization") accessToken: String,
@@ -130,18 +190,21 @@ interface CommunityApi {
     ): Call<PostResponse>
 
 
+    // # 글 스크랩 POST API 메서드
     @POST("refit/community/{postId}/scrap")
     fun scrapPost(
         @Header("Authorization") accessToken: String,
         @Path("postId") postId: Int
     ): Call<ResponseBody>
 
+    // # 사용자 차단 POST API 메서드
     @POST("refit/block")
     fun blockUser(
         @Header("Authorization") accessToken: String,
         @Body requestBody: BlockDto,
     ): Call<ResponseBody>
 
+    // # 신고 POST API 메서드
     @POST("refit/report")
     fun reportUser(
         @Header("Authorization") accessToken: String,

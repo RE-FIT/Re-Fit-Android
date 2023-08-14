@@ -90,6 +90,67 @@ class CommunityRepositoryImpl (private val communityDataSource: CommunityDataSou
         return communityDataSource.loadSearchResult(accessToken, keyword)
     }
 
+    override suspend fun loadSearchResultAll(
+        accessToken: String,
+        keyword: String,
+        postType: Int,
+        gender: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadSearchResultAll(accessToken, keyword, postType, gender, category)
+    }
+
+    override suspend fun loadSearchResulttOnlyPostType(
+        accessToken: String,
+        keyword: String,
+        postType: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadSearchResulttOnlyPostType(accessToken, keyword, postType)
+    }
+
+    override suspend fun loadSearchResultOnlyGender(
+        accessToken: String,
+        keyword: String,
+        gender: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadSearchResultOnlyGender(accessToken, keyword, gender)
+    }
+
+    override suspend fun loadSearchResultOnlyCategory(
+        accessToken: String,
+        keyword: String,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadSearchResultOnlyCategory(accessToken, keyword, category)
+    }
+
+    override suspend fun loadSearchResultPTAndGender(
+        accessToken: String,
+        keyword: String,
+        postType: Int,
+        gender: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadSearchResultPTAndGender(accessToken, keyword, postType, gender)
+    }
+
+    override suspend fun loadSearchResultPTAndCategory(
+        accessToken: String,
+        keyword: String,
+        postType: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadSearchResultPTAndCategory(accessToken, keyword, postType, category)
+    }
+
+    override suspend fun loadSearchResultGenderAndCategory(
+        accessToken: String,
+        keyword: String,
+        gender: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadSearchResultGenderAndCategory(accessToken, keyword, gender, category)
+    }
+
     override suspend fun modifyPostIncludeImage(
         accessToken: String,
         image_updated: Boolean,

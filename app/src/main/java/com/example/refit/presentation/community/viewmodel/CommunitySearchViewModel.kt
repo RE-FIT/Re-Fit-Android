@@ -85,14 +85,38 @@ class CommunitySearchViewModel(
             val accessToken = ds.getAccessToken().first()
             val keyword = _searchKeyword.value ?: ""
             try {
-                val response = repository.loadSearchResult(accessToken, keyword)
+
+                val postType = _dropDownValue[0].value ?: Integer.MAX_VALUE
+                val gender = _dropDownValue[1].value ?: Integer.MAX_VALUE
+                val category = _dropDownValue[2].value ?: Integer.MAX_VALUE
+
+                var response = repository.loadSearchResult(accessToken, keyword)
+
+                if (postType < 2) {
+                    if (gender > 2 && category > 6)
+                        response = repository.loadSearchResulttOnlyPostType(accessToken, keyword, postType)
+                    else if (gender < 2 && category > 6)
+                        response = repository.loadSearchResultPTAndGender(accessToken, keyword, postType, gender)
+                    else if (gender > 2 && category < 6)
+                        response = repository.loadSearchResultPTAndCategory(accessToken, keyword, postType, category)
+                    else if (gender < 2 && category < 6)
+                        response = repository.loadSearchResultAll(accessToken, keyword, postType, gender, category)
+                } else {
+                    if (gender < 2 && category > 6)
+                        response = repository.loadSearchResultOnlyGender(accessToken, keyword, gender)
+                    else if (gender > 2 && category < 6)
+                        response = repository.loadSearchResultOnlyCategory(accessToken, keyword, category)
+                    else if (gender < 2 && category < 6)
+                        response = repository.loadSearchResultGenderAndCategory(accessToken, keyword, gender, category)
+                }
+
                 response.enqueue(object : Callback<ResponseBody> {
                     override fun onResponse(
                         call: Call<ResponseBody>,
                         response: Response<ResponseBody>
                     ) {
                         if (response.isSuccessful) {
-                            Timber.d("API 호출 성공")
+                            Timber.d("[검색] API 호출 성공")
                             val responseBody = response.body()
                             if (responseBody != null) {
                                 val json = responseBody.string()
@@ -138,6 +162,10 @@ class CommunitySearchViewModel(
         _isSearching.value = false
         _isSearchTypingState.value = false
         _isExistResult.value = false
+
+        for (item in _dropDownValue) {
+            item.value = Integer.MAX_VALUE
+        }
     }
 
     fun noFoundResult() {
@@ -195,7 +223,5 @@ class CommunitySearchViewModel(
         val gson = Gson()
         return gson.fromJson(json, Array<CommunityListItemResponse>::class.java).toList()
     }
-
-
 
 }
