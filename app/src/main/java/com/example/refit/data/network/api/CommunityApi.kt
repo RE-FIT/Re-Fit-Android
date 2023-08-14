@@ -24,6 +24,7 @@ import java.io.IOException
 
 interface CommunityApi {
 
+    // # 커뮤니티 초기 화면 API 메서드
     @GET("refit/community")
     fun initCommunityList(
         @Header("Authorization") accessToken: String,
@@ -37,11 +38,51 @@ interface CommunityApi {
         @Query("category") category: Int = 0,
     ): Call<ResponseBody>
 
+    @GET("refit/community")
+    fun loadCommunityListOnlyPostType(
+        @Header("Authorization") accessToken: String,
+        @Query("postType") postType: Int = 0,
+    ): Call<ResponseBody>
+
+    @GET("refit/community")
+    fun loadCommunityListOnlyGender(
+        @Header("Authorization") accessToken: String,
+        @Query("gender") gender: Int = 0,
+    ): Call<ResponseBody>
+
+    @GET("refit/community")
+    fun loadCommunityListOnlyCategory(
+        @Header("Authorization") accessToken: String,
+        @Query("category") category: Int = 0,
+    ): Call<ResponseBody>
+
+    @GET("refit/community")
+    fun loadCommunityListPTAndGender(
+        @Header("Authorization") accessToken: String,
+        @Query("postType") postType: Int = 0,
+        @Query("gender") gender: Int = 0,
+    ): Call<ResponseBody>
+
+    @GET("refit/community")
+    fun loadCommunityListPTAndCategory(
+        @Header("Authorization") accessToken: String,
+        @Query("postType") postType: Int = 0,
+        @Query("category") category: Int = 0,
+    ): Call<ResponseBody>
+
+    @GET("refit/community")
+    fun loadCommunityListGenderAndCategory(
+        @Header("Authorization") accessToken: String,
+        @Query("gender") gender: Int = 0,
+        @Query("category") category: Int = 0,
+    ): Call<ResponseBody>
+
+    // # 글 등록 POST API 메서드
     @Multipart
     @POST("refit/community")
     fun createPost(
         @Header("Authorization") accessToken: String,
-        @Part ("postDto") postDto: RequestBody,
+        @Part("postDto") postDto: RequestBody,
         @Part image: List<MultipartBody.Part>
     ): Call<ResponseBody>
 
@@ -49,20 +90,20 @@ interface CommunityApi {
     @PUT("refit/community/{postId}/update")
     fun modifyPostIncludeImage(
         @Header("Authorization") accessToken: String,
-        @Path ("postId") postId: Int,
-        @Part ("postDto") postDto: RequestBody,
-        @Part ("image_updated") image_updated: Boolean,
+        @Path("postId") postId: Int,
+        @Part("postDto") postDto: RequestBody,
+        @Part("image_updated") image_updated: Boolean,
         @Part image: List<MultipartBody.Part>
     ): Call<ResponseBody>
 
     @Multipart
     @PUT("refit/community/{postId}/update")
     fun modifyPost(
-        @Header ("Authorization") accessToken: String,
-        @Path ("postId") postId: Int,
-        @Part ("postDto") postDto: RequestBody,
-        @Part ("image_updated") image_updated: Boolean,
-        ): Call<ResponseBody>
+        @Header("Authorization") accessToken: String,
+        @Path("postId") postId: Int,
+        @Part("postDto") postDto: RequestBody,
+        @Part("image_updated") image_updated: Boolean,
+    ): Call<ResponseBody>
 
     @GET("refit/community/{postId}")
     fun getPost(
@@ -80,7 +121,7 @@ interface CommunityApi {
     fun deletePost(
         @Header("Authorization") accessToken: String,
         @Path("postId") postId: Int
-    ) : Call<ResponseBody>
+    ): Call<ResponseBody>
 
     @PATCH("refit/community/{postId}")
     fun changePostStatus(

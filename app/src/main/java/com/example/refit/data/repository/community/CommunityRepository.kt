@@ -16,6 +16,39 @@ interface CommunityRepository {
 
     suspend fun loadCommuintyListSort(accessToken: String, postType: Int, gender: Int, category: Int): Call<ResponseBody>
 
+    suspend fun loadCommunityOnlyPostType(
+        accessToken: String,
+        postType: Int,
+    ): Call<ResponseBody>
+
+    suspend fun loadCommunityOnlyGender(
+        accessToken: String,
+        gender: Int,
+    ): Call<ResponseBody>
+
+    suspend fun loadCommunityOnlyCategory(
+        accessToken: String,
+        category: Int,
+    ): Call<ResponseBody>
+
+    suspend fun loadCommunityPTAndGender(
+        accessToken: String,
+        postType: Int,
+        gender: Int,
+    ): Call<ResponseBody>
+
+    suspend fun loadCommunityPTAndCategory(
+        accessToken: String,
+        postType: Int,
+        category: Int,
+    ): Call<ResponseBody>
+
+    suspend fun loadCommunityGenderAndCategory(
+        accessToken: String,
+        gender: Int,
+        category: Int,
+    ): Call<ResponseBody>
+
     suspend fun createPost(
         accessToken: String,
         postDto: RequestBody,

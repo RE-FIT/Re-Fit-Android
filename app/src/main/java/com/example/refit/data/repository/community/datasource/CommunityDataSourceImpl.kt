@@ -29,6 +29,51 @@ class CommunityDataSourceImpl(private val communityApi: CommunityApi) : Communit
         return communityApi.loadCommunityList(accessToken, postType, gender, category)
     }
 
+    override suspend fun loadCommunityOnlyPostType(
+        accessToken: String,
+        postType: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadCommunityListOnlyPostType(accessToken, postType)
+    }
+
+    override suspend fun loadCommunityOnlyGender(
+        accessToken: String,
+        gender: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadCommunityListOnlyGender(accessToken, gender)
+    }
+
+    override suspend fun loadCommunityOnlyCategory(
+        accessToken: String,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadCommunityListOnlyCategory(accessToken, category)
+    }
+
+    override suspend fun loadCommunityPTAndGender(
+        accessToken: String,
+        postType: Int,
+        gender: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadCommunityListPTAndGender(accessToken, postType, gender)
+    }
+
+    override suspend fun loadCommunityPTAndCategory(
+        accessToken: String,
+        postType: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadCommunityListPTAndCategory(accessToken, postType, category)
+    }
+
+    override suspend fun loadCommunityGenderAndCategory(
+        accessToken: String,
+        gender: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadCommunityListGenderAndCategory(accessToken, gender, category)
+    }
+
     override suspend fun createPost(
         accessToken: String,
         postDto: RequestBody,
@@ -75,7 +120,13 @@ class CommunityDataSourceImpl(private val communityApi: CommunityApi) : Communit
             MultipartBody.Part.createFormData("image", file.name, requestFile)
         }
 
-        return communityApi.modifyPostIncludeImage(accessToken, postId, postDto, image_updated, imageParts)
+        return communityApi.modifyPostIncludeImage(
+            accessToken,
+            postId,
+            postDto,
+            image_updated,
+            imageParts
+        )
     }
 
     override suspend fun modifyPost(

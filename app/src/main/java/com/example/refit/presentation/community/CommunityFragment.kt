@@ -81,11 +81,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
                 binding.cvCommunityOptionGender.id -> {
                     binding.tvCommunityOptionGender.text = itemDescription
                     communityViewModel.setDropDownController(1, itemDescription)
+                    communityViewModel.loadCommunityList()
                 }
 
                 binding.cvCommunityOptionCategory.id -> {
                     binding.tvCommunityOptionCategory.text = itemDescription
                     communityViewModel.setDropDownController(2, itemDescription)
+                    communityViewModel.loadCommunityList()
                 }
             }
 

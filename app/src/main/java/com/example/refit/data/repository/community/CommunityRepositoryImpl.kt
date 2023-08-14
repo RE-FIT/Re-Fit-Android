@@ -26,6 +26,51 @@ class CommunityRepositoryImpl (private val communityDataSource: CommunityDataSou
         return communityDataSource.loadCommunityListSort(accessToken, postType, gender, category)
     }
 
+    override suspend fun loadCommunityOnlyPostType(
+        accessToken: String,
+        postType: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadCommunityOnlyPostType(accessToken, postType)
+    }
+
+    override suspend fun loadCommunityOnlyGender(
+        accessToken: String,
+        gender: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadCommunityOnlyGender(accessToken, gender)
+    }
+
+    override suspend fun loadCommunityOnlyCategory(
+        accessToken: String,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadCommunityOnlyCategory(accessToken, category)
+    }
+
+    override suspend fun loadCommunityPTAndGender(
+        accessToken: String,
+        postType: Int,
+        gender: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadCommunityPTAndGender(accessToken, postType, gender)
+    }
+
+    override suspend fun loadCommunityPTAndCategory(
+        accessToken: String,
+        postType: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadCommunityPTAndCategory(accessToken, postType, category)
+    }
+
+    override suspend fun loadCommunityGenderAndCategory(
+        accessToken: String,
+        gender: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadCommunityGenderAndCategory(accessToken, gender, category)
+    }
+
     override suspend fun createPost(
         accessToken: String,
         postDto: RequestBody,
