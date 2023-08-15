@@ -1,6 +1,10 @@
 package com.example.refit.presentation.mypage
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.OvalShape
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -18,7 +22,6 @@ import com.example.refit.databinding.FragmentMyInfoUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DialogUtil
 import com.example.refit.presentation.common.DialogUtil.checkNickNameDialog
-import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.dialog.mypage.ProfileRegisterPhotoDialogListener
 import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
 import com.example.refit.util.FileUtil
@@ -75,6 +78,7 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
 
             vm.setUpdatedAllStatus()
         })
+
     }
 
     override fun onResume() {

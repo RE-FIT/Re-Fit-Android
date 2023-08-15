@@ -36,6 +36,10 @@ class MyScrapListAdapter(private val viewModel: MyScrapViewModel) :
             binding.scrapList = scrapList
             binding.vm = viewModel
             binding.executePendingBindings()
+
+            binding.mcvCommunityItemHolder.setOnClickListener {
+                viewModel.handleClickItem(scrapList.postId)
+            }
         }
     }
 
