@@ -1,7 +1,9 @@
 package com.example.refit.presentation.mypage
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.example.refit.MainActivity
 import com.example.refit.R
 import com.example.refit.databinding.FragmentSettingBinding
 import com.example.refit.presentation.common.BaseFragment
@@ -30,7 +32,9 @@ class SettingFragment: BaseFragment<FragmentSettingBinding>(R.layout.fragment_se
         }
 
         viewModel.logoutSuccess.observe(viewLifecycleOwner, EventObserver {
-            navigate(R.id.action_myPage_mySetting_to_startingFragment)
+            requireActivity().finish()
+            val restartIntent = Intent(context, MainActivity::class.java)
+            startActivity(restartIntent)
         })
     }
 
