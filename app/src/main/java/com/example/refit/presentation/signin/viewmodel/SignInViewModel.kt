@@ -58,8 +58,8 @@ class SignInViewModel(private val repository: SignUpRepository, private val ds: 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     val accessToken = response.headers().get("Authorization").toString()
-                    _accessToken.postValue(Event(accessToken))
                     setAccessToken(accessToken)
+                    _accessToken.postValue(Event(accessToken))
                 } else {
                     Log.d("RESPONSE", "FAIL")
                     var jsonObject = JSONObject(response.errorBody()!!.string())

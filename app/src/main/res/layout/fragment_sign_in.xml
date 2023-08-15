@@ -68,7 +68,7 @@
             app:hintTextColor="@android:color/transparent"
             app:passwordToggleTint="@color/dark1">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:id="@+id/sign_in_password"
                 style="@style/RegularFontKr.14"
                 android:layout_width="match_parent"

@@ -40,7 +40,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
             val customSnackBar = CustomSnackBar.make(
                 view = requireView(),
                 layout = R.layout.custom_snackbar_sign_fail,
-                animationId = R.anim.anim_show_snack_bar_from_bottom
+                animationId = R.anim.anim_show_snack_bar_from_top
             )
 
             customSnackBar.setTitle("존재하지 않는 계정입니다.", "아이디 또는 비밀번호를 다시 한 번 확인해주세요!")
@@ -53,7 +53,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
             val id = binding.signInLoginId.text.toString()
             val password = binding.signInPassword.text.toString()
             viewModel.basicLogin(id, password)
-            //viewModel.basicLogin("admin0000", "AAaa1234!!")
         }
 
 
@@ -95,19 +94,5 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
 
             }
         })
-    }
-
-    // 로그인 실패 시 snackBar
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        viewModel.error.observe(viewLifecycleOwner) {
-            it?.let {
-                val errorView = binding.signInExistingLogin
-                CustomSnackBar.make(errorView, R.layout.custom_dialog_alert_only_text_icon_left, R.anim.anim_show_snack_bar_from_top)
-                    .setTitle("존재하지 않는 계정입니다.", null)
-                    .show()
-            }
-        }
     }
 }
