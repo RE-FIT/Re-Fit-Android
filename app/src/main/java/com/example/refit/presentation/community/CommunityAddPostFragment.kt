@@ -196,6 +196,7 @@ class CommunityAddPostFragment :
                     binding.tvCommunityAddpostFeeInput.text =
                         getString(R.string.community_addpost_contents_detail_fourth_input)
                     vmAdd.setFeeStatus()
+                    vmAdd.setShippingFee(0)
                     false
                 }
 
@@ -449,6 +450,7 @@ class CommunityAddPostFragment :
             if (fee == 0) {
                 // 배송비 포함
                 binding.rbCommunityAddpostInputIncludeFee.isChecked = true
+                vmAdd.setShippingFee(0)
             } else {
                 binding.rbCommunityAddpostInputExcludeFee.isChecked = true
                 vmAdd.setFilledStatus(8, true, "")
