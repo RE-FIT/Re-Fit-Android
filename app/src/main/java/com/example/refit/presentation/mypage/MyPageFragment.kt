@@ -1,13 +1,14 @@
 package com.example.refit.presentation.mypage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import com.example.refit.R
 import com.example.refit.databinding.FragmentMyPageBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.NavigationUtil.navigate
-import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
+import com.example.refit.presentation.mypage.viewmodel.MyViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -15,7 +16,7 @@ import java.util.Locale
 
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
 
-    private val vm: MyInfoViewModel by sharedViewModel()
+    private val vm: MyViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,9 +49,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 
         binding.dDay.text = "D + ${challengeDay}"
 
-        vm.userNickname.observe(viewLifecycleOwner, Observer {
-            binding.myPageName.text = it.toString()
-        })
+        vm.getMyInfo()
 
+        vm.myInfoResponse.observe(viewLifecycleOwner, Observer {
+            binding.myPageName.text = it.name
+        })
     }
 }

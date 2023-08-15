@@ -3,6 +3,7 @@ package com.example.refit.data.repository.mypage.datasource
 import com.example.refit.data.model.mypage.MyFeedBuyListItemResponse
 import com.example.refit.data.model.mypage.MyFeedGiveListItemResponse
 import com.example.refit.data.model.mypage.MyFeedSellListItemResponse
+import com.example.refit.data.model.mypage.MyInfoResponse
 import com.example.refit.data.model.mypage.MyScrapGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
 import com.example.refit.data.model.mypage.PasswordUpdateRequest
@@ -17,6 +18,10 @@ class MyPageDataSourceImpl (private val myPageApi: MyPageApi, private val commun
 
     override suspend fun showMyInfo(accessToken: String): Call<ShowMyInfoResponse> {
         return myPageApi.showMyInfo(accessToken)
+    }
+
+    override suspend fun myInfo(accessToken: String): Call<MyInfoResponse> {
+        return myPageApi.myInfo(accessToken)
     }
 
     override suspend fun checkNickname(accessToken: String, name: String): Call<Boolean> {

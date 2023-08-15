@@ -3,6 +3,7 @@ package com.example.refit.data.repository.mypage
 import com.example.refit.data.model.mypage.MyFeedBuyListItemResponse
 import com.example.refit.data.model.mypage.MyFeedGiveListItemResponse
 import com.example.refit.data.model.mypage.MyFeedSellListItemResponse
+import com.example.refit.data.model.mypage.MyInfoResponse
 import com.example.refit.data.model.mypage.MyScrapGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
 import com.example.refit.data.model.mypage.PasswordUpdateRequest
@@ -13,6 +14,10 @@ import retrofit2.Call
 import retrofit2.Response
 
 class MyPageRepositoryImpl(private val myPageDataSource: MyPageDataSource): MyPageRepository {
+    override suspend fun myInfo(accessToken: String): Call<MyInfoResponse> {
+        return myPageDataSource.myInfo(accessToken)
+    }
+
     override suspend fun checkNickname(accessToken: String, name: String): Call<Boolean> {
         return myPageDataSource.checkNickname(accessToken, name)
     }
