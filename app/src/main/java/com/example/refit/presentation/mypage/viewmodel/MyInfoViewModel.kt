@@ -12,6 +12,7 @@ import com.example.refit.data.model.mypage.ShowMyInfoResponse
 import com.example.refit.data.repository.mypage.MyPageRepository
 import com.example.refit.presentation.common.DialogUtil.checkPwDialog
 import com.example.refit.presentation.mypage.MyInfoPwUpdateFragment
+import com.example.refit.util.Event
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.first
@@ -128,6 +129,11 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     val postId: LiveData<Int>
         get() = _postId
 
+    private val _selectedPostItem: MutableLiveData<Event<Int>> =
+        MutableLiveData<Event<Int>>()
+    val selectedPostItem: LiveData<Event<Int>>
+        get() = _selectedPostItem
+
     fun setPostId(id: Int) {
         _postId.value = id
     }
@@ -195,6 +201,10 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     fun setUpdatedPasswordAllStatus() {
         _isUpdatedPwOptions.value =
             _isUpdatedPwValue[0].value == true && _isUpdatedPwValue[1].value == true
+    }
+
+    fun handleClickItem(postId: Int) {
+        _selectedPostItem.value = Event(postId)
     }
 
     fun initNicknameInfoStatus(status: Boolean) {

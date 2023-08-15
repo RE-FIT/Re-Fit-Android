@@ -15,6 +15,7 @@ import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
+import com.example.refit.presentation.mypage.viewmodel.MyViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -23,6 +24,10 @@ import java.util.Locale
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
 
     private val vm: MyViewModel by sharedViewModel()
+    private val myInfoViewModel: MyInfoViewModel by sharedViewModel()
+
+    var backPressedTime : Long = 0
+    private lateinit var callback : OnBackPressedCallback
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,6 +60,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 
         binding.dDay.text = "D + ${challengeDay}"
 
+        myInfoViewModel.initAllStatus()
         vm.getMyInfo()
 
         vm.myInfoResponse.observe(viewLifecycleOwner, Observer {

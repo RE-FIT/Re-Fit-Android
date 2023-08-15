@@ -31,7 +31,7 @@
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="27dp"
@@ -48,44 +48,50 @@
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_sell"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
                 android:text="@string/my_page_sell_text"
                 android:textAppearance="@style/MediumFontKr.14"
                 android:textColor="@color/selector_selected_white_else_dark2"
                 app:chipBackgroundColor="@color/selector_selected_green1_else_white"
-                app:chipEndPadding="35dp"
+                app:chipEndPadding="25dp"
                 app:chipMinHeight="22dp"
                 app:chipMinTouchTargetSize="30dp"
-                app:chipStartPadding="35dp" />
+                app:chipStartPadding="25dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_share"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
                 android:text="@string/my_page_share_text"
                 android:textAppearance="@style/MediumFontKr.14"
                 android:textColor="@color/selector_selected_white_else_dark2"
                 app:chipBackgroundColor="@color/selector_selected_green1_else_white"
-                app:chipEndPadding="35dp"
+                app:chipEndPadding="25dp"
                 app:chipMinHeight="22dp"
                 app:chipMinTouchTargetSize="30dp"
-                app:chipStartPadding="35dp" />
+                app:chipStartPadding="25dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_buy"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="3dp"
                 android:text="@string/my_page_buy_text"
                 android:textAppearance="@style/MediumFontKr.14"
                 android:textColor="@color/selector_selected_white_else_dark2"
                 app:chipBackgroundColor="@color/selector_selected_green1_else_white"
-                app:chipEndPadding="35dp"
+                app:chipEndPadding="25dp"
                 app:chipMinHeight="22dp"
                 app:chipMinTouchTargetSize="30dp"
-                app:chipStartPadding="35dp" />
+                app:chipStartPadding="25dp" />
 
         </com.google.android.material.chip.ChipGroup>
 

@@ -38,6 +38,10 @@ class MyFeedSellListAdapter(private val viewModel: MyFeedViewModel) :
             binding.feedList = feedList
             binding.vm = viewModel
             binding.executePendingBindings()
+
+            binding.mcvCommunityItemHolder.setOnClickListener {
+                viewModel.handleClickItem(feedList.postId)
+            }
         }
     }
 
