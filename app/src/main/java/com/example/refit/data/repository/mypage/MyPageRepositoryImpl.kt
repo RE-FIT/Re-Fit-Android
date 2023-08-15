@@ -9,9 +9,11 @@ import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
 import com.example.refit.data.model.mypage.PasswordUpdateRequest
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
 import com.example.refit.data.repository.mypage.datasource.MyPageDataSource
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
+import java.io.File
 
 class MyPageRepositoryImpl(private val myPageDataSource: MyPageDataSource): MyPageRepository {
     override suspend fun myInfo(accessToken: String): Call<MyInfoResponse> {
@@ -27,7 +29,16 @@ class MyPageRepositoryImpl(private val myPageDataSource: MyPageDataSource): MyPa
     override suspend fun updatePassword(accessToken: String, request: PasswordUpdateRequest): Call<Response<Void>> {
         return myPageDataSource.updatePassword(accessToken, request)
     }
-
+    override suspend fun updateInfoNoImage(accessToken: String, content: RequestBody): Call<Response<Void>> {
+        return myPageDataSource.updateInfoNoImage(accessToken, content)
+    }
+    override suspend fun updateInfo(
+        accessToken: String,
+        image: List<File?>,
+        content: RequestBody
+    ): Call<Response<Void>> {
+        return myPageDataSource.updateInfo(accessToken, image, content)
+    }
     override suspend fun loadCommunityListSort(
         token: String,
         postType: Int,

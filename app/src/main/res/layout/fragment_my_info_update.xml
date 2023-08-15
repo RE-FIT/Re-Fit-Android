@@ -181,7 +181,6 @@
                         android:id="@+id/able_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:text="@string/my_info_available_nickname"
                         android:textAppearance="@style/RegularFontKr.10"
                         android:textColor="@color/green1"
@@ -191,7 +190,6 @@
                         android:id="@+id/enable_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:text="@string/my_info_unavailable_nickname"
                         android:textAppearance="@style/RegularFontKr.10"
                         android:textColor="@color/red"
@@ -200,9 +198,9 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
                         android:layout_marginBottom="5dp"
                         android:text="@string/my_info_dateTxt"
+                        android:layout_marginTop="5dp"
                         android:textAppearance="@style/MediumFontKr.12"
                         android:textColor="@color/green1" />
 

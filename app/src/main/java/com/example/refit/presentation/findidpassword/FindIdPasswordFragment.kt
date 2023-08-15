@@ -51,8 +51,8 @@ class FindIdPasswordFragment : BaseFragment<FragmentFindIdPasswordBinding>(R.lay
 
         val adapter = FragmentPageAdapter(this)
 
-        adapter.addFragment(FindIdFragment())
         adapter.addFragment(FindPasswordFragment())
+        adapter.addFragment(FindIdFragment())
 
         viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         viewPager.adapter = adapter

@@ -10,9 +10,14 @@ import com.example.refit.data.model.mypage.PasswordUpdateRequest
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
 import com.example.refit.data.network.api.CommunityApi
 import com.example.refit.data.network.api.MyPageApi
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
+import java.io.File
 
 class MyPageDataSourceImpl (private val myPageApi: MyPageApi, private val communityApi: CommunityApi): MyPageDataSource {
 
@@ -31,6 +36,25 @@ class MyPageDataSourceImpl (private val myPageApi: MyPageApi, private val commun
     override suspend fun updatePassword(accessToken: String, request: PasswordUpdateRequest): Call<Response<Void>> {
         return myPageApi.updatePassword(accessToken, request)
     }
+    override suspend fun updateInfo(
+        accessToken: String,
+        image: List<File?>,
+        content: RequestBody
+    ): Call<Response<Void>> {
+
+        val image: List<Unit> = image.map { file ->
+            val requestFile = file?.asRequestBody("image/*".toMediaTypeOrNull())
+            if (requestFile != null) {
+                MultipartBody.Part.createFormData("image", file?.name, requestFile)
+            }
+        }
+
+        return myPageApi.updateInfo(accessToken, image, content)
+    }
+    override suspend fun updateInfoNoImage(accessToken: String, content: RequestBody): Call<Response<Void>> {
+        return myPageApi.updateInfoNoImage(accessToken, content)
+    }
+
     override suspend fun loadCommunityListSort(
         token: String,
         postType: Int,

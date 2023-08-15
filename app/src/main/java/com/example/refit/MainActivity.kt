@@ -9,6 +9,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.refit.databinding.ActivityMainBinding
 import com.example.refit.presentation.common.BaseActivity
 import com.example.refit.presentation.common.WindowUtil.setStatusBarColor
+import com.example.refit.presentation.mypage.MyFeedFragment
+import com.example.refit.presentation.mypage.MyInfoFragment
+import com.example.refit.presentation.mypage.ScrapFragment
+import com.example.refit.presentation.mypage.SettingFragment
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 
@@ -71,5 +75,4 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
             .setTopRightCorner(CornerFamily.ROUNDED, radius)
             .build()
     }
-
 }

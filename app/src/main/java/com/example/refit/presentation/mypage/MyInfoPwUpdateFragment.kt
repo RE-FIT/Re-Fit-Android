@@ -30,11 +30,15 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
         binding.btnPwUpdate.setOnClickListener {
             vm.updatePasswordRetrofit()
 
+            if (vm.isUpdatedPwStatus.value == false) {
+                notifyPwIncorrectDialog()
+            }
+
             onDestroyView()
         }
     }
 
-    private fun notifyPwIncorrectDialog() {
+    fun notifyPwIncorrectDialog() {
         checkPwDialog(
             resources.getString(R.string.pw_incorrect_title),
             resources.getString(R.string.pw_incorrect_content)
