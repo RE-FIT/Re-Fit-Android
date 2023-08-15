@@ -67,25 +67,4 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             binding.myPageName.text = it.name
         })
     }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (System.currentTimeMillis() - backPressedTime < 2500) {
-                    activity?.finish()
-                    return
-                }
-                Toast.makeText(activity, "한 번 더 누르면 앱이 종료됩니다.", Toast.LENGTH_SHORT).show()
-                backPressedTime = System.currentTimeMillis()
-            }
-        }
-        activity?.onBackPressedDispatcher!!.addCallback(this, callback)
-        val mainActivity = context as MainActivity
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        callback.remove()
-    }
 }
