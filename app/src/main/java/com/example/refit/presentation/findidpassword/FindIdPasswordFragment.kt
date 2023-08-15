@@ -30,15 +30,12 @@ class FindIdPasswordFragment : BaseFragment<FragmentFindIdPasswordBinding>(R.lay
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = vm
-        binding.lifecycleOwner = this
 
         connectionTabLayout()
-
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
         vm.initFilledState()
     }
 
@@ -50,9 +47,8 @@ class FindIdPasswordFragment : BaseFragment<FragmentFindIdPasswordBinding>(R.lay
         tabLayout = binding.tabLayout // tabLayout 연결
 
         val adapter = FragmentPageAdapter(this)
-
-        adapter.addFragment(FindPasswordFragment())
         adapter.addFragment(FindIdFragment())
+        adapter.addFragment(FindPasswordFragment())
 
         viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         viewPager.adapter = adapter
