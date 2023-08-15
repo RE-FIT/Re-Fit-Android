@@ -82,7 +82,6 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_community_item_list_price"
                             style="@style/MediumFont.10"
-                            setVisibility="@{feedList.price == 0 ? false : true}"
                             android:visibility="visible"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -91,11 +90,9 @@
 
                     </LinearLayout>
 
-
-
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_size_txt"
-                        style="@style/RegularFontKr.9"
+                        style="@style/RegularFontKr.10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -107,7 +104,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_size"
-                        style="@style/RegularFontKr.9"
+                        style="@style/RegularFontKr.10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -119,7 +116,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_method_txt"
-                        style="@style/RegularFontKr.9"
+                        style="@style/RegularFontKr.10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:minWidth="45dp"
@@ -130,7 +127,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_method"
-                        style="@style/RegularFontKr.9"
+                        style="@style/RegularFontKr.10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="bottom"
@@ -142,7 +139,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_region_txt"
-                        style="@style/RegularFontKr.9"
+                        style="@style/RegularFontKr.10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:minWidth="45dp"
@@ -153,7 +150,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_region"
-                        style="@style/RegularFontKr.9"
+                        style="@style/RegularFontKr.10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="bottom"

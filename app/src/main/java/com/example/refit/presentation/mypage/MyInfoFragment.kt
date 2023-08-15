@@ -28,6 +28,7 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(R.layout.fragment_my_
     private var mainActivity: MainActivity = MainActivity()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        vm.initAllStatus()
         super.onViewCreated(view, savedInstanceState)
 
         connectionTabLayout()
