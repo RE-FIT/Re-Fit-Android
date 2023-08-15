@@ -19,12 +19,14 @@ class FindIdFinishFragment : BaseFragment<FragmentFindIdFinishBinding>(R.layout.
 
         //아이디 찾기 이동
         binding.btnFindIdBtn.setOnClickListener(){
-            navigate(R.id.action_findIdFinishFragment_to_findIdFragment)
+            navigate(R.id.action_findIdFinishFragment_to_findIdPasswordFragment)
         }
 
         //비밀번호 찾기 이동
-        binding.findIdFindPwBtn.setOnClickListener(){}
-        navigate(R.id.action_findIdFinishFragment_to_findPasswordFragment)
+        binding.findIdFindPwBtn.setOnClickListener(){
+            navigate(R.id.action_findIdFinishFragment_to_findIdPasswordFragment)
+        }
+
 
     }
 

@@ -2,6 +2,8 @@
     <string name="app_name">ReFit</string>
     <string name="empty" />
     <string name="percent">%</string>
+    <string name="sign_up_agree_description">개정일자 : 2023.06.11\n\n제1조 (목적)\n이 약관은 RE-FIT ( 이하 ‘ 회사 ’ 라고 합니다 )이 제공하는 제반 서비스의 이용과 관련하여 회사와 회원과의 관리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.\n\n제2조 (정의)\n이 약관에서 사용하는 주요 용어의 정의는 다음과 같습니다.\n\n1. ’서비스’ 라 함은 구현되는 단말기 (pc, TV, 휴대형단말기 등의 각종 유무선 장치를 포함 ) 와 상관없이 ‘이용자’ 가 이용할 수 있는 회사가 제공하는 제반 서비스를 의미합니다.\n\n2. ‘이용자’ 란 이 약관에 따라 회사가 제공하는 서비스를 받는 ‘ 개인회원’, ‘기업회원’ 및 ‘비회원’ 을 말합니다.\n\n3. ‘개인회원’ 은 회사에 개인정보를 제공하여 회원등록을 한 사람으로, 회사로부터 지속적으로 정보를 제공받고 ‘ 회사 ’ 가 제공하는 서비스를 계속적으로 이용할 수 있는 자를 말합니다.\n\n4. ‘기업회원’ 은 회사에 기업정보 및 개인정보를 제공하여 회원등록을 한 사람으로, 회사로부터 지속적으로 정보를 제공받고 회사가 제공하는 서비스를 계속적으로 이용할 수 있는 자를 말합니다.\n\n5. ‘비회원’ 은 회원가입 없이 회사가 제공하는 서비스를 이용하는 자를 말합니다.
+    </string>
     <!-- dialog -->
     <string name="closet_dialog_cloth_delete_title">삭제 시 그동안 심은 나무와\n입력한 정보들이 다 삭제돼요!\n해당 옷을 삭제하시겠어요?</string>
     <string name="closet_dialog_cloth_delete_positive">네, 삭제할래요</string>
@@ -31,6 +33,22 @@
     <string name="cloth_item_selection_dialog_deletion">옷 삭제</string>
 
     <string name="closet_dialog_clothing_double_single_category">하나의 카테고리에서는\n하루에 2번 이상 입기가 불가능해요!</string>
+
+
+    <!-- Sign Up -->
+    <string name="sign_up_valid_id">사용 가능한 아이디입니다</string>
+    <string name="sign_up_valid_password">사용 가능한 비밀번호입니다</string>
+    <string name="sign_up_valid_email">사용 가능한 이메일입니다</string>
+    <string name="sign_up_valid_email_code">올바른 인증번호입니다</string>
+    <string name="sign_up_valid_nickname">사용 가능한 닉네임입니다</string>
+
+    <string name="sign_up_invalid_id">* 8-16자의 영문, 숫자를 포함해야 합니다</string>
+    <string name="sign_up_invalid_password">* 영문 대문자, 소문자, 숫자, 특수기호 !, -, _ 중 모두 포함하며 8글자 이상 16글자 이하여야 합니다</string>
+    <string name="sign_up_invalid_email">* 이메일 양식을 정확하게 입력해주세요</string>
+    <string name="sign_up_invalid_email_code">* 인증번호를 다시 한 번 확인해주세요.</string>
+    <string name="sign_up_invalid_nickname">* 이미 존재하는 닉네임입니다</string>
+    <string name="sign_up_invalid_nickname_format">* 이미 존재하는 닉네임입니다</string>
+    <string name="sign_up_invalid_birth">* YYYY/MM/DD 형식으로 작성해야 합니다</string>
 
     <!-- Closet -->
     <string name="closet_category_first">상의</string>
@@ -118,9 +136,9 @@
 
     <!--Community-->
     <string name="community_main_toolbar_title">Green Community</string>
-    <string name="community_search_option_first">나눔</string>
-    <string name="community_search_option_second">여성복</string>
-    <string name="community_search_option_third">상의</string>
+    <string name="community_search_option_first">종류</string>
+    <string name="community_search_option_second">성별</string>
+    <string name="community_search_option_third">카테고리</string>
     <string name="community_main_fab_bottom_end">글쓰기</string>
     <string name="community_item_text_first">사이즈</string>
     <string name="community_item_text_second">거래방식</string>
@@ -192,7 +210,8 @@
     <string name="community_post_report_contents_fourth">사기가 의심돼요</string>
     <string name="community_post_report_contents_fifth">기타</string>
     <string name="community_post_report_ban_on_sales_titles">판매 금지 물품</string>
-    <string name="community_post_report_ban_on_sales_contents">· 음란물 (청소년 유해 매체물)\n· 청소년 유해 상품 (청소년 유해 매체물)\n· 게임 아이템 거래 (청소년 유해 매체물)\n· 렌탈 제품\n· 개인정보\n· 경찰용품 (경찰제복, 경찰기동화, 경찰장구류 등)\n· 군용품 (군복, 군화, 군용장구류 등), 군마트용품\n· 나라미, 정부 지원 생필품, 지역 상품권, 문화누리카드, 에너지바우처 등 법률에 의해 재판매 할 수 없는 물품\n· 국가기관 인증을 받지 않고 친환경, 무농약, 유기농, 오가닉, 무공해 라는 표현을 사용하여 판매하는 행위 \n· 100만 원 이상 금 제품 (골드바, 금괴, 금으로 제작된 목걸이, 팔찌, 귀걸이 등)\n· 현금을 거래하는 행위 (돈을 빌리거나, 빌려주는 행위)\n· 이외 법률을 위반하는 모든 물품 \n· 모든 홍보 / 광고 </string>
+    <string name="community_post_report_dot">·\n·\n·\n·\n·\n·\n·\n·\n\n·\n\n·\n\n·\n·\n·</string>
+    <string name="community_post_report_ban_on_sales_contents">음란물 (청소년 유해 매체물)\n청소년 유해 상품 (청소년 유해 매체물)\n게임 아이템 거래 (청소년 유해 매체물)\n렌탈 제품\n개인정보\n경찰용품 (경찰제복, 경찰기동화, 경찰장구류 등)\n군용품 (군복, 군화, 군용장구류 등), 군마트용품\n나라미, 정부 지원 생필품, 지역 상품권, 문화누리카드, 에너지바우처 등 법률에 의해 재판매 할 수 없는 물품\n국가기관 인증을 받지 않고 친환경, 무농약, 유기농, 오가닉, 무공해 라는 표현을 사용하여 판매하는 행위 \n100만 원 이상 금 제품 (골드바, 금괴, 금으로 제작된 목걸이, 팔찌, 귀걸이 등)\n현금을 거래하는 행위 (돈을 빌리거나, 빌려주는 행위)\n이외 법률을 위반하는 모든 물품 \n모든 홍보 / 광고 </string>
     <string name="community_post_report_next">다음</string>
     <string name="community_post_report_ban_on_sales_contents_second">한 번 신고하면 취소가 불가능하니,\n신고 사유를 다시 한 번 확인해주세요!</string>
     <string name="community_post_report_ban_on_sales_contents_third">[신고 사유]</string>
@@ -312,5 +331,10 @@
     <string name="find_pw_write_title">회원정보에 등록하신 이름(닉네임), 아이디, 이메일을 작성해주세요.</string>
     <string name="find_pw_big_title">비밀번호가 생각나지 않으세요?</string>
     <string name="find_pw_title">비밀번호 찾기</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- 채팅 -->
+    <string name="chat_overflow_text">채팅방 나가기</string>
 
 </resources>

@@ -49,7 +49,9 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         handleFavIconClicked()
         observeStatus()
         initImageList()
+        vm.clickedGetPost(vm.postId.value!!)
 
+        Timber.d("[info] onViewCreated")
         binding.fabCommunityInfoChat.setOnClickListener {
             chatViewModel.room_create(CreateRoom(vm.postResponse.value!!.author,
                 vm.postResponse.value!!.postId, vm.postResponse.value!!.postType))
@@ -57,7 +59,8 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
 
         chatViewModel.success.observe(viewLifecycleOwner, EventObserver{
             val action = CommunityInfoFragmentDirections.actionCommunityInfoFragmentToChatFragment(
-                vm.postResponse.value!!.clickedMember, chatViewModel.roomId.value.toString(), vm.postResponse.value!!.author)
+                vm.postResponse.value!!.clickedMember, chatViewModel.roomId.value.toString(),
+                vm.postResponse.value!!.author, vm.postResponse.value!!.author, vm.postResponse.value!!.postType.toString())
             Navigation.findNavController(view).navigate(action)
         })
     }
@@ -235,6 +238,14 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
                 vm.checkIfAuthor()
                 vm.classifyUserState()
                 vm.setPostDate()
+            }
+        }
+
+        vmAdd.updateStatus.observe(viewLifecycleOwner) {response ->
+            if(response != null) {
+                vm.clickedGetPost(vm.postId.value!!)
+                initImageList()
+                Timber.d("[INFO] 업데이트 상태 변경 알람")
             }
         }
     }

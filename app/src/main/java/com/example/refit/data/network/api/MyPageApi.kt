@@ -3,6 +3,7 @@ package com.example.refit.data.network.api
 import com.example.refit.data.model.mypage.MyFeedBuyListItemResponse
 import com.example.refit.data.model.mypage.MyFeedGiveListItemResponse
 import com.example.refit.data.model.mypage.MyFeedSellListItemResponse
+import com.example.refit.data.model.mypage.MyInfoResponse
 import com.example.refit.data.model.mypage.MyScrapGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
 import com.example.refit.data.model.mypage.PasswordUpdateRequest
@@ -19,6 +20,13 @@ import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface MyPageApi {
+
+    //기본화면 회원 정보 조회
+    @GET("/refit/mypage")
+    fun myInfo(
+        @Header("Authorization") token: String
+    ): Call<MyInfoResponse>
+
     // 회원 정보 조회
     @GET("/refit/mypage/info")
     fun showMyInfo(

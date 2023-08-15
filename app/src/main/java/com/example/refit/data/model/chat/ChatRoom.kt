@@ -18,4 +18,8 @@ data class ChatRoom(
     val remain: Int,
     @SerializedName("participants")
     val participants: List<String>,
+    @SerializedName("seller")
+    val seller: String,
+    @SerializedName("postType")
+    val postType: Int,
 )

@@ -11,11 +11,44 @@ import retrofit2.Call
 import java.io.File
 
 interface CommunityDataSource {
-    suspend fun loadCommunityList(accessToken: String): Call<ResponseBody>
+    suspend fun initCommunityList(accessToken: String): Call<ResponseBody>
 
     suspend fun loadCommunityListSort(
         accessToken: String,
         postType: Int,
+        gender: Int,
+        category: Int,
+    ): Call<ResponseBody>
+
+    suspend fun loadCommunityOnlyPostType(
+        accessToken: String,
+        postType: Int,
+    ): Call<ResponseBody>
+
+    suspend fun loadCommunityOnlyGender(
+        accessToken: String,
+        gender: Int,
+    ): Call<ResponseBody>
+
+    suspend fun loadCommunityOnlyCategory(
+        accessToken: String,
+        category: Int,
+    ): Call<ResponseBody>
+
+    suspend fun loadCommunityPTAndGender(
+        accessToken: String,
+        postType: Int,
+        gender: Int,
+    ): Call<ResponseBody>
+
+    suspend fun loadCommunityPTAndCategory(
+        accessToken: String,
+        postType: Int,
+        category: Int,
+    ): Call<ResponseBody>
+
+    suspend fun loadCommunityGenderAndCategory(
+        accessToken: String,
         gender: Int,
         category: Int,
     ): Call<ResponseBody>
@@ -28,6 +61,54 @@ interface CommunityDataSource {
 
     suspend fun getPost(accessToken: String, postId: Int): Call<PostResponse>
     suspend fun loadSearchResult(accessToken: String, keyword: String): Call<ResponseBody>
+
+    suspend fun loadSearchResultAll(
+        accessToken: String,
+        keyword: String,
+        postType: Int,
+        gender: Int,
+        category: Int
+    ): Call<ResponseBody>
+
+    suspend fun loadSearchResulttOnlyPostType(
+        accessToken: String,
+        keyword: String,
+        postType: Int
+    ): Call<ResponseBody>
+
+    suspend fun loadSearchResultOnlyGender(
+        accessToken: String,
+        keyword: String,
+        gender: Int
+    ): Call<ResponseBody>
+
+    suspend fun loadSearchResultOnlyCategory(
+        accessToken: String,
+        keyword: String,
+        category: Int
+    ): Call<ResponseBody>
+
+    suspend fun loadSearchResultPTAndGender(
+        accessToken: String,
+        keyword: String,
+        postType: Int,
+        gender: Int,
+    ): Call<ResponseBody>
+
+    suspend fun loadSearchResultPTAndCategory(
+        accessToken: String,
+        keyword: String,
+        postType: Int,
+        category: Int
+    ): Call<ResponseBody>
+
+    suspend fun loadSearchResultGenderAndCategory(
+        accessToken: String,
+        keyword: String,
+        gender: Int,
+        category: Int
+    ): Call<ResponseBody>
+
 
     suspend fun deletePost(accessToken: String, postId: Int): Call<ResponseBody>
 

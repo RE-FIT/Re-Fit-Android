@@ -22,10 +22,7 @@ import java.util.Locale
 
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
 
-    private val vm: MyInfoViewModel by sharedViewModel()
-
-    private lateinit var callback : OnBackPressedCallback
-    var backPressedTime : Long = 0
+    private val vm: MyViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,28 +32,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         val date = SimpleDateFormat("yyyy-MM-dd 00:00:00").parse("2023-07-01 00:00:00") // 시작 날짜 임의 지정
         val dDay = (today.time.time - (date?.time ?: 0)) / (60 * 60 * 24 * 1000)
         val challengeDay = (dDay + 1).toInt()
-
-        val activity = activity as MainActivity
-/*
-        // 내 정보 버튼 클릭시
-        binding.myPageBtnMyInfo.setOnClickListener{
-            activity.changeMyPageFragment(1)
-        }
-
-        // 내 피드 버튼 클릭시
-        binding.myPageBtnMyFeed.setOnClickListener{
-            activity.changeMyPageFragment(2)
-        }
-
-        // 스크랩 버튼 클릭시
-        binding.myPageBtnScrap.setOnClickListener{
-            activity.changeMyPageFragment(3)
-        }
-
-        // 설정 버튼 클릭시
-        binding.myPageBtnSetting.setOnClickListener{
-            activity.changeMyPageFragment(4)
-        }*/
 
         // 내 정보 버튼 클릭시
         binding.myPageBtnMyInfo.setOnClickListener(){
@@ -80,7 +55,11 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 
         binding.dDay.text = "D + ${challengeDay}"
 
-        binding.myPageName.text = vm.userNickname.value
+        vm.getMyInfo()
+
+        vm.myInfoResponse.observe(viewLifecycleOwner, Observer {
+            binding.myPageName.text = it.name
+        })
     }
 
     override fun onAttach(context: Context) {
@@ -98,7 +77,6 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         activity?.onBackPressedDispatcher!!.addCallback(this, callback)
         val mainActivity = context as MainActivity
     }
-
 
     override fun onDetach() {
         super.onDetach()

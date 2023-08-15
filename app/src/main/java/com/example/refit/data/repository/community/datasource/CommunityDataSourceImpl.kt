@@ -16,8 +16,8 @@ import java.io.File
 
 class CommunityDataSourceImpl(private val communityApi: CommunityApi) : CommunityDataSource {
 
-    override suspend fun loadCommunityList(accessToken: String): Call<ResponseBody> {
-        return communityApi.loadCommunityList(accessToken)
+    override suspend fun initCommunityList(accessToken: String): Call<ResponseBody> {
+        return communityApi.initCommunityList(accessToken)
     }
 
     override suspend fun loadCommunityListSort(
@@ -27,6 +27,51 @@ class CommunityDataSourceImpl(private val communityApi: CommunityApi) : Communit
         category: Int
     ): Call<ResponseBody> {
         return communityApi.loadCommunityList(accessToken, postType, gender, category)
+    }
+
+    override suspend fun loadCommunityOnlyPostType(
+        accessToken: String,
+        postType: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadCommunityListOnlyPostType(accessToken, postType)
+    }
+
+    override suspend fun loadCommunityOnlyGender(
+        accessToken: String,
+        gender: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadCommunityListOnlyGender(accessToken, gender)
+    }
+
+    override suspend fun loadCommunityOnlyCategory(
+        accessToken: String,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadCommunityListOnlyCategory(accessToken, category)
+    }
+
+    override suspend fun loadCommunityPTAndGender(
+        accessToken: String,
+        postType: Int,
+        gender: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadCommunityListPTAndGender(accessToken, postType, gender)
+    }
+
+    override suspend fun loadCommunityPTAndCategory(
+        accessToken: String,
+        postType: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadCommunityListPTAndCategory(accessToken, postType, category)
+    }
+
+    override suspend fun loadCommunityGenderAndCategory(
+        accessToken: String,
+        gender: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadCommunityListGenderAndCategory(accessToken, gender, category)
     }
 
     override suspend fun createPost(
@@ -54,6 +99,67 @@ class CommunityDataSourceImpl(private val communityApi: CommunityApi) : Communit
         return communityApi.loadSearchResult(accessToken, keyword)
     }
 
+    override suspend fun loadSearchResultAll(
+        accessToken: String,
+        keyword: String,
+        postType: Int,
+        gender: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadSearchResultAll(accessToken, keyword, postType, gender, category)
+    }
+
+    override suspend fun loadSearchResulttOnlyPostType(
+        accessToken: String,
+        keyword: String,
+        postType: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadSearchResulttOnlyPostType(accessToken, keyword, postType)
+    }
+
+    override suspend fun loadSearchResultOnlyGender(
+        accessToken: String,
+        keyword: String,
+        gender: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadSearchResultOnlyGender(accessToken, keyword, gender)
+    }
+
+    override suspend fun loadSearchResultOnlyCategory(
+        accessToken: String,
+        keyword: String,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadSearchResultOnlyCategory(accessToken, keyword, category)
+    }
+
+    override suspend fun loadSearchResultPTAndGender(
+        accessToken: String,
+        keyword: String,
+        postType: Int,
+        gender: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadSearchResultPTAndGender(accessToken, keyword, postType, gender)
+    }
+
+    override suspend fun loadSearchResultPTAndCategory(
+        accessToken: String,
+        keyword: String,
+        postType: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadSearchResultPTAndCategory(accessToken, keyword, postType, category)
+    }
+
+    override suspend fun loadSearchResultGenderAndCategory(
+        accessToken: String,
+        keyword: String,
+        gender: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityApi.loadSearchResultGenderAndCategory(accessToken, keyword, gender, category)
+    }
+
     override suspend fun deletePost(accessToken: String, postId: Int): Call<ResponseBody> {
         return communityApi.deletePost(accessToken, postId)
     }
@@ -75,7 +181,13 @@ class CommunityDataSourceImpl(private val communityApi: CommunityApi) : Communit
             MultipartBody.Part.createFormData("image", file.name, requestFile)
         }
 
-        return communityApi.modifyPostIncludeImage(accessToken, postId, postDto, image_updated, imageParts)
+        return communityApi.modifyPostIncludeImage(
+            accessToken,
+            postId,
+            postDto,
+            image_updated,
+            imageParts
+        )
     }
 
     override suspend fun modifyPost(

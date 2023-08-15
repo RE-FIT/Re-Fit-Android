@@ -13,6 +13,8 @@
     <!-- Tab Indicator -->
     <dimen name="on_boarding_indicator">6dp</dimen>
 
+    <!-- TextInput   -->
+    <dimen name="sign_up_text_input_layout_radius">10dp</dimen>
 
     <!-- Bottom Navigation -->
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
