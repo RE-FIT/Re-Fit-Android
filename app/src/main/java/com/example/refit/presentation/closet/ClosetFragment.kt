@@ -1,10 +1,13 @@
 package com.example.refit.presentation.closet
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.refit.R
 import com.example.refit.data.model.closet.ResponseRegisteredClothes
@@ -40,6 +43,27 @@ class ClosetFragment : BaseFragment<FragmentClosetBinding>(R.layout.fragment_clo
         handleSelectedRegisteredClothItem()
         handleNotificationAfterDeleteItem()
         handleDoubleClothingSingleCategory()
+        finishActivity()
+    }
+
+    private fun finishActivity() {
+        val navController = findNavController()
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val previousFragmentId = navController.previousBackStackEntry?.destination?.id
+                when (previousFragmentId) {
+                    R.id.startingFragment -> {
+                        requireActivity().finish()
+                    }
+                    R.id.signInFragment -> {
+                        requireActivity().finish()
+                    }
+                    else -> {}
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     private fun handleDoubleClothingSingleCategory() {

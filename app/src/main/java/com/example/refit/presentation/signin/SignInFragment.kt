@@ -18,23 +18,12 @@ import retrofit2.Response
 
 class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sign_in) {
 
-    private val tokenViewModel: AccessTokenViewModel by sharedViewModel()
     private val viewModel: SignInViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         textWatcher()
-        /*//엑세스 토큰 체크
-        tokenViewModel.checkAccessToken()
-
-        //토큰 체크 후, 만약 엑세스 토큰이 유효하다면 이동
-        tokenViewModel.success.observe(viewLifecycleOwner) {
-            if (it) {
-                navigate(R.id.action_signInFragment_to_signUpFragment)
-            }
-        }*/
-
 
         viewModel.error.observe(viewLifecycleOwner, EventObserver{
             val customSnackBar = CustomSnackBar.make(
@@ -58,7 +47,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
 
         //로그인 시 이동
         viewModel.accessToken.observe(viewLifecycleOwner, EventObserver {
-            navigate(R.id.action_signInFragment_to_communityFragment)
+            navigate(R.id.action_signInFragment_to_nav_closet)
         })
 
         //회원가입 이동
