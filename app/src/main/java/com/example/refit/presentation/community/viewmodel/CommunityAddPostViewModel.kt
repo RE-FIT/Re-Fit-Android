@@ -199,9 +199,7 @@ class CommunityAddPostViewModel(
     }
 
     fun setFeeStatus() {
-        if(isFilledFee.value == true && (postValue[2].value == null || postValue[2].value == 0)) {
-            _isFilledFeeStatus.value = true
-        } else _isFilledFeeStatus.value = false
+        _isFilledFeeStatus.value = isFilledFee.value == true && (postValue[2].value == null || postValue[2].value == 0)
     }
 
     fun checkTransactionType(selectedType: String, typeList: List<String>) {

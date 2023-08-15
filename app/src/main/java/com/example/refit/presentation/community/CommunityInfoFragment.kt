@@ -244,6 +244,7 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         vmAdd.updateStatus.observe(viewLifecycleOwner) {response ->
             if(response != null) {
                 vm.clickedGetPost(vm.postId.value!!)
+                initImageList()
                 Timber.d("[INFO] 업데이트 상태 변경 알람")
             }
         }
