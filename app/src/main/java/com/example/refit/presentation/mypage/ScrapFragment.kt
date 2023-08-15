@@ -1,21 +1,17 @@
 package com.example.refit.presentation.mypage
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.refit.R
 import com.example.refit.databinding.FragmentScrapBinding
 import com.example.refit.presentation.common.BaseFragment
-import com.example.refit.presentation.mypage.adapter.MyFeedGiveListAdapter
-import com.example.refit.presentation.mypage.adapter.MyFeedSellListAdapter
 import com.example.refit.presentation.mypage.adapter.MyScrapGiveListAdapter
 import com.example.refit.presentation.mypage.adapter.MyScrapListAdapter
 import com.example.refit.presentation.mypage.viewmodel.MyFeedViewModel
 import com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import timber.log.Timber
 
 class ScrapFragment: BaseFragment<FragmentScrapBinding>(R.layout.fragment_scrap) {
 
@@ -31,11 +27,11 @@ class ScrapFragment: BaseFragment<FragmentScrapBinding>(R.layout.fragment_scrap)
 
         myScrapViewModel.selectedTab2.observe(viewLifecycleOwner, Observer { tab ->
             when (tab) {
-                MyScrapViewModel.Tab2.SELL -> {
+                MyScrapViewModel.Tab2.S_SELL -> {
                     initScrapSellList()
                     myScrapViewModel.loadScrapSellList()
                 }
-                MyScrapViewModel.Tab2.GIVE -> {
+                MyScrapViewModel.Tab2.S_GIVE -> {
                     initScrapGiveList()
                     myScrapViewModel.loadScrapGiveList()
                 }
@@ -44,11 +40,11 @@ class ScrapFragment: BaseFragment<FragmentScrapBinding>(R.layout.fragment_scrap)
 
         chipGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.chip_sell_scrap -> {
-                    myScrapViewModel.setSelectedTab(MyScrapViewModel.Tab2.SELL)
+                R.id.chip_sell -> {
+                    myScrapViewModel.setSelectedTab(MyScrapViewModel.Tab2.S_SELL)
                 }
-                R.id.chip_give_scrap -> {
-                    myScrapViewModel.setSelectedTab(MyScrapViewModel.Tab2.GIVE)
+                R.id.chip_give -> {
+                    myScrapViewModel.setSelectedTab(MyScrapViewModel.Tab2.S_GIVE)
                 }
             }
         }

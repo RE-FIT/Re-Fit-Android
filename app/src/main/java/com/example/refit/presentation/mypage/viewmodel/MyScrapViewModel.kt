@@ -54,7 +54,7 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
         get() = _dropDownValue
 
     enum class Tab2 {
-        SELL, GIVE
+        S_SELL, S_GIVE
     }
 
     private val _selectedTab2 = MutableLiveData<Tab2>()
@@ -62,7 +62,7 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
         get() = _selectedTab2
 
     init {
-        _selectedTab2.value = Tab2.SELL // 초기 선택 탭 설정
+        _selectedTab2.value = Tab2.S_SELL // 초기 선택 탭 설정
     }
 
     fun setSelectedTab(tab: Tab2) {

@@ -235,7 +235,7 @@
     <string name="my_page_title">MY PAGE</string>
     <string name="my_page_setting">환경설정</string>
 
-    <string name="setting_title">설정</string>
+    <string name="setting_title">환경설정</string>
     <string name="my_setting_stringTxt">정책</string>
     <string name="my_setting_string">이용약관</string>
     <string name="my_setting_string2">개인정보처리 방침</string>

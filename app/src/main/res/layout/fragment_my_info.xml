@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.mypage.MyScrapFragment">
+    tools:context=".presentation.mypage.MyInfoFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -11,10 +11,10 @@
 
         <TextView
             android:id="@+id/my_feed_title"
-            style="@style/BoldFontKr.18"
+            android:textAppearance="@style/BoldFontKr.18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="53dp"
+            android:layout_marginTop="25dp"
             android:text="@string/my_info_myInfo"
             android:textColor="@color/green1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +61,7 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/viewPager"
                     android:layout_width="match_parent"
-                    android:layout_height="830dp"
+                    android:layout_height="850dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
