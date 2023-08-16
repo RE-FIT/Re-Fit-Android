@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.chat.ChatFragment">
 
+    <data>
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.chat.viewmodel.ChatViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -18,7 +24,7 @@
 
             <ImageView
                 android:id="@+id/cancel"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="15dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/back"
@@ -48,14 +54,31 @@
                 android:orientation="horizontal"
                 android:elevation="2dp"></LinearLayout>
 
-            <ImageView
+
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/out"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/back"
-                app:layout_constraintBottom_toBottomOf="parent"
+                style="@style/CommunityInfoETCCardView.Common."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"></ImageView>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:drawableRight="@drawable/ic_community_etc_4"
+                    android:drawableTint="@color/dark2"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:minWidth="100dp"
+                    android:text="@string/chat_overflow_text"
+                    android:textColor="@android:color/transparent" />
+            </com.google.android.material.card.MaterialCardView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -80,15 +103,16 @@
             android:inputType="text"
             android:textColor="@color/dark2"
             style="@style/RegularFont.14"
+            android:text="@={vm.chatting}"
             android:hint="메세지를 입력해주세요."
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"></EditText>
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/write_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/before_send"
+            android:background="@{vm.isFilledAllOptions ? @drawable/message_send : @drawable/before_send}"
             app:layout_constraintBottom_toBottomOf="@+id/edit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/edit"

@@ -25,7 +25,8 @@ class BanOnSalesDialog : BaseDialog<CustomDialogBanOnSalesBinding>(R.layout.cust
         handleCloseButton()
         Timber.d("onViewCreated")
 
-        binding.tvDialogAlertContents.text = getString(R.string.community_post_report_ban_on_sales_contents)
+        binding.tvDialogAlertContentsFirst.text = getString(R.string.community_post_report_dot)
+        binding.tvDialogAlertContentsSecond.text = getString(R.string.community_post_report_ban_on_sales_contents)
     }
 
     private fun handleCloseButton() {

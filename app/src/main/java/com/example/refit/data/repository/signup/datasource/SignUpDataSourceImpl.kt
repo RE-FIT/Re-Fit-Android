@@ -5,6 +5,7 @@ import com.example.refit.data.model.signup.FindIdResponse
 import com.example.refit.data.model.signup.FindPasswordRequest
 import com.example.refit.data.model.signup.RegisterUserRequest
 import com.example.refit.data.model.signup.RequestEmailCertification
+import com.example.refit.data.model.signup.RequestNicknameValidation
 import com.example.refit.data.model.signup.ResponseEmailCertification
 import com.example.refit.data.network.api.SignUpApi
 import okhttp3.ResponseBody
@@ -17,8 +18,8 @@ class SignUpDataSourceImpl(private val signUpApi: SignUpApi) : SignUpDataSource 
         return signUpApi.requestEmailCertification(body)
     }
 
-    override suspend fun requestLoginCertification(loginId: String, password: String): Call<ResponseBody> {
-        return signUpApi.requestLoginCertification(loginId, password)
+    override suspend fun requestLoginCertification(loginId: String, password: String, fcm: String): Call<ResponseBody> {
+        return signUpApi.requestLoginCertification(loginId, password, fcm)
     }
 
     override suspend fun checkAccessToken(accessToken: String): Call<ResponseBody> {
@@ -40,5 +41,9 @@ class SignUpDataSourceImpl(private val signUpApi: SignUpApi) : SignUpDataSource 
 
     override suspend fun findByPassword(body: FindPasswordRequest): Call<ResponseBody> {
         return signUpApi.findPassword(body)
+    }
+
+    override suspend fun checkNicknameValidation(body: RequestNicknameValidation): Call<Void> {
+        return signUpApi.checkNicknameValidation(body)
     }
 }

@@ -6,15 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.community.CommunityListItemResponse
-import com.example.refit.data.model.community.PostResponse
+import com.example.refit.data.model.mypage.MyFeedGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
 import com.example.refit.data.repository.mypage.MyPageRepository
 import com.example.refit.util.Event
-import com.google.gson.Gson
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -55,7 +53,23 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
     val dropDownValue: List<MutableLiveData<Int>>
         get() = _dropDownValue
 
-    fun loadScrapList() =
+    enum class Tab2 {
+        S_SELL, S_GIVE
+    }
+
+    private val _selectedTab2 = MutableLiveData<Tab2>()
+    val selectedTab2: LiveData<Tab2>
+        get() = _selectedTab2
+
+    init {
+        _selectedTab2.value = Tab2.S_SELL // 초기 선택 탭 설정
+    }
+
+    fun setSelectedTab(tab: Tab2) {
+        _selectedTab2.value = tab
+    }
+
+    fun loadScrapSellList() =
         viewModelScope.launch {
             val accessToken = ds.getAccessToken().first()
             _isLoading.value = true
@@ -72,8 +86,8 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
                             Timber.d("API 호출 성공")
                             val responseBody = response.body()
                             if (responseBody != null) {
-                                _myScrapSellList.value = response.body() as List<MyScrapSellListItemResponse>
-                                Timber.d("scrapList : ${response.body()}")
+                                _myScrapSellList.value = response.body() ?: null
+                                Timber.d("scrapSellList : ${response.body()}")
                             }
                         } else {
                             val errorBody = response.errorBody()
@@ -101,6 +115,52 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
 
         }
 
+    fun loadScrapGiveList() =
+        viewModelScope.launch {
+            val accessToken = ds.getAccessToken().first()
+            _isLoading.value = true
+            try {
+                val response =
+                    repository.loadMyScrapGiveList(accessToken)
+
+                response.enqueue(object : Callback<List<MyScrapGiveListItemResponse>> {
+                    override fun onResponse(
+                        call: Call<List<MyScrapGiveListItemResponse>>,
+                        response: Response<List<MyScrapGiveListItemResponse>>
+                    ) {
+                        if (response.isSuccessful) {
+                            Timber.d("API 호출 성공")
+                            val responseBody = response.body()
+                            if (responseBody != null) {
+                                _myScrapGiveList.value = response.body() ?: null
+                                Timber.d("scrapSellList : ${response.body()}")
+                            }
+                        } else {
+                            val errorBody = response.errorBody()
+                            val errorCode = response.code()
+
+                            if (errorBody != null) {
+                                val errorJson = JSONObject(errorBody.string())
+                                val errorMessage = errorJson.optString("message")
+                                val errorCodeFromJson = errorJson.optInt("code")
+
+                                Timber.d("API 호출 실패: ${errorJson.toString()} / $errorCodeFromJson / $errorMessage")
+                            } else Timber.d("API 호출 실패 errorbody is not working : $errorCode")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<List<MyScrapGiveListItemResponse>>, t: Throwable) {
+                        Timber.d("실패: $t")
+                    }
+                })
+            } catch (e: Exception) {
+                "스크랩 글 목록 로딩 오류: $e"
+            } finally {
+                _isLoading.value = false
+            }
+
+        }
+
     fun handleClickItem(postId: Int) {
         _selectedPostItem.value = Event(postId)
     }
@@ -111,9 +171,9 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
         }
     }
 
-    fun conversionTypeToText(itemType: Int, value: String): String {
+    fun conversionTypeToText(itemType: Int?, value: String?): String {
         return when (itemType) {
-            3 -> when (value.toInt()) {
+            3 -> when (value?.toInt()) {
                 0 -> "XS"
                 1 -> "S"
                 2 -> "M"

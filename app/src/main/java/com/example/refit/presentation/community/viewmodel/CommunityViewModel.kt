@@ -53,19 +53,80 @@ class CommunityViewModel(
         _isNewChat.value = status
     }
 
+    fun initCommunityList() = viewModelScope.launch {
+        val accessToken = ds.getAccessToken().first()
+        _isLoading.value = true
+        try {
+            val response =
+                repository.initCommunityList(accessToken)
+
+            response.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    if (response.isSuccessful) {
+                        Timber.d("init API 호출 성공")
+                        val responseBody = response.body()
+                        if (responseBody != null) {
+                            val json = responseBody.string()
+                            val communitylist = parseCommunityList(json)
+                            Timber.d("communitylist 초기 : ${communitylist.toString()}")
+                            _communityList.value = communitylist
+                        }
+                    } else {
+                        val errorBody = response.errorBody()
+                        val errorCode = response.code()
+
+                        if (errorBody != null) {
+                            val errorJson = JSONObject(errorBody.string())
+
+                            Timber.d("API 호출 실패: ${errorJson.toString()}")
+                        } else Timber.d("API 호출 실패 errorbody is not working : $errorCode")
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Timber.d("RESPONSE FAILURE")
+                }
+            })
+        } catch (e: Exception) {
+            "커뮤니티 글 목록 초기 로딩 오류: $e"
+        } finally {
+
+        }
+
+    }
+
     fun loadCommunityList() =
         viewModelScope.launch {
             val accessToken = ds.getAccessToken().first()
             _isLoading.value = true
             try {
-                val postType = _dropDownValue[0].value ?: 0
-                val gender = _dropDownValue[1].value ?: 0
-                val category = _dropDownValue[2].value ?: 0
+                val postType = _dropDownValue[0].value ?: Integer.MAX_VALUE
+                val gender = _dropDownValue[1].value ?: Integer.MAX_VALUE
+                val category = _dropDownValue[2].value ?: Integer.MAX_VALUE
 
-                val response =
+                var response =
                     repository.loadCommuintyListSort(accessToken, postType, gender, category)
 
-                Timber.d("postType: $postType, gender: $gender, category: $category")
+                if (postType < 2) {
+                    if (gender > 2 && category > 6)
+                        response = repository.loadCommunityOnlyPostType(accessToken, postType)
+                    else if (gender < 2 && category > 6)
+                        response = repository.loadCommunityPTAndGender(accessToken, postType, gender)
+                    else if (gender > 2 && category < 6)
+                        response = repository.loadCommunityPTAndCategory(accessToken, postType, category)
+                } else {
+                    if (gender < 2 && category > 6)
+                        response = repository.loadCommunityOnlyGender(accessToken, gender)
+                    else if (gender > 2 && category < 6)
+                        response = repository.loadCommunityOnlyCategory(accessToken, category)
+                    else if (gender < 2 && category < 6)
+                        response = repository.loadCommunityGenderAndCategory(accessToken, gender, category)
+                }
+
+                Timber.d("[커뮤니티 드롭다운 테스트] postType: $postType, gender: $gender, category: $category")
                 response.enqueue(object : Callback<ResponseBody> {
                     override fun onResponse(
                         call: Call<ResponseBody>,
@@ -87,11 +148,8 @@ class CommunityViewModel(
 
                             if (errorBody != null) {
                                 val errorJson = JSONObject(errorBody.string())
-                                val errorMessage = errorJson.optString("message")
-                                val errorCodeFromJson = errorJson.optInt("code")
-
-                                Timber.d("API 호출 실패: ${errorJson.toString()} / $errorCodeFromJson / $errorMessage")
-                            } else Timber.d("API 호출 실패 errorbody is not working : $errorCode")
+                                Timber.d("API 호출 실패: ${errorJson.toString()}")
+                            }
                         }
                     }
 
@@ -106,6 +164,7 @@ class CommunityViewModel(
             }
 
         }
+
 
     fun setDropDownController(type: Int, value: String) {
         when (type) {
@@ -132,7 +191,7 @@ class CommunityViewModel(
 
     fun initStatus() {
         for (item in _dropDownValue) {
-            item.value = 0
+            item.value = Integer.MAX_VALUE
         }
     }
 

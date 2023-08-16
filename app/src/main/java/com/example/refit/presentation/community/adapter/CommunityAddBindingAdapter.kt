@@ -50,7 +50,8 @@ private fun getSizeString(size: Int): String {
         2 -> "M"
         3 -> "L"
         4 -> "XL"
-        else -> "Unknown" // You can set a default value or handle other cases as needed
+        5 -> "직접 입력"
+        else -> "Unknown"
     }
 }
 

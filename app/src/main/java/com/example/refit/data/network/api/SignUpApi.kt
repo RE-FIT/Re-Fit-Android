@@ -5,6 +5,7 @@ import com.example.refit.data.model.signup.FindIdResponse
 import com.example.refit.data.model.signup.FindPasswordRequest
 import com.example.refit.data.model.signup.RegisterUserRequest
 import com.example.refit.data.model.signup.RequestEmailCertification
+import com.example.refit.data.model.signup.RequestNicknameValidation
 import com.example.refit.data.model.signup.ResponseEmailCertification
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -23,7 +24,7 @@ interface SignUpApi {
         @Body findId: FindIdRequest
     ): Call<FindIdResponse>
 
-    @POST("auth/find/password")
+    @POST("auth/reset/password")
     fun findPassword(
         @Body findId: FindPasswordRequest
     ): Call<ResponseBody>
@@ -36,7 +37,8 @@ interface SignUpApi {
     @POST("/auth/login")
     fun requestLoginCertification(
         @Query("loginId") loginId: String,
-        @Query("password") password: String
+        @Query("password") password: String,
+        @Query("fcm") fcm: String
     ): Call<ResponseBody>
 
     @GET("auth/token/check")
@@ -55,4 +57,9 @@ interface SignUpApi {
     fun requestJoinUser(
         @Body requestBody: RegisterUserRequest
     ): Call<ResponseBody>
+
+    @POST("auth/join/name")
+    fun checkNicknameValidation(
+        @Body requestBody: RequestNicknameValidation
+    ): Call<Void>
 }

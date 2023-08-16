@@ -5,10 +5,12 @@ import com.example.refit.data.model.signup.FindIdResponse
 import com.example.refit.data.model.signup.FindPasswordRequest
 import com.example.refit.data.model.signup.RegisterUserRequest
 import com.example.refit.data.model.signup.RequestEmailCertification
+import com.example.refit.data.model.signup.RequestNicknameValidation
 import com.example.refit.data.model.signup.ResponseEmailCertification
 import com.example.refit.data.repository.signup.datasource.SignUpDataSource
 import okhttp3.ResponseBody
 import retrofit2.Call
+import kotlin.math.sign
 
 class SignUpRepositoryImpl(private val signUpDataSource: SignUpDataSource) : SignUpRepository {
 
@@ -16,8 +18,8 @@ class SignUpRepositoryImpl(private val signUpDataSource: SignUpDataSource) : Sig
         return signUpDataSource.requestEmailCertification(body)
     }
 
-    override suspend fun requestLoginCertification(loginId: String, password: String): Call<ResponseBody> {
-        return signUpDataSource.requestLoginCertification(loginId, password)
+    override suspend fun requestLoginCertification(loginId: String, password: String, fcm: String): Call<ResponseBody> {
+        return signUpDataSource.requestLoginCertification(loginId, password, fcm)
     }
 
     override suspend fun checkAccessToken(accessToken: String): Call<ResponseBody> {
@@ -39,5 +41,9 @@ class SignUpRepositoryImpl(private val signUpDataSource: SignUpDataSource) : Sig
 
     override suspend fun findByPassword(body: FindPasswordRequest): Call<ResponseBody> {
         return signUpDataSource.findByPassword(body)
+    }
+
+    override suspend fun checkNicknameValidation(body: RequestNicknameValidation): Call<Void> {
+        return signUpDataSource.checkNicknameValidation(body)
     }
 }

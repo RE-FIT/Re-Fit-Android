@@ -196,8 +196,12 @@
 
     <style name="ListPopupMenuWindow.CommunityAddPostOption" parent="ListPopupMenuWindow.Common">
         <item name="popupMenuBackground">@drawable/bg_solid_white_radius_10</item>
-        <item name="textAppearanceLargePopupMenu">@style/PopupTextAppearance.CommunityAddPostOption</item>
-        <item name="textAppearanceSmallPopupMenu">@style/PopupTextAppearance.CommunityAddPostOption</item>
+        <item name="textAppearanceLargePopupMenu">
+            @style/PopupTextAppearance.CommunityAddPostOption
+        </item>
+        <item name="textAppearanceSmallPopupMenu">
+            @style/PopupTextAppearance.CommunityAddPostOption
+        </item>
     </style>
 
     <style name="PopupTextAppearance.CommunityAddPostOption" parent="PopupTextAppearance.App.BodyLarge">
@@ -206,13 +210,55 @@
 
     <style name="ListPopupMenuWindow.CommunityInfoOption" parent="ListPopupMenuWindow.Common">
         <item name="popupMenuBackground">@drawable/bg_solid_dark2_radius_10</item>
-        <item name="textAppearanceLargePopupMenu">@style/PopupTextAppearance.CommunityInfoOption</item>
-        <item name="textAppearanceSmallPopupMenu">@style/PopupTextAppearance.CommunityInfoOption</item>
+        <item name="textAppearanceLargePopupMenu">@style/PopupTextAppearance.CommunityInfoOption
+        </item>
+        <item name="textAppearanceSmallPopupMenu">@style/PopupTextAppearance.CommunityInfoOption
+        </item>
     </style>
 
     <style name="PopupTextAppearance.CommunityInfoOption" parent="PopupTextAppearance.App.BodyLarge">
         <item name="android:textSize">10sp</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+
+    <!-- TextInput -->
+    <style name="TextInputLayout.SignUp.Common" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/selector_sign_up_textinput</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/sign_up_text_input_layout_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/sign_up_text_input_layout_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/sign_up_text_input_layout_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/sign_up_text_input_layout_radius</item>
+        <item name="errorIconDrawable">@null</item>
+        <item name="errorEnabled">true</item>
+        <item name="hintEnabled">false</item>
+        <item name="android:textAppearance">@style/RegularFontKr.12</item>
+        <item name="helperTextTextColor">@color/green1</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="ThemeOverlay.Design.TextInputEditText.SignUp.Common" parent="ThemeOverlay.Material3.TextInputEditText">
+        <item name="android:textColorHint">@color/dark2</item>
+        <item name="android:textAppearance">@style/RegularFontKr.12</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:padding">18dp</item>
+    </style>
+
+    <style name="TextInputLayout.SignUp.DropDown" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">@color/selector_sign_up_textinput</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/sign_up_text_input_layout_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/sign_up_text_input_layout_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/sign_up_text_input_layout_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/sign_up_text_input_layout_radius</item>
+        <item name="hintEnabled">false</item>
+        <item name="endIconDrawable">@drawable/ic_arrow_bottom_14</item>
+        <item name="endIconTint">@color/dark2</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
 
@@ -294,7 +340,7 @@
     </style>
 
     <style name="Layout.CommunityItem.Margin.Common" parent="">
-        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
     </style>
 
     <!-- Theme -->
@@ -329,6 +375,14 @@
         <item name="cornerSizeBottomLeft">20dp</item>
         <item name="cornerSizeTopLeft">0dp</item>
         <item name="cornerSizeTopRight">0dp</item>
+    </style>
+
+    <style name="ShapeAppearance.SignUpDialog.CardView.Corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeTopRight">20dp</item>
     </style>
 
     <style name="ShapeAppearance.Circle" parent="">

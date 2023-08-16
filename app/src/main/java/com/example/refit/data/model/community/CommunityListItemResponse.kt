@@ -13,8 +13,6 @@ data class CommunityListItemResponse(
     val postId: Int,
     @SerializedName("price")
     val price: Int,
-    @SerializedName("region")
-    val region: String,
     @SerializedName("title")
     val title: String,
     @SerializedName("size")

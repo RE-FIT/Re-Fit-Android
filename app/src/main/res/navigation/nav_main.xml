@@ -9,7 +9,7 @@
         android:id="@+id/signInFragment"
         android:name="com.example.refit.presentation.signin.SignInFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" >
+        tools:layout="@layout/fragment_sign_up" >
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment"
@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_signInFragment_to_findIdPasswordFragment"
             app:destination="@id/findIdPasswordFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_nav_closet"
+            app:destination="@id/nav_closet" />
     </fragment>
     <fragment
         android:id="@+id/findIdPasswordFragment"
@@ -30,6 +33,42 @@
         <action
             android:id="@+id/action_findIdPasswordFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_findIdPasswordFragment_to_findIdFinishFragment"
+            app:destination="@id/findIdFinishFragment" />
+        <action
+            android:id="@+id/action_findIdPasswordFragment_to_findPasswordFinishFragment"
+            app:destination="@id/findPasswordFinishFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/findIdFinishFragment"
+        android:name="com.example.refit.presentation.findidpassword.FindIdFinishFragment"
+        android:label="fragment_find_id_finish"
+        tools:layout="@layout/fragment_find_id_finish">
+
+        <action
+            android:id="@+id/action_findIdFinishFragment_to_findIdPasswordFragment"
+            app:destination="@id/findIdPasswordFragment" />
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="id" />
+    </fragment>
+    <fragment
+        android:id="@+id/findPasswordFinishFragment"
+        android:name="com.example.refit.presentation.findidpassword.FindPasswordFinishFragment"
+        android:label="fragment_find_passowrd_finish"
+        tools:layout="@layout/fragment_find_password_finish">
+        <action
+            android:id="@+id/action_findPasswordFinishFragment_to_signInFragment"
+            app:destination="@id/signInFragment"
+            />
+        <argument
+            android:name="email"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="email" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -44,6 +83,9 @@
         <action
             android:id="@+id/action_signUpFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_signUpCompleteFragment"
+            app:destination="@id/signUpCompleteFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_community"
@@ -135,22 +177,43 @@
         <action
             android:id="@+id/action_myInfo_to_nav_my_page"
             app:destination="@id/nav_my_page"/>
+
     </fragment>
     <fragment
         android:id="@+id/myPage_myFeed"
         android:name="com.example.refit.presentation.mypage.MyFeedFragment"
         android:label="fragment_myFeed"
-        tools:layout="@layout/fragment_my_feed"/>
+        tools:layout="@layout/fragment_my_feed">
+        <action
+            android:id="@+id/action_myPage_myFeed_to_communityInfoFragment"
+            app:destination="@id/communityInfoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/myPage_myScrap"
         android:name="com.example.refit.presentation.mypage.ScrapFragment"
         android:label="fragment_Scrap"
-        tools:layout="@layout/fragment_scrap"/>
+        tools:layout="@layout/fragment_scrap">
+        <action
+            android:id="@+id/action_myPage_myScrap_to_communityInfoFragment"
+            app:destination="@id/communityInfoFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/myPage_mySetting"
         android:name="com.example.refit.presentation.mypage.SettingFragment"
         android:label="fragment_mySetting"
-        tools:layout="@layout/fragment_setting"/>
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_myPage_mySetting_to_startingFragment"
+            app:destination="@id/startingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/clothRegistrationFragment"
         android:name="com.example.refit.presentation.closet.ClothRegistrationFragment"
@@ -218,6 +281,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_communityInfoFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
     <fragment
         android:id="@+id/communityAddPostFragment"
@@ -287,6 +353,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_startingFragment_to_nav_closet"
+            app:destination="@id/nav_closet" />
     </fragment>
     <fragment
         android:id="@+id/introContainerFragment"
@@ -359,5 +428,26 @@
             android:name="otherId"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="sellerId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="postType"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="otherImage"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpCompleteFragment"
+        android:name="com.example.refit.presentation.signup.SignUpCompleteFragment"
+        android:label="fragment_sign_up_complete"
+        tools:layout="@layout/fragment_sign_up_complete" >
+        <action
+            android:id="@+id/action_signUpCompleteFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
 </navigation>

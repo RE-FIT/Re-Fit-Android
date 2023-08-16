@@ -13,10 +13,13 @@ import com.example.refit.presentation.community.viewmodel.CommunitySearchViewMod
 import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import com.example.refit.presentation.community.viewmodel.PostReportViewModel
 import com.example.refit.presentation.findidpassword.viewModel.FindIdPasswordViewModel
+import com.example.refit.presentation.findidpassword.viewModel.FindIdViewModel
+import com.example.refit.presentation.findidpassword.viewModel.FindPwViewModel
 import com.example.refit.presentation.mypage.viewmodel.MyFeedViewModel
 import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
 import com.example.refit.presentation.mypage.viewmodel.MyPageViewModel
 import com.example.refit.presentation.mypage.viewmodel.MyScrapViewModel
+import com.example.refit.presentation.mypage.viewmodel.MyViewModel
 import com.example.refit.presentation.signup.viewmodel.SignUpViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -41,4 +44,7 @@ val viewModelModule = module {
     viewModel { ChatRoomViewModel(get(), get()) }
     viewModel { ChatViewModel(get(), get()) }
     viewModel { FindIdPasswordViewModel(get(), get())}
+    viewModel { FindIdViewModel(get())}
+    viewModel { FindPwViewModel(get())}
+    viewModel { MyViewModel(get(), get()) }
 }

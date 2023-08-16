@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.refit.data.model.mypage.MyFeedBuyListItemResponse
 import com.example.refit.data.model.mypage.MyFeedGiveListItemResponse
 import com.example.refit.databinding.ItemFeedBinding
+import com.example.refit.databinding.ItemFeedBuyBinding
 import com.example.refit.presentation.mypage.viewmodel.MyFeedViewModel
 
 class MyFeedBuyListAdapter(private val viewModel: MyFeedViewModel) :
@@ -20,7 +21,7 @@ class MyFeedBuyListAdapter(private val viewModel: MyFeedViewModel) :
         viewType: Int
     ): MyFeedBuyListAdapter.MatchingListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ItemFeedBinding.inflate(layoutInflater, parent, false)
+        val binding = ItemFeedBuyBinding.inflate(layoutInflater, parent, false)
         return MatchingListViewHolder(binding)
     }
 
@@ -31,12 +32,16 @@ class MyFeedBuyListAdapter(private val viewModel: MyFeedViewModel) :
         holder.bindItems(getItem(position))
     }
 
-    inner class MatchingListViewHolder(private val binding: ItemFeedBinding) :
+    inner class MatchingListViewHolder(private val binding: ItemFeedBuyBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindItems(feedList: MyFeedBuyListItemResponse) {
-            binding.feedListBuy = feedList
+            binding.feedList = feedList
             binding.vm = viewModel
             binding.executePendingBindings()
+
+            binding.mcvCommunityItemHolder.setOnClickListener {
+                viewModel.handleClickItem(feedList.postId)
+            }
         }
     }
 

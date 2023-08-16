@@ -6,13 +6,13 @@
 
         <variable
             name="vm"
-            type="com.example.refit.presentation.findidpassword.viewModel.FindIdPasswordViewModel" />
+            type="com.example.refit.presentation.findidpassword.viewModel.FindIdViewModel" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="20dp">
 
         <TextView
@@ -20,10 +20,11 @@
             style="@style/BoldFont.18"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="4dp"
             android:text="@string/find_id_big_title"
             android:textColor="@color/green1"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,7 +61,8 @@
             android:layout_marginTop="6dp"
             android:color="@color/white"
             android:hint="@string/find_id_name_text"
-            android:padding="15dp"
+            android:padding="13dp"
+            android:text="@={vm.name}"
             android:textColor="@color/dark2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +89,8 @@
             android:background="@drawable/et_mypage_round_10"
             android:color="@color/white"
             android:hint="@string/find_id_email_text"
-            android:padding="15dp"
+            android:padding="13dp"
+            android:text="@={vm.email}"
             android:textColor="@color/dark2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.refit.data.model.chat.ChatRoom
 import com.example.refit.databinding.ItemChatRoomBinding
 import java.time.ZonedDateTime
@@ -40,6 +41,10 @@ class ChatRoomRVAdapter(private val dataList: List<ChatRoom>): RecyclerView.Adap
                 binding.time.isVisible = false
                 binding.remain.isVisible = false
             }
+
+            Glide.with(binding.root)
+                .load(data.otherImage)
+                .into(binding.image)
 
             binding.name.text = data.other
             binding.remain.text = data.remain.toString()

@@ -6,8 +6,11 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
+import androidx.navigation.Navigation
 import com.example.refit.R
+import com.example.refit.data.model.chat.CreateRoom
 import com.example.refit.databinding.FragmentCommunityInfoBinding
+import com.example.refit.presentation.chat.viewmodel.ChatViewModel
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
@@ -22,13 +25,14 @@ import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
 import com.example.refit.presentation.community.viewmodel.PostReportViewModel
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.AlertNoIconDialogListener
+import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.lang.IllegalArgumentException
 
 class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layout.fragment_community_info) {
 
+    private val chatViewModel: ChatViewModel by sharedViewModel()
     private val vm: CommunityInfoViewModel by sharedViewModel()
     private val vmAdd: CommunityAddPostViewModel by sharedViewModel()
     private val vmPr: PostReportViewModel by sharedViewModel()
@@ -42,6 +46,21 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         handleFavIconClicked()
         observeStatus()
         initImageList()
+        vm.clickedGetPost(vm.postId.value!!)
+
+        Timber.d("[info] onViewCreated")
+        binding.fabCommunityInfoChat.setOnClickListener {
+            chatViewModel.room_create(CreateRoom(vm.postResponse.value!!.author,
+                vm.postResponse.value!!.postId, vm.postResponse.value!!.postType))
+        }
+
+        chatViewModel.success.observe(viewLifecycleOwner, EventObserver{
+            val action = CommunityInfoFragmentDirections.actionCommunityInfoFragmentToChatFragment(
+                vm.postResponse.value!!.clickedMember, chatViewModel.roomId.value.toString(),
+                vm.postResponse.value!!.author, vm.postResponse.value!!.author,
+                vm.postResponse.value!!.postType.toString(), vm.postResponse.value!!.profileUrl.toString())
+            Navigation.findNavController(view).navigate(action)
+        })
     }
 
     private fun CommunityEtcMenuDropdown() {
@@ -217,6 +236,14 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
                 vm.checkIfAuthor()
                 vm.classifyUserState()
                 vm.setPostDate()
+            }
+        }
+
+        vmAdd.updateStatus.observe(viewLifecycleOwner) {response ->
+            if(response != null) {
+                vm.clickedGetPost(vm.postId.value!!)
+                initImageList()
+                Timber.d("[INFO] 업데이트 상태 변경 알람")
             }
         }
     }

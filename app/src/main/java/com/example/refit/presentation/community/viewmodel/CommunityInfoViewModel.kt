@@ -94,8 +94,8 @@ class CommunityInfoViewModel (
 
     fun conversionType(value: Int): String {
         return when (value) {
-            0 -> "나눔 중"
-            1 -> "판매 중"
+            0 -> "나눔 진행중"
+            1 -> "판매 진행중"
             2 -> "나눔 완료"
             3 -> "판매 완료"
             else -> "UnKnown Data"
@@ -183,7 +183,6 @@ class CommunityInfoViewModel (
             "커뮤니티 글 상세 페이지 로딩 오류: $e"
         }
     }
-
 
     // 글 삭제 기능
     fun deletePost() = viewModelScope.launch {

@@ -11,7 +11,7 @@
 
         <variable
             name="scrapList"
-            type="com.example.refit.data.model.mypage.MyScrapSellListItemResponse" />
+            type="com.example.refit.data.model.mypage.MyScrapGiveListItemResponse"/>
 
         <variable
             name="vm"
@@ -86,7 +86,6 @@
                             android:visibility="visible"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{scrapList.price + `원`}"
                             android:textColor="@color/dark2"
                             android:layout_marginLeft="15dp" />
 
@@ -158,7 +157,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="bottom"
-                        android:text="@{scrapList.address == null ? @string/community_item_region_all : scrapList.address }"
+                        android:text="@{scrapList.address == null ? @string/community_item_region_all : scrapList.address}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_method_txt"
                         app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_method"
@@ -166,14 +165,11 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.appcompat.widget.AppCompatToggleButton
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="18dp"
                     android:layout_height="15dp"
                     android:layout_marginEnd="20dp"
-                    android:checked="@={favToggleState}"
-                    android:background="@{favToggleState ? @drawable/ic_community_blank_heart_18 : @drawable/ic_community_heart_18}"
-                    android:textOff=""
-                    android:textOn=""
+                    android:background="@{scrapList.scrapFlag ? @drawable/ic_community_heart_18 : @drawable/ic_community_blank_heart_18}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

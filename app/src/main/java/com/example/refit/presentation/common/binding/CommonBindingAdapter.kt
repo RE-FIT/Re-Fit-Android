@@ -88,4 +88,19 @@ object CommonBindingAdapter {
         }
     }
 
+    @JvmStatic
+    @BindingAdapter("temp")
+    fun temp(view: TextView, id: String?) {
+        id?.let {
+            val text = view.context.resources.getString(
+                R.string.find_id_finish_id,
+            )
+            val lastIndex = text.length -1
+            val startIndex = lastIndex - 3
+            view.text = text.substring(0, startIndex)+ "***"
+
+
+        }
+    }
+
 }

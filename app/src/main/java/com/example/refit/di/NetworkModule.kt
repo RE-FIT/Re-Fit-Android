@@ -22,7 +22,7 @@ import java.lang.reflect.Type
 val networkModule = module {
     single {
         OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .addNetworkInterceptor(NetworkInterceptor())
             .addInterceptor(Interceptor { chain ->
                 chain.proceed(
