@@ -49,6 +49,11 @@
         <action
             android:id="@+id/action_findIdFinishFragment_to_findIdPasswordFragment"
             app:destination="@id/findIdPasswordFragment" />
+        <argument
+            android:name="id"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="id" />
     </fragment>
     <fragment
         android:id="@+id/findPasswordFinishFragment"
@@ -57,7 +62,13 @@
         tools:layout="@layout/fragment_find_password_finish">
         <action
             android:id="@+id/action_findPasswordFinishFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
+            app:destination="@id/signInFragment"
+            />
+        <argument
+            android:name="email"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="email" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"

@@ -3,9 +3,8 @@ package com.example.refit.presentation.findidpassword
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import com.example.refit.R
 import com.example.refit.data.model.signup.FindIdRequest
 import com.example.refit.databinding.FragmentFindIdBinding
@@ -13,14 +12,14 @@ import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.findidpassword.viewModel.FindIdPasswordViewModel
-import com.example.refit.presentation.findidpassword.viewModel.FindIdPwViewModel
+import com.example.refit.presentation.findidpassword.viewModel.FindIdViewModel
 import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class FindIdFragment : BaseFragment<FragmentFindIdBinding>(R.layout.fragment_find_id) {
 
     private val vm: FindIdPasswordViewModel by sharedViewModel()
-    private val viewModel: FindIdPwViewModel by sharedViewModel()
+    private val viewModel: FindIdViewModel by sharedViewModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -37,27 +36,25 @@ class FindIdFragment : BaseFragment<FragmentFindIdBinding>(R.layout.fragment_fin
             }
         }
 
+        viewModel.error.observe(viewLifecycleOwner, EventObserver{
+            val customSnackBar = CustomSnackBar.make(
+                view = requireView(),
+                layout = R.layout.custom_snackbar_find_id_fail,
+                animationId = R.anim.anim_show_snack_bar_from_top
+            )
+
+            customSnackBar.setTitle("존재하지 않는 계정입니다.", null)
+            customSnackBar.show()
+        })
+
         //아이디 찾기 성공 시 이동
-        viewModel.idSuccess.observe(viewLifecycleOwner, Observer {
-            navigate(R.id.action_findIdPasswordFragment_to_findIdFinishFragment)
+        viewModel.idSuccess.observe(viewLifecycleOwner, EventObserver{
+            val action = FindIdPasswordFragmentDirections.actionFindIdPasswordFragmentToFindIdFinishFragment(viewModel.id.value)
+            Navigation.findNavController(view).navigate(action)
         })
 
         editNickname()
         editEmail()
-    }
-
-    // 로그인 찾기 실패 시 snackBar
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        viewModel.error.observe(viewLifecycleOwner) {
-            it?.let {
-                val errorView = binding.btnFindIdBtn
-                CustomSnackBar.make(errorView, R.layout.custom_snackbar_find_id_fail, R.anim.anim_show_snack_bar_from_top)
-                    .setTitle("존재하지 않는 계정입니다.", null)
-                    .show()
-            }
-        }
     }
 
     private fun editNickname() {

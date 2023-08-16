@@ -1,7 +1,6 @@
 package com.example.refit.presentation.community
 
 import android.os.Bundle
-import android.util.Log
 
 import android.view.View
 import android.widget.TextView
@@ -11,7 +10,6 @@ import androidx.navigation.Navigation
 import com.example.refit.R
 import com.example.refit.data.model.chat.CreateRoom
 import com.example.refit.databinding.FragmentCommunityInfoBinding
-import com.example.refit.presentation.chat.ChatRoomFragmentDirections
 import com.example.refit.presentation.chat.viewmodel.ChatViewModel
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.CustomSnackBar
@@ -29,7 +27,6 @@ import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.AlertNoIconDialogListener
 import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.lang.IllegalArgumentException
 
