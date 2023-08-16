@@ -29,14 +29,7 @@ class FindIdPasswordFragment : BaseFragment<FragmentFindIdPasswordBinding>(R.lay
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.vm = vm
-
         connectionTabLayout()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        vm.initFilledState()
     }
 
     fun connectionTabLayout() {

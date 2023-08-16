@@ -2,6 +2,7 @@ package com.example.refit.presentation.signin.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -92,5 +93,25 @@ class SignInViewModel(private val repository: SignUpRepository, private val ds: 
                 Log.d("ContinueFail", "FAIL")
             }
         })
+    }
+
+    /**
+     * 버튼 활성화 기능
+     */
+    val loginId = MutableLiveData<String>()
+    val password = MutableLiveData<String>()
+
+    val isFilledAllOptions: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        addSource(loginId) { value = isBothFieldsFilled() }
+        addSource(password) { value = isBothFieldsFilled() }
+    }
+
+    private fun isBothFieldsFilled(): Boolean {
+        return !loginId.value.isNullOrEmpty() && !password.value.isNullOrEmpty()
+    }
+
+    fun init() {
+        loginId.postValue("")
+        password.postValue("")
     }
 }

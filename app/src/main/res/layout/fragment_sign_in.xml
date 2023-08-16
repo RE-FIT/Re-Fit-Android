@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.signin.SignInFragment">
 
+    <data>
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.signin.viewmodel.SignInViewModel" />
+    </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -46,6 +52,7 @@
             android:background="@drawable/border"
             android:hint="아이디를 입력해주세요"
             android:paddingLeft="15dp"
+            android:text="@={vm.loginId}"
             android:textColorHint="@color/dark2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -76,6 +83,7 @@
                 android:autofillHints="password"
                 android:padding="13dp"
                 android:background="@drawable/border"
+                android:text="@={vm.password}"
                 android:hint="비밀번호를 입력해주세요"
                 android:textColorHint="@color/dark2"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -94,8 +102,8 @@
             android:padding="13dp"
             android:text="기존 회원 로그인"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:backgroundTint="@{vm.isFilledAllOptions ? @color/green1 : @color/dark1}"
+            android:clickable="@{vm.isFilledAllOptions ? true : false}"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
             app:shapeAppearance="@color/selector_green1_else_dark1" />
 

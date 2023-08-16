@@ -20,7 +20,8 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        textWatcher()
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
 
         viewModel.error.observe(viewLifecycleOwner, EventObserver{
             val customSnackBar = CustomSnackBar.make(
@@ -38,7 +39,10 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         binding.signInExistingLogin.setOnClickListener {
             val id = binding.signInLoginId.text.toString()
             val password = binding.signInPassword.text.toString()
-            viewModel.basicLogin(id, password)
+
+            if(id.isNotEmpty() && password.isNotEmpty()){
+                viewModel.basicLogin(id, password)
+            }
         }
 
 
@@ -58,27 +62,8 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         }
 
     }
-    fun textWatcher() {
-        binding.signInPassword.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                val id = binding.signInLoginId.text.toString()
-                val password = binding.signInPassword.text.toString()
-
-                //텍스트 입력시 로그인 버튼 색상 초록으로 변경
-                if (id.isEmpty() || password.isEmpty()) {
-                    binding.signInExistingLogin.setBackgroundResource(R.drawable.bg_solid_dark1_radius_10)
-                } else {
-                    binding.signInExistingLogin.setBackgroundResource(R.drawable.bg_solid_green_radius_10)
-                }
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-        })
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.init()
     }
 }
