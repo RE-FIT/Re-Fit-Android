@@ -10,27 +10,24 @@
         android:orientation="vertical"
         android:paddingStart="20dp"
         android:paddingTop="20dp"
-        android:paddingBottom="20dp"
+        android:paddingBottom="16dp"
         android:paddingEnd="20dp">
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_dialog_cloth_register_photo_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginEnd="-10dp"
             android:backgroundTint="@android:color/transparent"
-            app:icon="@drawable/ic_close_24"
-            app:iconGravity="end"
-            app:iconSize="24dp"
-            app:iconTint="@color/dark2" />
+            android:drawableEnd="@drawable/ic_close_24"
+            android:drawableTint="@color/dark2"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_dialog_cloth_register_photo_title"
-            style="@style/BoldFontKr.18"
+            style="@style/BoldFontKr.20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/closet_dialog_cloth_register_photo_title"
             android:textAlignment="center"
             android:textColor="@color/black" />
@@ -39,7 +36,6 @@
             android:id="@+id/btn_dialog_cloth_register_photo_from_camera"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
             android:text="@string/closet_dialog_cloth_register_photo_from_camera"
             android:textAppearance="@style/MediumFontKr.14"
             app:backgroundTint="@color/green1"

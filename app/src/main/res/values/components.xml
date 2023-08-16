@@ -16,8 +16,11 @@
         <item name="strokeColor">@android:color/transparent</item>
         <item name="cardCornerRadius">@dimen/max_radius</item>
         <item name="cardBackgroundColor">@color/selector_white_else_default</item>
+        <item name="cardForegroundColor">@null</item>
         <item name="android:checkable">true</item>
         <item name="checkedIcon">@null</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="cardElevation">6dp</item>
         <item name="rippleColor">@android:color/transparent</item>
     </style>
 
@@ -268,6 +271,7 @@
         <item name="chipBackgroundColor">@color/white</item>
         <item name="chipStrokeWidth">1dp</item>
         <item name="chipMinHeight">40dp</item>
+        <item name="android:textAlignment">center</item>
         <item name="chipCornerRadius">10dp</item>
         <item name="chipStrokeColor">@color/selector_selected_green1_else_dark1</item>
         <item name="android:textColor">@color/selector_selected_green1_else_dark1</item>
