@@ -2,6 +2,7 @@ package com.example.refit.presentation.findidpassword.viewModel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -58,5 +59,25 @@ class FindIdViewModel(private val repository: SignUpRepository): ViewModel() {
                 Log.d("ContinueFail", "FAIL")
             }
         })
+    }
+
+    /**
+     * 버튼 활성화 기능
+     */
+    val name = MutableLiveData<String>()
+    val email = MutableLiveData<String>()
+
+    val isFilledAllOptions: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        addSource(name) { value = isBothFieldsFilled() }
+        addSource(email) { value = isBothFieldsFilled() }
+    }
+
+    private fun isBothFieldsFilled(): Boolean {
+        return !name.value.isNullOrEmpty() && !email.value.isNullOrEmpty()
+    }
+
+    fun init() {
+        name.postValue("")
+        email.postValue("")
     }
 }

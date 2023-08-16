@@ -18,12 +18,12 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class FindIdFragment : BaseFragment<FragmentFindIdBinding>(R.layout.fragment_find_id) {
 
-    private val vm: FindIdPasswordViewModel by sharedViewModel()
     private val viewModel: FindIdViewModel by sharedViewModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.vm = vm
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
 
         //아이디 찾기
         binding.btnFindIdBtn.setOnClickListener(){
@@ -52,32 +52,11 @@ class FindIdFragment : BaseFragment<FragmentFindIdBinding>(R.layout.fragment_fin
             val action = FindIdPasswordFragmentDirections.actionFindIdPasswordFragmentToFindIdFinishFragment(viewModel.id.value)
             Navigation.findNavController(view).navigate(action)
         })
-
-        editNickname()
-        editEmail()
     }
 
-    private fun editNickname() {
-        // 이름(닉네임)
-        binding.findIdEditName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                vm.setFindIdFilledStatus(0, true, s.toString())
-            }
-            override fun afterTextChanged(s: Editable?) { vm.setFindIdAllFilledStatus() }
-        })
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.init()
     }
-
-    private fun editEmail() {
-        // 이메일
-        binding.findIdEditEmail.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                vm.setFindIdFilledStatus(1, true, s.toString())
-            }
-            override fun afterTextChanged(s: Editable?) { vm.setFindIdAllFilledStatus() }
-        })
-    }
-
 
 }
