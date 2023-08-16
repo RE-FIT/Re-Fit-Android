@@ -3,29 +3,22 @@ package com.example.refit.presentation.community
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.refit.R
-import com.example.refit.databinding.FragmentCommunityBinding
 import com.example.refit.databinding.FragmentCommunitySearchBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.common.NavigationUtil.navigateUp
-import com.example.refit.presentation.community.adapter.CommunityListAdapter
 import com.example.refit.presentation.community.adapter.SearchListAdapter
 import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
 import com.example.refit.presentation.community.viewmodel.CommunitySearchViewModel
-import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import timber.log.Timber
 
 class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.layout.fragment_community_search) {
 
@@ -98,16 +91,19 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
                 binding.cvCommunityOptionType.id -> {
                     binding.tvCommunityOptionType.text = itemDescription
                     vm.setDropDownController(0, itemDescription)
+                    vm.loadSearchResult()
                 }
 
                 binding.cvCommunityOptionGender.id -> {
                     binding.tvCommunityOptionGender.text = itemDescription
                     vm.setDropDownController(1, itemDescription)
+                    vm.loadSearchResult()
                 }
 
                 binding.cvCommunityOptionCategory.id -> {
                     binding.tvCommunityOptionCategory.text = itemDescription
                     vm.setDropDownController(2, itemDescription)
+                    vm.loadSearchResult()
                 }
             }
             vm.loadSearchResult()

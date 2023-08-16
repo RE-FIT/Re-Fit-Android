@@ -26,6 +26,51 @@ class CommunityRepositoryImpl (private val communityDataSource: CommunityDataSou
         return communityDataSource.loadCommunityListSort(accessToken, postType, gender, category)
     }
 
+    override suspend fun loadCommunityOnlyPostType(
+        accessToken: String,
+        postType: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadCommunityOnlyPostType(accessToken, postType)
+    }
+
+    override suspend fun loadCommunityOnlyGender(
+        accessToken: String,
+        gender: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadCommunityOnlyGender(accessToken, gender)
+    }
+
+    override suspend fun loadCommunityOnlyCategory(
+        accessToken: String,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadCommunityOnlyCategory(accessToken, category)
+    }
+
+    override suspend fun loadCommunityPTAndGender(
+        accessToken: String,
+        postType: Int,
+        gender: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadCommunityPTAndGender(accessToken, postType, gender)
+    }
+
+    override suspend fun loadCommunityPTAndCategory(
+        accessToken: String,
+        postType: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadCommunityPTAndCategory(accessToken, postType, category)
+    }
+
+    override suspend fun loadCommunityGenderAndCategory(
+        accessToken: String,
+        gender: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadCommunityGenderAndCategory(accessToken, gender, category)
+    }
+
     override suspend fun createPost(
         accessToken: String,
         postDto: RequestBody,
@@ -43,6 +88,67 @@ class CommunityRepositoryImpl (private val communityDataSource: CommunityDataSou
         keyword: String
     ): Call<ResponseBody> {
         return communityDataSource.loadSearchResult(accessToken, keyword)
+    }
+
+    override suspend fun loadSearchResultAll(
+        accessToken: String,
+        keyword: String,
+        postType: Int,
+        gender: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadSearchResultAll(accessToken, keyword, postType, gender, category)
+    }
+
+    override suspend fun loadSearchResulttOnlyPostType(
+        accessToken: String,
+        keyword: String,
+        postType: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadSearchResulttOnlyPostType(accessToken, keyword, postType)
+    }
+
+    override suspend fun loadSearchResultOnlyGender(
+        accessToken: String,
+        keyword: String,
+        gender: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadSearchResultOnlyGender(accessToken, keyword, gender)
+    }
+
+    override suspend fun loadSearchResultOnlyCategory(
+        accessToken: String,
+        keyword: String,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadSearchResultOnlyCategory(accessToken, keyword, category)
+    }
+
+    override suspend fun loadSearchResultPTAndGender(
+        accessToken: String,
+        keyword: String,
+        postType: Int,
+        gender: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadSearchResultPTAndGender(accessToken, keyword, postType, gender)
+    }
+
+    override suspend fun loadSearchResultPTAndCategory(
+        accessToken: String,
+        keyword: String,
+        postType: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadSearchResultPTAndCategory(accessToken, keyword, postType, category)
+    }
+
+    override suspend fun loadSearchResultGenderAndCategory(
+        accessToken: String,
+        keyword: String,
+        gender: Int,
+        category: Int
+    ): Call<ResponseBody> {
+        return communityDataSource.loadSearchResultGenderAndCategory(accessToken, keyword, gender, category)
     }
 
     override suspend fun modifyPostIncludeImage(

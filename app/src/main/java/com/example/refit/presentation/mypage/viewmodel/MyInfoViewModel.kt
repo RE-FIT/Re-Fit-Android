@@ -1,20 +1,39 @@
 package com.example.refit.presentation.mypage.viewmodel
 
+import android.annotation.SuppressLint
+import android.net.Uri
+import android.provider.OpenableColumns
 import android.util.Log
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.refit.R
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.mypage.PasswordUpdateRequest
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
+import com.example.refit.data.model.mypage.UpdateDTO
 import com.example.refit.data.repository.mypage.MyPageRepository
+import com.example.refit.presentation.common.DialogUtil.checkPwDialog
+import com.example.refit.presentation.common.NavigationUtil.navigateUp
+import com.example.refit.presentation.mypage.MyInfoPwUpdateFragment
+import com.example.refit.util.Event
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.ResponseBody
+import okhttp3.internal.notify
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
+import java.io.File
 
 class MyInfoViewModel(private val repository: MyPageRepository, private val ds: TokenStore) : ViewModel() {
 
@@ -107,6 +126,29 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     val isUpdatedPwOptions: LiveData<Boolean>
         get() = _isUpdatedPwOptions
 
+
+    // 수정 시에 이미지 변경 여부 확인
+    private val _modifyImageStatus: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val modifyImageStatus: LiveData<Boolean>
+        get() = _modifyImageStatus
+
+    private val _postId: MutableLiveData<Int> = MutableLiveData<Int>()
+    val postId: LiveData<Int>
+        get() = _postId
+
+    private val _selectedPostItem: MutableLiveData<Event<Int>> =
+        MutableLiveData<Event<Int>>()
+    val selectedPostItem: LiveData<Event<Int>>
+        get() = _selectedPostItem
+
+    private val _isModifyPost: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isModifyPost: LiveData<Boolean>
+        get() = _isModifyPost
+
+    fun setPostId(id: Int) {
+        _postId.value = id
+    }
+
     // -----------------------------------
     fun setUpdatedStatus(type: Int, status: Boolean) {
         when (type) {
@@ -172,6 +214,10 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
             _isUpdatedPwValue[0].value == true && _isUpdatedPwValue[1].value == true
     }
 
+    fun handleClickItem(postId: Int) {
+        _selectedPostItem.value = Event(postId)
+    }
+
     fun initNicknameInfoStatus(status: Boolean) {
         _isCheckUpdatedNickname.value = status
     }
@@ -188,6 +234,25 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
         initNicknameInfoStatus(false)
         initCheckBtnStatus(false)
         initUpdatedPwStatus(false)
+        _isUpdatedOptions.value = false
+        _isModifyPost.value = false
+    }
+
+    fun setModifyOrNew(status: Boolean) {
+        _isModifyPost.value = status
+        if(status) {
+//            setValueIfModifyStatus()
+        }
+    }
+
+    fun setValueIfModifyStatus() {
+/*
+            // 이미지 관련 처리
+            _photoUris.value = postResponse.value?.imgUrls
+            _photoLen.value = postResponse.value?.imgUrls?.size
+            _isFilledValue[0].value = true
+            for (i in 0 until _photoLen.value!!) {
+                _isFilledImageValues[i].value = true*/
     }
 
     // Retrofit
@@ -293,9 +358,64 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
         }
     }
 
-    fun updateMyInfoRetrofit() {
-        viewModelScope.launch {
+    fun updateMyInfoRetrofit(
+        images: List<File?>
+    ) = viewModelScope.launch {
+        val token = ds.getAccessToken().first()
+        if (images.isEmpty()) {
+            Timber.d("이미지 파일이 없습니다.")
+            return@launch
+        }
 
+        try {
+            val updateDto = UpdateDTO(
+                name = _userNickname.value ?: "",
+                birth = _userBirth.value ?: "",
+                gender = _userGender.value ?: 0
+            )
+
+            // PostDto 객체를 JSON 형태의 문자열로 변환
+            val updateDtoJson = Gson().toJson(updateDto)
+            Timber.d("[POST] postDto to JSON : ${updateDtoJson.toString()}")
+            val updateDtoRequestBody =
+                updateDtoJson.toRequestBody("application/json".toMediaTypeOrNull())
+
+            var response: Call<Response<Void>> = repository.updateInfo(
+                token, images,  updateDtoRequestBody
+            )
+
+            response.enqueue(object : Callback<Response<Void>> {
+                override fun onResponse(
+                    call: Call<Response<Void>>,
+                    response: Response<Response<Void>>
+                ) {
+                    if (response.isSuccessful) {
+                        val json = response.body()?.toString()
+                        Timber.d("MY PAGE PATCH API 호출 성공 : $json")
+                    } else {
+                        try {
+                            val errorBody = response.errorBody()
+                            val errorCode = response.code()
+
+                            if (errorBody != null) {
+                                val errorJson = JSONObject(errorBody.string())
+                                val errorMessage = errorJson.optString("message")
+                                val errorCodeFromJson = errorJson.optInt("code")
+
+                                Timber.d("API 호출 실패: $errorCodeFromJson / $errorMessage")
+                            } else Timber.d("MY PAGE PATCH API 호출 실패: $errorCode")
+                        } catch (e: JSONException) {
+                            Timber.d("error response failed : ${e.message}")
+                        }
+
+                    }
+                }
+                override fun onFailure(call: Call<Response<Void>>, t: Throwable) {
+                    Timber.d("RESPONSE FAILURE")
+                }
+            })
+        } catch (e: Exception) {
+            Timber.d("마이 페이지 글 수정 과정 오류 발생: $e")
         }
     }
 }

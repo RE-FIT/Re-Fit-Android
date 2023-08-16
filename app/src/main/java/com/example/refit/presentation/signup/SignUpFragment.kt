@@ -1,18 +1,10 @@
 package com.example.refit.presentation.signup
 
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
-import android.text.SpannableString
 import android.text.TextWatcher
-import android.text.style.UnderlineSpan
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.EditText
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
 import com.example.refit.R
 import com.example.refit.databinding.FragmentSignUpBinding
@@ -23,11 +15,7 @@ import com.example.refit.presentation.signin.viewmodel.SignInViewModel
 import com.example.refit.presentation.signup.viewmodel.SignUpViewModel
 import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputLayout
-import timber.log.Timber
-import java.util.regex.Pattern
-import kotlin.math.sign
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sign_up) {
 

@@ -1,24 +1,17 @@
 package com.example.refit.presentation.community
 
-import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.refit.R
 import com.example.refit.databinding.FragmentCommunityBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
-import com.example.refit.presentation.common.WindowUtil.setStatusBarColor
 import com.example.refit.presentation.community.adapter.CommunityListAdapter
-import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import com.example.refit.util.EventObserver
@@ -81,11 +74,13 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
                 binding.cvCommunityOptionGender.id -> {
                     binding.tvCommunityOptionGender.text = itemDescription
                     communityViewModel.setDropDownController(1, itemDescription)
+                    communityViewModel.loadCommunityList()
                 }
 
                 binding.cvCommunityOptionCategory.id -> {
                     binding.tvCommunityOptionCategory.text = itemDescription
                     communityViewModel.setDropDownController(2, itemDescription)
+                    communityViewModel.loadCommunityList()
                 }
             }
 

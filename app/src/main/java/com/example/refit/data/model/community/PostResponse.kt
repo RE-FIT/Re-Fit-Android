@@ -19,5 +19,6 @@ data class PostResponse(
     @SerializedName("postState") val postState: Int,
     @SerializedName("createdAt") val createdAt: String,
     @SerializedName("clickedMember") val clickedMember: String,
-    @SerializedName("scrapFlag") val scrapFlag: Boolean
+    @SerializedName("scrapFlag") val scrapFlag: Boolean,
+    @SerializedName("profileUrl") val profileUrl: String? = ""
 )

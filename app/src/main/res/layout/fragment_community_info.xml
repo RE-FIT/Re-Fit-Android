@@ -5,7 +5,6 @@
     tools:context=".presentation.community.CommunityInfoFragment">
 
     <data>
-
         <variable
             name="vm"
             type="com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel" />
@@ -371,16 +370,7 @@
                                         android:textColor="@color/black" />
 
                                 </LinearLayout>
-
-
                             </LinearLayout>
-
-
-
-
-
-
-
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </com.google.android.material.card.MaterialCardView>
@@ -389,12 +379,12 @@
                         android:id="@+id/mcv_community_info_view2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="30dp"
                         app:cardBackgroundColor="@color/white"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/mcv_community_info_view1"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:strokeColor="@android:color/transparent">
 
                         <androidx.constraintlayout.widget.ConstraintLayout

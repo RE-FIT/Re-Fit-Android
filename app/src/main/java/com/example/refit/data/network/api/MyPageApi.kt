@@ -3,11 +3,11 @@ package com.example.refit.data.network.api
 import com.example.refit.data.model.mypage.MyFeedBuyListItemResponse
 import com.example.refit.data.model.mypage.MyFeedGiveListItemResponse
 import com.example.refit.data.model.mypage.MyFeedSellListItemResponse
+import com.example.refit.data.model.mypage.MyInfoResponse
 import com.example.refit.data.model.mypage.MyScrapGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
 import com.example.refit.data.model.mypage.PasswordUpdateRequest
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
@@ -20,19 +20,33 @@ import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface MyPageApi {
+
+    //기본화면 회원 정보 조회
+    @GET("/refit/mypage")
+    fun myInfo(
+        @Header("Authorization") token: String
+    ): Call<MyInfoResponse>
+
     // 회원 정보 조회
     @GET("/refit/mypage/info")
     fun showMyInfo(
-        @Header("Authorization") token: String
+        @Header("Authorization") accessToken: String
     ): Call<ShowMyInfoResponse>
 
     // 회원 정보 수정
     @Multipart
     @PATCH("/refit/mypage/info")
     fun updateInfo(
-        @Header("Authorization") token: String,
-        @Part("image") image: List<MultipartBody.Part>,
-        @Part("content") content: RequestBody,
+        @Header("Authorization") accessToken: String,
+        @Part("image") image: List<Unit>,
+        @Part("content") content: RequestBody?,
+    ) : Call<Response<Void>>
+
+    @Multipart
+    @PATCH("/refit/mypage/info")
+    fun updateInfoNoImage(
+        @Header("Authorization") accessToken: String,
+        @Part("content") content: RequestBody?,
     ) : Call<Response<Void>>
 
     // 이름(닉네임) 중복 확인

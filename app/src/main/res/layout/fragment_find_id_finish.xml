@@ -9,13 +9,15 @@
             name="vm"
             type="com.example.refit.presentation.findidpassword.viewModel.FindIdPasswordViewModel" />
 
+        <variable
+            name="id"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/default_dark"
-        android:padding="30dp">
+        android:background="@color/default_dark">
 
         <TextView
             android:id="@+id/find_id_title"
@@ -23,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="ID 찾기"
-            android:textSize="23sp"
+            android:textSize="24dp"
             android:textStyle="bold"
             android:textColor="@color/green1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,10 +36,9 @@
             android:id="@+id/find_id_finish_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="108dp"
+            android:layout_marginTop="120dp"
             android:src="@drawable/ic_find_id_pw_check"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/find_id_title" />
 
@@ -46,7 +47,7 @@
             style="@style/RegularFontKr.14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="32dp"
             android:gravity="center"
             android:text="아이디 찾기가 완료되었습니다."
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,11 +60,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
             android:background="@drawable/bg_solid_white_radius_10"
             android:gravity="center"
             android:padding="25dp"
-            android:text="@{@string/find_id_finish_id(vm.userId)}"
-            temp="@{vm.userId}"
+            android:text="@{@string/find_id_finish_id(id)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
@@ -73,15 +75,14 @@
             style="@style/RegularFont.14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="68dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
             android:background="@drawable/btn_my_info_pw"
             android:backgroundTint="@color/green1"
             android:clickable="true"
-            android:text="@string/find_id_title"
+            android:text="로그인 하러가기"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.4"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/find_id_finish_id" />
 
         <android.widget.Button
@@ -89,13 +90,13 @@
             style="@style/RegularFontKr.14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
             android:background="@drawable/bg_solid_white_radius_10"
             android:backgroundTint="@color/white"
             android:text="비밀번호 찾기"
             android:textColor="@color/green1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_find_id_btn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

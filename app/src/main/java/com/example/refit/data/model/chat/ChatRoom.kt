@@ -10,6 +10,8 @@ data class ChatRoom(
     val username: String,
     @SerializedName("other")
     val other: String,
+    @SerializedName("otherImage")
+    val otherImage: String,
     @SerializedName("message")
     val message: String,
     @SerializedName("time")

@@ -24,7 +24,7 @@ interface SignUpApi {
         @Body findId: FindIdRequest
     ): Call<FindIdResponse>
 
-    @POST("auth/find/password")
+    @POST("auth/reset/password")
     fun findPassword(
         @Body findId: FindPasswordRequest
     ): Call<ResponseBody>

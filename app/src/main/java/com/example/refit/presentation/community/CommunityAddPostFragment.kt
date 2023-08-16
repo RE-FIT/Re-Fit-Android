@@ -1,31 +1,23 @@
 package com.example.refit.presentation.community
 
 import android.annotation.SuppressLint
-import android.icu.text.DecimalFormat
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.RadioButton
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ArrayRes
-import androidx.appcompat.app.WindowDecorActionBar.TabImpl
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.content.ContextCompat
 import com.example.refit.R
 import com.example.refit.databinding.FragmentCommunityAddPostBinding
 import com.example.refit.presentation.common.BaseFragment
-import com.example.refit.presentation.common.DialogUtil
 import com.example.refit.presentation.common.DialogUtil.showCommunityAddShippingFeeDiaglog
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
@@ -33,13 +25,10 @@ import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialogListener
-import com.example.refit.util.FileUtil
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 
 
 class CommunityAddPostFragment :
@@ -195,6 +184,7 @@ class CommunityAddPostFragment :
                     binding.tvCommunityAddpostFeeInput.text =
                         getString(R.string.community_addpost_contents_detail_fourth_input)
                     vmAdd.setFeeStatus()
+                    vmAdd.setShippingFee(0)
                     false
                 }
 
@@ -249,7 +239,11 @@ class CommunityAddPostFragment :
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 val isFilled = p0?.isNotEmpty() == true
-                vmAdd.setFilledStatus(6, isFilled, "")
+                val edit = vmAdd.getDecimalFormat(binding.etCommunityAddpostPrice.text.toString())
+                if(edit != "0" && isFilled) {
+                    vmAdd.setFilledStatus(6, true, "")
+                    Timber.d("[EDIT] 체크")
+                } else vmAdd.setFilledStatus(6, false, "")
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -343,8 +337,8 @@ class CommunityAddPostFragment :
             } else {
                 vmAdd.createPost(imageFiles)
                 vm.loadCommunityList()
+                navigateUp()
             }
-            navigateUp()
 
 
         }
@@ -448,6 +442,7 @@ class CommunityAddPostFragment :
             if (fee == 0) {
                 // 배송비 포함
                 binding.rbCommunityAddpostInputIncludeFee.isChecked = true
+                vmAdd.setShippingFee(0)
             } else {
                 binding.rbCommunityAddpostInputExcludeFee.isChecked = true
                 vmAdd.setFilledStatus(8, true, "")

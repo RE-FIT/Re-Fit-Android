@@ -30,41 +30,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:id="@+id/profile_image_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@+id/myInfo_name"
+                <!-- 캐릭터 -->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/profile_image"
+                    setImage="@{photoUri}"
+                    android:layout_width="109dp"
+                    android:layout_height="109dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_circle_profile"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_my_info_basic_profile"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <!-- 캐릭터 -->
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/profile_image"
-                        setImage="@{photoUri}"
-                        android:layout_width="109dp"
-                        android:layout_height="109dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/ic_white_100"
-                        android:scaleType="centerCrop" />
 
-                </LinearLayout>
-
+                <!-- 이름(닉네임) -->
                 <ImageView
                     android:id="@+id/camera_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="229dp"
-                    android:layout_marginBottom="27dp"
+                    android:layout_marginStart="82dp"
+                    android:layout_marginTop="80dp"
                     android:src="@drawable/ic_myinfo_camera"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintStart_toStartOf="@+id/profile_image"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <!-- 이름(닉네임) -->
                 <TextView
                     android:id="@+id/myInfo_name"
-                    style="@style/RegularFont.14"
+                    android:textAppearance="@style/RegularFontKr.14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{vm.myInfoResponse.name}"
@@ -72,7 +67,7 @@
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/profile_image_layout" />
+                    app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
                 <!-- 이메일 ~ 성별 -->
                 <LinearLayout
@@ -109,7 +104,7 @@
                         android:paddingEnd="0dp"
                         android:paddingBottom="13dp"
                         android:text="@{vm.myInfoResponse.email}"
-                        android:textColor="@color/dark1" />
+                        android:textColor="@color/dark2" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -131,7 +126,7 @@
                         android:paddingBottom="13dp"
                         android:text="@{vm.myInfoResponse.loginId}"
                         android:textAppearance="@style/RegularFont.12"
-                        android:textColor="@color/dark1" />
+                        android:textColor="@color/dark2" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -181,7 +176,6 @@
                         android:id="@+id/able_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:text="@string/my_info_available_nickname"
                         android:textAppearance="@style/RegularFontKr.10"
                         android:textColor="@color/green1"
@@ -191,7 +185,6 @@
                         android:id="@+id/enable_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:text="@string/my_info_unavailable_nickname"
                         android:textAppearance="@style/RegularFontKr.10"
                         android:textColor="@color/red"
@@ -200,9 +193,9 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
                         android:layout_marginBottom="5dp"
                         android:text="@string/my_info_dateTxt"
+                        android:layout_marginTop="5dp"
                         android:textAppearance="@style/MediumFontKr.12"
                         android:textColor="@color/green1" />
 

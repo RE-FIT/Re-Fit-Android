@@ -184,7 +184,6 @@ class CommunityInfoViewModel (
         }
     }
 
-
     // 글 삭제 기능
     fun deletePost() = viewModelScope.launch {
         val accessToken = ds.getAccessToken().first()

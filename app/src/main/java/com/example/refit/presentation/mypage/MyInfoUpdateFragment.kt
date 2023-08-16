@@ -1,7 +1,13 @@
 package com.example.refit.presentation.mypage
 
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.OvalShape
 import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -16,11 +22,13 @@ import com.example.refit.databinding.FragmentMyInfoUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DialogUtil
 import com.example.refit.presentation.common.DialogUtil.checkNickNameDialog
+import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.dialog.mypage.ProfileRegisterPhotoDialogListener
 import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
 import com.example.refit.util.FileUtil
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
+import java.io.File
 
 class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.fragment_my_info_update) {
 
@@ -29,6 +37,7 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
     private lateinit var takePicture: ActivityResultLauncher<Uri>
     private var photoUri: Uri? = null
+    private var photoUris: List<String>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,6 +77,7 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
 
             vm.setUpdatedAllStatus()
         })
+
     }
 
     override fun onResume() {
@@ -114,12 +124,22 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
             // 3. 수정 버튼
         // [성별, 생일 수정 됐을 때] >> 수정 버튼 바로 클릭 가능
         binding.btnMyInfoUpdate.setOnClickListener {
-            // TODO("수정")
+            Timber.d("수정 버튼 클릭됨")
+            vm.setModifyOrNew(true)
+
+            handleUpdateButton()
+
+            val postId = vm.postId.value
+            if (postId != null) {
+                vm.setPostId(postId)
+            }
+
             if (flag) {
                 vm.initCheckBtnStatus(false)
             } else {
                 showMyPageNickNameCheckDialog()
             }
+
         }
     }
 
@@ -216,5 +236,58 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
                     Timber.d("선택된 사진이 없음")
                 }
             }
+    }
+
+    // ----------------------- 수정하기 -----------------------
+
+    private fun copyFileToInternalStorage(uri: Uri): File? {
+        val context = requireContext().applicationContext
+        val inputStream = context.contentResolver.openInputStream(uri) ?: return null
+        val fileName = getFileName(uri) ?: return null
+
+        // 내부 저장소에 새 파일 생성
+        val file = File(context.filesDir, fileName)
+        file.outputStream().use { outputStream ->
+            inputStream.copyTo(outputStream)
+        }
+        return file
+    }
+    @SuppressLint("Range")
+    private fun getFileName(uri: Uri): String? {
+        val cursor = requireContext().contentResolver.query(uri, null, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val displayName = it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+                if (!displayName.isNullOrEmpty()) {
+                    return displayName
+                }
+            }
+        }
+        return null
+    }
+
+    private fun handleUpdateButton() {
+        val imageFiles = mutableListOf<File?>()
+        photoUris?.let {
+            for (uriString in it) {
+                val uri = Uri.parse(uriString)
+                val copiedFile = copyFileToInternalStorage(uri)
+                Timber.d("file URI 값 정상 작동되는지 확인 : $uri ================ $copiedFile")
+
+                copiedFile?.let { file ->
+                    if (file.exists()) {
+                        imageFiles.add(file)
+                    } else {
+                        Timber.e("파일이 존재하지 않습니다: $file")
+                    }
+                }
+            }
+        }
+        if (vm.isModifyPost.value == true) {
+            val imageStatus = vm.modifyImageStatus.value
+
+            vm.updateMyInfoRetrofit(imageFiles)
+            navigateUp()
+        }
     }
 }

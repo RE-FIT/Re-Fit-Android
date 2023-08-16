@@ -8,15 +8,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.refit.R
 import com.example.refit.databinding.FragmentMyFeedBinding
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.NavigationUtil.navigate
+import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
+import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import com.example.refit.presentation.mypage.adapter.MyFeedBuyListAdapter
 import com.example.refit.presentation.mypage.adapter.MyFeedGiveListAdapter
 import com.example.refit.presentation.mypage.adapter.MyFeedSellListAdapter
 import com.example.refit.presentation.mypage.viewmodel.MyFeedViewModel
+import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_feed) {
 
     private val myFeedViewModel: MyFeedViewModel by sharedViewModel()
+    private val infoViewModel: CommunityInfoViewModel by sharedViewModel()
+    private val communityViewModel: CommunityViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,6 +35,13 @@ class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_f
         myFeedViewModel.loadFeedSellList()
         myFeedViewModel.loadFeedBuyList()
 
+        infoViewModel.clickedGetPost(infoViewModel.postId.value!!)
+
+        communityViewModel.selectedPostItem.observe(viewLifecycleOwner, EventObserver { postId ->
+            infoViewModel.clickedGetPost(postId)
+            navigate(R.id.action_nav_community_to_communityInfoFragment)
+        })
+
         myFeedViewModel.selectedTab.observe(viewLifecycleOwner, Observer { tab ->
             when (tab) {
                 MyFeedViewModel.Tab.GIVE -> {
@@ -39,9 +52,6 @@ class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_f
                 }
                 MyFeedViewModel.Tab.BUY -> {
                     initFeedBuyList()
-                }
-                else -> {
-                    initFeedSellList()
                 }
             }
         })
@@ -61,8 +71,6 @@ class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_f
             }
         }
     }
-
-
 
     private fun initFeedGiveList() {
         binding.rvScrapList.layoutManager = LinearLayoutManager(requireActivity())

@@ -41,9 +41,12 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.vm = viewModel
+
         val userId = args.userId.toString()
         val roomId = args.roomId.toString()
         val sellerId = args.sellerId.toString()
+        val otherImage = args.otherImage.toString()
 
         viewModel.setUserStatus(userId, sellerId)
 
@@ -63,7 +66,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
 
         viewModel.chats.observe(viewLifecycleOwner) {
 
-            val dataRVAdapter = ChatRVAdapter(it.toMutableList())
+            val dataRVAdapter = ChatRVAdapter(it.toMutableList(), otherImage)
             binding.rv.adapter = dataRVAdapter
             binding.rv.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -174,7 +177,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
             val itemDescription = (view as TextView).text.toString()
             when (itemDescription) {
                 "채팅방 나가기" -> {
-                    viewModel.roomId.value?.let { viewModel.room_delete(it) }
+                    viewModel.room_delete(args.roomId.toString())
                 }
 
                 "거래 완료" -> {
