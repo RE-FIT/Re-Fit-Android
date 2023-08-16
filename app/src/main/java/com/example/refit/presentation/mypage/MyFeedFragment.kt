@@ -35,6 +35,8 @@ class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_f
         myFeedViewModel.loadFeedSellList()
         myFeedViewModel.loadFeedBuyList()
 
+        infoViewModel.clickedGetPost(infoViewModel.postId.value!!)
+
         communityViewModel.selectedPostItem.observe(viewLifecycleOwner, EventObserver { postId ->
             infoViewModel.clickedGetPost(postId)
             navigate(R.id.action_nav_community_to_communityInfoFragment)
@@ -50,9 +52,6 @@ class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_f
                 }
                 MyFeedViewModel.Tab.BUY -> {
                     initFeedBuyList()
-                }
-                else -> {
-                    initFeedSellList()
                 }
             }
         })
@@ -72,8 +71,6 @@ class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_f
             }
         }
     }
-
-
 
     private fun initFeedGiveList() {
         binding.rvScrapList.layoutManager = LinearLayoutManager(requireActivity())
