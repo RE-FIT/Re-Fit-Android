@@ -22,6 +22,7 @@ import com.example.refit.databinding.FragmentMyInfoUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DialogUtil
 import com.example.refit.presentation.common.DialogUtil.checkNickNameDialog
+import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.dialog.mypage.ProfileRegisterPhotoDialogListener
 import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
 import com.example.refit.util.FileUtil
@@ -54,8 +55,6 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         // 앨범에서 사진 가져오기
         initGalleryLauncher()
         handleAddProfilePhoto()
-
-        handleUpdateButton()
 
         vm.userNickname.observe(viewLifecycleOwner, Observer {
             vm.checkNicknameRetrofit()
@@ -125,12 +124,22 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
             // 3. 수정 버튼
         // [성별, 생일 수정 됐을 때] >> 수정 버튼 바로 클릭 가능
         binding.btnMyInfoUpdate.setOnClickListener {
-            // TODO("수정")
+            Timber.d("수정 버튼 클릭됨")
+            vm.setModifyOrNew(true)
+
+            handleUpdateButton()
+
+            val postId = vm.postId.value
+            if (postId != null) {
+                vm.setPostId(postId)
+            }
+
             if (flag) {
                 vm.initCheckBtnStatus(false)
             } else {
                 showMyPageNickNameCheckDialog()
             }
+
         }
     }
 
@@ -258,33 +267,27 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
     }
 
     private fun handleUpdateButton() {
-        binding.btnMyInfoUpdate.setOnClickListener {
+        val imageFiles = mutableListOf<File?>()
+        photoUris?.let {
+            for (uriString in it) {
+                val uri = Uri.parse(uriString)
+                val copiedFile = copyFileToInternalStorage(uri)
+                Timber.d("file URI 값 정상 작동되는지 확인 : $uri ================ $copiedFile")
 
-            val imageFiles = mutableListOf<File?>()
-            photoUris?.let {
-                for (uriString in it) {
-                    val uri = Uri.parse(uriString)
-                    val copiedFile = copyFileToInternalStorage(uri)
-                    Timber.d("file URI 값 정상 작동되는지 확인 : $uri ================ $copiedFile")
-
-                    copiedFile?.let { file ->
-                        if (file.exists()) {
-                            imageFiles.add(file)
-                        } else {
-                            Timber.e("파일이 존재하지 않습니다: $file")
-                        }
+                copiedFile?.let { file ->
+                    if (file.exists()) {
+                        imageFiles.add(file)
+                    } else {
+                        Timber.e("파일이 존재하지 않습니다: $file")
                     }
                 }
-            }/*
-            if (vm.isModifyPost.value == true) {
-                val imageStatus = vm.modifyImageStatus.value
-                if (imageStatus == false || imageStatus == null) {
-                    vm.updateMyInfoNoImageRetrofit()
-                } else {
-                    vm.updateMyInfoRetrofit(imageFiles)
-                }
-                navigateUp()
-            }*/
+            }
+        }
+        if (vm.isModifyPost.value == true) {
+            val imageStatus = vm.modifyImageStatus.value
+
+            vm.updateMyInfoRetrofit(imageFiles)
+            navigateUp()
         }
     }
 }
