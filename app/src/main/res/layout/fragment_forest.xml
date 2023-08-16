@@ -105,7 +105,7 @@
                         android:padding="20dp">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/RegularFontKr.10"
+                            style="@style/RegularFontKr.12"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
@@ -139,7 +139,7 @@
                         android:padding="20dp">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/RegularFontKr.10"
+                            style="@style/RegularFontKr.12"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
@@ -173,7 +173,7 @@
                         android:padding="20dp">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/RegularFontKr.10"
+                            style="@style/RegularFontKr.12"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
