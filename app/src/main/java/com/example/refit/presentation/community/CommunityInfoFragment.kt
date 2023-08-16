@@ -57,7 +57,8 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         chatViewModel.success.observe(viewLifecycleOwner, EventObserver{
             val action = CommunityInfoFragmentDirections.actionCommunityInfoFragmentToChatFragment(
                 vm.postResponse.value!!.clickedMember, chatViewModel.roomId.value.toString(),
-                vm.postResponse.value!!.author, vm.postResponse.value!!.author, vm.postResponse.value!!.postType.toString())
+                vm.postResponse.value!!.author, vm.postResponse.value!!.author,
+                vm.postResponse.value!!.postType.toString(), vm.postResponse.value!!.profileUrl.toString())
             Navigation.findNavController(view).navigate(action)
         })
     }

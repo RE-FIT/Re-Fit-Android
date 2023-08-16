@@ -436,6 +436,10 @@
             android:name="postType"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="otherImage"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/signUpCompleteFragment"

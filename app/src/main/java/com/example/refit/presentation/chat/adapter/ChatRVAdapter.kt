@@ -5,16 +5,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.refit.data.model.chat.Chat
 import com.example.refit.databinding.ItemChattingBinding
 import java.time.ZonedDateTime
 import java.util.Locale
 
-class ChatRVAdapter(private val dataList: MutableList<Chat>): RecyclerView.Adapter<ChatRVAdapter.DataViewHolder>() {
+class ChatRVAdapter(private val dataList: MutableList<Chat>,
+                    private val otherImage: String?=""): RecyclerView.Adapter<ChatRVAdapter.DataViewHolder>() {
 
     fun addChat(chat: Chat) {
         this.dataList.add(chat)
-        notifyItemInserted(dataList.size - 1)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
@@ -60,6 +62,7 @@ class ChatRVAdapter(private val dataList: MutableList<Chat>): RecyclerView.Adapt
             binding.my.isVisible = false
 
             if (adapterPosition == 0) {
+                imageSet()
                 binding.otherName.text = data.username
                 binding.otherConnect.isVisible = false
                 binding.otherChat.text = data.content.trim()
@@ -74,7 +77,7 @@ class ChatRVAdapter(private val dataList: MutableList<Chat>): RecyclerView.Adapt
                     binding.otherTimeConnect.text = formatToKoreanTime(data.time)
 
                 } else { // 다른 경우
-
+                    imageSet()
                     binding.otherName.text = data.username
                     binding.otherConnect.isVisible = false
                     binding.otherChat.text = data.content.trim()
@@ -87,6 +90,12 @@ class ChatRVAdapter(private val dataList: MutableList<Chat>): RecyclerView.Adapt
                 binding.otherTimeConnect.isVisible = false
                 binding.otherTime.isVisible = false
             }
+        }
+
+        private fun imageSet() {
+            Glide.with(binding.root)
+                .load(otherImage)
+                .into(binding.profile)
         }
 
         private fun resetViews() {
