@@ -1,6 +1,10 @@
 package com.example.refit.presentation.mypage.viewmodel
 
+import android.annotation.SuppressLint
+import android.net.Uri
+import android.provider.OpenableColumns
 import android.util.Log
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,8 +13,10 @@ import com.example.refit.R
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.mypage.PasswordUpdateRequest
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
+import com.example.refit.data.model.mypage.UpdateDTO
 import com.example.refit.data.repository.mypage.MyPageRepository
 import com.example.refit.presentation.common.DialogUtil.checkPwDialog
+import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.mypage.MyInfoPwUpdateFragment
 import com.example.refit.util.Event
 import com.google.gson.Gson
@@ -19,6 +25,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.ResponseBody
 import okhttp3.internal.notify
 import org.json.JSONException
 import org.json.JSONObject
@@ -134,6 +141,10 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     val selectedPostItem: LiveData<Event<Int>>
         get() = _selectedPostItem
 
+    private val _isModifyPost: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val isModifyPost: LiveData<Boolean>
+        get() = _isModifyPost
+
     fun setPostId(id: Int) {
         _postId.value = id
     }
@@ -224,6 +235,24 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
         initCheckBtnStatus(false)
         initUpdatedPwStatus(false)
         _isUpdatedOptions.value = false
+        _isModifyPost.value = false
+    }
+
+    fun setModifyOrNew(status: Boolean) {
+        _isModifyPost.value = status
+        if(status) {
+//            setValueIfModifyStatus()
+        }
+    }
+
+    fun setValueIfModifyStatus() {
+/*
+            // 이미지 관련 처리
+            _photoUris.value = postResponse.value?.imgUrls
+            _photoLen.value = postResponse.value?.imgUrls?.size
+            _isFilledValue[0].value = true
+            for (i in 0 until _photoLen.value!!) {
+                _isFilledImageValues[i].value = true*/
     }
 
     // Retrofit
@@ -339,102 +368,54 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
         }
 
         try {
-            val jsonObject = JsonObject().apply {
-                addProperty("name", userNickname.value) // Replace with actual value
-                addProperty("birth", userBirth.value) // Replace with actual value
-                addProperty("gender", userGender.value) // Replace with actual value
-            }
-            val dataJson = Gson().toJson(jsonObject)
-            Timber.d("[PATCH] postDto to JSON : ${dataJson.toString()}")
+            val updateDto = UpdateDTO(
+                name = _userNickname.value ?: "",
+                birth = _userBirth.value ?: "",
+                gender = _userGender.value ?: 0
+            )
 
-            val requestBody = dataJson.toRequestBody("application/json".toMediaTypeOrNull())
-            val response = repository.updateInfo(token, images, requestBody)
+            // PostDto 객체를 JSON 형태의 문자열로 변환
+            val updateDtoJson = Gson().toJson(updateDto)
+            Timber.d("[POST] postDto to JSON : ${updateDtoJson.toString()}")
+            val updateDtoRequestBody =
+                updateDtoJson.toRequestBody("application/json".toMediaTypeOrNull())
 
-                response.enqueue(object : Callback<Response<Void>> {
-                    override fun onResponse(
-                        call: Call<Response<Void>>,
-                        response: Response<Response<Void>>
-                    ) {
-                        if (response.isSuccessful) {
-                            val json = response.body()?.toString()
-                            Timber.d("MY PAGE PATCH API 호출 성공 : $json")
-                        } else {
-                            try {
-                                val errorBody = response.errorBody()
-                                val errorCode = response.code()
+            var response: Call<Response<Void>> = repository.updateInfo(
+                token, images,  updateDtoRequestBody
+            )
 
-                                if (errorBody != null) {
-                                    val errorJson = JSONObject(errorBody.string())
-                                    val errorMessage = errorJson.optString("message")
-                                    val errorCodeFromJson = errorJson.optInt("code")
+            response.enqueue(object : Callback<Response<Void>> {
+                override fun onResponse(
+                    call: Call<Response<Void>>,
+                    response: Response<Response<Void>>
+                ) {
+                    if (response.isSuccessful) {
+                        val json = response.body()?.toString()
+                        Timber.d("MY PAGE PATCH API 호출 성공 : $json")
+                    } else {
+                        try {
+                            val errorBody = response.errorBody()
+                            val errorCode = response.code()
 
-                                    Timber.d("API 호출 실패: $errorCodeFromJson / $errorMessage")
-                                } else Timber.d("MY PAGE PATCH API 호출 실패: $errorCode")
-                            } catch (e: JSONException) {
-                                Timber.d("error response failed : ${e.message}")
-                            }
+                            if (errorBody != null) {
+                                val errorJson = JSONObject(errorBody.string())
+                                val errorMessage = errorJson.optString("message")
+                                val errorCodeFromJson = errorJson.optInt("code")
+
+                                Timber.d("API 호출 실패: $errorCodeFromJson / $errorMessage")
+                            } else Timber.d("MY PAGE PATCH API 호출 실패: $errorCode")
+                        } catch (e: JSONException) {
+                            Timber.d("error response failed : ${e.message}")
+                        }
 
                     }
                 }
-
                 override fun onFailure(call: Call<Response<Void>>, t: Throwable) {
                     Timber.d("RESPONSE FAILURE")
                 }
             })
         } catch (e: Exception) {
             Timber.d("마이 페이지 글 수정 과정 오류 발생: $e")
-        }
-    }
-
-    fun updateMyInfoNoImageRetrofit() {
-        viewModelScope.launch {
-            val token = ds.getAccessToken().first()
-
-            try {
-                val jsonObject = JsonObject().apply {
-                    addProperty("name", userNickname.value) // Replace with actual value
-                    addProperty("birth", userBirth.value) // Replace with actual value
-                    addProperty("gender", userGender.value) // Replace with actual value
-                }
-                val dataJson = Gson().toJson(jsonObject)
-                Timber.d("[PATCH] postDto to JSON : ${dataJson.toString()}")
-
-                val requestBody = dataJson.toRequestBody("application/json".toMediaTypeOrNull())
-                val response = repository.updateInfoNoImage(token, requestBody)
-
-                response.enqueue(object : Callback<Response<Void>> {
-                    override fun onResponse(
-                        call: Call<Response<Void>>,
-                        response: Response<Response<Void>>
-                    ) {
-                        if (response.isSuccessful) {
-                            val json = response.body()?.toString()
-                            Timber.d("MY PAGE PATCH API 호출 성공 : $json")
-                        } else {
-                            try {
-                                val errorBody = response.errorBody()
-                                val errorCode = response.code()
-
-                                if (errorBody != null) {
-                                    val errorJson = JSONObject(errorBody.string())
-                                    val errorMessage = errorJson.optString("message")
-                                    val errorCodeFromJson = errorJson.optInt("code")
-
-                                    Timber.d("API 호출 실패: $errorCodeFromJson / $errorMessage")
-                                } else Timber.d("MY PAGE PATCH API 호출 실패: $errorCode")
-                            } catch (e: JSONException) {
-                                Timber.d("error response failed : ${e.message}")
-                            }
-                        }
-                    }
-
-                    override fun onFailure(call: Call<Response<Void>>, t: Throwable) {
-                        Timber.d("RESPONSE FAILURE")
-                    }
-                })
-            } catch (e: Exception) {
-                Timber.d("마이 페이지 글 수정 과정 오류 발생: $e")
-            }
         }
     }
 }

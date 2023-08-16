@@ -32,11 +32,7 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(R.layout.fragment_my_
         super.onViewCreated(view, savedInstanceState)
 
         connectionTabLayout()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        callback.remove()
+//        vm.updateMyInfoRetrofit()
     }
 
     override fun onAttach(context: Context) {
