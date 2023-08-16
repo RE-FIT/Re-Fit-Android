@@ -175,7 +175,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
             val itemDescription = (view as TextView).text.toString()
             when (itemDescription) {
                 "채팅방 나가기" -> {
-                    viewModel.roomId.value?.let { viewModel.room_delete(it) }
+                    viewModel.room_delete(args.roomId.toString())
                 }
 
                 "거래 완료" -> {
