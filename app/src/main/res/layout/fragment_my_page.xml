@@ -4,12 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.mypage.MyPageFragment">
 
-    <data>
-        <variable
-            name="vm"
-            type="com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel" />
-    </data>
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,7 +36,7 @@
                 android:id="@+id/image"
                 android:layout_width="110dp"
                 android:layout_height="110dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/refit"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +65,7 @@
                         android:id="@+id/myPageName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{vm.userNickname}"
+                        android:text="팀"
                         android:textAppearance="@style/MediumFontKr.12" />
 
                     <TextView
