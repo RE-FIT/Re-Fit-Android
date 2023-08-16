@@ -239,7 +239,11 @@ class CommunityAddPostFragment :
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 val isFilled = p0?.isNotEmpty() == true
-                vmAdd.setFilledStatus(6, isFilled, "")
+                val edit = vmAdd.getDecimalFormat(binding.etCommunityAddpostPrice.text.toString())
+                if(edit != "0" && isFilled) {
+                    vmAdd.setFilledStatus(6, true, "")
+                    Timber.d("[EDIT] 체크")
+                } else vmAdd.setFilledStatus(6, false, "")
             }
 
             override fun afterTextChanged(p0: Editable?) {
