@@ -41,6 +41,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.vm = viewModel
+
         val userId = args.userId.toString()
         val roomId = args.roomId.toString()
         val sellerId = args.sellerId.toString()

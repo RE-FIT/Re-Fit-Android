@@ -2,6 +2,7 @@ package com.example.refit.presentation.chat.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -134,5 +135,20 @@ class ChatViewModel(private val repository: ChatRepository, private val ds: Toke
         } else _userStatus.value = 1
     }
 
+    /**
+     * 버튼 활성화 기능
+     */
+    val chatting = MutableLiveData<String>()
 
+    val isFilledAllOptions: LiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        addSource(chatting) { value = isBothFieldsFilled() }
+    }
+
+    private fun isBothFieldsFilled(): Boolean {
+        return !chatting.value.isNullOrEmpty()
+    }
+
+    fun init() {
+        chatting.postValue("")
+    }
 }

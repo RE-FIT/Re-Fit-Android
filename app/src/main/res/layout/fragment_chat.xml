@@ -103,6 +103,7 @@
             android:inputType="text"
             android:textColor="@color/dark2"
             style="@style/RegularFont.14"
+            android:text="@={vm.chatting}"
             android:hint="메세지를 입력해주세요."
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"></EditText>
@@ -111,7 +112,7 @@
             android:id="@+id/write_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/before_send"
+            android:background="@{vm.isFilledAllOptions ? @drawable/message_send : @drawable/before_send}"
             app:layout_constraintBottom_toBottomOf="@+id/edit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/edit"
