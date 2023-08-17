@@ -16,24 +16,44 @@ import com.example.refit.presentation.signup.viewmodel.SignUpViewModel
 import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import com.google.android.material.textfield.TextInputLayout
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import kotlin.math.sign
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sign_up) {
 
-    private val signUpViewModel: SignUpViewModel by sharedViewModel()
+    private val signUpViewModel: SignUpViewModel by activityViewModel()
     private val viewModel: SignInViewModel by sharedViewModel()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = signUpViewModel
         handleInputId()
+        handleIdEvent()
         handleInputPassword()
+        handlePasswordEvent()
         handleInputEmail()
+        handleEmailFormatEvent()
         handleEmailCodeCertification()
+        handleEmailCodeFormatEvent()
+        handleEmailCodeEvent()
+        handleEmailEvent()
         handleInputNickname()
+        handleNicknameFormatEvent()
+        handleNicknameEvent()
         handleBirthDate()
+        handleBirthEvent()
         initSexDropDownMenu()
+        handleSexEvent()
         handleSignUpAgreeCheckBox()
+        handleAgreeEvent()
         handleClickSignUpButton()
         handleCompleteSignUp()
+        handleClickCloseButton()
+    }
+
+    private fun handleClickCloseButton() {
+        binding.tvSignUpClose.setOnClickListener {
+            navigate(R.id.action_signUpFragment_to_signInFragment)
+        }
     }
 
     private fun handleInputId() {
@@ -156,20 +176,70 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
         })
     }
 
-    abstract inner class SignUpInputTextWatcher(
-        private val containerView: TextInputLayout
-    ) : TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-        override fun afterTextChanged(text: Editable?) {
-            text?.let { inputText ->
-                if (inputText.isEmpty()) {
-                    containerView.error = null
-                    containerView.boxStrokeWidth = 0
-                    containerView.helperText = null
-                }
-            }
-        }
+    private fun handleIdEvent() {
+        signUpViewModel.isValidId.observe(viewLifecycleOwner, EventObserver {isValid ->
+            binding.isValidId = isValid
+        })
+    }
+
+    private fun handlePasswordEvent() {
+        signUpViewModel.isValidPassword.observe(viewLifecycleOwner, EventObserver {isValid ->
+            binding.isValidPassword = isValid
+        })
+    }
+
+    private fun handleEmailFormatEvent() {
+        signUpViewModel.isValidEmailFormat.observe(viewLifecycleOwner, EventObserver {isValid ->
+            binding.isValidEmailFormat = isValid
+        })
+    }
+
+    private fun handleEmailCodeFormatEvent() {
+        signUpViewModel.isValidEmailCodeFormat.observe(viewLifecycleOwner, EventObserver {isValid ->
+            binding.isValidEmailCodeFormat = isValid
+        })
+    }
+
+    private fun handleEmailCodeEvent() {
+        signUpViewModel.emailCode.observe(viewLifecycleOwner, EventObserver {
+            binding.emailCode = it
+        })
+    }
+
+    private fun handleEmailEvent() {
+        signUpViewModel.isValidEmail.observe(viewLifecycleOwner, EventObserver {isValid ->
+            binding.isValidEmail = isValid
+        })
+    }
+
+    private fun handleNicknameFormatEvent() {
+        signUpViewModel.isValidNicknameFormat.observe(viewLifecycleOwner, EventObserver {isValid ->
+            binding.isValidNicknameFormat = isValid
+        })
+    }
+
+    private fun handleNicknameEvent() {
+        signUpViewModel.isValidNickname.observe(viewLifecycleOwner, EventObserver {isValid ->
+            binding.isValidNickname = isValid
+        })
+    }
+
+    private fun handleBirthEvent() {
+        signUpViewModel.isValidBirt.observe(viewLifecycleOwner, EventObserver {isValid ->
+            binding.isValidBirth = isValid
+        })
+    }
+
+    private fun handleSexEvent() {
+        signUpViewModel.isValidSex.observe(viewLifecycleOwner, EventObserver {isValid ->
+            binding.isValidSex = isValid
+        })
+    }
+
+    private  fun handleAgreeEvent() {
+        signUpViewModel.isValidAgree.observe(viewLifecycleOwner, EventObserver {isValid ->
+            binding.isValidAgree = isValid
+        })
     }
 
 

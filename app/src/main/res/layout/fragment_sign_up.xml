@@ -8,6 +8,50 @@
         <import type="android.view.View" />
 
         <variable
+            name="isValidId"
+            type="Boolean" />
+
+        <variable
+            name="isValidPassword"
+            type="Boolean" />
+
+        <variable
+            name="isValidEmailFormat"
+            type="Boolean" />
+
+        <variable
+            name="isValidEmailCodeFormat"
+            type="Boolean" />
+
+        <variable
+            name="isValidEmail"
+            type="Boolean" />
+        
+        <variable
+            name="emailCode"
+            type="com.example.refit.data.model.signup.ResponseEmailCertification" />
+
+        <variable
+            name="isValidBirth"
+            type="Boolean" />
+
+        <variable
+            name="isValidNicknameFormat"
+            type="Boolean" />
+
+        <variable
+            name="isValidNickname"
+            type="Boolean" />
+
+        <variable
+            name="isValidSex"
+            type="Boolean" />
+
+        <variable
+            name="isValidAgree"
+            type="Boolean" />
+
+        <variable
             name="vm"
             type="com.example.refit.presentation.signup.viewmodel.SignUpViewModel" />
 
@@ -84,8 +128,8 @@
                     android:id="@+id/tl_sign_up_input_id"
                     style="@style/TextInputLayout.SignUp.Common"
                     handleErrorMessage="@{vm.errorResponseId.errorMessage}"
-                    handleInvalidMessage="@{etSignUpInputId.getText().length() == 0 || vm.isValidId() ? null : @string/sign_up_invalid_id}"
-                    handleValidMessage="@{vm.isValidId() ? @string/sign_up_valid_id : null}"
+                    handleInvalidMessage="@{etSignUpInputId.getText().length() == 0 || isValidId ? null : @string/sign_up_invalid_id}"
+                    handleValidMessage="@{isValidId ? @string/empty : null}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -118,8 +162,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tl_sign_up_input_password"
                     style="@style/TextInputLayout.SignUp.Common"
-                    handleInvalidMessage="@{etSignUpInputPassword.getText().length() == 0 || vm.isValidPassword() ? null : @string/sign_up_invalid_password}"
-                    handleValidMessage="@{vm.isValidPassword() ? @string/sign_up_valid_password : null}"
+                    handleInvalidMessage="@{etSignUpInputPassword.getText().length() == 0 || isValidPassword ? null : @string/sign_up_invalid_password}"
+                    handleValidMessage="@{isValidPassword ? @string/sign_up_valid_password : null}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -154,8 +198,8 @@
                     android:id="@+id/tl_sign_up_input_email"
                     style="@style/TextInputLayout.SignUp.Common"
                     handleErrorMessage="@{vm.errorResponseEmail.errorMessage}"
-                    handleInvalidMessage="@{etSignUpInputEmail.getText().length() == 0 || vm.isValidEmailFormat() ? null : @string/sign_up_invalid_email}"
-                    handleValidMessage="@{vm.isValidEmailFormat() ? @string/sign_up_valid_email : null}"
+                    handleInvalidMessage="@{etSignUpInputEmail.getText().length() == 0 || isValidEmailFormat ? null : @string/sign_up_invalid_email}"
+                    handleValidMessage="@{isValidEmailFormat ? @string/sign_up_valid_email : null}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -175,11 +219,11 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_sign_up_email_certification"
-                    setActivationButtonByStatus="@{vm.isValidEmailFormat()}"
+                    setActivationButtonByStatus="@{isValidEmailFormat}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/light"
-                    android:clickable="@{vm.isValidEmailFormat() ? true : false}"
+                    android:clickable="@{isValidEmailFormat ? true : false}"
                     android:onClick="@{() -> vm.certificateEmail(etSignUpInputEmail.getText().toString())}"
                     android:padding="12dp"
                     android:text="인증"
@@ -198,7 +242,7 @@
                     android:layout_marginTop="10dp"
                     android:text="이메일 인증"
                     android:textColor="@color/dark2"
-                    android:visibility="@{vm.emailCode != null ? View.VISIBLE : View.GONE, default=gone}"
+                    android:visibility="@{emailCode != null ? View.VISIBLE : View.GONE, default=gone}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tl_sign_up_input_email" />
@@ -206,13 +250,13 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tl_sign_up_input_email_certification_code"
                     style="@style/TextInputLayout.SignUp.Common"
-                    handleInvalidMessage="@{etSignUpInputEmailCertificationCode.getText().length() == 0 || vm.isValidEmail() ? null : @string/sign_up_invalid_email_code}"
-                    handleValidMessage="@{vm.isValidEmail() ? @string/sign_up_valid_email_code : null}"
+                    handleInvalidMessage="@{etSignUpInputEmailCertificationCode.getText().length() == 0 || isValidEmail ? null : @string/sign_up_invalid_email_code}"
+                    handleValidMessage="@{isValidEmail ? @string/sign_up_valid_email_code : null}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="10dp"
-                    android:visibility="@{vm.emailCode != null ? View.VISIBLE : View.GONE, default=gone}"
+                    android:visibility="@{emailCode != null ? View.VISIBLE : View.GONE, default=gone}"
                     app:layout_constraintEnd_toStartOf="@id/btn_sign_up_email_code_certification"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_sign_up_email_certification_code">
@@ -228,17 +272,17 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_sign_up_email_code_certification"
-                    setActivationButtonByStatus="@{vm.isValidEmailCodeFormat()}"
+                    setActivationButtonByStatus="@{isValidEmailCodeFormat}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/light"
-                    android:clickable="@{vm.isValidEmailCodeFormat() ? true : false}"
+                    android:clickable="@{isValidEmailCodeFormat ? true : false}"
                     android:onClick="@{() -> vm.checkValidationEmailCertificationCode(etSignUpInputEmailCertificationCode.getText().toString())}"
                     android:padding="12dp"
                     android:text="확인"
                     android:textAppearance="@style/MediumFontKr.10"
                     android:textColor="@color/black"
-                    android:visibility="@{vm.emailCode != null ? View.VISIBLE : View.GONE, default=gone}"
+                    android:visibility="@{emailCode != null ? View.VISIBLE : View.GONE, default=gone}"
                     app:cornerRadius="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/tl_sign_up_input_email_certification_code"
@@ -261,7 +305,7 @@
                     android:id="@+id/tl_sign_up_input_nickname"
                     style="@style/TextInputLayout.SignUp.Common"
                     handleErrorMessage="@{vm.errorResponseNickname.errorMessage}"
-                    handleValidMessage="@{vm.isValidNickname() ? @string/sign_up_valid_nickname : null}"
+                    handleValidMessage="@{isValidNickname ? @string/sign_up_valid_nickname : null}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -284,8 +328,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/light"
-                    android:clickable="@{vm.isValidNicknameFormat()}"
-                    setActivationButtonByStatus="@{vm.isValidNicknameFormat()}"
+                    android:clickable="@{isValidNicknameFormat}"
+                    setActivationButtonByStatus="@{isValidNicknameFormat}"
                     android:onClick="@{() -> vm.checkNicknameValidation(etSignUpInputNickname.getText().toString())}"
                     android:padding="12dp"
                     android:text="중복확인"
@@ -311,8 +355,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tl_sign_up_input_birth"
                     style="@style/TextInputLayout.SignUp.Common"
-                    handleValidMessage="@{vm.isValidBirt() ? @string/empty : null}"
-                    handleInvalidMessage="@{etSignUpInputBirth.getText().length()  == 0 || vm.isValidBirt() ? null : @string/sign_up_invalid_birth}"
+                    handleValidMessage="@{isValidBirth ? @string/empty : null}"
+                    handleInvalidMessage="@{etSignUpInputBirth.getText().length()  == 0 || isValidBirth ? null : @string/sign_up_invalid_birth}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -348,7 +392,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:boxStrokeWidth="@{vm.isValidSex() ? 4 : 0}"
+                    app:boxStrokeWidth="@{isValidSex ? 4 : 0}"
                     app:endIconTint="@color/selector_selected_dark2_else_green1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_sign_up_sex_title">
@@ -360,7 +404,7 @@
                         android:layout_height="wrap_content"
                         android:hint="성별을 선택해주세요"
                         android:inputType="none"
-                        android:textColor="@{vm.isValidSex() ? @color/green1 : @color/dark2}"
+                        android:textColor="@{isValidSex ? @color/green1 : @color/dark2}"
                         android:textColorHint="@color/dark2"
                         app:simpleItems="@array/sign_up_gender" />
 
@@ -416,8 +460,8 @@
                     android:layout_marginTop="40dp"
                     android:layout_marginBottom="20dp"
                     android:backgroundTint="@color/dark1"
-                    setActivationSignUpButtonByStatus="@{vm.isValidId() &amp; vm.isValidPassword() &amp; vm.isValidEmail() &amp; vm.isValidNickname() &amp; vm.isValidBirt() &amp; vm.isValidSex() &amp; vm.isValidAgree()}"
-                    android:clickable="@{vm.isValidId() &amp; vm.isValidPassword() &amp; vm.isValidEmail() &amp; vm.isValidNickname() &amp; vm.isValidBirt() &amp; vm.isValidSex() &amp; vm.isValidAgree() }"
+                    setActivationSignUpButtonByStatus="@{isValidId &amp; isValidPassword &amp; isValidEmail &amp; isValidNickname &amp; isValidBirth &amp; isValidSex &amp; isValidAgree}"
+                    android:clickable="@{isValidId &amp; isValidPassword &amp; isValidEmail &amp; isValidNickname &amp; isValidBirth &amp; isValidSex &amp; isValidAgree }"
                     android:text="가입하기"
                     android:textAppearance="@style/RegularFontKr.14"
                     android:textColor="@color/white"
