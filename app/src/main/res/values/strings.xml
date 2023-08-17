@@ -48,7 +48,7 @@
     <string name="sign_up_invalid_email_code">* 인증번호를 다시 한 번 확인해주세요.</string>
     <string name="sign_up_invalid_nickname">* 이미 존재하는 닉네임입니다</string>
     <string name="sign_up_invalid_nickname_format">* 이미 존재하는 닉네임입니다</string>
-    <string name="sign_up_invalid_birth">* YYYY/MM/DD 형식으로 작성해야 합니다</string>
+    <string name="sign_up_invalid_birth">* YYYY/MM/DD or YYYYMMDD 형식으로 작성해야 합니다</string>
 
     <!-- Closet -->
     <string name="closet_category_first">상의</string>

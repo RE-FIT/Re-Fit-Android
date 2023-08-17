@@ -127,7 +127,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
             override fun afterTextChanged(text: Editable?) {
                 super.afterTextChanged(text)
                 signUpViewModel.checkValidationBirth(
-                    "^(?:19|20)\\d\\d/(?:0[1-9]|1[0-2])/(?:0[1-9]|[12][0-9]|3[01])\$".toRegex(),
+                    "^(?:\\d{4}/\\d{2}/\\d{2}|\\d{8})\$".toRegex(),
                     text.toString()
                 )
             }
