@@ -58,7 +58,8 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
             val action = CommunityInfoFragmentDirections.actionCommunityInfoFragmentToChatFragment(
                 vm.postResponse.value!!.clickedMember, chatViewModel.roomId.value.toString(),
                 vm.postResponse.value!!.author, vm.postResponse.value!!.author,
-                vm.postResponse.value!!.postType.toString(), vm.postResponse.value!!.profileUrl.toString())
+                vm.postResponse.value!!.postType.toString(), vm.postResponse.value!!.profileUrl.toString(),
+                vm.postResponse.value!!.postId, vm.postResponse.value!!.postState)
             Navigation.findNavController(view).navigate(action)
         })
     }

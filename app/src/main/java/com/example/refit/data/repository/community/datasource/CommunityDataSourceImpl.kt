@@ -1,5 +1,6 @@
 package com.example.refit.data.repository.community.datasource
 
+import com.example.refit.data.model.chat.Trade
 import com.example.refit.data.model.community.BlockDto
 import com.example.refit.data.model.community.Member
 import com.example.refit.data.model.community.PostResponse
@@ -215,6 +216,10 @@ class CommunityDataSourceImpl(private val communityApi: CommunityApi) : Communit
         reportedUser: ReportedUser
     ): Call<ResponseBody> {
         return communityApi.reportUser(accessToken, reportedUser)
+    }
+
+    override suspend fun trade(accessToken: String, req: Trade): Call<ResponseBody> {
+        return communityApi.tradeSuccess(accessToken, req)
     }
 
 }
