@@ -45,10 +45,14 @@
     <string name="sign_up_invalid_id">* 8-16자의 영문, 숫자를 포함해야 합니다</string>
     <string name="sign_up_invalid_password">* 영문 대문자, 소문자, 숫자, 특수기호 !, -, _ 중 모두 포함하며 8글자 이상 16글자 이하여야 합니다</string>
     <string name="sign_up_invalid_email">* 이메일 양식을 정확하게 입력해주세요</string>
+    <string name="sign_up_request_email_code_error">* 오류입니다. 다시 시도해주세요</string>
     <string name="sign_up_invalid_email_code">* 인증번호를 다시 한 번 확인해주세요.</string>
     <string name="sign_up_invalid_nickname">* 이미 존재하는 닉네임입니다</string>
     <string name="sign_up_invalid_nickname_format">* 이미 존재하는 닉네임입니다</string>
     <string name="sign_up_invalid_birth">* YYYY/MM/DD or YYYYMMDD 형식으로 작성해야 합니다</string>
+
+    <string name="sign_up_more_request_email_code">재전송</string>
+    <string name="sign_up_request_email_code">인증</string>
 
     <!-- Closet -->
     <string name="closet_category_first">상의</string>

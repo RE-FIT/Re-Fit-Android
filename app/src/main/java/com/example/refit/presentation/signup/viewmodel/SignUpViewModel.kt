@@ -22,20 +22,20 @@ import timber.log.Timber
 
 class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
 
-    private var _errorResponse = MutableLiveData<ResponseError>()
-    val errorResponse: LiveData<ResponseError>
+    private var _errorResponse = MutableLiveData<Event<ResponseError>>()
+    val errorResponse: LiveData<Event<ResponseError>>
         get() = _errorResponse
 
-    private var _errorResponseId = MutableLiveData<ResponseError>()
-    val errorResponseId: LiveData<ResponseError>
+    private var _errorResponseId = MutableLiveData<Event<ResponseError>>()
+    val errorResponseId: LiveData<Event<ResponseError>>
         get() = _errorResponseId
 
-    private var _errorResponseEmail = MutableLiveData<ResponseError>()
-    val errorResponseEmail: LiveData<ResponseError>
+    private var _errorResponseEmail = MutableLiveData<Event<ResponseError>>()
+    val errorResponseEmail: LiveData<Event<ResponseError>>
         get() = _errorResponseEmail
 
-    private var _errorResponseNickname = MutableLiveData<ResponseError>()
-    val errorResponseNickname: LiveData<ResponseError>
+    private var _errorResponseNickname = MutableLiveData<Event<ResponseError>>()
+    val errorResponseNickname: LiveData<Event<ResponseError>>
         get() = _errorResponseNickname
 
     // 유효성 상태값
@@ -59,6 +59,10 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     private var _isValidEmailCodeFormat = MutableLiveData<Event<Boolean>>()
     val isValidEmailCodeFormat: LiveData<Event<Boolean>>
         get() = _isValidEmailCodeFormat
+
+    private var _isRequestEmailCode = MutableLiveData<Event<Boolean>>()
+    val isRequestEmailCode: LiveData<Event<Boolean>>
+        get() = _isRequestEmailCode
 
     private var _isValidEmail = MutableLiveData<Event<Boolean>>()
     val isValidEmail: LiveData<Event<Boolean>>
@@ -89,12 +93,11 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
         get() = _isSuccessSignUp
 
 
-
     fun certificateEmail(email: String) {
         viewModelScope.launch {
             try {
-                val response =
-                    repository.requestEmailCertification(RequestEmailCertification(email))
+                _isRequestEmailCode.value = Event(true)
+                val response = repository.requestEmailCertification(RequestEmailCertification(email))
                 response.enqueue(object : Callback<ResponseEmailCertification> {
                     override fun onResponse(
                         call: Call<ResponseEmailCertification>,
@@ -105,13 +108,16 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                             Timber.d("이메일 인증 코드 : ${response.body()}")
                         } else {
                             val jsonObject = JSONObject(response.errorBody()!!.string())
-                            _errorResponseEmail.value = ResponseError(
+                            _errorResponseEmail.value = Event(ResponseError(
                                 jsonObject.getInt("code"),
                                 jsonObject.getString("message")
-                            )
+                            ))
                         }
+                        _isRequestEmailCode.value = Event(false)
                     }
+
                     override fun onFailure(call: Call<ResponseEmailCertification>, t: Throwable) {
+                        _isRequestEmailCode.value = Event(false)
                         Timber.d("이메일 인증 코드를 불러오는 데 실패했습니다 - ${_errorResponseEmail.value}")
                     }
                 })
@@ -124,19 +130,20 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     fun checkNicknameValidation(nickname: String) {
         viewModelScope.launch {
             try {
-                val response = repository.checkNicknameValidation(RequestNicknameValidation(nickname))
-                response.enqueue(object: Callback<Void> {
+                val response =
+                    repository.checkNicknameValidation(RequestNicknameValidation(nickname))
+                response.enqueue(object : Callback<Void> {
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                        if(response.code() == 200) {
+                        if (response.code() == 200) {
                             _isValidNickname.value = Event(true)
                             Timber.d("사용 가능한 닉네임입니다")
-                        } else if(response.code() == 400) {
+                        } else if (response.code() == 400) {
                             val jsonObject = JSONObject(response.errorBody()!!.string())
                             _isValidNickname.value = Event(false)
-                            _errorResponseNickname.value = ResponseError(
+                            _errorResponseNickname.value = Event(ResponseError(
                                 jsonObject.getInt("code"),
                                 jsonObject.getString("message")
-                            )
+                            ))
                             Timber.d("닉네임 사용 불가 - ${_errorResponseNickname.value}")
                         }
                     }
@@ -153,11 +160,11 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
 
     }
 
-    fun signUpUser(loginId: String, password: String, email: String, name: String, birth: String, gender: Int) {
-        val requestBody = RegisterUserRequest(loginId, password, email, name, birth, gender)
-
+    fun signUpUser(
+        loginId: String, password: String, email: String, name: String, birth: String, gender: Int) {
         viewModelScope.launch {
             try {
+                val requestBody = RegisterUserRequest(loginId, password, email, name, birth, gender)
                 val response = repository.requestJoinUser(requestBody)
                 response.enqueue(object : Callback<ResponseBody> {
                     override fun onResponse(
@@ -168,16 +175,20 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                             _isSuccessSignUp.value = Event(true)
                             Timber.d("회원가입 성공")
                         } else {
-                            val errorBody = response.errorBody()
-                            val errorCode = response.code()
+                            response.errorBody()?.let {
+                                val errorJson = JSONObject(it.string())
+                                val message = errorJson.optString("message")
+                                val code = errorJson.optInt("code")
+                                val responseError = ResponseError(code, message)
 
-                            if (errorBody != null) {
-                                val errorJson = JSONObject(errorBody.string())
-                                val errorMessage = errorJson.optString("errorMessage")
-                                val errorCodeFromJson = errorJson.optInt("code")
-
-                                Timber.d("API 호출 실패: $errorJson")
-                            } else Timber.d("API 호출 실패: $errorCode")
+                                when (code) {
+                                    10013 -> {
+                                        _errorResponseId.value = Event(responseError)
+                                        _isValidId.value = Event(false)
+                                    }
+                                }
+                            }
+                            Timber.d("API 호출 실패: ${response.errorBody()}")
                         }
                     }
 
@@ -200,7 +211,8 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     }
 
     fun checkValidationEmailFormat(regex: Regex, inputText: String) {
-        _isValidEmailFormat.value = Event(regex.matches(inputText))
+        val isValidFormat = regex.matches(inputText)
+        _isValidEmailFormat.value = Event(isValidFormat)
     }
 
     fun checkValidationEmailCodeFormat(regex: Regex, inputText: String) {
@@ -227,5 +239,16 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
 
     fun checkValidationAgree(isChecked: Boolean) {
         _isValidAgree.value = Event(isChecked)
+    }
+
+    fun handleNoneResponseForEmailCodeRequest(errorMessage: String) {
+        if(_isRequestEmailCode.value!!.content) {
+            _isRequestEmailCode.value = Event(false)
+            _errorResponseEmail.value = Event(ResponseError(
+                -1,
+                errorMessage
+            ))
+        }
+
     }
 }

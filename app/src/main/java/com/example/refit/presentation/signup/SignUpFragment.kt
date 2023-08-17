@@ -1,5 +1,7 @@
 package com.example.refit.presentation.signup
 
+import android.animation.Animator
+import android.animation.Animator.AnimatorListener
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,6 +19,7 @@ import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import timber.log.Timber
 import kotlin.math.sign
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sign_up) {
@@ -26,6 +29,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = signUpViewModel
+        binding.requestEmailText = resources.getString(R.string.sign_up_request_email_code)
         handleInputId()
         handleIdEvent()
         handleInputPassword()
@@ -35,6 +39,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
         handleEmailCodeCertification()
         handleEmailCodeFormatEvent()
         handleEmailCodeEvent()
+        handleRequestEmailCodeEvent()
+        handleLoadingStatusRequestingEmailCode()
         handleEmailEvent()
         handleInputNickname()
         handleNicknameFormatEvent()
@@ -48,6 +54,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
         handleClickSignUpButton()
         handleCompleteSignUp()
         handleClickCloseButton()
+
+        handleResponseErrorId()
+        handleResponseErrorEmail()
+        handleResponseErrorNickname()
     }
 
     private fun handleClickCloseButton() {
@@ -168,36 +178,56 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
         }
     }
 
+    private fun handleLoadingStatusRequestingEmailCode() {
+        binding.lavSignUpWaitingEmailCertification.addAnimatorListener(object : AnimatorListener {
+            override fun onAnimationStart(p0: Animator) {}
+            override fun onAnimationCancel(p0: Animator) {
+                Timber.d("멈춤")
+            }
+            override fun onAnimationRepeat(p0: Animator) {
+            }
+            override fun onAnimationEnd(p0: Animator) {
+                signUpViewModel.handleNoneResponseForEmailCodeRequest(resources.getString(R.string.sign_up_request_email_code_error))
+            }
+        })
+    }
+
     private fun handleCompleteSignUp() {
-        signUpViewModel.isSuccessSignUp.observe(viewLifecycleOwner, EventObserver{isSuccess ->
-            if(isSuccess) {
+        signUpViewModel.isSuccessSignUp.observe(viewLifecycleOwner, EventObserver { isSuccess ->
+            if (isSuccess) {
                 navigate(R.id.action_signUpFragment_to_signUpCompleteFragment)
             }
         })
     }
 
     private fun handleIdEvent() {
-        signUpViewModel.isValidId.observe(viewLifecycleOwner, EventObserver {isValid ->
+        signUpViewModel.isValidId.observe(viewLifecycleOwner, EventObserver { isValid ->
             binding.isValidId = isValid
         })
     }
 
     private fun handlePasswordEvent() {
-        signUpViewModel.isValidPassword.observe(viewLifecycleOwner, EventObserver {isValid ->
+        signUpViewModel.isValidPassword.observe(viewLifecycleOwner, EventObserver { isValid ->
             binding.isValidPassword = isValid
         })
     }
 
     private fun handleEmailFormatEvent() {
-        signUpViewModel.isValidEmailFormat.observe(viewLifecycleOwner, EventObserver {isValid ->
+        signUpViewModel.isValidEmailFormat.observe(viewLifecycleOwner, EventObserver { isValid ->
+            if (!isValid) {
+                binding.emailCode = null
+                binding.requestEmailText = resources.getString(R.string.sign_up_request_email_code)
+            }
             binding.isValidEmailFormat = isValid
         })
     }
 
     private fun handleEmailCodeFormatEvent() {
-        signUpViewModel.isValidEmailCodeFormat.observe(viewLifecycleOwner, EventObserver {isValid ->
-            binding.isValidEmailCodeFormat = isValid
-        })
+        signUpViewModel.isValidEmailCodeFormat.observe(
+            viewLifecycleOwner,
+            EventObserver { isValid ->
+                binding.isValidEmailCodeFormat = isValid
+            })
     }
 
     private fun handleEmailCodeEvent() {
@@ -206,39 +236,69 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
         })
     }
 
+    private fun handleRequestEmailCodeEvent() {
+        signUpViewModel.isRequestEmailCode.observe(viewLifecycleOwner, EventObserver { isValid ->
+            if (isValid) {
+                binding.lavSignUpWaitingEmailCertification.playAnimation()
+            } else if (binding.lavSignUpWaitingEmailCertification.isAnimating) {
+                binding.lavSignUpWaitingEmailCertification.cancelAnimation()
+            }
+            binding.isRequestEmailCode = isValid
+            binding.requestEmailText = resources.getString(R.string.sign_up_more_request_email_code)
+        })
+    }
+
     private fun handleEmailEvent() {
-        signUpViewModel.isValidEmail.observe(viewLifecycleOwner, EventObserver {isValid ->
+        signUpViewModel.isValidEmail.observe(viewLifecycleOwner, EventObserver { isValid ->
             binding.isValidEmail = isValid
         })
     }
 
     private fun handleNicknameFormatEvent() {
-        signUpViewModel.isValidNicknameFormat.observe(viewLifecycleOwner, EventObserver {isValid ->
+        signUpViewModel.isValidNicknameFormat.observe(viewLifecycleOwner, EventObserver { isValid ->
             binding.isValidNicknameFormat = isValid
         })
     }
 
     private fun handleNicknameEvent() {
-        signUpViewModel.isValidNickname.observe(viewLifecycleOwner, EventObserver {isValid ->
+        signUpViewModel.isValidNickname.observe(viewLifecycleOwner, EventObserver { isValid ->
             binding.isValidNickname = isValid
         })
     }
 
     private fun handleBirthEvent() {
-        signUpViewModel.isValidBirt.observe(viewLifecycleOwner, EventObserver {isValid ->
+        signUpViewModel.isValidBirt.observe(viewLifecycleOwner, EventObserver { isValid ->
             binding.isValidBirth = isValid
         })
     }
 
     private fun handleSexEvent() {
-        signUpViewModel.isValidSex.observe(viewLifecycleOwner, EventObserver {isValid ->
+        signUpViewModel.isValidSex.observe(viewLifecycleOwner, EventObserver { isValid ->
             binding.isValidSex = isValid
         })
     }
 
-    private  fun handleAgreeEvent() {
-        signUpViewModel.isValidAgree.observe(viewLifecycleOwner, EventObserver {isValid ->
+    private fun handleAgreeEvent() {
+        signUpViewModel.isValidAgree.observe(viewLifecycleOwner, EventObserver { isValid ->
             binding.isValidAgree = isValid
+        })
+    }
+
+    private fun handleResponseErrorId() {
+        signUpViewModel.errorResponseId.observe(viewLifecycleOwner, EventObserver {
+            binding.responseErrorId = it
+        })
+    }
+
+    private fun handleResponseErrorEmail() {
+        signUpViewModel.errorResponseEmail.observe(viewLifecycleOwner, EventObserver {
+            binding.responseErrorEmail = it
+        })
+    }
+
+    private fun handleResponseErrorNickname() {
+        signUpViewModel.errorResponseNickname.observe(viewLifecycleOwner, EventObserver {
+            binding.responseErrorNickname = it
         })
     }
 
