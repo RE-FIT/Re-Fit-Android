@@ -15,9 +15,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.refit.BuildConfig
 import com.example.refit.R
 import com.example.refit.data.model.chat.Chat
+import com.example.refit.data.model.chat.Trade
 import com.example.refit.databinding.FragmentChatBinding
 import com.example.refit.presentation.chat.adapter.ChatRVAdapter
 import com.example.refit.presentation.chat.viewmodel.ChatViewModel
+import com.example.refit.presentation.chat.viewmodel.TradeViewModel
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
@@ -35,6 +37,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
 
     private lateinit var socket: Socket
     private val viewModel: ChatViewModel by sharedViewModel()
+    private val tradeViewModel: TradeViewModel by sharedViewModel()
 
     val args: ChatFragmentArgs by navArgs()
 
@@ -48,7 +51,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
         val sellerId = args.sellerId.toString()
         val otherImage = args.otherImage.toString()
 
-        viewModel.setUserStatus(userId, sellerId)
+        viewModel.setUserStatus(userId, sellerId, args.postState)
 
         binding.cancel.setOnClickListener {
             findNavController().popBackStack()
@@ -181,7 +184,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
                 }
 
                 "거래 완료" -> {
-
+                    tradeViewModel.trade(Trade(args.postId, args.otherId.toString()))
+                    viewModel.changeStatus()
                 }
             }
             Timber.d(itemDescription)

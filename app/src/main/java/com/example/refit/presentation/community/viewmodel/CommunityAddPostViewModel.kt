@@ -692,6 +692,7 @@ class CommunityAddPostViewModel(
                     if (response.isSuccessful) {
                         val json = response.body()?.string()
                         Timber.d("COMMUNITY PUT API 호출 성공 : $json")
+                        _updateStatus.value = true
                     } else {
                         try {
                             val errorBody = response.errorBody()
@@ -703,11 +704,10 @@ class CommunityAddPostViewModel(
                                 val errorCodeFromJson = errorJson.optInt("code")
 
                                 Timber.d("API 호출 실패: $errorCodeFromJson / $errorMessage")
-                            } else Timber.d("COMMUNITY POST API 호출 실패: $errorCode")
+                            } else Timber.d("COMMUNITY PUT API 호출 실패: $errorCode")
                         } catch (e: JSONException) {
                             Timber.d("error response failed : ${e.message}")
                         }
-
                     }
                 }
 

@@ -1,5 +1,6 @@
 package com.example.refit.data.repository.community.datasource
 
+import com.example.refit.data.model.chat.Trade
 import com.example.refit.data.model.community.BlockDto
 import com.example.refit.data.model.community.Member
 import com.example.refit.data.model.community.PostResponse
@@ -135,4 +136,5 @@ interface CommunityDataSource {
 
     suspend fun reportUser(accessToken: String, reportedUser: ReportedUser): Call<ResponseBody>
 
+    suspend fun trade(accessToken: String, req: Trade): Call<ResponseBody>
 }

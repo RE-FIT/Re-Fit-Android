@@ -78,6 +78,7 @@ class CommunityInfoViewModel (
 
     fun setSliderImageUrls() {
         _sliderImageUrls.value = postResponse.value?.imgUrls
+        Timber.d("[INFO] setSliderImageUrls 업데이트")
     }
 
     fun formatDate(dateTime: String): String {
@@ -160,7 +161,7 @@ class CommunityInfoViewModel (
                             classifyUserState()
                         }
 
-                        Timber.d("COMMUNITY POST API 호출 성공 : $json")
+                        Timber.d("COMMUNITY GET POST API 호출 성공 : $json")
                     } else {
                         val errorBody = response.errorBody()
                         val errorCode = response.code()

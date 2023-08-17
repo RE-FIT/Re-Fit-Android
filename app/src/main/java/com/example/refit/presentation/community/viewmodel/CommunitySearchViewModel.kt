@@ -22,7 +22,7 @@ import java.lang.Exception
 class CommunitySearchViewModel(
     private val repository: CommunityRepository,
     private val ds: TokenStore
-): ViewModel() {
+) : ViewModel() {
 
     private val _selectedPostItem: MutableLiveData<Event<Int>> =
         MutableLiveData<Event<Int>>()
@@ -58,9 +58,18 @@ class CommunitySearchViewModel(
     val dropDownValue: List<MutableLiveData<Int>>
         get() = _dropDownValue
 
+    // 0 (나눔/판매), 1(여성복/남성복), 2(상의/하의/...)
+    private val _dropDownStr: List<MutableLiveData<String>> = List(3) { MutableLiveData<String>() }
+    val dropDownStr: List<MutableLiveData<String>>
+        get() = _dropDownStr
+
     private val _searchKeyword: MutableLiveData<String> = MutableLiveData<String>()
     val searchKeyword: LiveData<String>
         get() = _searchKeyword
+
+    private val _firstOrNot: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val firstOrNot: LiveData<Boolean>
+        get() = _firstOrNot
 
 
     fun setSearchTypingState(status: Boolean) {
@@ -76,6 +85,7 @@ class CommunitySearchViewModel(
     fun setKeyword(value: String) {
         _searchKeyword.value = value
     }
+
     fun setExistResult(status: Boolean) {
         _isExistResult.value = status
     }
@@ -94,20 +104,44 @@ class CommunitySearchViewModel(
 
                 if (postType < 2) {
                     if (gender > 2 && category > 6)
-                        response = repository.loadSearchResulttOnlyPostType(accessToken, keyword, postType)
+                        response =
+                            repository.loadSearchResulttOnlyPostType(accessToken, keyword, postType)
                     else if (gender < 2 && category > 6)
-                        response = repository.loadSearchResultPTAndGender(accessToken, keyword, postType, gender)
+                        response = repository.loadSearchResultPTAndGender(
+                            accessToken,
+                            keyword,
+                            postType,
+                            gender
+                        )
                     else if (gender > 2 && category < 6)
-                        response = repository.loadSearchResultPTAndCategory(accessToken, keyword, postType, category)
+                        response = repository.loadSearchResultPTAndCategory(
+                            accessToken,
+                            keyword,
+                            postType,
+                            category
+                        )
                     else if (gender < 2 && category < 6)
-                        response = repository.loadSearchResultAll(accessToken, keyword, postType, gender, category)
+                        response = repository.loadSearchResultAll(
+                            accessToken,
+                            keyword,
+                            postType,
+                            gender,
+                            category
+                        )
                 } else {
                     if (gender < 2 && category > 6)
-                        response = repository.loadSearchResultOnlyGender(accessToken, keyword, gender)
+                        response =
+                            repository.loadSearchResultOnlyGender(accessToken, keyword, gender)
                     else if (gender > 2 && category < 6)
-                        response = repository.loadSearchResultOnlyCategory(accessToken, keyword, category)
+                        response =
+                            repository.loadSearchResultOnlyCategory(accessToken, keyword, category)
                     else if (gender < 2 && category < 6)
-                        response = repository.loadSearchResultGenderAndCategory(accessToken, keyword, gender, category)
+                        response = repository.loadSearchResultGenderAndCategory(
+                            accessToken,
+                            keyword,
+                            gender,
+                            category
+                        )
                 }
 
                 response.enqueue(object : Callback<ResponseBody> {
@@ -158,10 +192,19 @@ class CommunitySearchViewModel(
         _selectedPostItem.value = Event(postId)
     }
 
+    fun setFirstOrNot(boolean: Boolean) {
+        _firstOrNot.value = boolean
+    }
+
     fun initStatus() {
         _isSearching.value = false
         _isSearchTypingState.value = false
         _isExistResult.value = false
+        _firstOrNot.value = false
+
+        _dropDownStr[0].value = "종류"
+        _dropDownStr[1].value = "성별"
+        _dropDownStr[2].value = "카테고리"
 
         for (item in _dropDownValue) {
             item.value = Integer.MAX_VALUE
@@ -215,7 +258,34 @@ class CommunitySearchViewModel(
                 "악세사리" -> type = 5
             }
         }
+        conversionTypeToText(itemType, type)
         return type
+    }
+
+    fun conversionTypeToText(itemType: Int, value: Int) {
+        when (itemType) {
+            0 -> when (value) {
+                0 -> _dropDownStr[0].value = "나눔"
+                1 -> _dropDownStr[0].value = "판매"
+                else -> _dropDownStr[0].value = "종류"
+            }
+
+            1 -> when (value) {
+                0 -> _dropDownStr[1].value = "여성복"
+                1 -> _dropDownStr[1].value = "남성복"
+                else -> _dropDownStr[1].value ="성별"
+            }
+
+            2 -> when (value) {
+                0 -> _dropDownStr[2].value = "상의"
+                1 -> _dropDownStr[2].value = "하의"
+                2 -> _dropDownStr[2].value = "아우터"
+                3 -> _dropDownStr[2].value = "원피스"
+                4 -> _dropDownStr[2].value = "신발"
+                5 -> _dropDownStr[2].value = "악세사리"
+                else -> _dropDownStr[2].value = "카테고리"
+            }
+        }
     }
 
     private fun parseSearchList(json: String): List<CommunityListItemResponse> {

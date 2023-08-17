@@ -1,5 +1,6 @@
 package com.example.refit.data.network.api
 
+import com.example.refit.data.model.chat.Trade
 import com.example.refit.data.model.community.BlockDto
 import com.example.refit.data.model.community.PostResponse
 import com.example.refit.data.model.community.Member
@@ -211,5 +212,9 @@ interface CommunityApi {
         @Body requestBody: ReportedUser
     ): Call<ResponseBody>
 
-
+    @POST("refit/trade")
+    fun tradeSuccess(
+        @Header("Authorization") accessToken: String,
+        @Body requestBody: Trade
+    ): Call<ResponseBody>
 }
