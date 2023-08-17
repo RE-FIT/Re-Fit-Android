@@ -1,6 +1,8 @@
 package com.example.refit.presentation.community
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -15,6 +17,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.refit.R
 import com.example.refit.databinding.FragmentCommunityAddPostBinding
 import com.example.refit.presentation.common.BaseFragment
@@ -29,6 +37,7 @@ import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 import java.io.File
+import java.io.FileOutputStream
 
 
 class CommunityAddPostFragment :
@@ -39,6 +48,7 @@ class CommunityAddPostFragment :
     private lateinit var pickMultipleMedia: ActivityResultLauncher<PickVisualMediaRequest>
 
     private var photoUris: List<String>? = null
+    private var countImage: Int = 0
 
 
     @SuppressLint("ResourceAsColor")
@@ -112,12 +122,17 @@ class CommunityAddPostFragment :
                     binding.tvCommunityAddpostClothesCategory.text = itemDescription
                     binding.cvCommunityAddpostClothesCategory.strokeColor =
                         ContextCompat.getColor(requireContext(), R.color.white)
-                    if(itemDescription == "신발" || itemDescription == "악세사리") {
+                    if (itemDescription == "신발" || itemDescription == "악세사리") {
                         binding.cvCommuntiyAddpostSize.isClickable = false
                         binding.tvCommuntiyAddpostSize.text = "상세설명 입력"
                         binding.cvCommuntiyAddpostSize.strokeColor =
                             ContextCompat.getColor(requireContext(), R.color.white)
-                        binding.tvCommuntiyAddpostSize.setTextColor(ContextCompat.getColor(requireContext(), R.color.green1))
+                        binding.tvCommuntiyAddpostSize.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.green1
+                            )
+                        )
                         vmAdd.setFilledStatus(4, true, "상세설명 입력")
                     } else {
                         vmAdd.setClickedOptionSize(false)
@@ -240,7 +255,7 @@ class CommunityAddPostFragment :
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 val isFilled = p0?.isNotEmpty() == true
                 val edit = vmAdd.getDecimalFormat(binding.etCommunityAddpostPrice.text.toString())
-                if(edit != "0" && isFilled) {
+                if (edit != "0" && isFilled) {
                     vmAdd.setFilledStatus(6, true, "")
                     Timber.d("[EDIT] 체크")
                 } else vmAdd.setFilledStatus(6, false, "")
@@ -303,46 +318,115 @@ class CommunityAddPostFragment :
 
     private fun handleRegisterButton() {
         binding.btnCommunityAddPostRegister.setOnClickListener {
+            countImage = 0
             val title = binding.etCommunityAddpostTitle.text.toString()
             val detail = binding.etCommunityAddpostDetail.text.toString()
 
             vmAdd.setPostTitleAndDetail(title, detail)
-
-            val imageFiles = mutableListOf<File>()
-            photoUris?.let {
-                for (uriString in it) {
-                    val uri = Uri.parse(uriString)
-                    val copiedFile = copyFileToInternalStorage(uri)
-                    Timber.d("file URI 값 정상 작동되는지 확인 : $uri ================ $copiedFile")
-
-                    copiedFile?.let { file ->
-                        if (file.exists()) {
-                            imageFiles.add(file)
-                        } else {
-                            Timber.e("파일이 존재하지 않습니다: $file")
-                        }
-                    }
-                }
-            }
-
-            Timber.d("modifyPost : ${vmAdd.isModifyPost.value}\nimagestaus: ${vmAdd.modifyImageStatus.value}")
             if (vmAdd.isModifyPost.value == true) {
                 val imageStatus = vmAdd.modifyImageStatus.value
                 if (imageStatus == false || imageStatus == null) {
                     vmAdd.modifyPost()
-                } else {
-                    vmAdd.modifyPostIncludeImage(imageFiles)
+                    navigateUp()
                 }
+            }
+
+            val imageFiles = mutableListOf<File>()
+
+            // 이미지 압축
+            val requestOptions = RequestOptions().format(DecodeFormat.PREFER_RGB_565)
+            val glide = Glide.with(this)
+
+            photoUris?.let {
+                var processedImageCount = 0
+                for (uriString in it) {
+                    val uri = Uri.parse(uriString)
+                    val copiedFile = copyFileToInternalStorage(uri)
+                    val copyFileLength = copiedFile?.length()?.div(1024)
+
+                    if (copyFileLength != null) {
+                        if (copyFileLength < 1000) {
+                            Timber.d("file URI 값 정상 작동되는지 확인 : $uri ================ $copiedFile")
+
+                            copiedFile?.let { file ->
+                                if (file.exists()) {
+                                    imageFiles.add(file)
+                                    processImageComplete(photoUris!!.size, imageFiles)
+                                } else {
+                                    Timber.e("파일이 존재하지 않습니다: $file")
+                                }
+                            }
+                        } else {
+                            // 이미지 로드
+                            glide.asBitmap()
+                                .load(uri)
+                                .apply(requestOptions)
+                                .into(object : CustomTarget<Bitmap>() {
+                                    override fun onResourceReady(
+                                        resource: Bitmap,
+                                        transition: Transition<in Bitmap>?
+                                    ) {
+                                        // 이미지 압축 작업 수행
+                                        val compressedFile = compressImage(resource)
+                                        compressedFile?.let { file ->
+                                            if (file.exists()) {
+                                                imageFiles.add(file)
+                                                Timber.d("[ADD POST] 압축 파일 크기 : ${file.length() / 1024} KB, countImage: $countImage")
+                                                processImageComplete(photoUris!!.size, imageFiles)
+                                            } else {
+                                                Timber.e("압축된 파일이 존재하지 않습니다: $file")
+                                            }
+                                        }
+                                    }
+
+                                    override fun onLoadCleared(placeholder: Drawable?) {
+                                    }
+                                })
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    private fun processImageComplete(totalImageCount: Int, imageFiles: MutableList<File>) {
+        countImage++
+
+        if(countImage == totalImageCount) {
+            Timber.d("[ADD POST] processImageComplete 실행")
+            if (vmAdd.isModifyPost.value == true) {
+                vmAdd.modifyPostIncludeImage(imageFiles)
+                Timber.d("[ADD POST] modifyPostIncludeImage 실행")
                 navigateUp()
             } else {
                 vmAdd.createPost(imageFiles)
-                vm.loadCommunityList()
+                Timber.d("[ADD POST] createPost 실행")
                 navigateUp()
+                vm.initCommunityList()
             }
-
-
         }
     }
+
+    private fun compressImage(bitmap: Bitmap): File? {
+        val context = requireContext().applicationContext
+        val outputDir = context.cacheDir
+
+        // 이미지 파일 이름 생성
+        val fileName = "compressed_${System.currentTimeMillis()}.jpg"
+        Timber.d("[IMAGE] $fileName")
+        val outputFile = File(outputDir, fileName)
+
+        // 이미지 압축 및 저장
+        val quality = 5 // 이미지 품질 설정
+        val outputStream = FileOutputStream(outputFile)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
+        outputStream.flush()
+        outputStream.close()
+
+        return outputFile
+    }
+
 
     private fun copyFileToInternalStorage(uri: Uri): File? {
         val context = requireContext().applicationContext
@@ -406,7 +490,6 @@ class CommunityAddPostFragment :
         // 제목
         binding.etCommunityAddpostTitle.setText(vmAdd.postResponse.value?.title ?: "UnKnown")
 
-
         // 거래 방식 (나눔/판매)
         val transactionType = vmAdd.postResponse.value?.postType ?: 0
         if (transactionType == 0) {
@@ -456,7 +539,6 @@ class CommunityAddPostFragment :
             binding.tvCommunityAddpostRegion.text = vmAdd.postResponse.value?.address
         }
 
-
         // 상세 설명
         binding.etCommunityAddpostDetail.setText(vmAdd.postResponse.value?.detail ?: "UnKnown")
 
@@ -484,7 +566,7 @@ class CommunityAddPostFragment :
                 )
             )
         }
-        if(vmAdd.postResponse.value?.deliveryFee == 0) {
+        if (vmAdd.postResponse.value?.deliveryFee == 0) {
             binding.tvCommunityAddpostFeeInput.text = "입력"
         }
     }
@@ -495,11 +577,6 @@ class CommunityAddPostFragment :
                 initStrokeColorIfModify()
             }
         }
-        /*vmAdd.postValue[3].observe(viewLifecycleOwner) { response ->
-            if(response != null) {
-                vmAdd.gaugeShoesOrAcc()
-            }
-        }*/
     }
 
     override fun onDestroy() {
