@@ -21,17 +21,14 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(R.layout.fragment_my_info) {
     private lateinit var viewPager : ViewPager2
     private lateinit var tabLayout : TabLayout
-    private lateinit var callback : OnBackPressedCallback
 
     private val vm: MyInfoViewModel by sharedViewModel()
-    private var mainActivity: MainActivity = MainActivity()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         vm.initAllStatus()
         super.onViewCreated(view, savedInstanceState)
 
         connectionTabLayout()
-//        vm.updateMyInfoRetrofit()
     }
 
     override fun onAttach(context: Context) {

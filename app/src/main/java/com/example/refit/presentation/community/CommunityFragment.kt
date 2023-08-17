@@ -13,6 +13,7 @@ import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.community.adapter.CommunityListAdapter
 import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
+import com.example.refit.presentation.community.viewmodel.CommunitySearchViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -22,6 +23,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
     private val communityViewModel: CommunityViewModel by sharedViewModel()
     private val infoViewModel: CommunityInfoViewModel by sharedViewModel()
+    private val vmSearch: CommunitySearchViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,6 +34,7 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         initCommunityOptionDropdown()
         setClickedButton()
         observeStatus()
+        vmSearch.setFirstOrNot(false)
     }
 
     override fun onResume() {

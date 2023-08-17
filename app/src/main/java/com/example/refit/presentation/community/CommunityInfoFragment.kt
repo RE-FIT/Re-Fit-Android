@@ -58,7 +58,8 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
             val action = CommunityInfoFragmentDirections.actionCommunityInfoFragmentToChatFragment(
                 vm.postResponse.value!!.clickedMember, chatViewModel.roomId.value.toString(),
                 vm.postResponse.value!!.author, vm.postResponse.value!!.author,
-                vm.postResponse.value!!.postType.toString(), vm.postResponse.value!!.profileUrl.toString())
+                vm.postResponse.value!!.postType.toString(), vm.postResponse.value!!.profileUrl.toString(),
+                vm.postResponse.value!!.postId, vm.postResponse.value!!.postState)
             Navigation.findNavController(view).navigate(action)
         })
     }
@@ -141,8 +142,9 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
     private fun initImageList() {
         val imageSliderAdapter = InfoImageAdapter(vm)
         binding.vpCommunityInfoImage.adapter = imageSliderAdapter
-        vm.postResponse.observe(viewLifecycleOwner) {
-                postResponse -> imageSliderAdapter.sliderImageUrls = postResponse.imgUrls
+        vm.postResponse.observe(viewLifecycleOwner) { postResponse ->
+            binding.vpCommunityInfoImage.adapter = imageSliderAdapter
+            imageSliderAdapter.sliderImageUrls = postResponse.imgUrls
         }
     }
 
@@ -233,6 +235,7 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
     private fun observeStatus() {
         vm.postResponse.observe(viewLifecycleOwner) { response ->
             if (response != null) {
+                initImageList()
                 vm.checkIfAuthor()
                 vm.classifyUserState()
                 vm.setPostDate()
@@ -246,5 +249,11 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
                 Timber.d("[INFO] 업데이트 상태 변경 알람")
             }
         }
+
+       vm.sliderImageUrls.observe(viewLifecycleOwner) {response ->
+           if(response != null) {
+               initImageList()
+           }
+       }
     }
 }

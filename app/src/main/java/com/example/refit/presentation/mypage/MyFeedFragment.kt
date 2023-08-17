@@ -22,7 +22,6 @@ class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_f
 
     private val myFeedViewModel: MyFeedViewModel by sharedViewModel()
     private val infoViewModel: CommunityInfoViewModel by sharedViewModel()
-    private val communityViewModel: CommunityViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,11 +34,11 @@ class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_f
         myFeedViewModel.loadFeedSellList()
         myFeedViewModel.loadFeedBuyList()
 
-        infoViewModel.clickedGetPost(infoViewModel.postId.value!!)
+        //infoViewModel.clickedGetPost(infoViewModel.postId.value!!)
 
-        communityViewModel.selectedPostItem.observe(viewLifecycleOwner, EventObserver { postId ->
+        myFeedViewModel.selectedPostItem.observe(viewLifecycleOwner, EventObserver { postId ->
             infoViewModel.clickedGetPost(postId)
-            navigate(R.id.action_nav_community_to_communityInfoFragment)
+            navigate(R.id.action_myPage_myFeed_to_communityInfoFragment)
         })
 
         myFeedViewModel.selectedTab.observe(viewLifecycleOwner, Observer { tab ->
