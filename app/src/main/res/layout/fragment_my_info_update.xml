@@ -5,246 +5,213 @@
     tools:context=".presentation.mypage.MyInfoUpdateFragment">
 
     <data>
-
-        <import type="android.view.View"/>
-
-        <variable
-            name="photoUri"
-            type="String" />
-
-        <variable
-            name="onClickCardViewListener"
-            type="android.view.View.OnClickListener" />
-
         <variable
             name="vm"
             type="com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel" />
-
-        <variable
-            name="checkNickname"
-            type="com.example.refit.data.model.mypage.CheckNicknameResponse" />
-
     </data>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_my_info_basic_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- 이름(닉네임) -->
+        <ImageView
+            android:id="@+id/camera_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_myinfo_camera"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_image"
+            app:layout_constraintEnd_toEndOf="@+id/profile_image" />
+
+        <TextView
+            android:id="@+id/myInfo_name"
+            android:textAppearance="@style/RegularFontKr.14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{vm.myInfoResponse.name}"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+
+        <!-- 이메일 ~ 성별 -->
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="26dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/myInfo_name">
+
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/my_info_emailTxt"
+                android:textAppearance="@style/MediumFontKr.12"
+                android:textColor="@color/green1" />
 
-                <!-- 캐릭터 -->
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/profile_image"
-                    setImage="@{photoUri}"
-                    android:layout_width="109dp"
-                    android:layout_height="109dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/ic_circle_profile"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_my_info_basic_profile"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <EditText
+                style="@style/RegularFont.12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="emailAddress"
+                android:background="@drawable/et_mypage_round_10"
+                android:focusableInTouchMode="false"
+                android:gravity="center_vertical"
+                android:inputType="textEmailAddress"
+                android:paddingStart="11dp"
+                android:paddingTop="13dp"
+                android:paddingEnd="0dp"
+                android:paddingBottom="13dp"
+                android:text="@{vm.email}"
+                android:textColor="@color/dark2" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/my_info_idTxt"
+                android:textAppearance="@style/MediumFontKr.12"
+                android:textColor="@color/green1" />
 
-                <!-- 이름(닉네임) -->
-                <ImageView
-                    android:id="@+id/camera_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="82dp"
-                    android:layout_marginTop="80dp"
-                    android:src="@drawable/ic_myinfo_camera"
-                    app:layout_constraintStart_toStartOf="@+id/profile_image"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="username"
+                android:background="@drawable/et_mypage_round_10"
+                android:focusableInTouchMode="false"
+                android:gravity="center_vertical"
+                android:paddingStart="11dp"
+                android:paddingTop="13dp"
+                android:paddingEnd="0dp"
+                android:paddingBottom="13dp"
+                android:text="@{vm.loginId}"
+                android:textAppearance="@style/RegularFont.12"
+                android:textColor="@color/dark2" />
 
-                <TextView
-                    android:id="@+id/myInfo_name"
-                    android:textAppearance="@style/RegularFontKr.14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{vm.myInfoResponse.name}"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/my_info_nameTxt"
+                android:textAppearance="@style/MediumFontKr.12"
+                android:textColor="@color/green1" />
 
-                <!-- 이메일 ~ 성별 -->
-                <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="296dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="26dp"
-                    android:layout_marginTop="8dp"
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/et_nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="37dp"
+                    android:autofillHints="name"
+                    android:background="@drawable/et_mypage_round_10"
+                    android:inputType="textPersonName"
+                    android:paddingStart="11dp"
+                    android:text="@{vm.name}"
+                    android:textAppearance="@style/RegularFontKr.12"
+                    android:textColor="@color/black" />
+
+                <android.widget.Button
+                    android:id="@+id/btn_nickName_check"
+                    android:layout_width="49dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
                     android:layout_marginEnd="26dp"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/myInfo_name">
+                    android:background="@drawable/btn_my_info_check"
+                    android:backgroundTint="@{vm.isCheckUpdatedNickname == true ? @color/green1 : @color/dark1}"
+                    android:clickable="@{vm.isCheckUpdatedNickname == true ? true : false, default = false}"
+                    android:shadowColor="@android:color/transparent"
+                    android:text="@string/my_info_isCheck_nickname"
+                    android:textAppearance="@style/RegularFontKr.10"
+                    android:textColor="@color/white" />
+            </FrameLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:text="@string/my_info_emailTxt"
-                        android:textAppearance="@style/MediumFontKr.12"
-                        android:textColor="@color/green1" />
+            <TextView
+                android:id="@+id/able_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_info_available_nickname"
+                android:textAppearance="@style/RegularFontKr.10"
+                android:textColor="@color/green1"
+                android:visibility="gone" />
 
-                    <EditText
-                        style="@style/RegularFont.12"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:autofillHints="emailAddress"
-                        android:background="@drawable/et_mypage_round_10"
-                        android:focusableInTouchMode="false"
-                        android:gravity="center_vertical"
-                        android:inputType="textEmailAddress"
-                        android:paddingStart="11dp"
-                        android:paddingTop="13dp"
-                        android:paddingEnd="0dp"
-                        android:paddingBottom="13dp"
-                        android:text="@{vm.myInfoResponse.email}"
-                        android:textColor="@color/dark2" />
+            <TextView
+                android:id="@+id/enable_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_info_unavailable_nickname"
+                android:textAppearance="@style/RegularFontKr.10"
+                android:textColor="@color/red"
+                android:visibility="gone" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/my_info_idTxt"
-                        android:textAppearance="@style/MediumFontKr.12"
-                        android:textColor="@color/green1" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/my_info_dateTxt"
+                android:layout_marginTop="5dp"
+                android:textAppearance="@style/MediumFontKr.12"
+                android:textColor="@color/green1" />
 
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:autofillHints="username"
-                        android:background="@drawable/et_mypage_round_10"
-                        android:focusableInTouchMode="false"
-                        android:gravity="center_vertical"
-                        android:paddingStart="11dp"
-                        android:paddingTop="13dp"
-                        android:paddingEnd="0dp"
-                        android:paddingBottom="13dp"
-                        android:text="@{vm.myInfoResponse.loginId}"
-                        android:textAppearance="@style/RegularFont.12"
-                        android:textColor="@color/dark2" />
+            <EditText
+                android:id="@+id/et_birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="birth"
+                android:background="@drawable/et_mypage_round_10"
+                android:inputType="date"
+                android:maxLength="10"
+                android:paddingStart="11dp"
+                android:text="@{vm.birth}"
+                android:textAppearance="@style/RegularFontKr.12"
+                android:textColor="@color/black" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:text="@string/my_info_nameTxt"
-                        android:textAppearance="@style/MediumFontKr.12"
-                        android:textColor="@color/green1" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/my_page_genderTxt"
+                android:textAppearance="@style/MediumFontKr.12"
+                android:textColor="@color/green1" />
 
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+            <Spinner
+                android:id="@+id/spinner_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_mypage_round_10"
+                android:drawableEnd="@drawable/ic_arrow_bottom_14"
+                android:switchTextAppearance="@style/RegularFontKr.12"
+                android:textSize="12sp" />
 
-                        <EditText
-                            android:id="@+id/et_nickname"
-                            android:layout_width="match_parent"
-                            android:layout_height="37dp"
-                            android:autofillHints="name"
-                            android:background="@drawable/et_mypage_round_10"
-                            android:hint="@{vm.myInfoResponse.name}"
-                            android:inputType="textPersonName"
-                            android:paddingStart="11dp"
-                            android:paddingEnd="0dp"
-                            android:text="@{vm.myInfoResponse.name}"
-                            android:textAppearance="@style/RegularFontKr.12"
-                            android:textColor="@color/black" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_my_info_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="33dp"
+                android:background="@drawable/btn_my_info_pw"
+                android:backgroundTint="@{vm.isUpdatedOptions ? @color/green1 : @color/dark1}"
+                android:clickable="@{vm.isUpdatedOptions ? true : false, default = false}"
+                android:text="@string/my_info_btn_update"
+                android:textAppearance="@style/RegularFont.14"
+                android:textColor="@color/white" />
 
-                        <android.widget.Button
-                            android:id="@+id/btn_nickName_check"
-                            android:layout_width="49dp"
-                            android:layout_height="18dp"
-                            android:layout_gravity="end"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="26dp"
-                            android:background="@drawable/btn_my_info_check"
-                            android:backgroundTint="@{vm.isCheckUpdatedNickname == true ? @color/green1 : @color/dark1}"
-                            android:clickable="@{vm.isCheckUpdatedNickname == true ? true : false, default = false}"
-                            android:padding="0dp"
-                            android:shadowColor="@android:color/transparent"
-                            android:text="@string/my_info_isCheck_nickname"
-                            android:textAppearance="@style/RegularFontKr.10"
-                            android:textColor="@color/white" />
-                    </FrameLayout>
-
-                    <TextView
-                        android:id="@+id/able_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/my_info_available_nickname"
-                        android:textAppearance="@style/RegularFontKr.10"
-                        android:textColor="@color/green1"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/enable_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/my_info_unavailable_nickname"
-                        android:textAppearance="@style/RegularFontKr.10"
-                        android:textColor="@color/red"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:text="@string/my_info_dateTxt"
-                        android:layout_marginTop="5dp"
-                        android:textAppearance="@style/MediumFontKr.12"
-                        android:textColor="@color/green1" />
-
-                    <EditText
-                        android:id="@+id/et_birthday"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:autofillHints="birth"
-                        android:background="@drawable/et_mypage_round_10"
-                        android:inputType="date"
-                        android:maxLength="10"
-                        android:paddingStart="11dp"
-                        android:text="@{vm.myInfoResponse.birth}"
-                        android:textAppearance="@style/RegularFontKr.12"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:text="@string/my_page_genderTxt"
-                        android:textAppearance="@style/MediumFontKr.12"
-                        android:textColor="@color/green1" />
-
-                    <Spinner
-                        android:id="@+id/spinner_gender"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/et_mypage_round_10"
-                        android:drawableEnd="@drawable/ic_arrow_bottom_14"
-                        android:switchTextAppearance="@style/RegularFontKr.12"
-                        android:textSize="12sp" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn_my_info_update"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="33dp"
-                        android:layout_marginBottom="32dp"
-                        android:background="@drawable/btn_my_info_pw"
-                        android:backgroundTint="@{vm.isUpdatedOptions ? @color/green1 : @color/dark1}"
-                        android:clickable="@{vm.isUpdatedOptions ? true : false, default = false}"
-                        android:text="@string/my_info_btn_update"
-                        android:textAppearance="@style/RegularFont.14"
-                        android:textColor="@color/white" />
-
-                </LinearLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

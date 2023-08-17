@@ -17,6 +17,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.refit.R
 import com.example.refit.databinding.FragmentMyInfoUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
@@ -230,7 +231,9 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         pickMedia =
             registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
                 if (uri != null) {
-                    binding.photoUri = uri.toString()
+                    Glide.with(binding.root)
+                        .load(uri.toString())
+                        .into(binding.profileImage)
                     binding.profileImage.visibility = View.VISIBLE
                 } else {
                     Timber.d("선택된 사진이 없음")

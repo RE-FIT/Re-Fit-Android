@@ -4,11 +4,14 @@ import android.annotation.SuppressLint
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.util.Log
+import android.widget.ImageView
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide
 import com.example.refit.R
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.mypage.PasswordUpdateRequest
@@ -42,6 +45,60 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
         MutableLiveData<ShowMyInfoResponse>()
     val myInfoResponse: LiveData<ShowMyInfoResponse>
         get() = _myInfoResponse
+
+    /**
+     * 입력값 변경 감지를 위한 LiveData
+     * */
+    val profileImage: MutableLiveData<String> = MutableLiveData()
+    val birth: MutableLiveData<String> = MutableLiveData()
+    val name: MutableLiveData<String> = MutableLiveData()
+    val gender: MutableLiveData<Int> = MutableLiveData()
+    val email: MutableLiveData<String> = MutableLiveData()
+    val loginId: MutableLiveData<String> = MutableLiveData()
+
+    /**
+     * 초기화
+     * */
+    fun init() {
+        profileImage.postValue(myInfoResponse.value!!.imageUrl)
+        birth.postValue(myInfoResponse.value!!.birth)
+        name.postValue(myInfoResponse.value!!.name)
+        gender.postValue(myInfoResponse.value!!.gender)
+        email.postValue(myInfoResponse.value!!.email)
+        loginId.postValue(myInfoResponse.value!!.loginId)
+    }
+
+    fun showMyInfoRetrofit() {
+        viewModelScope.launch {
+            val accessToken = ds.getAccessToken().first()
+
+            try {
+                val response = repository.showMyInfo("$accessToken")
+
+                response.enqueue(object : Callback<ShowMyInfoResponse> {
+                    override fun onResponse(
+                        call: Call<ShowMyInfoResponse>,
+                        response: Response<ShowMyInfoResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            _myInfoResponse.value = response.body()
+                            init() //데이터 바인딩 뷰 초기화
+                            Log.d("내 정보 response", "${_myInfoResponse.value}")
+                            Log.d("내 정보 2", "${_myInfoResponse.value}")
+                        } else {
+                            Timber.e("Error: ${response.code()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ShowMyInfoResponse>, t: Throwable) {
+                        Timber.d("401 Unauthorized: $t")
+                    }
+                })
+            } catch (e: Throwable) {
+                Timber.d("ERROR: $e")
+            }
+        }
+    }
 
     // 이름(닉네임)
     private val _userNickname: MutableLiveData<String> = MutableLiveData<String>()
@@ -191,29 +248,6 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
         _userGender.value = status
     }
 
-    fun updateCurrentPw(nickname: String) {
-        _currentPassword.value = nickname
-        _isCheckUpdatedPw.value = true
-    }
-    fun updateNewPw(nickname: String) {
-        _isCheckUpdatedPw.value = true
-        _newPassword.value = nickname
-    }
-
-    fun setUpdatedPasswordStatus(type: Int, status: Boolean) {
-        when (type) {
-            0 -> {
-                _isUpdatedPwValue[0].value = status
-            }
-            1 -> _isUpdatedPwValue[1].value = status
-        }
-    }
-
-    fun setUpdatedPasswordAllStatus() {
-        _isUpdatedPwOptions.value =
-            _isUpdatedPwValue[0].value == true && _isUpdatedPwValue[1].value == true
-    }
-
     fun handleClickItem(postId: Int) {
         _selectedPostItem.value = Event(postId)
     }
@@ -290,36 +324,6 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
         }
     }
 
-    fun showMyInfoRetrofit() {
-        viewModelScope.launch {
-            val accessToken = ds.getAccessToken().first()
-
-            try {
-                val response = repository.showMyInfo("$accessToken")
-
-                response.enqueue(object : Callback<ShowMyInfoResponse> {
-                    override fun onResponse(
-                        call: Call<ShowMyInfoResponse>,
-                        response: Response<ShowMyInfoResponse>
-                    ) {
-                        if (response.isSuccessful) {
-                            _myInfoResponse.value = response.body()
-                            Log.d("내 정보 response", "${_myInfoResponse.value}")
-                            Log.d("내 정보 2", "${_myInfoResponse.value}")
-                        } else {
-                            Timber.e("Error: ${response.code()}")
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ShowMyInfoResponse>, t: Throwable) {
-                        Timber.d("401 Unauthorized: $t")
-                    }
-                })
-            } catch (e: Throwable) {
-                Timber.d("ERROR: $e")
-            }
-        }
-    }
 
     fun updatePasswordRetrofit() {
         viewModelScope.launch {

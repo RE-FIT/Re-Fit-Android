@@ -1,22 +1,29 @@
 package com.example.refit.presentation.mypage
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import com.example.refit.MainActivity
 import com.example.refit.R
+import com.example.refit.data.model.mypage.PasswordUpdateRequest
 import com.example.refit.databinding.FragmentMyInfoPwUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.DialogUtil.checkPwDialog
+import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
+import com.example.refit.presentation.mypage.viewmodel.PwChangeViewModel
+import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
 class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.layout.fragment_my_info_pw_update) {
 
-    private val vm: MyInfoViewModel by sharedViewModel()
+    private val vm: PwChangeViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,18 +31,27 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
         binding.vm = vm
         binding.lifecycleOwner = this
 
-        editCurrentPassword()
-        editNewPassword()
-
+        //패스워드 변경 API 호출
         binding.btnPwUpdate.setOnClickListener {
-            vm.updatePasswordRetrofit()
+            val pw = binding.currentPw.text.toString()
+            val next = binding.newPw.text.toString()
 
-            if (vm.isUpdatedPwStatus.value == false) {
-                notifyPwIncorrectDialog()
+            if(pw.isNotEmpty() && next.isNotEmpty()){
+                vm.updatePassword(PasswordUpdateRequest(pw,next))
             }
-
-            onDestroyView()
         }
+
+        //성공 처리
+        vm.changeSuccess.observe(viewLifecycleOwner, EventObserver{
+            requireActivity().finish()
+            val restartIntent = Intent(context, MainActivity::class.java)
+            startActivity(restartIntent)
+        })
+
+        //에러 처리
+        vm.error.observe(viewLifecycleOwner, EventObserver{
+            notifyPwIncorrectDialog()
+        })
     }
 
     fun notifyPwIncorrectDialog() {
@@ -45,31 +61,8 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
         ).show(requireActivity().supportFragmentManager, null)
     }
 
-    private fun editCurrentPassword() {
-        binding.currentPw.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                vm.updateCurrentPw(s.toString())
-                vm.setUpdatedPasswordStatus(0, true)
-            }
-            override fun afterTextChanged(s: Editable?) {
-                vm.setUpdatedPasswordAllStatus()
-                Timber.d("${vm.isUpdatedPwOptions.value}")
-            }
-        })
-    }
-
-    private fun editNewPassword() {
-        binding.newPw.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                vm.updateNewPw(s.toString())
-                vm.setUpdatedPasswordStatus(1, true)
-            }
-            override fun afterTextChanged(s: Editable?) {
-                vm.setUpdatedPasswordAllStatus()
-                Timber.d("${vm.isUpdatedPwOptions.value}")
-            }
-        })
+    override fun onDestroyView() {
+        super.onDestroyView()
+        vm.init()
     }
 }

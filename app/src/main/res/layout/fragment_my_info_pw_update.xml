@@ -7,7 +7,7 @@
     <data>
         <variable
             name="vm"
-            type="com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel" />
+            type="com.example.refit.presentation.mypage.viewmodel.PwChangeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,8 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="31dp"
             android:layout_marginEnd="31dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <!-- warning -->
@@ -40,16 +38,14 @@
                 android:textAppearance="@style/MediumFontKr.10"
                 android:textColor="@color/black"
                 app:drawableTopCompat="@drawable/ic_myinfo_warning"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
+                android:text="@={vm.pw}"
                 android:id="@+id/current_pw"
                 android:layout_width="match_parent"
                 android:layout_height="37dp"
                 android:layout_marginTop="22dp"
-                android:autofillHints="birth"
                 android:background="@drawable/et_mypage_round_10"
                 android:digits="0123456789_qwertzuiopasdfghjklyxcvbnm_QWERTYUIOPASDFGHJKLZXCVBNM_~!@#$%^*"
                 android:hint="@string/my_info_current_pw"
@@ -59,11 +55,10 @@
                 android:textAppearance="@style/RegularFontKr.12"
                 android:textColor="@color/black"
                 android:textColorHint="@color/dark2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/warning" />
 
             <EditText
+                android:text="@={vm.nextPw}"
                 android:id="@+id/new_pw"
                 android:layout_width="match_parent"
                 android:layout_height="37dp"
@@ -89,8 +84,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="95dp"
                 android:background="@drawable/btn_my_info_pw"
-                android:backgroundTint="@{vm.isCheckUpdatedPw() ? @color/green1 : @color/dark1}"
-                android:clickable="@{vm.isCheckUpdatedPw() ? true : false, default = false}"
+                android:backgroundTint="@{vm.isFilledAllOptions ? @color/green1 : @color/dark1}"
+                android:clickable="@{vm.isFilledAllOptions ? true : false, default = false}"
                 android:text="@string/my_info_btn_update"
                 android:textAppearance="@style/RegularFontKr.14"
                 android:textColor="@color/white"
@@ -101,8 +96,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--
-    </ScrollView>-->
 
 </layout>
