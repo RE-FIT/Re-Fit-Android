@@ -31,7 +31,9 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
 
         binding.vm = vm
 
-        vm.initStatus()
+        if (vm.firstOrNot.value == false) {
+            vm.initStatus()
+        } else vm.loadSearchResult()
         initSearchList()
         setOnClickedButton()
         initSearchOptionDropdown()
@@ -151,6 +153,7 @@ class CommunitySearchFragment : BaseFragment<FragmentCommunitySearchBinding>(R.l
     private fun observeStatus() {
         vm.selectedPostItem.observe(viewLifecycleOwner, EventObserver { postId ->
             vminfo.clickedGetPost(postId)
+            vm.setFirstOrNot(true)
             navigate(R.id.action_communitySearchFragment_to_communityInfoFragment)
         })
     }

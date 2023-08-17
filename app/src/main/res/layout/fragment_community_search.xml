@@ -133,7 +133,7 @@
                         style="@style/CommunitySearchOption2.TextCommon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/community_search_option_first" />
+                        android:text="@{vm.dropDownStr[0]}" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -148,7 +148,7 @@
                         style="@style/CommunitySearchOption2.TextCommon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/community_search_option_second" />
+                        android:text="@{vm.dropDownStr[1]}" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -163,7 +163,7 @@
                         style="@style/CommunitySearchOption2.TextCommon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/community_search_option_third" />
+                        android:text="@{vm.dropDownStr[2]}" />
 
                 </com.google.android.material.card.MaterialCardView>
 
