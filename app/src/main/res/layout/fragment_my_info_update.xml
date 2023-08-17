@@ -49,9 +49,9 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="26dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="26dp"
+            android:layout_marginEnd="30dp"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/myInfo_name">
 
@@ -76,7 +76,7 @@
                 android:paddingTop="13dp"
                 android:paddingEnd="0dp"
                 android:paddingBottom="13dp"
-                android:text="@{vm.email}"
+                android:text="@{vm.myInfoResponse.email}"
                 android:textColor="@color/dark2" />
 
             <TextView
@@ -97,7 +97,7 @@
                 android:paddingTop="13dp"
                 android:paddingEnd="0dp"
                 android:paddingBottom="13dp"
-                android:text="@{vm.loginId}"
+                android:text="@{vm.myInfoResponse.loginId}"
                 android:textAppearance="@style/RegularFont.12"
                 android:textColor="@color/dark2" />
 
@@ -110,37 +110,18 @@
                 android:textAppearance="@style/MediumFontKr.12"
                 android:textColor="@color/green1" />
 
-            <FrameLayout
+            <EditText
+                android:id="@+id/et_nickname"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <EditText
-                    android:id="@+id/et_nickname"
-                    android:layout_width="match_parent"
-                    android:layout_height="37dp"
-                    android:autofillHints="name"
-                    android:background="@drawable/et_mypage_round_10"
-                    android:inputType="textPersonName"
-                    android:paddingStart="11dp"
-                    android:text="@{vm.name}"
-                    android:textAppearance="@style/RegularFontKr.12"
-                    android:textColor="@color/black" />
-
-                <android.widget.Button
-                    android:id="@+id/btn_nickName_check"
-                    android:layout_width="49dp"
-                    android:layout_height="18dp"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="26dp"
-                    android:background="@drawable/btn_my_info_check"
-                    android:backgroundTint="@{vm.isCheckUpdatedNickname == true ? @color/green1 : @color/dark1}"
-                    android:clickable="@{vm.isCheckUpdatedNickname == true ? true : false, default = false}"
-                    android:shadowColor="@android:color/transparent"
-                    android:text="@string/my_info_isCheck_nickname"
-                    android:textAppearance="@style/RegularFontKr.10"
-                    android:textColor="@color/white" />
-            </FrameLayout>
+                android:layout_height="37dp"
+                android:autofillHints="name"
+                android:focusableInTouchMode="false"
+                android:background="@drawable/et_mypage_round_10"
+                android:inputType="textPersonName"
+                android:paddingStart="11dp"
+                android:text="@{vm.myInfoResponse.name}"
+                android:textAppearance="@style/RegularFontKr.12"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/able_name"
@@ -178,7 +159,7 @@
                 android:inputType="date"
                 android:maxLength="10"
                 android:paddingStart="11dp"
-                android:text="@{vm.birth}"
+                android:text="@{vm.myInfoResponse.birth}"
                 android:textAppearance="@style/RegularFontKr.12"
                 android:textColor="@color/black" />
 
@@ -206,8 +187,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="33dp"
                 android:background="@drawable/btn_my_info_pw"
-                android:backgroundTint="@{vm.isUpdatedOptions ? @color/green1 : @color/dark1}"
-                android:clickable="@{vm.isUpdatedOptions ? true : false, default = false}"
+                android:backgroundTint="@{vm.isChange ? @color/green1 : @color/dark1}"
+                android:clickable="@{vm.isChange ? true : false, default = false}"
                 android:text="@string/my_info_btn_update"
                 android:textAppearance="@style/RegularFont.14"
                 android:textColor="@color/white" />

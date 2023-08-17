@@ -22,10 +22,7 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(R.layout.fragment_my_
     private lateinit var viewPager : ViewPager2
     private lateinit var tabLayout : TabLayout
 
-    private val vm: MyInfoViewModel by sharedViewModel()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        vm.initAllStatus()
         super.onViewCreated(view, savedInstanceState)
 
         connectionTabLayout()
@@ -45,7 +42,6 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(R.layout.fragment_my_
                         resources.getString(R.string.pw_change_delete_negative),
                         object : AlertBasicDialogListener {
                             override fun onClickPositive() {
-                                vm.initAllStatus()
                                 navigate(R.id.action_myInfo_to_nav_my_page)
                             }
 
