@@ -418,7 +418,7 @@ class CommunityAddPostFragment :
         val outputFile = File(outputDir, fileName)
 
         // 이미지 압축 및 저장
-        val quality = 5 // 이미지 품질 설정
+        val quality = 10 // 이미지 품질 설정
         val outputStream = FileOutputStream(outputFile)
         bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
         outputStream.flush()
