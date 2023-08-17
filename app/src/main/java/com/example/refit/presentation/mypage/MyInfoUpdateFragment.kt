@@ -19,6 +19,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.example.refit.BuildConfig.IMAGE_URL
 import com.example.refit.R
 import com.example.refit.databinding.FragmentMyInfoUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
@@ -161,9 +162,13 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
     private fun handleAddProfilePhoto() {
         binding.cameraImage.setOnClickListener {
             DialogUtil.showProfileRegisterPhotoDialog(object : ProfileRegisterPhotoDialogListener {
-                override fun onClickTakePhoto() {
-                    photoUri = FileUtil.createImageFile(requireActivity())
-                    takePicture.launch(photoUri)
+
+                override fun deletePhoto() {
+                    vm.setProfileImage(IMAGE_URL)
+                    Glide.with(binding.root)
+                        .load(IMAGE_URL)
+                        .into(binding.profileImage)
+                    vm.changed()
                 }
 
                 override fun onClickGallery() {
@@ -180,7 +185,8 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
                     Glide.with(binding.root)
                         .load(uri.toString())
                         .into(binding.profileImage)
-                    binding.profileImage.visibility = View.VISIBLE
+                    vm.setProfileImage("profileChanged")
+                    vm.changed()
                 } else {
                     Timber.d("선택된 사진이 없음")
                 }
