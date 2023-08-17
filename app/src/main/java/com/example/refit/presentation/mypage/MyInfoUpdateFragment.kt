@@ -41,9 +41,7 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
     private val vm: MyInfoViewModel by sharedViewModel()
 
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
-    private lateinit var takePicture: ActivityResultLauncher<Uri>
     private var photoUri: Uri? = null
-    private var photoUris: List<String>? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -75,6 +73,13 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
                 vm.isChange(false)
             }
         })
+
+        /**
+         * 수정버튼 클릭
+         * */
+        binding.btnMyInfoUpdate.setOnClickListener {
+            handleUpdateButton()
+        }
     }
 
     override fun onDestroyView() {
@@ -82,33 +87,6 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         vm.isChange(false)
     }
 
-//    private fun pressUpdateButton(flag: Boolean) {
-//        // 수정 버튼 눌렀을 때
-//        // [이름만 수정 되었을 때]
-//            // 1. 중복 확인 누름 - 사용 가능 / 이미 사용 중 >> 이미 사용 중일 땐 - 수정 버튼 눌러도 다이얼로그
-//            // 2. 중복 확인 안 누름 > 다이얼 로그 띄우기
-//            // 3. 수정 버튼
-//        // [성별, 생일 수정 됐을 때] >> 수정 버튼 바로 클릭 가능
-//        binding.btnMyInfoUpdate.setOnClickListener {
-//            Timber.d("수정 버튼 클릭됨")
-//            vm.setModifyOrNew(true)
-//
-//            handleUpdateButton()
-//
-//            val postId = vm.postId.value
-//            if (postId != null) {
-//                vm.setPostId(postId)
-//            }
-//
-//            if (flag) {
-//                vm.initCheckBtnStatus(false)
-//            } else {
-//                showMyPageNickNameCheckDialog()
-//            }
-//
-//        }
-//    }
-//
     // ----------------------- 정보 수정 -----------------------
     private fun selectGenderSpinner() {
         // 성별 선택
@@ -169,6 +147,7 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
                         .load(IMAGE_URL)
                         .into(binding.profileImage)
                     vm.changed()
+                    photoUri = null
                 }
 
                 override fun onClickGallery() {
@@ -187,6 +166,7 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
                         .into(binding.profileImage)
                     vm.setProfileImage("profileChanged")
                     vm.changed()
+                    photoUri = uri
                 } else {
                     Timber.d("선택된 사진이 없음")
                 }
@@ -220,29 +200,17 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         }
         return null
     }
-//
-//    private fun handleUpdateButton() {
-//        val imageFiles = mutableListOf<File?>()
-//        photoUris?.let {
-//            for (uriString in it) {
-//                val uri = Uri.parse(uriString)
-//                val copiedFile = copyFileToInternalStorage(uri)
-//                Timber.d("file URI 값 정상 작동되는지 확인 : $uri ================ $copiedFile")
-//
-//                copiedFile?.let { file ->
-//                    if (file.exists()) {
-//                        imageFiles.add(file)
-//                    } else {
-//                        Timber.e("파일이 존재하지 않습니다: $file")
-//                    }
-//                }
-//            }
-//        }
-//        if (vm.isModifyPost.value == true) {
-//            val imageStatus = vm.modifyImageStatus.value
-//
-//            vm.updateMyInfoRetrofit(imageFiles)
-//            navigateUp()
-//        }
-//    }
+
+    private fun handleUpdateButton() {
+
+        if (photoUri != null) {
+            val uri = Uri.parse(photoUri.toString())
+            val copiedFile = copyFileToInternalStorage(uri)
+            Timber.d("file URI 값 정상 작동되는지 확인 : $uri ================ $copiedFile")
+
+            vm.updateMyInfoRetrofit(copiedFile!!)
+        } else {
+            vm.updateMyInfoRetrofit(null)
+        }
+    }
 }

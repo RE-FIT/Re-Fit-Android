@@ -7,14 +7,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.refit.data.datastore.TokenStore
+import com.example.refit.data.model.common.ResponseError
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
+import com.example.refit.data.model.mypage.UpdateDTO
 import com.example.refit.data.repository.mypage.MyPageRepository
 import com.example.refit.util.Event
+import com.google.gson.Gson
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.ResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 
 class MyInfoViewModel(private val repository: MyPageRepository, private val ds: TokenStore) : ViewModel() {
 
@@ -43,6 +51,7 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     val prevProfileImage: MutableLiveData<String> = MutableLiveData()
     val prevBirth: MutableLiveData<String> = MutableLiveData()
     val prevGender: MutableLiveData<Int> = MutableLiveData()
+    val prevName: MutableLiveData<String> = MutableLiveData()
     val fromServer: MutableLiveData<Event<Boolean>> = MutableLiveData()
 
     val profileImage: MutableLiveData<String> = MutableLiveData()
@@ -54,6 +63,7 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
      * */
     fun init(value: ShowMyInfoResponse) {
         prevProfileImage.postValue(value.imageUrl)
+        prevName.postValue(value.name)
         prevBirth.postValue(value.birth)
         prevGender.postValue(value.gender)
 
@@ -293,64 +303,41 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
 //    }
 
 
-//    fun updateMyInfoRetrofit(
-//        images: List<File?>
-//    ) = viewModelScope.launch {
-//        val token = ds.getAccessToken().first()
-//        if (images.isEmpty()) {
-//            Timber.d("이미지 파일이 없습니다.")
-//            return@launch
-//        }
-//
-//        try {
-//            val updateDto = UpdateDTO(
-//                name = _userNickname.value ?: "",
-//                birth = _userBirth.value ?: "",
-//                gender = _userGender.value ?: 0
-//            )
-//
-//            // PostDto 객체를 JSON 형태의 문자열로 변환
-//            val updateDtoJson = Gson().toJson(updateDto)
-//            Timber.d("[POST] postDto to JSON : ${updateDtoJson.toString()}")
-//            val updateDtoRequestBody =
-//                updateDtoJson.toRequestBody("application/json".toMediaTypeOrNull())
-//
-//            var response: Call<Response<Void>> = repository.updateInfo(
-//                token, images,  updateDtoRequestBody
-//            )
-//
-//            response.enqueue(object : Callback<Response<Void>> {
-//                override fun onResponse(
-//                    call: Call<Response<Void>>,
-//                    response: Response<Response<Void>>
-//                ) {
-//                    if (response.isSuccessful) {
-//                        val json = response.body()?.toString()
-//                        Timber.d("MY PAGE PATCH API 호출 성공 : $json")
-//                    } else {
-//                        try {
-//                            val errorBody = response.errorBody()
-//                            val errorCode = response.code()
-//
-//                            if (errorBody != null) {
-//                                val errorJson = JSONObject(errorBody.string())
-//                                val errorMessage = errorJson.optString("message")
-//                                val errorCodeFromJson = errorJson.optInt("code")
-//
-//                                Timber.d("API 호출 실패: $errorCodeFromJson / $errorMessage")
-//                            } else Timber.d("MY PAGE PATCH API 호출 실패: $errorCode")
-//                        } catch (e: JSONException) {
-//                            Timber.d("error response failed : ${e.message}")
-//                        }
-//
-//                    }
-//                }
-//                override fun onFailure(call: Call<Response<Void>>, t: Throwable) {
-//                    Timber.d("RESPONSE FAILURE")
-//                }
-//            })
-//        } catch (e: Exception) {
-//            Timber.d("마이 페이지 글 수정 과정 오류 발생: $e")
-//        }
-//    }
+    private var _error = MutableLiveData<Event<ResponseError>>()
+    val error : LiveData<Event<ResponseError>>
+        get() = _error
+
+    // 변경되었는지 체크
+    private val _isSuccess: MutableLiveData<Event<Boolean>> =
+        MutableLiveData<Event<Boolean>>()
+    val isSuccess: LiveData<Event<Boolean>>
+        get() = _isSuccess
+
+    fun updateMyInfoRetrofit( image: File?=null
+    ) = viewModelScope.launch {
+        val token = ds.getAccessToken().first()
+        val updateDto = UpdateDTO(
+            name = prevName.value.toString(),
+            birth = prevBirth.value.toString(),
+            gender = prevGender.value?.toString()!!.toInt()
+        )
+
+        var response = repository.updateInfo(token, image, updateDto)
+
+        response.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    _isSuccess.postValue(Event(true))
+                } else {
+                    Log.d("RESPONSE", "FAIL")
+                    var jsonObject = JSONObject(response.errorBody()!!.string())
+                    _error.postValue(Event(ResponseError(
+                        jsonObject.getInt("code"), jsonObject.getString("message"))))
+                }
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("ContinueFail", "FAIL")
+            }
+        })
+    }
 }
