@@ -142,8 +142,9 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
     private fun initImageList() {
         val imageSliderAdapter = InfoImageAdapter(vm)
         binding.vpCommunityInfoImage.adapter = imageSliderAdapter
-        vm.postResponse.observe(viewLifecycleOwner) {
-                postResponse -> imageSliderAdapter.sliderImageUrls = postResponse.imgUrls
+        vm.postResponse.observe(viewLifecycleOwner) { postResponse ->
+            binding.vpCommunityInfoImage.adapter = imageSliderAdapter
+            imageSliderAdapter.sliderImageUrls = postResponse.imgUrls
         }
     }
 
@@ -234,6 +235,7 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
     private fun observeStatus() {
         vm.postResponse.observe(viewLifecycleOwner) { response ->
             if (response != null) {
+                initImageList()
                 vm.checkIfAuthor()
                 vm.classifyUserState()
                 vm.setPostDate()
@@ -247,5 +249,11 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
                 Timber.d("[INFO] 업데이트 상태 변경 알람")
             }
         }
+
+       vm.sliderImageUrls.observe(viewLifecycleOwner) {response ->
+           if(response != null) {
+               initImageList()
+           }
+       }
     }
 }

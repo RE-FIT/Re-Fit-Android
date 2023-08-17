@@ -61,6 +61,7 @@
                     android:background="@color/white"
                     android:hint="@string/community_search_edit_hint"
                     android:maxLines="1"
+                    android:inputType="text"
                     android:textColor="@color/black"
                     android:textColorHint="@color/dark2" />
 

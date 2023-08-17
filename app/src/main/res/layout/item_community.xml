@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -34,150 +34,163 @@
             android:id="@+id/mcv_community_item_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:cardBackgroundColor="@color/white"
-            app:strokeColor="@android:color/transparent" >
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@android:color/transparent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp">
+                android:orientation="horizontal"
+                android:paddingVertical="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/iv_community_item"
+                    setImage="@{communityList.imgUrl}"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    setImage="@{communityList.imgUrl}"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
                     android:scaleType="centerCrop"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.10"
-                    app:strokeColor="@android:color/transparent"
-                    android:layout_marginStart="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:strokeColor="@android:color/transparent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/iv_community_item"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:layout_marginStart="15dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/ll_community_item"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
                         android:gravity="bottom"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" >
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_community_item_list_title"
-                            style="@style/BoldFontKr.14"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{communityList.title}"
-                            android:textColor="@color/green1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_community_item_list_title"
+                                style="@style/BoldFontKr.14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLength="15"
+                                android:text="@{communityList.title}"
+                                android:textColor="@color/green1" />
+
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tv_community_item_list_price"
                             style="@style/MediumFont.12"
                             setVisibility="@{communityList.price == 0 ? false : true}"
-                            android:visibility="visible"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
                             android:text="@{communityList.price + `원`}"
                             android:textColor="@color/dark2"
-                            android:layout_marginLeft="15dp" />
+                            android:visibility="visible" />
 
                     </LinearLayout>
 
-
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_community_item_list_size_txt"
-                        style="@style/RegularFontKr.10"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:minWidth="45dp"
-                        android:text="@string/community_item_text_first"
-                        android:textColor="@color/black"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ll_community_item" />
+                        android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_community_item_list_size"
-                        style="@style/RegularFontKr.10"
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_community_item_list_size_txt"
+                            style="@style/RegularFontKr.10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:minWidth="45dp"
+                            android:text="@string/community_item_text_first"
+                            android:textColor="@color/black" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_community_item_list_size"
+                            style="@style/RegularFontKr.10"
+                            setTextSize="@{communityList.size}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="bottom"
+                            android:textColor="@color/dark2" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="bottom"
-                        setTextSize="@{communityList.size}"
-                        android:textColor="@color/dark2"
-                        app:layout_constraintStart_toEndOf="@id/tv_community_item_list_size_txt"
-                        app:layout_constraintTop_toBottomOf="@id/ll_community_item" />
+                        android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_community_item_list_method_txt"
-                        style="@style/RegularFontKr.10"
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_community_item_list_method_txt"
+                            style="@style/RegularFontKr.10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="45dp"
+                            android:text="@string/community_item_text_second"
+                            android:textColor="@color/black" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_community_item_list_method"
+                            style="@style/RegularFontKr.10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom"
+                            android:text="@{communityList.deliveryType == 0 ? `직거래` : `택배`}"
+                            android:textColor="@color/dark2" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minWidth="45dp"
-                        android:text="@string/community_item_text_second"
-                        android:textColor="@color/black"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_size_txt" />
+                        android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_community_item_list_method"
-                        style="@style/RegularFontKr.10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="bottom"
-                        android:text="@{communityList.deliveryType == 0 ? `직거래` : `택배`}"
-                        android:textColor="@color/dark2"
-                        app:layout_constraintStart_toEndOf="@id/tv_community_item_list_method_txt"
-                        app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_size"
-                        tools:ignore="MissingConstraints" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_community_item_list_region_txt"
+                            style="@style/RegularFontKr.10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="45dp"
+                            android:text="@string/community_item_text_third"
+                            android:textColor="@color/black" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_community_item_list_region_txt"
-                        style="@style/RegularFontKr.10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:minWidth="45dp"
-                        android:text="@string/community_item_text_third"
-                        android:textColor="@color/black"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_method_txt" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_community_item_list_region"
+                            style="@style/RegularFontKr.10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom"
+                            android:text="@{communityList.address == null ? @string/community_item_region_all : communityList.address}"
+                            android:textColor="@color/dark2" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_community_item_list_region"
-                        style="@style/RegularFontKr.10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="bottom"
-                        android:text="@{communityList.address == null ? @string/community_item_region_all : communityList.address}"
-                        android:textColor="@color/dark2"
-                        app:layout_constraintStart_toEndOf="@id/tv_community_item_list_method_txt"
-                        app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_method"
-                        tools:ignore="MissingConstraints" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+                </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/appCompatImageView2"
                     android:layout_width="18dp"
                     android:layout_height="15dp"
+                    android:layout_marginStart="15dp"
                     android:layout_marginEnd="20dp"
                     android:background="@{communityList.scrapFlag ? @drawable/ic_community_heart_18 : @drawable/ic_community_blank_heart_18}"
+                    android:gravity="end"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
 
         </com.google.android.material.card.MaterialCardView>
 
