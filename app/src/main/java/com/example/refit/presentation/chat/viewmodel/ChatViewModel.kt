@@ -127,12 +127,24 @@ class ChatViewModel(private val repository: ChatRepository, private val ds: Toke
      * 데이터 바인딩
      * */
 
-    fun setUserStatus(userId: String, sellerId: String) {
+    fun setUserStatus(userId: String, sellerId: String, state: Int) {
         _userId.value = userId
         _sellerId.value = sellerId
         if(userId == sellerId) {
-            _userStatus.value = 0
+            if (state == 2 || state == 3) {
+                _userStatus.value = 1
+            } else {
+                _userStatus.value = 0
+            }
         } else _userStatus.value = 1
+    }
+
+    /**
+     * 데이터 바인딩
+     * */
+
+    fun changeStatus() {
+        _userStatus.value = 1
     }
 
     /**

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.refit.R
 import com.example.refit.databinding.FragmentMyPageBinding
 import com.example.refit.presentation.common.BaseFragment
@@ -17,19 +18,9 @@ import java.util.Calendar
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
 
     private val vm: MyViewModel by sharedViewModel()
-    private val myInfoViewModel: MyInfoViewModel by sharedViewModel()
-
-    var backPressedTime : Long = 0
-    private lateinit var callback : OnBackPressedCallback
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        //날짜 셋팅
-        val today = Calendar.getInstance()
-        val date = SimpleDateFormat("yyyy-MM-dd 00:00:00").parse("2023-07-01 00:00:00") // 시작 날짜 임의 지정
-        val dDay = (today.time.time - (date?.time ?: 0)) / (60 * 60 * 24 * 1000)
-        val challengeDay = (dDay + 1).toInt()
 
         // 내 정보 버튼 클릭시
         binding.myPageBtnMyInfo.setOnClickListener(){
@@ -51,13 +42,14 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             navigate(R.id.action_myPage_to_mySetting)
         }
 
-        binding.dDay.text = "D + ${challengeDay}"
-
-        myInfoViewModel.initAllStatus()
         vm.getMyInfo()
 
         vm.myInfoResponse.observe(viewLifecycleOwner, Observer {
             binding.myPageName.text = it.name
+            binding.dDay.text = "D + ${it.day}"
+            Glide.with(binding.root)
+                .load(it.imageUrl)
+                .into(binding.image)
         })
     }
 }

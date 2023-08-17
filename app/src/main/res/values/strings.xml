@@ -371,7 +371,7 @@
     <string name="my_info_register_profile_title">프로필 사진 등록</string>
     <string name="my_info_register_profile_content_camera">앨범에서 선택</string>
     <string name="my_info_register_profile_photo_delete">사진 삭제</string>
-    <string name="my_page_dDay">10</string>
+    <string name="my_page_dDay">D+</string>
 
     <!--  sign_up -->
     <string name="sign_up_id">아이디</string>
