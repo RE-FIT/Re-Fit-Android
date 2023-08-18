@@ -6,7 +6,7 @@
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="vm"
@@ -35,25 +35,26 @@
             app:titleCentered="true"
             app:titleTextAppearance="@style/BoldFontKr.20" />
 
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_forest_quiz_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            app:cardBackgroundColor="@color/default_dark"
+            app:layout_constraintTop_toBottomOf="@id/tb_forest_quiz_top_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tv_forest_quiz_result_status"
-            app:layout_constraintTop_toBottomOf="@id/tb_forest_quiz_top_container"
             app:strokeColor="@color/green1"
             app:strokeWidth="1dp">
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/RegularFontKr.12"
+                setQuizCategory="@{vm.quizInfo.category}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:textColor="@color/green1"
-                setQuizCategory="@{vm.quizInfo.category}"
                 tools:text="분리배출" />
 
         </com.google.android.material.card.MaterialCardView>
@@ -61,58 +62,78 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_forest_quiz_result_status"
             style="@style/BoldFont"
+            isRequestAnswer="@{isRequestAnswer}"
+            setQuizAnswer="@{vm.quizInfo.answer}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            setQuizAnswer="@{vm.quizInfo.answer}"
-            isRequestAnswer="@{isRequestAnswer}"
             android:textColor="@color/green1"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="60dp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_forest_quiz_confirm"
             app:layout_constraintTop_toBottomOf="@id/cv_forest_quiz_title"
             tools:text="Q." />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_forest_quiz_question"
-            style="@style/MediumFontKr.18"
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:paddingStart="40dp"
-            android:paddingEnd="40dp"
-            android:textAlignment="center"
             app:layout_constraintBottom_toTopOf="@id/btn_forest_quiz_confirm"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_forest_quiz_result_status"
-            android:visibility="@{isRequestAnswer ? View.INVISIBLE : View.VISIBLE}"
-            android:text="@{vm.quizInfo.question}" />
+            app:layout_constraintTop_toBottomOf="@id/tv_forest_quiz_result_status">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_forest_quiz_explanation"
-            style="@style/MediumFontKr.18"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:paddingStart="40dp"
-            android:paddingEnd="40dp"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@id/btn_forest_quiz_confirm"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_forest_quiz_result_status"
-            android:visibility="@{isRequestAnswer ? View.VISIBLE : View.INVISIBLE}"
-            android:text="@{vm.quizInfo.explanation}" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_gravity="top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_forest_quiz_question"
+                    style="@style/MediumFontKr.20"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:paddingStart="40dp"
+                    android:paddingEnd="40dp"
+                    android:text="@{vm.quizInfo.question}"
+                    android:textAlignment="center"
+                    android:visibility="@{isRequestAnswer ? View.INVISIBLE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_forest_quiz_explanation"
+                    style="@style/MediumFontKr.18"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:paddingStart="40dp"
+                    android:paddingEnd="40dp"
+                    android:text="@{vm.quizInfo.explanation}"
+                    android:textAlignment="center"
+                    android:visibility="@{isRequestAnswer ? View.VISIBLE : View.INVISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </ScrollView>
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_forest_quiz_confirm"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> isRequestAnswer != null ? vm.handleClickQuizButton(isRequestAnswer) : vm.handleClickQuizButton(false)}"
             android:background="@color/green1"
+            android:onClick="@{() -> isRequestAnswer != null ? vm.handleClickQuizButton(isRequestAnswer) : vm.handleClickQuizButton(false)}"
             android:text="@{isRequestAnswer ? @string/closet_quiz_button_exit : @string/closet_quiz_button_view_answer}"
             android:textAppearance="@style/RegularFontKr.14"
             android:textColor="@color/white"

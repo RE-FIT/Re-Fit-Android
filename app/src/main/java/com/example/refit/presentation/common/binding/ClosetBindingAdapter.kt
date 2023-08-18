@@ -1,11 +1,15 @@
 package com.example.refit.presentation.common.binding
 
+import android.os.Build
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.example.refit.R
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
 import kotlin.math.abs
 
 object ClosetBindingAdapter {
@@ -104,4 +108,16 @@ object ClosetBindingAdapter {
             view.text = view.context.resources.getString(R.string.closet_quiz_question)
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("setClosetCategoryShadow")
+    fun setClosetCategoryShadow(view: CardView, isChecked: Boolean) {
+        val shadowColor = when(isChecked) {
+            true -> R.color.green1
+            false -> R.color.transparent
+        }
+        view.outlineSpotShadowColor = view.context.resources.getColor(shadowColor, null)
+        view.outlineAmbientShadowColor = view.context.resources.getColor(shadowColor, null)
+    }
+
 }

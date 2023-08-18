@@ -81,6 +81,7 @@
                             style="@style/ClosetCategoryCardView.Common"
                             android:layout_width="@dimen/closet_category_card_view_length"
                             android:layout_height="@dimen/closet_category_card_view_length"
+                            setClosetCategoryShadow="@{vm.selectedCategoryId == 0}"
                             android:checked="@{vm.selectedCategoryId == 0}"
                             android:onClick="@{() -> vm.requestRegisteredItemsByClothCategory(0)}">
 
@@ -101,6 +102,7 @@
                             android:layout_width="@dimen/closet_category_card_view_length"
                             android:layout_height="@dimen/closet_category_card_view_length"
                             android:checked="@{vm.selectedCategoryId == 1}"
+                            setClosetCategoryShadow="@{vm.selectedCategoryId == 1}"
                             android:onClick="@{() -> vm.requestRegisteredItemsByClothCategory(1)}">
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -120,6 +122,7 @@
                             android:layout_width="@dimen/closet_category_card_view_length"
                             android:layout_height="@dimen/closet_category_card_view_length"
                             android:checked="@{vm.selectedCategoryId == 2}"
+                            setClosetCategoryShadow="@{vm.selectedCategoryId == 2}"
                             android:onClick="@{() -> vm.requestRegisteredItemsByClothCategory(2)}">
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -139,6 +142,7 @@
                             android:layout_width="@dimen/closet_category_card_view_length"
                             android:layout_height="@dimen/closet_category_card_view_length"
                             android:checked="@{vm.selectedCategoryId == 3}"
+                            setClosetCategoryShadow="@{vm.selectedCategoryId == 3}"
                             android:onClick="@{() -> vm.requestRegisteredItemsByClothCategory(3)}">
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -158,6 +162,7 @@
                             android:layout_width="@dimen/closet_category_card_view_length"
                             android:layout_height="@dimen/closet_category_card_view_length"
                             android:checked="@{vm.selectedCategoryId == 4}"
+                            setClosetCategoryShadow="@{vm.selectedCategoryId == 4}"
                             android:onClick="@{() -> vm.requestRegisteredItemsByClothCategory(4)}">
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -262,18 +267,21 @@
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/fab_closet_add"
-                android:layout_width="96dp"
-                android:layout_height="50dp"
+                android:layout_width="90dp"
+                android:layout_height="40dp"
                 android:layout_gravity="bottom|end"
                 android:layout_marginEnd="17dp"
                 android:layout_marginBottom="13dp"
                 android:backgroundTint="@color/green1"
+                android:paddingVertical="3dp"
                 android:text="@string/closet_main_fab_bottom_end"
                 android:textAppearance="@style/RegularFontKr"
                 android:textColor="@color/white"
                 android:textSize="12sp"
+                app:cornerRadius="5dp"
                 app:icon="@drawable/ic_add_24"
-                app:iconPadding="0dp"
+                app:iconPadding="-3dp"
+                app:iconSize="20dp"
                 app:iconTint="@color/white" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>

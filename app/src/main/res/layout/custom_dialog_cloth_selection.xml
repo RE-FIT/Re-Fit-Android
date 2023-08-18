@@ -40,22 +40,21 @@
         android:paddingEnd="20dp"
         android:paddingBottom="20dp">
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_dialog_cloth_selection_close"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/transparent"
-            app:icon="@drawable/ic_close_24"
-            app:iconGravity="end"
-            app:iconSize="24dp"
-            app:iconTint="@color/dark2" />
+            android:drawableEnd="@drawable/ic_close_24"
+            android:drawableTint="@color/dark2"
+            android:layout_gravity="end"
+            />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_dialog_alert_title"
-            style="@style/BoldFontKr.18"
+            style="@style/BoldFontKr.20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/closet_dialog_cloth_selection_title"
             android:textAlignment="center"
             android:textColor="@color/black" />
@@ -65,7 +64,6 @@
             android:backgroundTint="@color/green1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
             setButtonBackgroundTintByStatus="@{(isNotCompletedGoal &amp;&amp; !isWornToday) || !isNotCompletedGoal}"
             android:clickable="@{(isNotCompletedGoal &amp;&amp; !isWornToday) || !isNotCompletedGoal}"
             android:onClick="@{() -> dialog.handleClickMainButton(isNotCompletedGoal)}"
@@ -78,7 +76,6 @@
             android:id="@+id/btn_dialog_cloth_selection_option_fix"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
             android:backgroundTint="@android:color/transparent"
             android:text="@string/cloth_item_selection_dialog_fix_info"
             android:textAppearance="@style/MediumFontKr.14"
