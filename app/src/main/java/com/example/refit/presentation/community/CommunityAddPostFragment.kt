@@ -262,6 +262,7 @@ class CommunityAddPostFragment :
             }
 
             override fun afterTextChanged(p0: Editable?) {
+                priceStatus()
             }
         })
 
@@ -276,17 +277,20 @@ class CommunityAddPostFragment :
 
             override fun afterTextChanged(p0: Editable?) {
             }
-
         })
     }
 
     private fun handleAfterInputPrice() {
         binding.llCommunityAddpostView.setOnClickListener {
-            val inputPriceText = binding.etCommunityAddpostPrice.text.toString()
-            binding.tvCommunityAddpostPrice.text =
-                "₩ " + vmAdd.getDecimalFormat(inputPriceText) + "원"
-            vmAdd.setPriceInputCompleted(inputPriceText)
+            priceStatus()
         }
+    }
+
+    private fun priceStatus() {
+        val inputPriceText = binding.etCommunityAddpostPrice.text.toString()
+        binding.tvCommunityAddpostPrice.text =
+            "₩ " + vmAdd.getDecimalFormat(inputPriceText) + "원"
+        vmAdd.setPriceInputCompleted(inputPriceText)
     }
 
     private fun handlePostcodeSetting() {
