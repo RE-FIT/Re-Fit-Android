@@ -60,7 +60,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cv_cloth_register_photo_container"
                     style="@style/ClothRegistrationCardView.Common"
-                    android:layout_width="0dp"
+                    android:layout_width="250dp"
                     android:layout_height="250dp"
                     android:layout_margin="35dp"
                     app:cardElevation="10dp"
@@ -133,7 +133,7 @@
                                 <com.google.android.material.chip.Chip
                                     android:id="@+id/c_cloth_register_category_top"
                                     style="@style/ClothRegistrationChip.Category.Common"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="@dimen/cloth_register_category_chip_width"
                                     android:layout_height="wrap_content"
                                     android:checked="true"
                                     android:text="@string/cloth_register_category_top" />
@@ -141,28 +141,28 @@
                                 <com.google.android.material.chip.Chip
                                     android:id="@+id/c_cloth_register_category_bottom"
                                     style="@style/ClothRegistrationChip.Category.Common"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="@dimen/cloth_register_category_chip_width"
                                     android:layout_height="wrap_content"
                                     android:text="@string/cloth_register_category_bottom" />
 
                                 <com.google.android.material.chip.Chip
                                     android:id="@+id/c_cloth_register_category_outer"
                                     style="@style/ClothRegistrationChip.Category.Common"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="@dimen/cloth_register_category_chip_width"
                                     android:layout_height="wrap_content"
                                     android:text="@string/cloth_register_category_outer" />
 
                                 <com.google.android.material.chip.Chip
                                     android:id="@+id/c_cloth_register_category_one_piece"
                                     style="@style/ClothRegistrationChip.Category.Common"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="@dimen/cloth_register_category_chip_width"
                                     android:layout_height="wrap_content"
                                     android:text="@string/cloth_register_category_one_piece" />
 
                                 <com.google.android.material.chip.Chip
                                     android:id="@+id/c_cloth_register_category_shoes"
                                     style="@style/ClothRegistrationChip.Category.Common"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="@dimen/cloth_register_category_chip_width"
                                     android:layout_height="wrap_content"
                                     android:text="@string/cloth_register_category_shoes" />
 
