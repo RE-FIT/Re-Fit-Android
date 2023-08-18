@@ -47,8 +47,8 @@ class CommunityAddPostViewModel(
 
     val postResponse: LiveData<PostResponse> = PostDataRepository.postResponse
 
-    private val _photoUris: MutableLiveData<List<String>> = MutableLiveData<List<String>>()
-    val photoUris: LiveData<List<String>>
+    private val _photoUris: MutableLiveData<List<String>?> = MutableLiveData<List<String>?>()
+    val photoUris: LiveData<List<String>?>
         get() = _photoUris
 
     private val _isTransactionMethodChip: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
@@ -836,6 +836,8 @@ class CommunityAddPostViewModel(
         for (item in _isFilledImageValues) {
             item.value = false
         }
+
+        _photoUris.value = null
         _modifyImageStatus.value = false
         _postCodeValue.value = false
         _postTitle.value = ""
