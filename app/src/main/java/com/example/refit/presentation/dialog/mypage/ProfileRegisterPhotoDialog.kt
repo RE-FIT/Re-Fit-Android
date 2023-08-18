@@ -1,6 +1,7 @@
 package com.example.refit.presentation.dialog.mypage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.example.refit.R
 import com.example.refit.databinding.CustomDialogClothRegisterPhotoBinding
@@ -27,7 +28,8 @@ class ProfileRegisterPhotoDialog(
     }
 
     private fun handleNegativeConfirm() {
-        binding.btnDialogClothRegisterPhotoFromGallery.setOnClickListener {
+        binding.btnProfileDelete.setOnClickListener {
+            confirmDialogInterface.deletePhoto()
             dismiss()
         }
     }
