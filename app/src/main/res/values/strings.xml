@@ -127,6 +127,13 @@
     <string name="sign_up_more_request_email_code">재전송</string>
     <string name="sign_up_request_email_code">인증</string>
 
+    <string name="sign_up_complete_title_first">RE-FIT이 추구하는 가치에 공감해주신</string>
+    <string name="sign_up_complete_title_second">%s님을 진심으로 환영해요 :)</string>
+    <string name="sign_up_complete_subtitle_first">오늘부터 RE-FIT 과 함께\n옷과 환경 모두를 사랑하는 마음으로</string>
+    <string name="sign_up_complete_subtitle_second">친환경 의류 생활을 시작해봐요!</string>
+    
+    <string name="sign_up_complete_subtitle_third">환경 지키기</string>
+
     <!-- Closet -->
     <string name="closet_category_first">상의</string>
     <string name="closet_category_second">하의</string>
