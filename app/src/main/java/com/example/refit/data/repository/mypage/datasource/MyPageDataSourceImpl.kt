@@ -8,6 +8,7 @@ import com.example.refit.data.model.mypage.MyScrapGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
 import com.example.refit.data.model.mypage.PasswordUpdateRequest
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
+import com.example.refit.data.model.mypage.UpdateDTO
 import com.example.refit.data.network.api.CommunityApi
 import com.example.refit.data.network.api.MyPageApi
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -38,18 +39,19 @@ class MyPageDataSourceImpl (private val myPageApi: MyPageApi, private val commun
     }
     override suspend fun updateInfo(
         accessToken: String,
-        image: List<File?>,
-        content: RequestBody
-    ): Call<Response<Void>> {
+        image: File?,
+        request: UpdateDTO
+    ): Call<ResponseBody> {
 
-        val image: List<Unit> = image.map { file ->
-            val requestFile = file?.asRequestBody("image/*".toMediaTypeOrNull())
+        if (image != null) {
+            val requestFile = image?.asRequestBody("image/*".toMediaTypeOrNull())
             if (requestFile != null) {
-                MultipartBody.Part.createFormData("image", file?.name, requestFile)
+                val param = MultipartBody.Part.createFormData("image", image?.name, requestFile)
+                return myPageApi.updateInfo(accessToken, param, request)
             }
         }
 
-        return myPageApi.updateInfo(accessToken, image, content)
+        return myPageApi.updateInfo(accessToken, null, request)
     }
     override suspend fun updateInfoNoImage(accessToken: String, content: RequestBody): Call<Response<Void>> {
         return myPageApi.updateInfoNoImage(accessToken, content)

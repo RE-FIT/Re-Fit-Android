@@ -8,5 +8,7 @@ data class UpdateDTO (
     @SerializedName("birth")
     val birth: String,
     @SerializedName("gender")
-    val gender: Int
+    val gender: Int,
+    @SerializedName("image")
+    val image: String
 )
