@@ -4,11 +4,187 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".presentation.signup.SignUpCompleteFragment">
 
+    <data>
+
+        <variable
+            name="vm"
+            type="com.example.refit.presentation.signup.viewmodel.SignUpViewModel" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/default_dark"
         android:padding="20dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_sign_up_complete_title_first"
+            style="@style/MediumFontKr.18"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/sign_up_complete_title_first"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_sign_up_complete_title_second"
+            style="@style/MediumFontKr.18"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{@string/sign_up_complete_title_second(vm.requestUserNickname)}"
+            android:textAlignment="center"
+            android:textColor="@color/green1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_sign_up_complete_title_first"
+            tools:text="test님을 진심으로 환영해요 :)" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintBottom_toTopOf="@id/btn_sign_up_complete_to_sign_in"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_sign_up_complete_title_second"
+            app:strokeColor="@color/white">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_sign_up_complete_subtitle_first"
+                    style="@style/RegularFontKr.14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign_up_complete_subtitle_first"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_sign_up_complete_subtitle_second"
+                    style="@style/RegularFontKr.14"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/sign_up_complete_subtitle_second"
+                    android:textAlignment="center"
+                    android:textColor="@color/green1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sign_up_complete_subtitle_first" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_sign_up_complete_subtitle_third"
+                    style="@style/MediumFontKr.12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/sign_up_complete_subtitle_third"
+                    android:textColor="@color/dark2"
+                    app:layout_constraintEnd_toStartOf="@id/ll_sign_up_complete_day"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sign_up_complete_subtitle_second" />
+
+                <LinearLayout
+                    android:id="@+id/ll_sign_up_complete_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_sign_up_complete_subtitle_third"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/tv_sign_up_complete_subtitle_third"
+                    app:layout_constraintTop_toTopOf="@id/tv_sign_up_complete_subtitle_third">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        app:cardBackgroundColor="@color/default_dark"
+                        app:cardCornerRadius="8dp"
+                        app:strokeColor="@android:color/transparent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/MediumFontKr.12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="D"
+                            android:textColor="@color/green1" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        app:cardBackgroundColor="@color/default_dark"
+                        app:cardCornerRadius="8dp"
+                        app:strokeColor="@android:color/transparent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/MediumFontKr.12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="+"
+                            android:textColor="@color/green1" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        app:cardBackgroundColor="@color/default_dark"
+                        app:cardCornerRadius="8dp"
+                        app:strokeColor="@android:color/transparent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/MediumFontKr.12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="0"
+                            android:textColor="@color/green1" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        app:cardBackgroundColor="@color/default_dark"
+                        app:cardCornerRadius="8dp"
+                        app:strokeColor="@android:color/transparent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/MediumFontKr.12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="1"
+                            android:textColor="@color/green1" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_sign_up_complete_to_sign_in"

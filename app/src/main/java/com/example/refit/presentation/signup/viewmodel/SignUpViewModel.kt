@@ -92,6 +92,10 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     val isSuccessSignUp: LiveData<Event<Boolean>>
         get() = _isSuccessSignUp
 
+    private var _requestUserNickname = MutableLiveData<String>()
+    val requestUserNickname: LiveData<String>
+        get() = _requestUserNickname
+
 
     fun certificateEmail(email: String) {
         viewModelScope.launch {
@@ -136,6 +140,7 @@ class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
                         if (response.code() == 200) {
                             _isValidNickname.value = Event(true)
+                            _requestUserNickname.value = nickname
                             Timber.d("사용 가능한 닉네임입니다")
                         } else if (response.code() == 400) {
                             val jsonObject = JSONObject(response.errorBody()!!.string())
