@@ -1,8 +1,10 @@
 package com.example.refit.presentation.signin
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import com.example.refit.R
 import com.example.refit.databinding.FragmentSignInBinding
@@ -11,6 +13,10 @@ import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.signin.viewmodel.SignInViewModel
 import com.example.refit.util.EventObserver
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.model.ClientError
+import com.kakao.sdk.common.model.ClientErrorCause
+import com.kakao.sdk.user.UserApiClient
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sign_in) {
@@ -61,7 +67,55 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
             navigate(R.id.action_signInFragment_to_findIdPasswordFragment)
         }
 
+        kakaoLogin()
+        kakaoLogout()
     }
+
+    fun kakaoLogin() {
+
+        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+            if (error != null) {
+                Log.e(TAG, "카카오계정으로 로그인 실패", error)
+            } else if (token != null) {
+                Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
+            }
+        }
+
+        binding.KakaoLogin.setOnClickListener {
+            if (UserApiClient.instance.isKakaoTalkLoginAvailable(requireContext())) {
+                UserApiClient.instance.loginWithKakaoTalk(requireContext()) { token, error ->
+                    if (error != null) {
+                        Log.e(TAG, "카카오톡으로 로그인 실패", error)
+
+                        if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
+                            return@loginWithKakaoTalk
+                        }
+
+                        // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
+                        UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = callback)
+                    } else if (token != null) {
+                        Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
+                    }
+                }
+            } else {
+                UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = callback)
+            }
+        }
+    }
+
+    fun kakaoLogout() {
+        binding.signInCacaoText.setOnClickListener {
+            UserApiClient.instance.logout { error ->
+                if (error != null) {
+                    Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
+                }
+                else {
+                    Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
+                }
+            }
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         viewModel.init()
