@@ -68,7 +68,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
         }
 
         kakaoLogin()
-        kakaoLogout()
     }
 
     fun kakaoLogin() {
@@ -78,6 +77,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
                 Log.e(TAG, "카카오계정으로 로그인 실패", error)
             } else if (token != null) {
                 Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
+                viewModel.kakaoLogin(token.accessToken)
             }
         }
 
@@ -95,23 +95,11 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(R.layout.fragment_sig
                         UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = callback)
                     } else if (token != null) {
                         Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
+                        viewModel.kakaoLogin(token.accessToken)
                     }
                 }
             } else {
                 UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = callback)
-            }
-        }
-    }
-
-    fun kakaoLogout() {
-        binding.signInCacaoText.setOnClickListener {
-            UserApiClient.instance.logout { error ->
-                if (error != null) {
-                    Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
-                }
-                else {
-                    Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
-                }
             }
         }
     }
