@@ -19,6 +19,7 @@
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:scaleType="centerCrop"
+            android:layout_marginTop="25dp"
             android:src="@drawable/ic_my_info_basic_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -35,7 +35,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding>(R.layout.fragment
                 override fun onItemClick(v: View, data: ChatRoom, pos: Int) {
                     val action = ChatRoomFragmentDirections.actionChatRoomFragmentToChatFragment(
                         data.username.toString(), data.roomId.toString(), data.other.toString(),
-                        data.seller.toString(), data.postType.toString(), data.otherImage)
+                        data.seller.toString(), data.postType.toString(), data.otherImage, data.postId, data.postState)
                     Navigation.findNavController(view).navigate(action)
                 }
             })

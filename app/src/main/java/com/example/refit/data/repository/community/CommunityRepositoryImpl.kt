@@ -1,6 +1,7 @@
 package com.example.refit.data.repository.community
 
 import androidx.lifecycle.LiveData
+import com.example.refit.data.model.chat.Trade
 import com.example.refit.data.model.community.BlockDto
 import com.example.refit.data.model.community.Member
 import com.example.refit.data.model.community.PostResponse
@@ -194,6 +195,10 @@ class CommunityRepositoryImpl (private val communityDataSource: CommunityDataSou
 
     override suspend fun changePostStatus(accessToken: String, postId: Int): Call<PostResponse> {
         return communityDataSource.changePostStatus(accessToken, postId)
+    }
+
+    override suspend fun trade(accessToken: String, req: Trade): Call<ResponseBody> {
+        return communityDataSource.trade(accessToken, req)
     }
 
 

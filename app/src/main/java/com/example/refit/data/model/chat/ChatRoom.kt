@@ -4,6 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 //채팅방 DTO
 data class ChatRoom(
+    @SerializedName("postState")
+    val postState: Int,
+    @SerializedName("postId")
+    val postId: Int,
     @SerializedName("roomId")
     val roomId: Int,
     @SerializedName("username")

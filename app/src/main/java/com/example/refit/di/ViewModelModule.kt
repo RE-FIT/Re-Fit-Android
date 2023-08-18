@@ -3,6 +3,7 @@ package com.example.refit.di
 import com.example.refit.presentation.AccessTokenViewModel
 import com.example.refit.presentation.chat.viewmodel.ChatRoomViewModel
 import com.example.refit.presentation.chat.viewmodel.ChatViewModel
+import com.example.refit.presentation.chat.viewmodel.TradeViewModel
 import com.example.refit.presentation.closet.viewmodel.ClosetViewModel
 import com.example.refit.presentation.closet.viewmodel.ClothAddViewModel
 import com.example.refit.presentation.closet.viewmodel.ForestViewModel
@@ -49,4 +50,5 @@ val viewModelModule = module {
     viewModel { FindPwViewModel(get())}
     viewModel { MyViewModel(get(), get()) }
     viewModel { PwChangeViewModel(get(), get()) }
+    viewModel { TradeViewModel(get(), get()) }
 }

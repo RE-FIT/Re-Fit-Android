@@ -210,7 +210,9 @@
                             android:background="@drawable/bg_solid_white_radius_10"
                             android:hint="@string/community_addpost_contents_detail_first"
                             android:inputType="text"
-                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:maxLength="15"
+                            android:ellipsize="end"
                             android:paddingHorizontal="15dp"
                             android:textColor="@color/black"
                             android:textColorHint="@color/dark2" />

@@ -440,6 +440,12 @@
             android:name="otherImage"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="postId"
+            app:argType="integer" />
+        <argument
+            android:name="postState"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/signUpCompleteFragment"
