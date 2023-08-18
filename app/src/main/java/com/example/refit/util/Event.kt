@@ -12,4 +12,5 @@ open class Event<out T>(val content: T) {
             content
         }
     }
+    fun peekContent(): T = content
 }
