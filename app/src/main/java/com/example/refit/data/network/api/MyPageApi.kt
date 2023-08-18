@@ -8,7 +8,10 @@ import com.example.refit.data.model.mypage.MyScrapGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
 import com.example.refit.data.model.mypage.PasswordUpdateRequest
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
+import com.example.refit.data.model.mypage.UpdateDTO
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -38,9 +41,9 @@ interface MyPageApi {
     @PATCH("/refit/mypage/info")
     fun updateInfo(
         @Header("Authorization") accessToken: String,
-        @Part("image") image: List<Unit>,
-        @Part("content") content: RequestBody?,
-    ) : Call<Response<Void>>
+        @Part image: MultipartBody.Part? = null,
+        @Part("request") request: UpdateDTO,
+    ) : Call<ResponseBody>
 
     @Multipart
     @PATCH("/refit/mypage/info")

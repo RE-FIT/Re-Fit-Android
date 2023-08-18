@@ -55,6 +55,8 @@ class FindPasswordFragment : BaseFragment<FragmentFindPasswordBinding>(R.layout.
             val action = FindIdPasswordFragmentDirections.actionFindIdPasswordFragmentToFindPasswordFinishFragment(binding.findIdEditEmail.text.toString())
             Navigation.findNavController(view).navigate(action)
         })
+
+
     }
 
     override fun onDestroyView() {
