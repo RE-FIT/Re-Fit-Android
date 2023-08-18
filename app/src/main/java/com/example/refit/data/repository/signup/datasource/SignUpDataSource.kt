@@ -15,6 +15,8 @@ interface SignUpDataSource {
 
     suspend fun requestLoginCertification(loginId: String, password: String, fcm: String): Call<ResponseBody>
 
+    suspend fun kakaoLogin(accessToken: String, fcm: String): Call<ResponseBody>
+
     suspend fun checkAccessToken(accessToken: String): Call<ResponseBody>
 
     suspend fun logout(accessToken: String): Call<ResponseBody>
