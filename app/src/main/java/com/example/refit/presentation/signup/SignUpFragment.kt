@@ -181,11 +181,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
     private fun handleLoadingStatusRequestingEmailCode() {
         binding.lavSignUpWaitingEmailCertification.addAnimatorListener(object : AnimatorListener {
             override fun onAnimationStart(p0: Animator) {}
-            override fun onAnimationCancel(p0: Animator) {
-                Timber.d("멈춤")
-            }
-            override fun onAnimationRepeat(p0: Animator) {
-            }
+            override fun onAnimationCancel(p0: Animator) {}
+            override fun onAnimationRepeat(p0: Animator) {}
             override fun onAnimationEnd(p0: Animator) {
                 signUpViewModel.handleNoneResponseForEmailCodeRequest(resources.getString(R.string.sign_up_request_email_code_error))
             }
