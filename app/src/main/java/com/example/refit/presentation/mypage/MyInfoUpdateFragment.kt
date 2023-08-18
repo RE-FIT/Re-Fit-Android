@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,11 +22,15 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.refit.BuildConfig.IMAGE_URL
 import com.example.refit.R
+import com.example.refit.data.model.mypage.ShowMyInfoResponse
 import com.example.refit.databinding.FragmentMyInfoUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DialogUtil
 import com.example.refit.presentation.common.DialogUtil.checkNickNameDialog
+import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
+import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.common.NavigationUtil.navigateUp
+import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.mypage.ProfileRegisterPhotoDialogListener
 import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
 import com.example.refit.util.Event
@@ -42,6 +47,7 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
 
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
     private var photoUri: Uri? = null
+    var flag = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -82,11 +88,16 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
          * */
         binding.btnMyInfoUpdate.setOnClickListener {
             handleUpdateButton()
+            vm.isChange(false)
         }
 
         vm.isSuccess.observe(viewLifecycleOwner, EventObserver{
             vm.showMyInfoRetrofit()
         })
+
+        showMyInfoBackPressedDialog()
+
+
     }
 
     override fun onDestroyView() {
@@ -209,7 +220,6 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
     }
 
     private fun handleUpdateButton() {
-
         if (photoUri != null) {
             val uri = Uri.parse(photoUri.toString())
             val copiedFile = copyFileToInternalStorage(uri)
@@ -219,5 +229,30 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         } else {
             vm.updateMyInfoRetrofit(null)
         }
+    }
+
+    private fun showMyInfoBackPressedDialog() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (vm.isChange.value == true) {
+                        createAlertBasicDialog(
+                            resources.getString(R.string.pw_change_delete_title),
+                            resources.getString(R.string.pw_change_delete_positive),
+                            resources.getString(R.string.pw_change_delete_negative),
+                            object : AlertBasicDialogListener {
+                                override fun onClickPositive() {
+                                    navigate(R.id.action_myInfo_to_nav_my_page)
+                                }
+
+                                override fun onClickNegative() {
+                                }
+                            }).show(requireActivity().supportFragmentManager, null)
+                    } else {
+                        navigate(R.id.action_myInfo_to_nav_my_page)
+                    }
+                }
+            })
     }
 }

@@ -21,8 +21,12 @@ import com.example.refit.presentation.chat.adapter.ChatRVAdapter
 import com.example.refit.presentation.chat.viewmodel.ChatViewModel
 import com.example.refit.presentation.chat.viewmodel.TradeViewModel
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
+import com.example.refit.presentation.common.DialogUtil.showChatConfirmDialog
+import com.example.refit.presentation.common.DialogUtil.showChatDeletionConfirmDialog
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
+import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
@@ -180,17 +184,55 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
             val itemDescription = (view as TextView).text.toString()
             when (itemDescription) {
                 "채팅방 나가기" -> {
-                    viewModel.room_delete(args.roomId.toString())
+                    showChatDeletionConfirmDialog(args.roomId.toString())
                 }
 
                 "거래 완료" -> {
                     tradeViewModel.trade(Trade(args.postId, args.otherId.toString()))
                     viewModel.changeStatus()
+
+                    showChatConfirmDialog()
                 }
             }
             Timber.d(itemDescription)
             popupMenu.dismiss()
         }
+    }
+
+    private fun showChatDeletionConfirmDialog(id: String) {
+        showChatDeletionConfirmDialog(
+            resources.getString(R.string.chat_dialog_chat_delete_title),
+            resources.getString(R.string.chat_dialog_chat_delete_subTtle),
+            resources.getString(R.string.chat_dialog_chat_delete_positive),
+            resources.getString(R.string.chat_dialog_chat_delete_negative),
+            object : AlertBasicDialogListener {
+                override fun onClickPositive() {
+                    viewModel.room_delete(args.roomId.toString())
+                }
+
+                override fun onClickNegative() {
+                }
+
+            }
+        ).show(requireActivity().supportFragmentManager, null)
+    }
+
+    private fun showChatConfirmDialog() {
+        showChatConfirmDialog(
+            resources.getString(R.string.chat_dialog_chat_confirm_title),
+            resources.getString(R.string.chat_dialog_chat_confirm_subTitle),
+            resources.getString(R.string.chat_dialog_chat_confirm_positive),
+            resources.getString(R.string.chat_dialog_chat_confirm_negative),
+            object : AlertBasicDialogListener {
+                override fun onClickPositive() {
+                    //TODO("거래 완료")
+                }
+
+                override fun onClickNegative() {
+                }
+
+            }
+        ).show(requireActivity().supportFragmentManager, null)
     }
 
 }

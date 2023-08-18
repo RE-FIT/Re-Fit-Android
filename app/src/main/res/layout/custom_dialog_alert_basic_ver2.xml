@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="dialogInfo"
+            type="com.example.refit.data.model.common.dialog.AlertDialogInfoVer2" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_dialog_alert_basic"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="20dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_dialog_alert_basic_caution"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@{dialogInfo.iconDrawable}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_alert_circle_24" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_dialog_alert_basic_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_close_24"
+                android:drawableTint="@color/dark2"
+                android:visibility="@{dialogInfo.positiveConfirm == null &amp;&amp; dialogInfo.negativeConfirm == null ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_dialog_alert_title"
+            style="@style/MediumFontKr.14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:text="@{dialogInfo.title}"
+            android:textAlignment="center"
+            android:textColor="@color/dark2"
+            tools:text="title text" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_dialog_alert_sub_title"
+            style="@style/MediumFontKr.10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="17dp"
+            android:text="@{dialogInfo.subTitle}"
+            android:textAlignment="center"
+            android:textColor="@color/dark2"
+            tools:text="title text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_dialog_alert_basic_positive"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{dialogInfo.positiveConfirm == null ? @string/empty : dialogInfo.positiveConfirm }"
+                android:textAppearance="@style/MediumFontKr.14"
+                android:visibility="@{dialogInfo.positiveConfirm == null ? View.GONE : View.VISIBLE}"
+                app:backgroundTint="@color/green1"
+                app:cornerRadius="10dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_dialog_alert_basic_negative"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/transparent"
+                android:text="@{dialogInfo.negativeConfirm == null ? @string/empty : dialogInfo.negativeConfirm }"
+                android:textAppearance="@style/MediumFontKr.14"
+                android:textColor="@color/dark1"
+                android:visibility="@{dialogInfo.negativeConfirm == null ? View.GONE : View.VISIBLE}"
+                app:cornerRadius="10dp"
+                app:strokeColor="@color/dark1"
+                app:strokeWidth="1dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</layout>
