@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "426925702932",
+    "project_id": "refit-b8e5f",
+    "storage_bucket": "refit-b8e5f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426925702932:android:4e2d3be5017fbf3bdb0c01",
+        "android_client_info": {
+          "package_name": "com.example.refit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426925702932-q9dblhbklvjknqdod67265dn459m780s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCr4rhabKkMfhxm3a5hJZ0qdUcO0NiidOg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426925702932-q9dblhbklvjknqdod67265dn459m780s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
