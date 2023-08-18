@@ -22,6 +22,7 @@ import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDi
 import com.example.refit.presentation.dialog.community.CommunityNoIconDialog
 import com.example.refit.presentation.dialog.mypage.AlertBasicNoIconDialog
 import com.example.refit.presentation.dialog.mypage.MyPagePwCheckDialog
+import com.example.refit.presentation.dialog.mypage.MyPagePwCheckSuccessDialog
 import com.example.refit.presentation.dialog.mypage.MypageNickNameCheckDialog
 import com.example.refit.presentation.dialog.mypage.ProfileRegisterPhotoDialog
 import com.example.refit.presentation.dialog.mypage.ProfileRegisterPhotoDialogListener
@@ -94,12 +95,19 @@ object DialogUtil {
         return MypageNickNameCheckDialog(icon!!, title)
     }
 
-    fun Fragment.checkPwDialog(
+    fun Fragment.checkPwFailDialog(
         title: String,
         content: String
     ): MyPagePwCheckDialog {
         val icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_alert_circle_24)
         return MyPagePwCheckDialog(icon!!, title, content)
+    }
+
+    fun Fragment.checkPwSuccessDialog(
+        title: String
+    ): MyPagePwCheckSuccessDialog {
+        val icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_dialog_chat_positive)
+        return MyPagePwCheckSuccessDialog(icon!!, title)
     }
 
     fun showProfileRegisterPhotoDialog(listener: ProfileRegisterPhotoDialogListener): ProfileRegisterPhotoDialog {

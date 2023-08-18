@@ -358,6 +358,8 @@
 
     <string name="pw_incorrect_title">입력하신 비밀번호가 일치하지 않습니다.</string>
     <string name="pw_incorrect_content">기존 비밀번호 혹은 새로운 비밀번호를 다시 확인해주세요!</string>
+    <string name="pw_correct_content">비밀번호 변경이 완료되었습니다!</string>
+
     <string name="my_page_sell_text">판매</string>
     <string name="my_page_share_text">나눔</string>
     <string name="my_page_buy_text">구매</string>

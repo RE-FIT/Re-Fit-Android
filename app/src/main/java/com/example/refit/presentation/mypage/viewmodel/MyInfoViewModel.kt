@@ -103,6 +103,7 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
         gender.postValue(type)
     }
 
+
     fun showMyInfoRetrofit() = viewModelScope.launch {
         val token = ds.getAccessToken().first()
         val response = repository.showMyInfo(token)
@@ -138,6 +139,7 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     _isSuccess.postValue(Event(true))
+                    Log.d("boolean", "${_isChange.value}")
                 } else {
                     Log.d("RESPONSE", "FAIL")
                     var jsonObject = JSONObject(response.errorBody()!!.string())

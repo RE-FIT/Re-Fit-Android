@@ -1,28 +1,20 @@
 package com.example.refit.presentation.mypage
 
-import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import com.example.refit.MainActivity
 import com.example.refit.R
 import com.example.refit.data.model.mypage.PasswordUpdateRequest
 import com.example.refit.databinding.FragmentMyInfoPwUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
-import com.example.refit.presentation.common.CustomSnackBar
-import com.example.refit.presentation.common.DialogUtil.checkPwDialog
+import com.example.refit.presentation.common.DialogUtil.checkPwFailDialog
+import com.example.refit.presentation.common.DialogUtil.checkPwSuccessDialog
 import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
-import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
 import com.example.refit.presentation.mypage.viewmodel.PwChangeViewModel
 import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import timber.log.Timber
 
 class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.layout.fragment_my_info_pw_update) {
 
@@ -46,9 +38,11 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
 
         //성공 처리
         vm.changeSuccess.observe(viewLifecycleOwner, EventObserver{
-            requireActivity().finish()
-            val restartIntent = Intent(context, MainActivity::class.java)
-            startActivity(restartIntent)
+//            requireActivity().finish()
+//            val restartIntent = Intent(context, MainActivity::class.java)
+//            startActivity(restartIntent)
+            vm.isChange(false)
+            notifyPwCorrectDialog()
         })
 
         //에러 처리
@@ -56,16 +50,32 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
             notifyPwIncorrectDialog()
         })
 
+        // 뒤로 가기 처리
         vm.pw.observe(viewLifecycleOwner) {
-            showMyInfoBackPressedDialog()
+            vm.isChange(true)
         }
+
+        vm.nextPw.observe(viewLifecycleOwner) {
+            vm.isChange(true)
+        }
+
+        showMyInfoBackPressedDialog()
+
     }
 
-    fun notifyPwIncorrectDialog() {
-        checkPwDialog(
+    private fun notifyPwIncorrectDialog() {
+        checkPwFailDialog(
             resources.getString(R.string.pw_incorrect_title),
             resources.getString(R.string.pw_incorrect_content)
         ).show(requireActivity().supportFragmentManager, null)
+    }
+
+    private fun notifyPwCorrectDialog() {
+        checkPwSuccessDialog(
+            resources.getString(R.string.pw_correct_content)
+        ).show(requireActivity().supportFragmentManager, null)
+
+        vm.init()
     }
 
     override fun onDestroyView() {
@@ -78,18 +88,22 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    createAlertBasicDialog(
-                        resources.getString(R.string.pw_change_delete_title),
-                        resources.getString(R.string.pw_change_delete_positive),
-                        resources.getString(R.string.pw_change_delete_negative),
-                        object : AlertBasicDialogListener {
-                            override fun onClickPositive() {
-                                navigate(R.id.action_myInfo_to_nav_my_page)
-                            }
+                    if (vm.isChange.value == true) {
+                        createAlertBasicDialog(
+                            resources.getString(R.string.pw_change_delete_title),
+                            resources.getString(R.string.pw_change_delete_positive),
+                            resources.getString(R.string.pw_change_delete_negative),
+                            object : AlertBasicDialogListener {
+                                override fun onClickPositive() {
+                                    navigate(R.id.action_myInfo_to_nav_my_page)
+                                }
 
-                            override fun onClickNegative() {
-                            }
-                        }).show(requireActivity().supportFragmentManager, null)
+                                override fun onClickNegative() {
+                                }
+                            }).show(requireActivity().supportFragmentManager, null)
+                    } else {
+                        navigate(R.id.action_myInfo_to_nav_my_page)
+                    }
                 }
             })
     }

@@ -22,6 +22,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.refit.BuildConfig.IMAGE_URL
 import com.example.refit.R
+import com.example.refit.data.model.mypage.ShowMyInfoResponse
 import com.example.refit.databinding.FragmentMyInfoUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DialogUtil
@@ -46,6 +47,7 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
 
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
     private var photoUri: Uri? = null
+    var flag = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,7 +78,6 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         vm.change.observe(viewLifecycleOwner, EventObserver{
             if ((vm.profileImage.value != vm.prevProfileImage.value) || (vm.birth.value != vm.prevBirth.value) || (vm.gender.value != vm.prevGender.value)) {
                 vm.isChange(true)
-                showMyInfoBackPressedDialog()
             } else {
                 vm.isChange(false)
             }
@@ -87,11 +88,16 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
          * */
         binding.btnMyInfoUpdate.setOnClickListener {
             handleUpdateButton()
+            vm.isChange(false)
         }
 
         vm.isSuccess.observe(viewLifecycleOwner, EventObserver{
             vm.showMyInfoRetrofit()
         })
+
+        showMyInfoBackPressedDialog()
+
+
     }
 
     override fun onDestroyView() {
@@ -214,7 +220,6 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
     }
 
     private fun handleUpdateButton() {
-
         if (photoUri != null) {
             val uri = Uri.parse(photoUri.toString())
             val copiedFile = copyFileToInternalStorage(uri)
@@ -231,18 +236,22 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    createAlertBasicDialog(
-                        resources.getString(R.string.pw_change_delete_title),
-                        resources.getString(R.string.pw_change_delete_positive),
-                        resources.getString(R.string.pw_change_delete_negative),
-                        object : AlertBasicDialogListener {
-                            override fun onClickPositive() {
-                                navigate(R.id.action_myInfo_to_nav_my_page)
-                            }
+                    if (vm.isChange.value == true) {
+                        createAlertBasicDialog(
+                            resources.getString(R.string.pw_change_delete_title),
+                            resources.getString(R.string.pw_change_delete_positive),
+                            resources.getString(R.string.pw_change_delete_negative),
+                            object : AlertBasicDialogListener {
+                                override fun onClickPositive() {
+                                    navigate(R.id.action_myInfo_to_nav_my_page)
+                                }
 
-                            override fun onClickNegative() {
-                            }
-                        }).show(requireActivity().supportFragmentManager, null)
+                                override fun onClickNegative() {
+                                }
+                            }).show(requireActivity().supportFragmentManager, null)
+                    } else {
+                        navigate(R.id.action_myInfo_to_nav_my_page)
+                    }
                 }
             })
     }

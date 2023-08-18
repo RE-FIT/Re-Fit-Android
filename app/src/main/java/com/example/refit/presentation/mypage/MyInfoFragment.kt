@@ -31,7 +31,7 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(R.layout.fragment_my_
 
     fun connectionTabLayout() {
 
-        val tabTitle = arrayOf("회원정보 수정", "비밀번호 수정")
+        val tabTitle = arrayOf("회원정보 수정", "비밀번호 변경")
 
         viewPager = binding.viewPager // viewPager 연결
         tabLayout = binding.tabLayout // tabLayout 연결
