@@ -8,6 +8,7 @@ import com.example.refit.data.model.mypage.MyScrapGiveListItemResponse
 import com.example.refit.data.model.mypage.MyScrapSellListItemResponse
 import com.example.refit.data.model.mypage.PasswordUpdateRequest
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
+import com.example.refit.data.model.mypage.UpdateDTO
 import com.example.refit.data.repository.mypage.datasource.MyPageDataSource
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -34,10 +35,10 @@ class MyPageRepositoryImpl(private val myPageDataSource: MyPageDataSource): MyPa
     }
     override suspend fun updateInfo(
         accessToken: String,
-        image: List<File?>,
-        content: RequestBody
-    ): Call<Response<Void>> {
-        return myPageDataSource.updateInfo(accessToken, image, content)
+        image: File?,
+        request: UpdateDTO
+    ): Call<ResponseBody> {
+        return myPageDataSource.updateInfo(accessToken, image, request)
     }
     override suspend fun loadCommunityListSort(
         token: String,
