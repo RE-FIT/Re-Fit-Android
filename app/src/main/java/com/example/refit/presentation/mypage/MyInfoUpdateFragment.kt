@@ -59,6 +59,9 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
          * 서버로부터 데이터가 왔을때 초기화
          */
         vm.fromServer.observe(viewLifecycleOwner, EventObserver{
+            Glide.with(binding.root)
+                .load(vm.prevProfileImage.value)
+                .into(binding.profileImage)
             editBirth()
             selectGenderSpinner()
         })
@@ -80,6 +83,10 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         binding.btnMyInfoUpdate.setOnClickListener {
             handleUpdateButton()
         }
+
+        vm.isSuccess.observe(viewLifecycleOwner, EventObserver{
+            vm.showMyInfoRetrofit()
+        })
     }
 
     override fun onDestroyView() {

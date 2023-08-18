@@ -42,7 +42,7 @@ interface MyPageApi {
     fun updateInfo(
         @Header("Authorization") accessToken: String,
         @Part image: MultipartBody.Part? = null,
-        @Body request: UpdateDTO,
+        @Part("request") request: UpdateDTO,
     ) : Call<ResponseBody>
 
     @Multipart
