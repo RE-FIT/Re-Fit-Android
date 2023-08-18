@@ -22,6 +22,10 @@ class SignUpRepositoryImpl(private val signUpDataSource: SignUpDataSource) : Sig
         return signUpDataSource.requestLoginCertification(loginId, password, fcm)
     }
 
+    override suspend fun kakaoLogin(accessToken: String, fcm: String): Call<ResponseBody> {
+        return signUpDataSource.kakaoLogin(accessToken, fcm)
+    }
+
     override suspend fun checkAccessToken(accessToken: String): Call<ResponseBody> {
         return signUpDataSource.checkAccessToken(accessToken)
     }

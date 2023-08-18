@@ -41,6 +41,12 @@ interface SignUpApi {
         @Query("fcm") fcm: String
     ): Call<ResponseBody>
 
+    @POST("/auth/kakao")
+    fun kakaoLogin(
+        @Header("Authorization") accessToken: String,
+        @Query("fcm") fcm: String
+    ): Call<ResponseBody>
+
     @GET("auth/token/check")
     fun checkAccessToken(
         @Header("Authorization") accessToken: String
