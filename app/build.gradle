@@ -23,6 +23,7 @@ android {
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
         buildConfigField "String", "BASE_URL", "\"${properties.getProperty("BASE_URL")}\""
         buildConfigField "String", "SUB_URL", "\"${properties.getProperty("SUB_URL")}\""
+        buildConfigField "String", "IMAGE_URL", "\"${properties.getProperty("IMAGE_URL")}\""
     }
 
     buildFeatures {
