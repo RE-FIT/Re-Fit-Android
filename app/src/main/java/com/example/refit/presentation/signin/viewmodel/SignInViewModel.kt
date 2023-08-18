@@ -74,6 +74,28 @@ class SignInViewModel(private val repository: SignUpRepository, private val ds: 
         })
     }
 
+    fun kakaoLogin(accessToken: String) = viewModelScope.launch {
+        val fcmToken = fcmToken().toString()
+        val response = repository.kakaoLogin(accessToken, fcmToken)
+        response.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    val accessToken = response.headers().get("Authorization").toString()
+                    setAccessToken(accessToken)
+                    _accessToken.postValue(Event(accessToken))
+                } else {
+                    Log.d("RESPONSE", "FAIL")
+                    var jsonObject = JSONObject(response.errorBody()!!.string())
+                    _error.postValue(Event(ResponseError(
+                        jsonObject.getInt("code"), jsonObject.getString("errorMessage"))))
+                }
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("ContinueFail", "FAIL")
+            }
+        })
+    }
+
     fun logout() = viewModelScope.launch {
 
         val token = ds.getAccessToken().first()
