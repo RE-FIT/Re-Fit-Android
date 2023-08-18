@@ -336,5 +336,8 @@
 
     <!-- 채팅 -->
     <string name="chat_overflow_text">채팅방 나가기</string>
+    <string name="find_pw_finish_content2">발송된 임시 비밀번호로 로그인 후\n마이페이지에서 비밀번호 재설정을 부탁드려요 :)</string>
+    <string name="find_pw_finish_content">임시 비밀번호 메일이 발송되었습니다.</string>
+    <string name="find_pw_finish_title">PW 찾기</string>
 
 </resources>
