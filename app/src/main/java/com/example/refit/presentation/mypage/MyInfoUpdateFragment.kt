@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,7 +26,10 @@ import com.example.refit.databinding.FragmentMyInfoUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DialogUtil
 import com.example.refit.presentation.common.DialogUtil.checkNickNameDialog
+import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
+import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.common.NavigationUtil.navigateUp
+import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.mypage.ProfileRegisterPhotoDialogListener
 import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
 import com.example.refit.util.Event
@@ -72,6 +76,7 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         vm.change.observe(viewLifecycleOwner, EventObserver{
             if ((vm.profileImage.value != vm.prevProfileImage.value) || (vm.birth.value != vm.prevBirth.value) || (vm.gender.value != vm.prevGender.value)) {
                 vm.isChange(true)
+                showMyInfoBackPressedDialog()
             } else {
                 vm.isChange(false)
             }
@@ -219,5 +224,26 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         } else {
             vm.updateMyInfoRetrofit(null)
         }
+    }
+
+    private fun showMyInfoBackPressedDialog() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    createAlertBasicDialog(
+                        resources.getString(R.string.pw_change_delete_title),
+                        resources.getString(R.string.pw_change_delete_positive),
+                        resources.getString(R.string.pw_change_delete_negative),
+                        object : AlertBasicDialogListener {
+                            override fun onClickPositive() {
+                                navigate(R.id.action_myInfo_to_nav_my_page)
+                            }
+
+                            override fun onClickNegative() {
+                            }
+                        }).show(requireActivity().supportFragmentManager, null)
+                }
+            })
     }
 }
