@@ -358,6 +358,8 @@
 
     <string name="pw_incorrect_title">입력하신 비밀번호가 일치하지 않습니다.</string>
     <string name="pw_incorrect_content">기존 비밀번호 혹은 새로운 비밀번호를 다시 확인해주세요!</string>
+    <string name="pw_correct_content">비밀번호 변경이 완료되었습니다!</string>
+
     <string name="my_page_sell_text">판매</string>
     <string name="my_page_share_text">나눔</string>
     <string name="my_page_buy_text">구매</string>
@@ -385,6 +387,11 @@
     <string name="find_id_email">이메일</string>
     <string name="find_pw_id">아이디</string>
     <string name="find_id_finish_id">회원님의 아이디는\n%s입니다.</string>
+    <!-- pw 찾기 -->
+    <string name="find_pw_finish_content2">발송된 임시 비밀번호로 로그인 후\n마이페이지에서 비밀번호 재설정을 부탁드려요 :)</string>
+    <string name="find_pw_finish_content">임시 비밀번호 메일이 발송되었습니다.</string>
+    <string name="find_pw_finish_title">PW 찾기</string>
+    <string name="finish_re_password_content">%s님 안녕하세요.\n요청하신 임시 비밀번호는 다음과 같습니다.</string>
 
     <!-- 온보딩  -->
     <string name="app_info_description">세상에 없던 친환경 디지털 옷장</string>
@@ -413,8 +420,14 @@
 
     <!-- 채팅 -->
     <string name="chat_overflow_text">채팅방 나가기</string>
-    <string name="find_pw_finish_content2">발송된 임시 비밀번호로 로그인 후\n마이페이지에서 비밀번호 재설정을 부탁드려요 :)</string>
-    <string name="find_pw_finish_content">임시 비밀번호 메일이 발송되었습니다.</string>
-    <string name="find_pw_finish_title">PW 찾기</string>
+    <string name="chat_dialog_chat_delete_title">이 채팅방을 나가시겠어요?</string>
+    <string name="chat_dialog_chat_delete_subTtle">*채팅방을 나가면 대화 복구가 불가능해요!*</string>
+    <string name="chat_dialog_chat_delete_positive">네, 나갈래요</string>
+    <string name="chat_dialog_chat_delete_negative">아니오</string>
+
+    <string name="chat_dialog_chat_confirm_title">구매자 님과 거래를 완료하시겠어요?</string>
+    <string name="chat_dialog_chat_confirm_subTitle">*거래완료에서 거래중으로 변경가능하니 안심하세요!*</string>
+    <string name="chat_dialog_chat_confirm_positive">네, 완료할래요</string>
+    <string name="chat_dialog_chat_confirm_negative">아니오</string>
 
 </resources>

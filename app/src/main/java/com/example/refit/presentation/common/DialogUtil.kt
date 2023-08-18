@@ -8,6 +8,7 @@ import com.example.refit.data.model.closet.ResponseRegisteredClothes
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.dialog.AlertBasicDialog
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
+import com.example.refit.presentation.dialog.AlertBasicDialogVer2
 import com.example.refit.presentation.dialog.AlertNoIconDialog
 import com.example.refit.presentation.dialog.AlertNoIconDialogListener
 import com.example.refit.presentation.dialog.closet.ClothItemSelectionDialog
@@ -21,6 +22,7 @@ import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDi
 import com.example.refit.presentation.dialog.community.CommunityNoIconDialog
 import com.example.refit.presentation.dialog.mypage.AlertBasicNoIconDialog
 import com.example.refit.presentation.dialog.mypage.MyPagePwCheckDialog
+import com.example.refit.presentation.dialog.mypage.MyPagePwCheckSuccessDialog
 import com.example.refit.presentation.dialog.mypage.MypageNickNameCheckDialog
 import com.example.refit.presentation.dialog.mypage.ProfileRegisterPhotoDialog
 import com.example.refit.presentation.dialog.mypage.ProfileRegisterPhotoDialogListener
@@ -93,12 +95,19 @@ object DialogUtil {
         return MypageNickNameCheckDialog(icon!!, title)
     }
 
-    fun Fragment.checkPwDialog(
+    fun Fragment.checkPwFailDialog(
         title: String,
         content: String
     ): MyPagePwCheckDialog {
         val icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_alert_circle_24)
         return MyPagePwCheckDialog(icon!!, title, content)
+    }
+
+    fun Fragment.checkPwSuccessDialog(
+        title: String
+    ): MyPagePwCheckSuccessDialog {
+        val icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_dialog_chat_positive)
+        return MyPagePwCheckSuccessDialog(icon!!, title)
     }
 
     fun showProfileRegisterPhotoDialog(listener: ProfileRegisterPhotoDialogListener): ProfileRegisterPhotoDialog {
@@ -107,5 +116,27 @@ object DialogUtil {
 
     fun showForestStampDialog(initData: ResponseForestStatusInfo): ForestStampDialog {
         return ForestStampDialog(initData)
+    }
+
+    fun Fragment.showChatDeletionConfirmDialog(
+        title: String,
+        subTitle: String,
+        positive: String?,
+        negative: String?,
+        listener: AlertBasicDialogListener?
+    ): AlertBasicDialogVer2 {
+        val icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_alert_circle_24)
+        return AlertBasicDialogVer2(icon!!, title, subTitle, positive, negative, listener)
+    }
+
+    fun Fragment.showChatConfirmDialog(
+        title: String,
+        subTitle: String,
+        positive: String?,
+        negative: String?,
+        listener: AlertBasicDialogListener?
+    ): AlertBasicDialogVer2 {
+        val icon = ContextCompat.getDrawable(requireActivity(), R.drawable.ic_dialog_chat_positive)
+        return AlertBasicDialogVer2(icon!!, title, subTitle, positive, negative, listener)
     }
 }

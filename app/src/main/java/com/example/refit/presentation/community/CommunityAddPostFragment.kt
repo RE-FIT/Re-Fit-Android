@@ -262,6 +262,7 @@ class CommunityAddPostFragment :
             }
 
             override fun afterTextChanged(p0: Editable?) {
+                priceStatus()
             }
         })
 
@@ -276,17 +277,20 @@ class CommunityAddPostFragment :
 
             override fun afterTextChanged(p0: Editable?) {
             }
-
         })
     }
 
     private fun handleAfterInputPrice() {
         binding.llCommunityAddpostView.setOnClickListener {
-            val inputPriceText = binding.etCommunityAddpostPrice.text.toString()
-            binding.tvCommunityAddpostPrice.text =
-                "₩ " + vmAdd.getDecimalFormat(inputPriceText) + "원"
-            vmAdd.setPriceInputCompleted(inputPriceText)
+            priceStatus()
         }
+    }
+
+    private fun priceStatus() {
+        val inputPriceText = binding.etCommunityAddpostPrice.text.toString()
+        binding.tvCommunityAddpostPrice.text =
+            "₩ " + vmAdd.getDecimalFormat(inputPriceText) + "원"
+        vmAdd.setPriceInputCompleted(inputPriceText)
     }
 
     private fun handlePostcodeSetting() {
@@ -346,7 +350,7 @@ class CommunityAddPostFragment :
 
                     if (copyFileLength != null) {
                         if (copyFileLength < 1000) {
-                            Timber.d("file URI 값 정상 작동되는지 확인 : $uri ================ $copiedFile")
+                            Timber.d("[ADD POST] 압축 안함 파일 크기 : $copyFileLength KB")
 
                             copiedFile?.let { file ->
                                 if (file.exists()) {
@@ -367,7 +371,14 @@ class CommunityAddPostFragment :
                                         transition: Transition<in Bitmap>?
                                     ) {
                                         // 이미지 압축 작업 수행
-                                        val compressedFile = compressImage(resource)
+                                        var compressedFile: File? = null
+                                        compressedFile = if (copyFileLength > 6001) {
+                                            compressImage(resource, 0)
+                                        } else if (copyFileLength in 1000..2999)
+                                            compressImage(resource, 1)
+                                        else
+                                            compressImage(resource, 2)
+
                                         compressedFile?.let { file ->
                                             if (file.exists()) {
                                                 imageFiles.add(file)
@@ -393,7 +404,7 @@ class CommunityAddPostFragment :
     private fun processImageComplete(totalImageCount: Int, imageFiles: MutableList<File>) {
         countImage++
 
-        if(countImage == totalImageCount) {
+        if (countImage == totalImageCount) {
             Timber.d("[ADD POST] processImageComplete 실행")
             if (vmAdd.isModifyPost.value == true) {
                 vmAdd.modifyPostIncludeImage(imageFiles)
@@ -408,7 +419,7 @@ class CommunityAddPostFragment :
         }
     }
 
-    private fun compressImage(bitmap: Bitmap): File? {
+    private fun compressImage(bitmap: Bitmap, type: Int): File? {
         val context = requireContext().applicationContext
         val outputDir = context.cacheDir
 
@@ -416,9 +427,16 @@ class CommunityAddPostFragment :
         val fileName = "compressed_${System.currentTimeMillis()}.jpg"
         Timber.d("[IMAGE] $fileName")
         val outputFile = File(outputDir, fileName)
+        var quality = 10 // 이미지 품질 설정
 
         // 이미지 압축 및 저장
-        val quality = 10 // 이미지 품질 설정
+        when (type) {
+            0 -> quality = 5
+            1 -> quality = 15
+            2 -> quality = 10
+        }
+
+        Timber.d("photo quality: $quality")
         val outputStream = FileOutputStream(outputFile)
         bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
         outputStream.flush()

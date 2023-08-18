@@ -23,40 +23,15 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(R.layout.fragment_my_
     private lateinit var viewPager : ViewPager2
     private lateinit var tabLayout : TabLayout
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         connectionTabLayout()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-
-        requireActivity().onBackPressedDispatcher.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    createAlertBasicDialog(
-                        resources.getString(R.string.pw_change_delete_title),
-                        resources.getString(R.string.pw_change_delete_positive),
-                        resources.getString(R.string.pw_change_delete_negative),
-                        object : AlertBasicDialogListener {
-                            override fun onClickPositive() {
-                                navigate(R.id.action_myInfo_to_nav_my_page)
-                            }
-
-                            override fun onClickNegative() {
-                            }
-                        }).show(requireActivity().supportFragmentManager, null)
-                }
-            })
-    }
-
     fun connectionTabLayout() {
 
-        val tabTitle = arrayOf("회원정보 수정", "비밀번호 수정")
+        val tabTitle = arrayOf("회원정보 수정", "비밀번호 변경")
 
         viewPager = binding.viewPager // viewPager 연결
         tabLayout = binding.tabLayout // tabLayout 연결
