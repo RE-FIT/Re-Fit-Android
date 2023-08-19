@@ -38,11 +38,8 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
 
         //성공 처리
         vm.changeSuccess.observe(viewLifecycleOwner, EventObserver{
-//            requireActivity().finish()
-//            val restartIntent = Intent(context, MainActivity::class.java)
-//            startActivity(restartIntent)
-            vm.isChange(false)
             notifyPwCorrectDialog()
+            vm.init()
         })
 
         //에러 처리
@@ -50,17 +47,7 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
             notifyPwIncorrectDialog()
         })
 
-        // 뒤로 가기 처리
-        vm.pw.observe(viewLifecycleOwner) {
-            vm.isChange(true)
-        }
-
-        vm.nextPw.observe(viewLifecycleOwner) {
-            vm.isChange(true)
-        }
-
         showMyInfoBackPressedDialog()
-
     }
 
     private fun notifyPwIncorrectDialog() {
@@ -74,8 +61,6 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
         checkPwSuccessDialog(
             resources.getString(R.string.pw_correct_content)
         ).show(requireActivity().supportFragmentManager, null)
-
-        vm.init()
     }
 
     override fun onDestroyView() {
