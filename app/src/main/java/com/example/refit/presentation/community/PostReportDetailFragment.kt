@@ -12,7 +12,7 @@ import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.community.viewmodel.PostReportViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class PostReportDetailFrament :
+class PostReportDetailFragment :
     BaseFragment<FragmentPostReportDetailBinding>(R.layout.fragment_post_report_detail) {
     private val vm: PostReportViewModel by sharedViewModel()
 
