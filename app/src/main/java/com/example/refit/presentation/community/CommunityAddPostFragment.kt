@@ -33,6 +33,7 @@ import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialogListener
+import com.example.refit.util.EventObserver
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
@@ -71,6 +72,10 @@ class CommunityAddPostFragment :
             initTextValueIfModify()
             observeStatus()
         }
+
+        vmAdd.success.observe(viewLifecycleOwner, EventObserver{
+            navigateUp()
+        })
     }
 
 
@@ -413,7 +418,6 @@ class CommunityAddPostFragment :
             } else {
                 vmAdd.createPost(imageFiles)
                 Timber.d("[ADD POST] createPost 실행")
-                navigateUp()
                 vm.initCommunityList()
             }
         }
