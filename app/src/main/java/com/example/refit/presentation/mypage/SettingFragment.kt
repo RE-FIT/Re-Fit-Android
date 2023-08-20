@@ -23,6 +23,14 @@ class SettingFragment: BaseFragment<FragmentSettingBinding>(R.layout.fragment_se
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.btnString.setOnClickListener {
+            navigate(R.id.action_myPage_mySetting_to_termsFragment)
+        }
+
+        binding.btnString2.setOnClickListener {
+            navigate(R.id.action_myPage_mySetting_to_policyFragment)
+        }
+
         binding.btnLogout.setOnClickListener {
             showMyPageLogoutDialog()
         }
