@@ -39,7 +39,6 @@ class PwChangeViewModel(private val repository: MyPageRepository, private val ds
     fun init() {
         pw.postValue("")
         nextPw.postValue("")
-        _isChange.value = false
     }
 
     private var _changeSuccess = MutableLiveData<Event<Boolean>>()

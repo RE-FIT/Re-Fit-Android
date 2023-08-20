@@ -21,6 +21,11 @@ class ScrapFragment: BaseFragment<FragmentScrapBinding>(R.layout.fragment_scrap)
     private val myScrapViewModel: MyScrapViewModel by sharedViewModel()
     private val infoViewModel: CommunityInfoViewModel by sharedViewModel()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        myScrapViewModel.setSelectedTab(MyScrapViewModel.Tab2.S_SELL)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

@@ -36,11 +36,8 @@ class CommunityAddShippingFeeDialog(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Timber.d("onViewCreated")
         communityAddPostViewModel.setSFPriceInputCompleted("")
         handlePositiveConfirm()
-        handleAfterInputFee()
         observeEditTextChanges()
     }
 
@@ -54,18 +51,7 @@ class CommunityAddShippingFeeDialog(
         }
     }
 
-    private fun handleAfterInputFee() {
-        binding.llDialogShippingFee.setOnClickListener {
-            shippingFeeText = binding.etDialogCommunityShippingFee.text.toString()
-            val sfText = communityAddPostViewModel.getDecimalFormat(shippingFeeText)
-            binding.tvDialogCommunityFee.text = sfText + "원"
-            communityAddPostViewModel.setSFPriceInputCompleted(shippingFeeText)
-        }
-    }
-
     private fun observeEditTextChanges() {
-        Timber.d("옵서버 호출")
-
         binding.etDialogCommunityShippingFee.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 communityAddPostViewModel.setSFPriceInputCompleted("")
@@ -74,10 +60,13 @@ class CommunityAddShippingFeeDialog(
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val isFilled = s?.isNotEmpty() == true
                 communityAddPostViewModel.setFilledStatus(9, isFilled, "")
-                Timber.d("텍스트 입력중 : $isFilled")
             }
 
             override fun afterTextChanged(s: Editable?) {
+                shippingFeeText = binding.etDialogCommunityShippingFee.text.toString()
+                val sfText = communityAddPostViewModel.getDecimalFormat(shippingFeeText)
+                binding.tvDialogCommunityFee.text = sfText + "원"
+                communityAddPostViewModel.setSFPriceInputCompleted(shippingFeeText)
             }
         })
     }

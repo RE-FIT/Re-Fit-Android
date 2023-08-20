@@ -12,6 +12,7 @@ import com.example.refit.data.model.community.PostDTODt
 import com.example.refit.data.model.community.PostResponse
 import com.example.refit.data.repository.community.CommunityRepository
 import com.example.refit.data.repository.community.PostDataRepository
+import com.example.refit.util.Event
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -32,6 +33,10 @@ class CommunityAddPostViewModel(
     private val ds: TokenStore
 ) : ViewModel() {
 
+    private var _success = MutableLiveData<Event<Boolean>>()
+    val success : LiveData<Event<Boolean>>
+        get() = _success
+
     private val _postId: MutableLiveData<Int> = MutableLiveData<Int>()
     val postId: LiveData<Int>
         get() = _postId
@@ -42,8 +47,8 @@ class CommunityAddPostViewModel(
 
     val postResponse: LiveData<PostResponse> = PostDataRepository.postResponse
 
-    private val _photoUris: MutableLiveData<List<String>> = MutableLiveData<List<String>>()
-    val photoUris: LiveData<List<String>>
+    private val _photoUris: MutableLiveData<List<String>?> = MutableLiveData<List<String>?>()
+    val photoUris: LiveData<List<String>?>
         get() = _photoUris
 
     private val _isTransactionMethodChip: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
@@ -604,6 +609,7 @@ class CommunityAddPostViewModel(
                     if (response.isSuccessful) {
                         val json = response.body()?.string()
                         Timber.d("COMMUNITY POST API 호출 성공 : $json")
+                        _success.postValue(Event(true))
                     } else {
                         try {
                             val errorBody = response.errorBody()
@@ -830,6 +836,8 @@ class CommunityAddPostViewModel(
         for (item in _isFilledImageValues) {
             item.value = false
         }
+
+        _photoUris.value = null
         _modifyImageStatus.value = false
         _postCodeValue.value = false
         _postTitle.value = ""

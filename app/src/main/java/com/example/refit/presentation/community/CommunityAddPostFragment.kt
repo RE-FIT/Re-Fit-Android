@@ -33,6 +33,7 @@ import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import com.example.refit.presentation.dialog.community.CommunityAddShippingFeeDialogListener
+import com.example.refit.util.EventObserver
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
@@ -71,6 +72,10 @@ class CommunityAddPostFragment :
             initTextValueIfModify()
             observeStatus()
         }
+
+        vmAdd.success.observe(viewLifecycleOwner, EventObserver{
+            navigateUp()
+        })
     }
 
 
@@ -322,129 +327,47 @@ class CommunityAddPostFragment :
 
     private fun handleRegisterButton() {
         binding.btnCommunityAddPostRegister.setOnClickListener {
-            countImage = 0
             val title = binding.etCommunityAddpostTitle.text.toString()
             val detail = binding.etCommunityAddpostDetail.text.toString()
 
             vmAdd.setPostTitleAndDetail(title, detail)
+
+            val imageFiles = mutableListOf<File>()
+            photoUris?.let {
+                for (uriString in it) {
+                    val uri = Uri.parse(uriString)
+                    val copiedFile = copyFileToInternalStorage(uri)
+                    Timber.d("file URI 값 정상 작동되는지 확인 : $uri ================ $copiedFile")
+
+                    copiedFile?.let { file ->
+                        if (file.exists()) {
+                            imageFiles.add(file)
+                        } else {
+                            Timber.e("파일이 존재하지 않습니다: $file")
+                        }
+                    }
+                }
+            }
+
+            Timber.d("modifyPost : ${vmAdd.isModifyPost.value}\nimagestaus: ${vmAdd.modifyImageStatus.value}")
             if (vmAdd.isModifyPost.value == true) {
                 val imageStatus = vmAdd.modifyImageStatus.value
                 if (imageStatus == false || imageStatus == null) {
                     vmAdd.modifyPost()
-                    navigateUp()
+                } else {
+                    vmAdd.modifyPostIncludeImage(imageFiles)
                 }
-            }
-
-            val imageFiles = mutableListOf<File>()
-
-            // 이미지 압축
-            val requestOptions = RequestOptions().format(DecodeFormat.PREFER_RGB_565)
-            val glide = Glide.with(this)
-
-            photoUris?.let {
-                var processedImageCount = 0
-                for (uriString in it) {
-                    val uri = Uri.parse(uriString)
-                    val copiedFile = copyFileToInternalStorage(uri)
-                    val copyFileLength = copiedFile?.length()?.div(1024)
-
-                    if (copyFileLength != null) {
-                        if (copyFileLength < 1000) {
-                            Timber.d("[ADD POST] 압축 안함 파일 크기 : $copyFileLength KB")
-
-                            copiedFile?.let { file ->
-                                if (file.exists()) {
-                                    imageFiles.add(file)
-                                    processImageComplete(photoUris!!.size, imageFiles)
-                                } else {
-                                    Timber.e("파일이 존재하지 않습니다: $file")
-                                }
-                            }
-                        } else {
-                            // 이미지 로드
-                            glide.asBitmap()
-                                .load(uri)
-                                .apply(requestOptions)
-                                .into(object : CustomTarget<Bitmap>() {
-                                    override fun onResourceReady(
-                                        resource: Bitmap,
-                                        transition: Transition<in Bitmap>?
-                                    ) {
-                                        // 이미지 압축 작업 수행
-                                        var compressedFile: File? = null
-                                        compressedFile = if (copyFileLength > 6001) {
-                                            compressImage(resource, 0)
-                                        } else if (copyFileLength in 1000..2999)
-                                            compressImage(resource, 1)
-                                        else
-                                            compressImage(resource, 2)
-
-                                        compressedFile?.let { file ->
-                                            if (file.exists()) {
-                                                imageFiles.add(file)
-                                                Timber.d("[ADD POST] 압축 파일 크기 : ${file.length() / 1024} KB, countImage: $countImage")
-                                                processImageComplete(photoUris!!.size, imageFiles)
-                                            } else {
-                                                Timber.e("압축된 파일이 존재하지 않습니다: $file")
-                                            }
-                                        }
-                                    }
-
-                                    override fun onLoadCleared(placeholder: Drawable?) {
-                                    }
-                                })
-                        }
-                    }
-                }
-
-            }
-        }
-    }
-
-    private fun processImageComplete(totalImageCount: Int, imageFiles: MutableList<File>) {
-        countImage++
-
-        if (countImage == totalImageCount) {
-            Timber.d("[ADD POST] processImageComplete 실행")
-            if (vmAdd.isModifyPost.value == true) {
-                vmAdd.modifyPostIncludeImage(imageFiles)
-                Timber.d("[ADD POST] modifyPostIncludeImage 실행")
                 navigateUp()
             } else {
                 vmAdd.createPost(imageFiles)
                 Timber.d("[ADD POST] createPost 실행")
-                navigateUp()
                 vm.initCommunityList()
+                navigateUp()
             }
+
+
         }
     }
-
-    private fun compressImage(bitmap: Bitmap, type: Int): File? {
-        val context = requireContext().applicationContext
-        val outputDir = context.cacheDir
-
-        // 이미지 파일 이름 생성
-        val fileName = "compressed_${System.currentTimeMillis()}.jpg"
-        Timber.d("[IMAGE] $fileName")
-        val outputFile = File(outputDir, fileName)
-        var quality = 10 // 이미지 품질 설정
-
-        // 이미지 압축 및 저장
-        when (type) {
-            0 -> quality = 5
-            1 -> quality = 15
-            2 -> quality = 10
-        }
-
-        Timber.d("photo quality: $quality")
-        val outputStream = FileOutputStream(outputFile)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
-        outputStream.flush()
-        outputStream.close()
-
-        return outputFile
-    }
-
 
     private fun copyFileToInternalStorage(uri: Uri): File? {
         val context = requireContext().applicationContext
@@ -472,7 +395,6 @@ class CommunityAddPostFragment :
         }
         return null
     }
-
 
     private fun initGalleryLauncher() {
         pickMultipleMedia =

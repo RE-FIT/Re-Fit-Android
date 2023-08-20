@@ -66,6 +66,7 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
     val profileImage: MutableLiveData<String> = MutableLiveData()
     val birth: MutableLiveData<String> = MutableLiveData()
     val gender: MutableLiveData<Int> = MutableLiveData()
+    val type: MutableLiveData<String> = MutableLiveData()
 
     /**
      * 초기화
@@ -79,6 +80,7 @@ class MyInfoViewModel(private val repository: MyPageRepository, private val ds: 
         profileImage.postValue(value.imageUrl)
         birth.postValue(value.birth)
         gender.postValue(value.gender)
+        type.postValue(value.type)
 
         fromServer.postValue(Event(true))
     }

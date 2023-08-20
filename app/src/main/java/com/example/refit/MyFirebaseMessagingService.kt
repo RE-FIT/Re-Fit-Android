@@ -46,7 +46,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val channelId = "refit"
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.refit)
+            .setSmallIcon(R.drawable.logo)
             .setContentTitle(title)
             .setContentText(messageBody)
             .setAutoCancel(true)

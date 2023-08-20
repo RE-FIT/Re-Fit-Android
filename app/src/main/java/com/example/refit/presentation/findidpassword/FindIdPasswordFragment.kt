@@ -21,8 +21,6 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class FindIdPasswordFragment : BaseFragment<FragmentFindIdPasswordBinding>(R.layout.fragment_find_id_password) {
 
-    private val vm: FindIdPasswordViewModel by sharedViewModel()
-
     private lateinit var viewPager : ViewPager2
     private lateinit var tabLayout : TabLayout
 

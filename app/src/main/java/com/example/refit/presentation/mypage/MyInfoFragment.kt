@@ -1,17 +1,13 @@
 package com.example.refit.presentation.mypage
 
-import android.content.Context
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.viewpager2.widget.ViewPager2
-import com.example.refit.MainActivity
 import com.example.refit.R
 import com.example.refit.databinding.FragmentMyInfoBinding
 import com.example.refit.presentation.common.BaseFragment
-import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
-import com.example.refit.presentation.common.NavigationUtil.navigate
-import com.example.refit.presentation.dialog.AlertBasicDialogListener
+import com.example.refit.presentation.common.DialogUtil.checkPwFailDialog
 import com.example.refit.presentation.findidpassword.adapter.FragmentPageAdapter
 import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
 import com.google.android.material.tabs.TabLayout
@@ -23,10 +19,13 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(R.layout.fragment_my_
     private lateinit var viewPager : ViewPager2
     private lateinit var tabLayout : TabLayout
 
+    private val vm: MyInfoViewModel by sharedViewModel()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         connectionTabLayout()
+        blockPasswordChangeTab()
     }
 
     fun connectionTabLayout() {
@@ -48,4 +47,21 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(R.layout.fragment_my_
         ) { tab, position -> tab.text = tabTitle[position] }.attach()
     }
 
+    fun blockPasswordChangeTab() {
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                if (position == 1 && vm.type.value != null) {
+                    viewPager.setCurrentItem(0, false)
+                    notifyBlockChangeDialog()
+                }
+            }
+        })
+    }
+
+    private fun notifyBlockChangeDialog() {
+        checkPwFailDialog(
+            resources.getString(R.string.block_change_to_pw_title),
+            resources.getString(R.string.block_change_to_pw_content)
+        ).show(requireActivity().supportFragmentManager, null)
+    }
 }

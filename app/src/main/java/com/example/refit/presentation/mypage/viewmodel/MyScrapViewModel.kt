@@ -61,10 +61,6 @@ class MyScrapViewModel(private val repository: MyPageRepository, private val ds:
     val selectedTab2: LiveData<Tab2>
         get() = _selectedTab2
 
-    init {
-        _selectedTab2.value = Tab2.S_SELL // 초기 선택 탭 설정
-    }
-
     fun setSelectedTab(tab: Tab2) {
         _selectedTab2.value = tab
     }
