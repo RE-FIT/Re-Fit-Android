@@ -27,7 +27,6 @@
         android:paddingVertical="5dp">
 
         <com.google.android.material.card.MaterialCardView
-            android:onClick="@{() -> vm.handleClickItem(feedList.postId)}"
             android:id="@+id/mcv_community_item_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,39 +55,59 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
+                    android:id="@+id/ll_community_item"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:gravity="bottom"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintEnd_toStartOf="@+id/appCompatImageView"
                     app:layout_constraintStart_toEndOf="@id/iv_community_item"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
-                        android:id="@+id/ll_community_item"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_community_item_list_title"
+                        style="@style/BoldFontKr.14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="bottom"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" >
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="@{feedList.title}"
+                        android:textColor="@color/green1"
+                        app:layout_constrainedWidth="true"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@+id/tv_community_item_list_price"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_community_item_list_title"
-                            style="@style/BoldFontKr.12"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{feedList.title}"
-                            android:textColor="@color/green1" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_community_item_list_price"
+                        style="@style/MediumFont.12"
+                        setVisibility="@{feedList.price == 0 ? false : true}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="@{feedList.price + `원`}"
+                        android:textColor="@color/dark2"
+                        app:layout_constraintLeft_toRightOf="@+id/tv_community_item_list_title"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_community_item_list_price"
-                            style="@style/MediumFont.10"
-                            android:visibility="visible"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/dark2"
-                            android:layout_marginLeft="15dp" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    </LinearLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_community_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_community_item"
+                    app:layout_constraintTop_toBottomOf="@id/ll_community_item">
+
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_size_txt"
@@ -100,19 +119,19 @@
                         android:text="@string/community_item_text_first"
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ll_community_item" />
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_size"
                         style="@style/RegularFontKr.10"
+                        setTextSize="@{feedList.size}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="bottom"
-                        android:text="@{vm.conversionTypeToText(3, feedList.size)}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_size_txt"
-                        app:layout_constraintTop_toBottomOf="@id/ll_community_item" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_community_item_list_method_txt"
@@ -157,8 +176,7 @@
                         android:text="@{feedList.address == null ? @string/community_item_region_all : feedList.address}"
                         android:textColor="@color/dark2"
                         app:layout_constraintStart_toEndOf="@id/tv_community_item_list_method_txt"
-                        app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_method"
-                        tools:ignore="MissingConstraints" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_community_item_list_method" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

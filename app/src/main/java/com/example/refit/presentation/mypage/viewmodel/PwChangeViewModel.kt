@@ -39,6 +39,7 @@ class PwChangeViewModel(private val repository: MyPageRepository, private val ds
     fun init() {
         pw.postValue("")
         nextPw.postValue("")
+        initIsSuccess(true)
     }
 
     private var _changeSuccess = MutableLiveData<Event<Boolean>>()
@@ -50,13 +51,13 @@ class PwChangeViewModel(private val repository: MyPageRepository, private val ds
         get() = _error
 
     // 변경되었는지 체크
-    private val _isChange: MutableLiveData<Boolean> =
+    private val _isSuccess: MutableLiveData<Boolean> =
         MutableLiveData<Boolean>()
-    val isChange: LiveData<Boolean>
-        get() = _isChange
+    val isSuccess: LiveData<Boolean>
+        get() = _isSuccess
 
-    fun isChange(boolean: Boolean) {
-        _isChange.postValue(boolean)
+    fun initIsSuccess(status: Boolean) {
+        _isSuccess.value = status
     }
 
     fun updatePassword(request: PasswordUpdateRequest) = viewModelScope.launch {

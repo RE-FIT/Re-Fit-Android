@@ -28,6 +28,8 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
         binding.vm = vm
         binding.lifecycleOwner = this
 
+        vm.initIsSuccess(false)
+
         //패스워드 변경 API 호출
         binding.btnPwUpdate.setOnClickListener {
             val pw = binding.currentPw.text.toString()
@@ -47,9 +49,13 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
         //에러 처리
         vm.error.observe(viewLifecycleOwner, EventObserver{
             notifyPwIncorrectDialog()
+            showUpdatePwBackPressedDialog()
         })
 
-        showUpdatePwBackPressedDialog()
+        if ((!vm.pw.value.isNullOrEmpty() || !vm.nextPw.value.isNullOrEmpty())
+            && vm.isFilledAllOptions.value == false) {
+            showUpdatePwBackPressedDialog()
+        }
     }
 
     private fun notifyPwIncorrectDialog() {
@@ -75,7 +81,6 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (vm.isChange.value == true) {
                         createAlertBasicDialog(
                             resources.getString(R.string.pw_change_delete_title),
                             resources.getString(R.string.pw_change_delete_positive),
@@ -88,9 +93,6 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
                                 override fun onClickNegative() {
                                 }
                             }).show(requireActivity().supportFragmentManager, null)
-                    } else {
-                        navigate(R.id.action_myInfo_to_nav_my_page)
-                    }
                 }
             })
     }
