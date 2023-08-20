@@ -12,6 +12,7 @@ import com.example.refit.presentation.common.DialogUtil.checkPwSuccessDialog
 import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
+import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
 import com.example.refit.presentation.mypage.viewmodel.PwChangeViewModel
 import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -19,12 +20,19 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.layout.fragment_my_info_pw_update) {
 
     private val vm: PwChangeViewModel by sharedViewModel()
+    private val myInfoViewModel: MyInfoViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = vm
         binding.lifecycleOwner = this
+
+        if (myInfoViewModel.type.value != null) {
+            notifyBlockChangeDialog()
+            binding.currentPw.isEnabled = false
+            binding.newPw.isEnabled = false
+        }
 
         //패스워드 변경 API 호출
         binding.btnPwUpdate.setOnClickListener {
@@ -91,5 +99,12 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
                     }
                 }
             })
+    }
+
+    private fun notifyBlockChangeDialog() {
+        checkPwFailDialog(
+            resources.getString(R.string.block_change_to_pw_title),
+            resources.getString(R.string.block_change_to_pw_content)
+        ).show(requireActivity().supportFragmentManager, null)
     }
 }

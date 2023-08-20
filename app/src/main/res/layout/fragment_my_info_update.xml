@@ -116,6 +116,7 @@
                     android:textColor="@color/green1" />
 
                 <EditText
+                    android:textColor="@color/dark2"
                     android:id="@+id/et_nickname"
                     android:layout_width="match_parent"
                     android:layout_height="37dp"
@@ -125,8 +126,7 @@
                     android:inputType="textPersonName"
                     android:paddingStart="11dp"
                     android:text="@{vm.myInfoResponse.name}"
-                    android:textAppearance="@style/RegularFontKr.12"
-                    android:textColor="@color/black" />
+                    android:textAppearance="@style/RegularFontKr.12" />
 
                 <TextView
                     android:id="@+id/able_name"
