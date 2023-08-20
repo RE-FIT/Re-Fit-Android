@@ -22,6 +22,7 @@ import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.community.adapter.InfoImageAdapter
 import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
+import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import com.example.refit.presentation.community.viewmodel.PostReportViewModel
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.AlertNoIconDialogListener
@@ -36,6 +37,7 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
     private val vm: CommunityInfoViewModel by sharedViewModel()
     private val vmAdd: CommunityAddPostViewModel by sharedViewModel()
     private val vmPr: PostReportViewModel by sharedViewModel()
+    private val vmCom: CommunityViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,6 +49,7 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         observeStatus()
         initImageList()
         vm.clickedGetPost(vm.postId.value!!)
+        vmCom.setScrollStatus(true)
 
         Timber.d("[info] onViewCreated")
         binding.fabCommunityInfoChat.setOnClickListener {
