@@ -11,6 +11,7 @@ import com.example.refit.presentation.common.DialogUtil.checkPwFailDialog
 import com.example.refit.presentation.common.DialogUtil.checkPwSuccessDialog
 import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
 import com.example.refit.presentation.common.NavigationUtil.navigate
+import com.example.refit.presentation.common.NavigationUtil.navigateUp
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
 import com.example.refit.presentation.mypage.viewmodel.PwChangeViewModel
@@ -88,14 +89,14 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
                             resources.getString(R.string.pw_change_delete_negative),
                             object : AlertBasicDialogListener {
                                 override fun onClickPositive() {
-                                    navigate(R.id.action_myInfo_to_nav_my_page)
+                                    navigateUp()
                                 }
 
                                 override fun onClickNegative() {
                                 }
                             }).show(requireActivity().supportFragmentManager, null)
                     } else {
-                        navigate(R.id.action_myInfo_to_nav_my_page)
+                        navigateUp()
                     }
                 }
             })

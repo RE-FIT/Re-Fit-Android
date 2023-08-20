@@ -243,14 +243,14 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
                             resources.getString(R.string.pw_change_delete_negative),
                             object : AlertBasicDialogListener {
                                 override fun onClickPositive() {
-                                    navigate(R.id.action_myInfo_to_nav_my_page)
+                                    navigateUp()
                                 }
 
                                 override fun onClickNegative() {
                                 }
                             }).show(requireActivity().supportFragmentManager, null)
                     } else {
-                        navigate(R.id.action_myInfo_to_nav_my_page)
+                        navigateUp()
                     }
                 }
             })
