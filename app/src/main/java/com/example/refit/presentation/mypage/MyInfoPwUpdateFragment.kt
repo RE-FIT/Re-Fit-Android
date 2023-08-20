@@ -1,6 +1,8 @@
 package com.example.refit.presentation.mypage
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import com.example.refit.R
@@ -47,7 +49,7 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
             notifyPwIncorrectDialog()
         })
 
-        showMyInfoBackPressedDialog()
+        showUpdatePwBackPressedDialog()
     }
 
     private fun notifyPwIncorrectDialog() {
@@ -68,7 +70,7 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
         vm.init()
     }
 
-    private fun showMyInfoBackPressedDialog() {
+    private fun showUpdatePwBackPressedDialog() {
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
