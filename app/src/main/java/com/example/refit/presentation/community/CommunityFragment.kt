@@ -1,7 +1,10 @@
 package com.example.refit.presentation.community
 
 import android.os.Bundle
+import android.os.Parcelable
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
@@ -22,15 +25,20 @@ import timber.log.Timber
 
 class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragment_community) {
 
-    private val communityViewModel: CommunityViewModel by sharedViewModel()
-    private val infoViewModel: CommunityInfoViewModel by sharedViewModel()
+    private val vm: CommunityViewModel by sharedViewModel()
+    private val vmInfo: CommunityInfoViewModel by sharedViewModel()
     private val vmSearch: CommunitySearchViewModel by sharedViewModel()
+    private var recyclerViewState: Parcelable? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.vm = communityViewModel
-        communityViewModel.initStatus()
-        communityViewModel.initCommunityList()
+        Timber.d("[MAIN] onViewCreated")
+        binding.vm = vm
+
+        if (vm.scrollStatus.value != true) {
+            vm.initStatus()
+            vm.initCommunityList()
+        }
         initCommunityList()
         initCommunityOptionDropdown()
         setClickedButton()
@@ -40,9 +48,11 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
     override fun onResume() {
         super.onResume()
-        Timber.d("onResume")
-        communityViewModel.initCommunityList()
-        initCommunityList()
+        Timber.d("[MAIN] onResume")
+        if (recyclerViewState != null && vm.scrollStatus.value == true) {
+            setSavedRecyclerViewState()
+            vm.setScrollStatus(false)
+        }
     }
 
     private fun initCommunityOptionDropdown() {
@@ -71,20 +81,20 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
             when (viewId) {
                 binding.cvCommunityOptionType.id -> {
                     binding.tvCommunityOptionType.text = itemDescription
-                    communityViewModel.setDropDownController(0, itemDescription)
-                    communityViewModel.loadCommunityList()
+                    vm.setDropDownController(0, itemDescription)
+                    vm.loadCommunityList()
                 }
 
                 binding.cvCommunityOptionGender.id -> {
                     binding.tvCommunityOptionGender.text = itemDescription
-                    communityViewModel.setDropDownController(1, itemDescription)
-                    communityViewModel.loadCommunityList()
+                    vm.setDropDownController(1, itemDescription)
+                    vm.loadCommunityList()
                 }
 
                 binding.cvCommunityOptionCategory.id -> {
                     binding.tvCommunityOptionCategory.text = itemDescription
-                    communityViewModel.setDropDownController(2, itemDescription)
-                    communityViewModel.loadCommunityList()
+                    vm.setDropDownController(2, itemDescription)
+                    vm.loadCommunityList()
                 }
             }
 
@@ -106,8 +116,8 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
     private fun initCommunityList() {
         binding.rvCommunityList.layoutManager = LinearLayoutManager(requireActivity())
-        binding.rvCommunityList.adapter = CommunityListAdapter(communityViewModel).apply {
-            communityViewModel.communityList.observe(viewLifecycleOwner) { list ->
+        binding.rvCommunityList.adapter = CommunityListAdapter(vm).apply {
+            vm.communityList.observe(viewLifecycleOwner) { list ->
                 submitList(list)
             }
         }
@@ -128,15 +138,24 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
 
     }
 
+    private fun saveRecyclerViewState() {
+        recyclerViewState = binding.rvCommunityList.layoutManager!!.onSaveInstanceState()
+    }
+
+    private fun setSavedRecyclerViewState() {
+        binding.rvCommunityList.layoutManager!!.onRestoreInstanceState(recyclerViewState)
+    }
+
     private fun observeStatus() {
-        communityViewModel.communityList.observe(viewLifecycleOwner) { response ->
+        vm.communityList.observe(viewLifecycleOwner) { response ->
             if (response != null) {
                 initCommunityList()
             }
         }
 
-        communityViewModel.selectedPostItem.observe(viewLifecycleOwner, EventObserver { postId ->
-            infoViewModel.clickedGetPost(postId)
+        vm.selectedPostItem.observe(viewLifecycleOwner, EventObserver { postId ->
+            vmInfo.clickedGetPost(postId)
+            saveRecyclerViewState()
             navigate(R.id.action_nav_community_to_communityInfoFragment)
         })
     }
