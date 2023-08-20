@@ -74,6 +74,7 @@ class CommunityAddPostFragment :
         }
 
         vmAdd.success.observe(viewLifecycleOwner, EventObserver{
+            binding.btnCommunityAddPostRegister.isEnabled = true
             navigateUp()
         })
     }
@@ -360,6 +361,7 @@ class CommunityAddPostFragment :
                 navigateUp()
             } else {
                 vmAdd.createPost(imageFiles)
+                binding.btnCommunityAddPostRegister.isEnabled = false
                 Timber.d("[ADD POST] createPost 실행")
                 vm.initCommunityList()
             }
