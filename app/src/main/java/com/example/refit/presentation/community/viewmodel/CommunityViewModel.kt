@@ -23,6 +23,10 @@ class CommunityViewModel(
     private val ds: TokenStore
 ) : ViewModel() {
 
+    private val _scrollStatus: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    val scrollStatus: LiveData<Boolean>
+        get() = _scrollStatus
+
     private val _communityList: MutableLiveData<List<CommunityListItemResponse>> =
         MutableLiveData<List<CommunityListItemResponse>>()
     val communityList: LiveData<List<CommunityListItemResponse>>
@@ -42,16 +46,19 @@ class CommunityViewModel(
     val dropDownValue: List<MutableLiveData<Int>>
         get() = _dropDownValue
 
-
     // 새로운 채팅이 있는가? (for. N 아이콘 표시)
     private val _isNewChat: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     val isNewChat: LiveData<Boolean>
         get() = _isNewChat
 
-
     fun setNewChatIcon(status: Boolean) {
         _isNewChat.value = status
     }
+
+    fun setScrollStatus(boolean: Boolean) {
+        _scrollStatus.value = boolean
+    }
+
 
     fun initCommunityList() = viewModelScope.launch {
         val accessToken = ds.getAccessToken().first()
