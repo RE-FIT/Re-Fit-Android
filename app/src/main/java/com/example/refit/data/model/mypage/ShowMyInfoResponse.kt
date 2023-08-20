@@ -9,5 +9,5 @@ data class ShowMyInfoResponse (
     @SerializedName("name") val name: String,
     @SerializedName("birth") val birth: String,
     @SerializedName("gender") val gender: Int,
-    @SerializedName("string") val type: String
+    @SerializedName("type") val type: String
 )

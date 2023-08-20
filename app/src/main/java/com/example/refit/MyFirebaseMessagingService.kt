@@ -63,7 +63,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        //동일한 알람이 여러번 왔을때 이전 알람을 대체
-        notificationManager.notify(0, notificationBuilder.build())
+        val notificationId = System.currentTimeMillis().toInt()
+        notificationManager.notify(notificationId, notificationBuilder.build())
     }
 }

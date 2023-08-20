@@ -49,7 +49,10 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         observeStatus()
         initImageList()
         vm.clickedGetPost(vm.postId.value!!)
-        vmCom.setScrollStatus(true)
+
+        vm.deleteSuccess.observe(viewLifecycleOwner, EventObserver{
+            navigateUp()
+        })
 
         Timber.d("[info] onViewCreated")
         binding.fabCommunityInfoChat.setOnClickListener {
@@ -225,7 +228,6 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
                 override fun onClickPositive() {
                     // TODO 글 삭제
                     vm.deletePost()
-                    navigateUp()
                 }
 
                 override fun onClickNegative() {

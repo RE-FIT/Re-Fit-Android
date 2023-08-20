@@ -50,7 +50,6 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
         vm.changeSuccess.observe(viewLifecycleOwner, EventObserver{
             notifyPwCorrectDialog()
             vm.init()
-            showMyInfoBackPressedDialog()
         })
 
         //에러 처리
