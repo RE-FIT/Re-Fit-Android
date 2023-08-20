@@ -133,25 +133,39 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
     }
 
     private fun editBirth() {
-        // 생일
-        binding.etBirthday.addTextChangedListener(object : TextWatcher {
+        val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val length = binding.etBirthday.text.length
 
-                if (length == 4 && before != 1) {
-                    binding.etBirthday.setText(binding.etBirthday.text.toString()+"/")
-                    binding.etBirthday.setSelection(binding.etBirthday.text.length)
-                } else if (length == 7 && before != 1) {
-                    binding.etBirthday.setText(binding.etBirthday.text.toString() + "/")
-                    binding.etBirthday.setSelection(binding.etBirthday.text.length)
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+
+            override fun afterTextChanged(s: Editable?) {
+                s?.let {
+
+                    binding.etBirthday.removeTextChangedListener(this)
+
+                    val strippedValue = it.toString().replace("/", "")
+                    when (strippedValue.length) {
+                        in 5..6 -> {
+                            val formattedValue = "${strippedValue.substring(0, 4)}/${strippedValue.substring(4)}"
+                            binding.etBirthday.setText(formattedValue)
+                            binding.etBirthday.setSelection(formattedValue.length)
+                        }
+                        in 7..8 -> {
+                            val formattedValue = "${strippedValue.substring(0, 4)}/${strippedValue.substring(4, 6)}/${strippedValue.substring(6)}"
+                            binding.etBirthday.setText(formattedValue)
+                            binding.etBirthday.setSelection(formattedValue.length)
+                        }
+                    }
+
+                    vm.setBirth(binding.etBirthday.text.toString())
+                    vm.changed()
+
+                    binding.etBirthday.addTextChangedListener(this)
                 }
-
-                vm.setBirth(binding.etBirthday.text.toString())
-                vm.changed()
             }
-            override fun afterTextChanged(s: Editable?) { }
-        })
+        }
+
+        binding.etBirthday.addTextChangedListener(textWatcher)
     }
 
     // ----------------------- 사진 및 카메라 통한 옷 이미지 등록 -----------------------
