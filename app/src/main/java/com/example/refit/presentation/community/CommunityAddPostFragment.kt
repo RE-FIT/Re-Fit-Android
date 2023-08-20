@@ -362,7 +362,6 @@ class CommunityAddPostFragment :
                 vmAdd.createPost(imageFiles)
                 Timber.d("[ADD POST] createPost 실행")
                 vm.initCommunityList()
-                navigateUp()
             }
 
 
