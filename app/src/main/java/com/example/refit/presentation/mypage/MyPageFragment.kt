@@ -6,6 +6,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
+import com.example.refit.BuildConfig.IMAGE_URL
 import com.example.refit.R
 import com.example.refit.databinding.FragmentMyPageBinding
 import com.example.refit.presentation.common.BaseFragment
@@ -46,8 +47,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 
         // 설정 버튼 클릭시
         binding.image.setOnClickListener(){
-            val action = MyPageFragmentDirections.actionNavMyPageToImageFragment(vm.myInfoResponse.value!!.imageUrl)
-            Navigation.findNavController(view).navigate(action)
+            if (vm.myInfoResponse.value!!.imageUrl != IMAGE_URL) {
+                val action = MyPageFragmentDirections.actionNavMyPageToImageFragment(vm.myInfoResponse.value!!.imageUrl)
+                Navigation.findNavController(view).navigate(action)
+            }
         }
 
         vm.getMyInfo()
