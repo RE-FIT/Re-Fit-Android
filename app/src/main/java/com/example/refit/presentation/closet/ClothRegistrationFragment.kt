@@ -47,19 +47,23 @@ class ClothRegistrationFragment :
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    createAlertBasicDialog(
-                        resources.getString(R.string.cloth_register_cancel_title),
-                        resources.getString(R.string.cloth_register_cancel_positive),
-                        resources.getString(R.string.cloth_register_cancel_negative),
-                        object : AlertBasicDialogListener {
-                            override fun onClickPositive() {
-                                clothAddViewModel.initAllStatus()
-                                navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
-                            }
+                    if(photoUri == null && binding.cgClothRegisterWearingSeason.checkedChipId == -1) {
+                        navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
+                    } else {
+                        createAlertBasicDialog(
+                            resources.getString(R.string.cloth_register_cancel_title),
+                            resources.getString(R.string.cloth_register_cancel_positive),
+                            resources.getString(R.string.cloth_register_cancel_negative),
+                            object : AlertBasicDialogListener {
+                                override fun onClickPositive() {
+                                    clothAddViewModel.initAllStatus()
+                                    navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
+                                }
 
-                            override fun onClickNegative() {
-                            }
-                        }).show(requireActivity().supportFragmentManager, null)
+                                override fun onClickNegative() {
+                                }
+                            }).show(requireActivity().supportFragmentManager, null)
+                    }
                 }
             })
     }
