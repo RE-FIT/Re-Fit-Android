@@ -1,8 +1,6 @@
 package com.example.refit.presentation.closet
 
 import android.content.Context
-import android.graphics.ImageDecoder
-import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -20,7 +18,6 @@ import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
 import com.example.refit.presentation.common.DialogUtil.showClothRegisterPhotoDialog
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
-import com.example.refit.presentation.common.binding.CommonBindingAdapter
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.closet.ClothRegisterPhotoDialogListener
 import com.example.refit.util.EventObserver

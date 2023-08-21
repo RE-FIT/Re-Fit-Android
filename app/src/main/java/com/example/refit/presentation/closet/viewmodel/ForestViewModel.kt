@@ -8,6 +8,7 @@ import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.closet.ForestStamps
 import com.example.refit.data.model.closet.ResponseForestStatusInfo
 import com.example.refit.data.model.closet.ResponseQuizInfo
+import com.example.refit.data.model.closet.ResponseRegisteredClothInfo
 import com.example.refit.data.repository.colset.ClosetRepository
 import com.example.refit.util.Event
 import kotlinx.coroutines.flow.first
@@ -18,7 +19,8 @@ import retrofit2.Response
 import timber.log.Timber
 import kotlin.random.Random
 
-class ForestViewModel(private val repository: ClosetRepository, private val dataStore: TokenStore): ViewModel() {
+class ForestViewModel(private val repository: ClosetRepository, private val dataStore: TokenStore) :
+    ViewModel() {
 
     private val _forestInfo: MutableLiveData<Event<ResponseForestStatusInfo>> =
         MutableLiveData<Event<ResponseForestStatusInfo>>()
@@ -50,6 +52,11 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
     val clothId: LiveData<Int>
         get() = _clothId
 
+    private val _clothItemInfo: MutableLiveData<Event<ResponseRegisteredClothInfo>> =
+        MutableLiveData<Event<ResponseRegisteredClothInfo>>()
+    val clothItemInfo: LiveData<Event<ResponseRegisteredClothInfo>>
+        get() = _clothItemInfo
+
     // 퀴즈 화면
     private val _isRequestAnswer: MutableLiveData<Event<Boolean>> =
         MutableLiveData<Event<Boolean>>()
@@ -60,22 +67,25 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
         MutableLiveData<Event<Boolean>>()
     val isRequestExit: LiveData<Event<Boolean>>
         get() = _isRequestExit
-    
+
 
     fun getForestInfo() {
         viewModelScope.launch {
             try {
-                val response = repository.getForestStatusInfo(dataStore.getAccessToken().first(), _clothId.value!!)
-                response.enqueue(object: Callback<ResponseForestStatusInfo> {
+                val response = repository.getForestStatusInfo(
+                    dataStore.getAccessToken().first(),
+                    _clothId.value!!
+                )
+                response.enqueue(object : Callback<ResponseForestStatusInfo> {
                     override fun onResponse(
                         call: Call<ResponseForestStatusInfo>,
                         response: Response<ResponseForestStatusInfo>
                     ) {
-                        if(response.isSuccessful) {
+                        if (response.isSuccessful) {
                             //TODO(카카오톡 로그인이 추가되면 옷장이 완성됐을 때 카톡 공유 기능도 추가할 것)
                             _forestInfo.value = Event(response.body()!!)
                             val stampList = mutableListOf<ForestStamps>()
-                            for(id in 1 .. response.body()!!.targetCnt) {
+                            for (id in 1..response.body()!!.targetCnt) {
                                 stampList.add(ForestStamps(id, Random.nextInt(0, 3)))
                             }
                             _forestStamps.value = Event(stampList.toList())
@@ -101,13 +111,14 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
         viewModelScope.launch {
             try {
                 Timber.d("퀴즈 요청 id - ${_clothId.value}")
-                val response = repository.getQuizInfo(dataStore.getAccessToken().first(), _clothId.value!!)
-                response.enqueue(object: Callback<ResponseQuizInfo> {
+                val response =
+                    repository.getQuizInfo(dataStore.getAccessToken().first(), _clothId.value!!)
+                response.enqueue(object : Callback<ResponseQuizInfo> {
                     override fun onResponse(
                         call: Call<ResponseQuizInfo>,
                         response: Response<ResponseQuizInfo>
                     ) {
-                        if(response.isSuccessful) {
+                        if (response.isSuccessful) {
                             _quizInfo.value = response.body()
                             Timber.d("퀴즈 데이터 불러오기 성공 - ${response.body()}")
                         } else {
@@ -126,18 +137,49 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
         }
     }
 
+    fun getRegisteredClothInfo() {
+        viewModelScope.launch {
+            try {
+                val response = repository.getRegisteredClothInfo(
+                    dataStore.getAccessToken().first(),
+                    _clothId.value!!
+                )
+                response.enqueue(object : Callback<ResponseRegisteredClothInfo> {
+                    override fun onResponse(
+                        call: Call<ResponseRegisteredClothInfo>,
+                        response: Response<ResponseRegisteredClothInfo>
+                    ) {
+                        if (response.isSuccessful) {
+                            _clothItemInfo.value = Event(response.body()!!)
+                            Timber.d("선택된 옷 아이템 정보를 불러오는 데 성공했습니다 - ${response.body()}")
+                        } else {
+                            Timber.d("선택된 옷 아이템 정보를 불러오는 데 실패했습니다1")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseRegisteredClothInfo>, t: Throwable) {
+                        Timber.d("선택된 옷 아이템 정보를 불러오는 데 실패했습니다2 - $t")
+                    }
+
+                })
+            } catch (e: Throwable) {
+                Timber.d(e)
+            }
+        }
+    }
+
 
     fun handleClickItem() {
         _isSelectItem.value = Event(true)
     }
-    
+
     fun checkValidationShowingDialog(isSuccessRequest: Boolean, clothId: Int) {
         _isValidShowingDialog.value = Event(isSuccessRequest)
         _clothId.value = clothId
     }
 
     fun handleClickQuizButton(isSuccessRequest: Boolean) {
-        if(!isSuccessRequest) {
+        if (!isSuccessRequest) {
             _isRequestAnswer.value = Event(true)
         } else {
             _isRequestExit.value = Event(true)
