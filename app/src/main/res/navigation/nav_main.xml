@@ -328,7 +328,7 @@
     </fragment>
     <fragment
         android:id="@+id/postReportDetailFrament"
-        android:name="com.example.refit.presentation.community.PostReportDetailFrament"
+        android:name="com.example.refit.presentation.community.PostReportDetailFragment"
         android:label="PostReportDetailFrament" />
     <fragment
         android:id="@+id/postcodeFragment"
