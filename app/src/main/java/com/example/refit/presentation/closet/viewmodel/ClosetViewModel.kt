@@ -1,6 +1,5 @@
 package com.example.refit.presentation.closet.viewmodel
 
-import androidx.datastore.dataStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,8 +16,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
-import java.text.SimpleDateFormat
-import java.util.Calendar
 
 class ClosetViewModel(
     private val repository: ClosetRepository,
@@ -44,15 +41,17 @@ class ClosetViewModel(
     val isClothesWornToday: LiveData<Boolean>
         get() = _isClothesWornToday
 
-    private val _isSuccessWearingClothes: MutableLiveData<Event<Boolean>> = MutableLiveData<Event<Boolean>>()
+    private val _isSuccessWearingClothes: MutableLiveData<Event<Boolean>> =
+        MutableLiveData<Event<Boolean>>()
     val isSuccessWearingClothes: LiveData<Event<Boolean>>
         get() = _isSuccessWearingClothes
 
-    private val _doubleClothingAttemptedInSingleCategory: MutableLiveData<Event<Boolean>> = MutableLiveData<Event<Boolean>>()
+    private val _doubleClothingAttemptedInSingleCategory: MutableLiveData<Event<Boolean>> =
+        MutableLiveData<Event<Boolean>>()
     val doubleClothingAttemptedInSingleCategory: LiveData<Event<Boolean>>
         get() = _doubleClothingAttemptedInSingleCategory
 
-        // 옷장 필터링 옵션
+    // 옷장 필터링 옵션
 
     private val _selectedCategoryId: MutableLiveData<Int> = MutableLiveData<Int>(0)
     val selectedCategoryId: LiveData<Int>
@@ -86,14 +85,15 @@ class ClosetViewModel(
                     6
                 )
                 Timber.d("옷장 현황 데이터 요청 데이터 - $request")
-                val response = repository.getRegisteredClothes(dataStore.getAccessToken().first(), request)
-                response.enqueue(object: Callback<List<ResponseRegisteredClothes>> {
+                val response =
+                    repository.getRegisteredClothes(dataStore.getAccessToken().first(), request)
+                response.enqueue(object : Callback<List<ResponseRegisteredClothes>> {
                     override fun onResponse(
                         call: Call<List<ResponseRegisteredClothes>>,
                         response: Response<List<ResponseRegisteredClothes>>
                     ) {
-                        if(response.isSuccessful) {
-                            _registeredClothes.value = when(response.body()) {
+                        if (response.isSuccessful) {
+                            _registeredClothes.value = when (response.body()) {
                                 null -> listOf()
                                 else -> response.body()
                             }
@@ -121,13 +121,13 @@ class ClosetViewModel(
         viewModelScope.launch {
             try {
                 val response = repository.deleteClothItem(dataStore.getAccessToken().first(), id)
-                response.enqueue(object: Callback<Void> {
+                response.enqueue(object : Callback<Void> {
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                        if(response.code() == 200) {
+                        if (response.code() == 200) {
                             _isSuccessDeleteItem.value = Event(true)
                             getUserRegisteredClothes()
                             Timber.d("옷 아이템 삭제 성공 - id: $id")
-                        } else{
+                        } else {
                             _isSuccessDeleteItem.value = Event(false)
                             Timber.d("옷 아이템 삭제 실패1 - ${response.errorBody()}")
                         }
@@ -149,13 +149,13 @@ class ClosetViewModel(
         viewModelScope.launch {
             try {
                 val response = repository.wearClothes(dataStore.getAccessToken().first(), id)
-                response.enqueue(object: Callback<Void> {
+                response.enqueue(object : Callback<Void> {
                     override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                        if(response.code() == 200) {
+                        if (response.code() == 200) {
                             _isSuccessWearingClothes.value = Event(true)
                             Timber.d("옷 입기 요청 성공")
 
-                        } else if(response.code() == 400) {
+                        } else if (response.code() == 400) {
                             _doubleClothingAttemptedInSingleCategory.value = Event(true)
                             Timber.d("하나의 카테고리를 두 번 이상 입으려고 시도했습니다")
                         } else {
@@ -169,12 +169,11 @@ class ClosetViewModel(
                     }
 
                 })
-            } catch (e:Throwable) {
+            } catch (e: Throwable) {
                 Timber.d(e)
             }
         }
     }
-
 
 
     fun requestRegisteredItemsByClothCategory(selectedCategoryId: Int) {
@@ -195,7 +194,7 @@ class ClosetViewModel(
         selectedSortingOption: String
     ) {
         _selectedSortingOption.value = selectedSortingOption
-        _selectedSortingOptionId.value = when(sortingOptionList.indexOf(selectedSortingOption)) {
+        _selectedSortingOptionId.value = when (sortingOptionList.indexOf(selectedSortingOption)) {
             0 -> "d-day"
             1 -> "most-worn"
             else -> "least-worn"
@@ -206,11 +205,8 @@ class ClosetViewModel(
 
     fun handleClickItem(clothInfo: ResponseRegisteredClothes) {
         _selectedRegisteredClothItem.value = Event(clothInfo)
-        clothInfo.lastDate?.let {
-            val isWorn = DateUtil.isCurrentDate("YYYY-MM-dd", clothInfo.lastDate)
-            Timber.d("오늘 입은 옷인가? - $isWorn")
-            _isClothesWornToday.value = isWorn
-        }
+        _isClothesWornToday.value = DateUtil.isCurrentDate("YYYY-MM-dd", clothInfo.lastDate)
+        Timber.d("isWordnToday? -> ${_isClothesWornToday.value}")
     }
 
 }

@@ -81,9 +81,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_cloth_register_selected_cloth"
-                        setImage="@{photoUri}"
-                        android:src="@drawable/img_temp_67"
                         android:layout_width="match_parent"
+                        setImage="@{photoUri}"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         android:visibility="@{photoUri != null ? View.VISIBLE : View.GONE, default=gone}"/>

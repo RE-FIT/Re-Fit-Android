@@ -212,7 +212,23 @@
         <action
             android:id="@+id/action_myPage_mySetting_to_startingFragment"
             app:destination="@id/startingFragment" />
+        <action
+            android:id="@+id/action_myPage_mySetting_to_termsFragment"
+            app:destination="@id/myPage_mySetting_termsFragment" />
+        <action
+            android:id="@+id/action_myPage_mySetting_to_policyFragment"
+            app:destination="@id/myPage_mySetting_policyFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/myPage_mySetting_termsFragment"
+        android:name="com.example.refit.presentation.mypage.TermsFragment"
+        android:label="fragment_terms"
+        tools:layout="@layout/fragment_terms"/>
+    <fragment
+        android:id="@+id/myPage_mySetting_policyFragment"
+        android:name="com.example.refit.presentation.mypage.PolicyFragment"
+        android:label="fragment_policy"
+        tools:layout="@layout/fragment_policy"/>
     <fragment
         android:id="@+id/clothRegistrationFragment"
         android:name="com.example.refit.presentation.closet.ClothRegistrationFragment"
@@ -243,6 +259,13 @@
         <action
             android:id="@+id/action_forestFragment_to_quizFragment"
             app:destination="@id/quizFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_forestFragment_to_completedForestFragment"
+            app:destination="@id/completedForestFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -311,7 +334,7 @@
     </fragment>
     <fragment
         android:id="@+id/postReportDetailFrament"
-        android:name="com.example.refit.presentation.community.PostReportDetailFrament"
+        android:name="com.example.refit.presentation.community.PostReportDetailFragment"
         android:label="PostReportDetailFrament" />
     <fragment
         android:id="@+id/postcodeFragment"
@@ -454,5 +477,14 @@
         <action
             android:id="@+id/action_signUpCompleteFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/completedForestFragment"
+        android:name="com.example.refit.presentation.closet.CompletedForestFragment"
+        android:label="fragment_completed_forest"
+        tools:layout="@layout/fragment_completed_forest" >
+        <action
+            android:id="@+id/action_completedForestFragment_to_forestFragment"
+            app:destination="@id/forestFragment" />
     </fragment>
 </navigation>

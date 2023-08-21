@@ -2,6 +2,7 @@ package com.example.refit.presentation.community.viewmodel
 
 import android.annotation.SuppressLint
 import android.icu.text.DecimalFormat
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,6 +37,10 @@ class CommunityAddPostViewModel(
     private var _success = MutableLiveData<Event<Boolean>>()
     val success : LiveData<Event<Boolean>>
         get() = _success
+
+    private var _update = MutableLiveData<Event<Boolean>>()
+    val update : LiveData<Event<Boolean>>
+        get() = _update
 
     private val _postId: MutableLiveData<Int> = MutableLiveData<Int>()
     val postId: LiveData<Int>
@@ -698,6 +703,7 @@ class CommunityAddPostViewModel(
                     if (response.isSuccessful) {
                         val json = response.body()?.string()
                         Timber.d("COMMUNITY PUT API 호출 성공 : $json")
+                        _update.postValue(Event(true))
                         _updateStatus.value = true
                     } else {
                         try {
@@ -779,6 +785,7 @@ class CommunityAddPostViewModel(
                     if (response.isSuccessful) {
                         val json = response.body()?.string()
                         Timber.d("COMMUNITY PUT API 호출 성공 : $json")
+                        _update.postValue(Event(true))
                         _updateStatus.value = true
                     } else {
                         try {

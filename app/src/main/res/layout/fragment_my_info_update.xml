@@ -63,7 +63,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
                     android:text="@string/my_info_emailTxt"
                     android:textAppearance="@style/MediumFontKr.12"
                     android:textColor="@color/green1" />
@@ -72,15 +71,10 @@
                     style="@style/RegularFont.12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints="emailAddress"
+                    android:layout_marginTop="2dp"
                     android:background="@drawable/et_mypage_round_10"
-                    android:focusableInTouchMode="false"
-                    android:gravity="center_vertical"
-                    android:inputType="textEmailAddress"
-                    android:paddingStart="11dp"
-                    android:paddingTop="13dp"
-                    android:paddingEnd="0dp"
-                    android:paddingBottom="13dp"
+                    android:padding="13dp"
+                    android:enabled="false"
                     android:text="@{vm.myInfoResponse.email}"
                     android:textColor="@color/dark2" />
 
@@ -92,41 +86,36 @@
                     android:textColor="@color/green1" />
 
                 <EditText
+                    style="@style/RegularFont.12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="username"
                     android:background="@drawable/et_mypage_round_10"
-                    android:focusableInTouchMode="false"
-                    android:gravity="center_vertical"
-                    android:paddingStart="11dp"
-                    android:paddingTop="13dp"
-                    android:paddingEnd="0dp"
-                    android:paddingBottom="13dp"
+                    android:enabled="false"
+                    android:padding="13dp"
+                    android:layout_marginTop="2dp"
                     android:text="@{vm.myInfoResponse.loginId}"
-                    android:textAppearance="@style/RegularFont.12"
                     android:textColor="@color/dark2" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
                     android:text="@string/my_info_nameTxt"
                     android:textAppearance="@style/MediumFontKr.12"
                     android:textColor="@color/green1" />
 
                 <EditText
+                    style="@style/RegularFont.12"
+                    android:textColor="@color/dark2"
                     android:id="@+id/et_nickname"
                     android:layout_width="match_parent"
-                    android:layout_height="37dp"
+                    android:layout_height="wrap_content"
                     android:autofillHints="name"
-                    android:focusableInTouchMode="false"
+                    android:layout_marginTop="2dp"
                     android:background="@drawable/et_mypage_round_10"
-                    android:inputType="textPersonName"
-                    android:paddingStart="11dp"
-                    android:text="@{vm.myInfoResponse.name}"
-                    android:textAppearance="@style/RegularFontKr.12"
-                    android:textColor="@color/black" />
+                    android:padding="13dp"
+                    android:enabled="false"
+                    android:text="@{vm.myInfoResponse.name}" />
 
                 <TextView
                     android:id="@+id/able_name"
@@ -149,9 +138,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
                     android:text="@string/my_info_dateTxt"
-                    android:layout_marginTop="5dp"
                     android:textAppearance="@style/MediumFontKr.12"
                     android:textColor="@color/green1" />
 
@@ -159,39 +146,37 @@
                     android:id="@+id/et_birthday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints="birth"
                     android:background="@drawable/et_mypage_round_10"
                     android:inputType="date"
                     android:maxLength="10"
-                    android:paddingStart="11dp"
+                    android:padding="13dp"
+                    android:layout_marginTop="2dp"
                     android:text="@{vm.myInfoResponse.birth}"
-                    android:textAppearance="@style/RegularFontKr.12"
+                    style="@style/RegularFont.12"
                     android:textColor="@color/black" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
                     android:text="@string/my_page_genderTxt"
                     android:textAppearance="@style/MediumFontKr.12"
                     android:textColor="@color/green1" />
 
                 <Spinner
+                    style="@style/RegularFont.12"
                     android:id="@+id/spinner_gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/et_mypage_round_10"
                     android:drawableEnd="@drawable/ic_arrow_bottom_14"
                     android:switchTextAppearance="@style/RegularFontKr.12"
-                    android:textSize="12sp" />
+                    android:layout_marginTop="2dp" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_my_info_update"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="33dp"
-                    android:layout_marginBottom="64dp"
                     android:background="@drawable/btn_my_info_pw"
                     android:backgroundTint="@{vm.isChange ? @color/green1 : @color/dark1}"
                     android:clickable="@{vm.isChange ? true : false, default = false}"

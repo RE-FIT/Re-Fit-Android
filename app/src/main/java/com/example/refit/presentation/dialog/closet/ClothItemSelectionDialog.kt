@@ -28,13 +28,12 @@ class ClothItemSelectionDialog(
         binding.isNotCompletedGoal =
             resources.getString(R.string.registered_cloth_completed_goal_remained_day)
                 .toInt() != clothInfo.remainedDay
-
         binding.dialog = this
+        binding.vm = closetViewModel
         binding.clothInfo = clothInfo
         handleClickUpdateInfoButton()
         handleClickClothDeletion()
         handleClickCloseButton()
-        observingClothesWornStatus()
     }
 
     fun handleClickMainButton(isNotCompleteGoal: Boolean) {
@@ -61,12 +60,5 @@ class ClothItemSelectionDialog(
             dismiss()
         }
     }
-
-    private fun observingClothesWornStatus() {
-        closetViewModel.isClothesWornToday.observe(viewLifecycleOwner) {
-            binding.isWornToday = it
-        }
-    }
-
 
 }

@@ -37,7 +37,7 @@ class ForestFragment : BaseFragment<FragmentForestBinding>(R.layout.fragment_for
                     forestViewModel.stopShowingDialogEver()
                 }
             } else {
-                // TODO(옷장 다 채워졌을 경우 카톡 공유할 수 있는 창으로 이동 구현)
+                navigate(R.id.action_forestFragment_to_completedForestFragment)
             }
         })
     }

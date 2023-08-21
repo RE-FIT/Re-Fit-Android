@@ -116,7 +116,6 @@ class ClothAddViewModel(
 
     fun requestRegisteringCloth(imageFile: File?, clothId: Int?) {
         if (clothId != null) {
-            Timber.d("가자 -> ${_isRequestedFixCloth.value == Event(true)}")
             if (_isRequestedFixCloth.value!!.content) {
                 requestFixClothToServer(clothId)
             } else if(_isRequestedResetCompletedCloth.value!!.content) {
@@ -392,6 +391,7 @@ class ClothAddViewModel(
         initClothWearingGoalOptionStatus(false)
         initRecommendWearingStatus(false)
         initNegativeInvalidSeasonConfirmStatus(false)
+        _selectedClothCategoryId.value = 0
     }
 
     fun setClothCategory(categoryList: List<String>, selectedCategory: String) {

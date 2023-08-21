@@ -26,6 +26,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.example.refit.R
 import com.example.refit.databinding.FragmentCommunityAddPostBinding
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.DialogUtil.showCommunityAddShippingFeeDiaglog
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
@@ -74,7 +75,14 @@ class CommunityAddPostFragment :
         }
 
         vmAdd.success.observe(viewLifecycleOwner, EventObserver{
+            binding.btnCommunityAddPostRegister.isEnabled = true
             navigateUp()
+
+            CustomSnackBar.make(
+                binding.root,
+                R.layout.custom_snack_bar_basic,
+                R.anim.anim_show_snack_bar_from_bottom
+            ).setTitle("글 등록이 완료되었습니다", null).show()
         })
     }
 
@@ -360,9 +368,9 @@ class CommunityAddPostFragment :
                 navigateUp()
             } else {
                 vmAdd.createPost(imageFiles)
+                binding.btnCommunityAddPostRegister.isEnabled = false
                 Timber.d("[ADD POST] createPost 실행")
                 vm.initCommunityList()
-                navigateUp()
             }
 
 
