@@ -10,6 +10,7 @@ import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.community.PostResponse
 import com.example.refit.data.repository.community.CommunityRepository
 import com.example.refit.data.repository.community.PostDataRepository
+import com.example.refit.util.Event
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
@@ -59,6 +60,9 @@ class CommunityInfoViewModel (
     val postDate: LiveData<String>
         get() = _postDate
 
+    private var _deleteSuccess = MutableLiveData<Event<Boolean>>()
+    val deleteSuccess : LiveData<Event<Boolean>>
+        get() = _deleteSuccess
 
     fun clickedGetPost(postId: Int) {
         _postId.value = postId
@@ -200,6 +204,7 @@ class CommunityInfoViewModel (
                 ) {
                     if (response.isSuccessful) {
                         Timber.d("API 호출 성공")
+                        _deleteSuccess.postValue(Event(true))
                     } else {
                         val errorBody = response.errorBody()
                         val errorCode = response.code()

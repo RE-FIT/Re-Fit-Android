@@ -24,9 +24,9 @@
 
             <ImageView
                 android:id="@+id/cancel"
-                android:layout_marginLeft="15dp"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:src="@drawable/back"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

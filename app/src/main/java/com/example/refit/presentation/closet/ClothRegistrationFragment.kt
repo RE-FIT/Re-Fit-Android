@@ -79,7 +79,7 @@ class ClothRegistrationFragment :
                 binding.root,
                 R.layout.custom_snack_bar_basic,
                 R.anim.anim_show_snack_bar_from_bottom
-            ).setTitle("옷 등록을 완료했습니다!", null).show()
+            ).setTitle("옷 등록이 완료되었습니다", null).show()
             navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
         })
 

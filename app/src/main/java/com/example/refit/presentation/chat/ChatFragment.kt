@@ -55,6 +55,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
         val sellerId = args.sellerId.toString()
         val otherImage = args.otherImage.toString()
 
+        binding.name.text = args.otherId.toString()
+
         viewModel.setUserStatus(userId, sellerId, args.postState)
 
         binding.cancel.setOnClickListener {
