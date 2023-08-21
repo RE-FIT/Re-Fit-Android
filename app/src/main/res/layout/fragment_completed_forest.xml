@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.closet.CompletedForestFragment">
+
+    <data>
+
+        <variable
+            name="myInfo"
+            type="com.example.refit.data.model.mypage.ShowMyInfoResponse" />
+
+        <variable
+            name="clothInfo"
+            type="com.example.refit.data.model.closet.ResponseRegisteredClothInfo" />
+
+        <variable
+            name="forestViewModel"
+            type="com.example.refit.presentation.closet.viewmodel.ForestViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/forest_sky_blue">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_completed_forest_close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:drawableEnd="@drawable/ic_close_24"
+            android:drawableTint="@color/dark2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_completed_forest_title_first"
+            style="@style/RegularFontKr.20"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="@{@string/forest_completed_title_first(myInfo.name)}"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/tv_completed_forest_title_second_left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_completed_forest_close_button"
+            tools:text="승민님 덕에" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_completed_forest_title_second_left"
+            style="@style/BoldFontKr.20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@{@string/forest_completed_title_second_left(forestViewModel.clothTargetCnt)}"
+            android:textColor="@color/green1"
+            app:layout_constraintEnd_toStartOf="@id/tv_completed_forest_title_second_right"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_completed_forest_title_first"
+            tools:text="총 20그루" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_completed_forest_title_second_right"
+            style="@style/RegularFontKr.20"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/forest_completed_title_second_right"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/tv_completed_forest_title_second_left"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_completed_forest_title_second_left"
+            app:layout_constraintTop_toTopOf="@id/tv_completed_forest_title_second_left" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_completed_forest_title_third"
+            style="@style/RegularFontKr.20"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/forest_completed_title_third"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_completed_forest_title_second_left" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_completed_forest_background_top"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:elevation="-1dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_completed_forest_cloud"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_completed_forest_title_first" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_completed_forest_statistics_title"
+            style="@style/RegularFontKr.14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="이렇게 많이 절약했어요!"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_completed_forest_background_top" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_completed_forest_statistics_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_completed_forest_statistics_title"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/ic_water_black_24" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/MediumFontKr.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="물 사용량"
+                        android:textColor="@color/black" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/RegularFontKr.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@{clothInfo.category == 1 ? `7,500L` : `2,700:`}"
+                        android:textColor="@color/black"
+                        tools:text="2700 L" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/RegularFontKr.10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{clothInfo.category == 1 ? `(물 30,000컵)` : `(물 10,400컵)`}"
+                        android:textColor="@color/dark2"
+                        tools:text="(물 30,000컵)" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/dark1" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/ic_wind_24" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/MediumFontKr.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="온실가스 배출량"
+                        android:textColor="@color/black" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/RegularFontKr.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@{clothInfo.category == 1 ? `11 Kg` : `2.6 Kg`}"
+                        android:textColor="@color/black"
+                        tools:text="11 Kg" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/RegularFontKr.10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{clothInfo.category == 1 ? `(승용차 46.5 km)` : `(승용차 10.5 km)`}"
+                        android:textColor="@color/dark2"
+                        tools:text="(승용차 46.5 km)" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/dark1" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/ic_light_bulb_24" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/MediumFontKr.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="에너지 소비량"
+                        android:textColor="@color/black" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/RegularFontKr.12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@{clothInfo.category == 1 ? `68 kWh` : `15 kWh`}"
+                        android:textColor="@color/black"
+                        tools:text="68 kWh" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/RegularFontKr.10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{clothInfo.category == 1 ? `(LED 형광등 1,905 시간)` : `(LED 형광등 416 시간)`}"
+                        android:textColor="@color/dark2"
+                        tools:text="(LED 형광등 1,905 시간)" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_completed_forest_subtitle_first"
+            style="@style/RegularFontKr.16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="앞으로 RE-FIT과 함께"
+            android:textAlignment="center"
+            android:textColor="@color/dark2"
+            app:layout_constraintBottom_toTopOf="@id/tv_completed_forest_subtitle_second"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_completed_forest_statistics_container" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_completed_forest_subtitle_second"
+            style="@style/RegularFontKr.16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="건강한 의류 소비 생활 함께해요 :)"
+            android:textAlignment="center"
+            android:textColor="@color/green1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/iv_completed_forest_background_bottom"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_completed_forest_subtitle_first" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_completed_forest_background_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:elevation="-1dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_completed_forest_subtitle_second"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_completed_forest_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_completed_forest_button_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@android:color/transparent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingStart="20dp"
+                android:paddingTop="14dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="14dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_completed_forest_sns_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_kakao_circle_filled_24"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_completed_forest_button_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_completed_forest_button_title"
+                    style="@style/RegularFontKr.14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:text="친구에게 사진 공유하기"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_completed_forest_sns_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,7 +1,9 @@
 package com.example.refit.presentation.common.binding
 
 import android.content.res.ColorStateList
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -15,8 +17,10 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.example.refit.R
+import com.example.refit.util.FileUtil
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import timber.log.Timber
 
 object CommonBindingAdapter {
 
@@ -42,6 +46,16 @@ object CommonBindingAdapter {
     @JvmStatic
     @BindingAdapter("setImage")
     fun setImage(view: ImageView, url: String?) {
+        url?.let {
+            Glide.with(view)
+                .load(url)
+                .into(view)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("setImageBitmap")
+    fun setImageBitmap(view: ImageView, url: Bitmap?) {
         url?.let {
             Glide.with(view)
                 .load(url)

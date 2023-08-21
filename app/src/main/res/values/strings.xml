@@ -105,7 +105,7 @@
     <string name="cloth_item_selection_dialog_fix_info">정보 수정</string>
     <string name="cloth_item_selection_dialog_deletion">옷 삭제</string>
 
-    <string name="closet_dialog_clothing_double_single_category">하나의 카테고리에서는\n하루에 2번 이상 입기가 불가능해요!</string>
+    <string name="closet_dialog_clothing_double_single_category">하나의 카테고리에서는\n하루에 2번까지만 입을 수 있어요!</string>
 
 
     <!-- Sign Up -->
@@ -217,6 +217,12 @@
     <string name="forest_dialog_title_require_tree_title">숲 완성까지 남은 나무</string>
     <string name="forest_dialog_title_require_tree_number">%d그루</string>
     <string name="forest_dialog_confirm_button">확인</string>
+
+    <string name="forest_completed_title_first">%s님 덕에</string>
+    <string name="forest_completed_title_second_left">총 %d그루</string>
+    <string name="forest_completed_title_second_right">나무가 있는 숲이</string>
+    <string name="forest_completed_title_third">완성되었어요!</string>
+
 
     <!--Community-->
     <string name="community_main_toolbar_title">Green Community</string>

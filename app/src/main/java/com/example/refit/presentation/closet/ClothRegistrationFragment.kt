@@ -25,6 +25,7 @@ import com.example.refit.util.FileUtil
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
+import java.io.File
 
 
 class ClothRegistrationFragment :
@@ -43,19 +44,23 @@ class ClothRegistrationFragment :
             this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    createAlertBasicDialog(
-                        resources.getString(R.string.cloth_register_cancel_title),
-                        resources.getString(R.string.cloth_register_cancel_positive),
-                        resources.getString(R.string.cloth_register_cancel_negative),
-                        object : AlertBasicDialogListener {
-                            override fun onClickPositive() {
-                                clothAddViewModel.initAllStatus()
-                                navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
-                            }
+                    if(photoUri == null && binding.cgClothRegisterWearingSeason.checkedChipId == -1) {
+                        navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
+                    } else {
+                        createAlertBasicDialog(
+                            resources.getString(R.string.cloth_register_cancel_title),
+                            resources.getString(R.string.cloth_register_cancel_positive),
+                            resources.getString(R.string.cloth_register_cancel_negative),
+                            object : AlertBasicDialogListener {
+                                override fun onClickPositive() {
+                                    clothAddViewModel.initAllStatus()
+                                    navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
+                                }
 
-                            override fun onClickNegative() {
-                            }
-                        }).show(requireActivity().supportFragmentManager, null)
+                                override fun onClickNegative() {
+                                }
+                            }).show(requireActivity().supportFragmentManager, null)
+                    }
                 }
             })
     }
@@ -83,22 +88,27 @@ class ClothRegistrationFragment :
             navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
         })
 
-        clothAddViewModel.isSuccessUpdatingClothInfo.observe(viewLifecycleOwner, EventObserver { isSuccess ->
-            if(isSuccess) {
-                CustomSnackBar.make(
-                    binding.root,
-                    R.layout.custom_snack_bar_basic,
-                    R.anim.anim_show_snack_bar_from_bottom
-                ).setTitle("정보가 수정됐습니다", null).show()
-                navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
-            }
-        })
+        clothAddViewModel.isSuccessUpdatingClothInfo.observe(
+            viewLifecycleOwner,
+            EventObserver { isSuccess ->
+                if (isSuccess) {
+                    CustomSnackBar.make(
+                        binding.root,
+                        R.layout.custom_snack_bar_basic,
+                        R.anim.anim_show_snack_bar_from_bottom
+                    ).setTitle("정보가 수정됐습니다", null).show()
+                    navigate(R.id.action_clothRegistrationFragment_to_nav_closet)
+                }
+            })
     }
 
     private fun handleClickAddCompleteButton() {
         binding.btnClothRegisterComplete.setOnClickListener {
-            if(photoUri != null) {
-                clothAddViewModel.requestRegisteringCloth(FileUtil.toFile(requireActivity(), photoUri!!), null)
+            if (photoUri != null) {
+                clothAddViewModel.requestRegisteringCloth(
+                    File(FileUtil.convertResizeImage(requireActivity(), photoUri!!)!!),
+                    null
+                )
             } else {
                 clothAddViewModel.requestRegisteringCloth(null, requestedClothIdForUpdate?.toInt())
             }
@@ -239,12 +249,16 @@ class ClothRegistrationFragment :
     // ----------------------- 옷 재등록 -----------------------
 
     private fun handleFixClothInfo() {
-        clothAddViewModel.requestedFixClothInfo.observe(viewLifecycleOwner, EventObserver { clothInfo ->
-            binding.photoUri = clothInfo.imageUrl
-            (binding.cgClothRegisterCategory.getChildAt(clothInfo.category) as Chip).isChecked = true
-            (binding.cgClothRegisterWearingSeason.getChildAt(clothInfo.season) as Chip).isChecked = true
-            requestedClothIdForUpdate = clothInfo.id
-        })
+        clothAddViewModel.requestedFixClothInfo.observe(
+            viewLifecycleOwner,
+            EventObserver { clothInfo ->
+                binding.photoUri = clothInfo.imageUrl
+                (binding.cgClothRegisterCategory.getChildAt(clothInfo.category) as Chip).isChecked =
+                    true
+                (binding.cgClothRegisterWearingSeason.getChildAt(clothInfo.season) as Chip).isChecked =
+                    true
+                requestedClothIdForUpdate = clothInfo.id
+            })
     }
 
     override fun onDestroy() {

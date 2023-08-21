@@ -264,6 +264,13 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_forestFragment_to_completedForestFragment"
+            app:destination="@id/completedForestFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/quizFragment"
@@ -471,5 +478,14 @@
         <action
             android:id="@+id/action_signUpCompleteFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/completedForestFragment"
+        android:name="com.example.refit.presentation.closet.CompletedForestFragment"
+        android:label="fragment_completed_forest"
+        tools:layout="@layout/fragment_completed_forest" >
+        <action
+            android:id="@+id/action_completedForestFragment_to_forestFragment"
+            app:destination="@id/forestFragment" />
     </fragment>
 </navigation>
