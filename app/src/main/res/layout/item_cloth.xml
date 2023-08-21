@@ -69,14 +69,20 @@
                 </com.google.android.material.card.MaterialCardView>
 
 
+
+
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/iv_closet_item"
-                    android:layout_width="67dp"
-                    android:layout_height="76dp"
+                    android:layout_width="50dp"
+                    android:layout_height="70dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
+                    tools:src="@drawable/img_temp_70"
+                    android:scaleType="centerCrop"
                     setImage="@{clothInfo.imageUrl}"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/tv_closet_item_progress_percent"
+                    app:layout_constraintEnd_toStartOf="@id/tv_closet_item_goal_title"
                     app:layout_constraintTop_toBottomOf="@id/cv_closet_item_d_day_container"
                     app:shapeAppearanceOverlay="@style/ShapeAppearance.RoundedRadius.20" />
 
