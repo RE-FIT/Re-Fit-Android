@@ -1,6 +1,7 @@
 package com.example.refit.presentation.mypage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import com.example.refit.R
@@ -22,7 +23,6 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
 
     private val vm: PwChangeViewModel by sharedViewModel()
     private val myInfoViewModel: MyInfoViewModel by sharedViewModel()
-    private var flag = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,20 +55,9 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
         //에러 처리
         vm.error.observe(viewLifecycleOwner, EventObserver{
             notifyPwIncorrectDialog()
-            showMyInfoBackPressedDialog()
         })
 
-        vm.pw.observe(viewLifecycleOwner) {
-            if (flag == 0) {
-                showMyInfoBackPressedDialog()
-            }
-        }
-
-        vm.nextPw.observe(viewLifecycleOwner) {
-            if (flag == 0) {
-                showMyInfoBackPressedDialog()
-            }
-        }
+        showMyInfoBackPressedDialog()
     }
 
     private fun notifyPwIncorrectDialog() {
@@ -76,16 +65,12 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
             resources.getString(R.string.pw_incorrect_title),
             resources.getString(R.string.pw_incorrect_content)
         ).show(requireActivity().supportFragmentManager, null)
-
-        flag = 0
     }
 
     private fun notifyPwCorrectDialog() {
         checkPwSuccessDialog(
             resources.getString(R.string.pw_correct_content)
         ).show(requireActivity().supportFragmentManager, null)
-
-        flag = 1
     }
 
     override fun onDestroyView() {
@@ -98,18 +83,22 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    createAlertBasicDialog(
-                        resources.getString(R.string.pw_change_delete_title),
-                        resources.getString(R.string.pw_change_delete_positive),
-                        resources.getString(R.string.pw_change_delete_negative),
-                        object : AlertBasicDialogListener {
-                            override fun onClickPositive() {
-                                navigateUp()
-                            }
+                    if (binding.currentPw.text.toString() != "" || binding.newPw.text.toString() != "") {
+                        createAlertBasicDialog(
+                            resources.getString(R.string.pw_change_delete_title),
+                            resources.getString(R.string.pw_change_delete_positive),
+                            resources.getString(R.string.pw_change_delete_negative),
+                            object : AlertBasicDialogListener {
+                                override fun onClickPositive() {
+                                    navigateUp()
+                                }
 
-                            override fun onClickNegative() {
-                            }
-                        }).show(requireActivity().supportFragmentManager, null)
+                                override fun onClickNegative() {
+                                }
+                            }).show(requireActivity().supportFragmentManager, null)
+                    } else {
+                        navigateUp()
+                    }
                 }
             })
     }

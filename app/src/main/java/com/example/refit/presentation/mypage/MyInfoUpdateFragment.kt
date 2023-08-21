@@ -47,7 +47,6 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
 
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
     private var photoUri: Uri? = null
-    var flag = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -101,6 +100,11 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
     override fun onDestroyView() {
         super.onDestroyView()
         vm.isChange(false)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showMyInfoBackPressedDialog()
     }
 
     // ----------------------- 정보 수정 -----------------------
