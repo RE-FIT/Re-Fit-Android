@@ -1,5 +1,6 @@
 package com.example.refit.presentation.mypage.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,6 +26,26 @@ import timber.log.Timber
 import java.lang.Exception
 
 class MyFeedViewModel(private val repository: MyPageRepository, private val ds: TokenStore) : ViewModel() {
+
+    private val _successGive: MutableLiveData<Event<Boolean>> =
+        MutableLiveData<Event<Boolean>>()
+    val successGive: LiveData<Event<Boolean>>
+        get() = _successGive
+
+    private val _successSell: MutableLiveData<Event<Boolean>> =
+        MutableLiveData<Event<Boolean>>()
+    val successSell: LiveData<Event<Boolean>>
+        get() = _successSell
+
+    private val _successBuy: MutableLiveData<Event<Boolean>> =
+        MutableLiveData<Event<Boolean>>()
+    val successBuy: LiveData<Event<Boolean>>
+        get() = _successBuy
+
+    private val _init: MutableLiveData<Event<Boolean>> =
+        MutableLiveData<Event<Boolean>>()
+    val init: LiveData<Event<Boolean>>
+        get() = _init
 
     private val _postId: MutableLiveData<Int> = MutableLiveData<Int>()
     val postId: LiveData<Int>
@@ -66,10 +87,6 @@ class MyFeedViewModel(private val repository: MyPageRepository, private val ds: 
     val selectedTab: LiveData<Tab>
         get() = _selectedTab
 
-    init {
-        _selectedTab.value = Tab.SELL // 초기 선택 탭 설정
-    }
-
     fun setSelectedTab(tab: Tab) {
         _selectedTab.value = tab
     }
@@ -94,6 +111,7 @@ class MyFeedViewModel(private val repository: MyPageRepository, private val ds: 
                                 _myFeedGiveList.value = responseBody ?: null
                                 Timber.d("scrapList : ${response.body()}")
                             }
+                            _successGive.postValue(Event(true))
                         } else {
                             val errorBody = response.errorBody()
                             val errorCode = response.code()
@@ -140,6 +158,7 @@ class MyFeedViewModel(private val repository: MyPageRepository, private val ds: 
                                 _myFeedSellList.value = responseBody ?: null
                                 Timber.d("feedSellList : ${response.body()}")
                             }
+                            _successSell.postValue(Event(true))
                         } else {
                             val errorBody = response.errorBody()
                             val errorCode = response.code()
@@ -186,6 +205,7 @@ class MyFeedViewModel(private val repository: MyPageRepository, private val ds: 
                                 _myFeedBuyList.value = responseBody ?: null
                                 Timber.d("scrapList : ${response.body()}")
                             }
+                            _successBuy.postValue(Event(true))
                         } else {
                             val errorBody = response.errorBody()
                             val errorCode = response.code()

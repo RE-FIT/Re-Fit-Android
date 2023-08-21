@@ -213,7 +213,23 @@
         <action
             android:id="@+id/action_myPage_mySetting_to_startingFragment"
             app:destination="@id/startingFragment" />
+        <action
+            android:id="@+id/action_myPage_mySetting_to_termsFragment"
+            app:destination="@id/myPage_mySetting_termsFragment" />
+        <action
+            android:id="@+id/action_myPage_mySetting_to_policyFragment"
+            app:destination="@id/myPage_mySetting_policyFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/myPage_mySetting_termsFragment"
+        android:name="com.example.refit.presentation.mypage.TermsFragment"
+        android:label="fragment_terms"
+        tools:layout="@layout/fragment_terms"/>
+    <fragment
+        android:id="@+id/myPage_mySetting_policyFragment"
+        android:name="com.example.refit.presentation.mypage.PolicyFragment"
+        android:label="fragment_policy"
+        tools:layout="@layout/fragment_policy"/>
     <fragment
         android:id="@+id/clothRegistrationFragment"
         android:name="com.example.refit.presentation.closet.ClothRegistrationFragment"
@@ -312,7 +328,7 @@
     </fragment>
     <fragment
         android:id="@+id/postReportDetailFrament"
-        android:name="com.example.refit.presentation.community.PostReportDetailFrament"
+        android:name="com.example.refit.presentation.community.PostReportDetailFragment"
         android:label="PostReportDetailFrament" />
     <fragment
         android:id="@+id/postcodeFragment"

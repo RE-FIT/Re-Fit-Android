@@ -55,6 +55,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
         val sellerId = args.sellerId.toString()
         val otherImage = args.otherImage.toString()
 
+        binding.name.text = args.otherId.toString()
+
         viewModel.setUserStatus(userId, sellerId, args.postState)
 
         binding.cancel.setOnClickListener {
@@ -184,13 +186,10 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
             val itemDescription = (view as TextView).text.toString()
             when (itemDescription) {
                 "채팅방 나가기" -> {
-                    showChatDeletionConfirmDialog(args.roomId.toString())
+                    showChatDeletionConfirmDialog()
                 }
 
                 "거래 완료" -> {
-                    tradeViewModel.trade(Trade(args.postId, args.otherId.toString()))
-                    viewModel.changeStatus()
-
                     showChatConfirmDialog()
                 }
             }
@@ -199,7 +198,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
         }
     }
 
-    private fun showChatDeletionConfirmDialog(id: String) {
+    private fun showChatDeletionConfirmDialog() {
         showChatDeletionConfirmDialog(
             resources.getString(R.string.chat_dialog_chat_delete_title),
             resources.getString(R.string.chat_dialog_chat_delete_subTtle),
@@ -225,7 +224,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
             resources.getString(R.string.chat_dialog_chat_confirm_negative),
             object : AlertBasicDialogListener {
                 override fun onClickPositive() {
-                    //TODO("거래 완료")
+                    tradeViewModel.trade(Trade(args.postId, args.otherId.toString()))
+                    viewModel.changeStatus()
                 }
 
                 override fun onClickNegative() {

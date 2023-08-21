@@ -2,6 +2,7 @@ package com.example.refit.presentation.community.viewmodel
 
 import android.annotation.SuppressLint
 import android.icu.text.DecimalFormat
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import com.example.refit.data.model.community.PostDTODt
 import com.example.refit.data.model.community.PostResponse
 import com.example.refit.data.repository.community.CommunityRepository
 import com.example.refit.data.repository.community.PostDataRepository
+import com.example.refit.util.Event
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -32,6 +34,14 @@ class CommunityAddPostViewModel(
     private val ds: TokenStore
 ) : ViewModel() {
 
+    private var _success = MutableLiveData<Event<Boolean>>()
+    val success : LiveData<Event<Boolean>>
+        get() = _success
+
+    private var _update = MutableLiveData<Event<Boolean>>()
+    val update : LiveData<Event<Boolean>>
+        get() = _update
+
     private val _postId: MutableLiveData<Int> = MutableLiveData<Int>()
     val postId: LiveData<Int>
         get() = _postId
@@ -42,8 +52,8 @@ class CommunityAddPostViewModel(
 
     val postResponse: LiveData<PostResponse> = PostDataRepository.postResponse
 
-    private val _photoUris: MutableLiveData<List<String>> = MutableLiveData<List<String>>()
-    val photoUris: LiveData<List<String>>
+    private val _photoUris: MutableLiveData<List<String>?> = MutableLiveData<List<String>?>()
+    val photoUris: LiveData<List<String>?>
         get() = _photoUris
 
     private val _isTransactionMethodChip: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
@@ -604,6 +614,7 @@ class CommunityAddPostViewModel(
                     if (response.isSuccessful) {
                         val json = response.body()?.string()
                         Timber.d("COMMUNITY POST API 호출 성공 : $json")
+                        _success.postValue(Event(true))
                     } else {
                         try {
                             val errorBody = response.errorBody()
@@ -692,6 +703,7 @@ class CommunityAddPostViewModel(
                     if (response.isSuccessful) {
                         val json = response.body()?.string()
                         Timber.d("COMMUNITY PUT API 호출 성공 : $json")
+                        _update.postValue(Event(true))
                         _updateStatus.value = true
                     } else {
                         try {
@@ -773,6 +785,7 @@ class CommunityAddPostViewModel(
                     if (response.isSuccessful) {
                         val json = response.body()?.string()
                         Timber.d("COMMUNITY PUT API 호출 성공 : $json")
+                        _update.postValue(Event(true))
                         _updateStatus.value = true
                     } else {
                         try {
@@ -830,6 +843,8 @@ class CommunityAddPostViewModel(
         for (item in _isFilledImageValues) {
             item.value = false
         }
+
+        _photoUris.value = null
         _modifyImageStatus.value = false
         _postCodeValue.value = false
         _postTitle.value = ""

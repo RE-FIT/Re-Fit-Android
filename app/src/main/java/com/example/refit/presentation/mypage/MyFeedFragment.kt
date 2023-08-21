@@ -23,6 +23,11 @@ class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_f
     private val myFeedViewModel: MyFeedViewModel by sharedViewModel()
     private val infoViewModel: CommunityInfoViewModel by sharedViewModel()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        myFeedViewModel.setSelectedTab(MyFeedViewModel.Tab.SELL)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -30,27 +35,36 @@ class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_f
 
         binding.vm = myFeedViewModel
 
-        myFeedViewModel.loadFeedGiveList()
-        myFeedViewModel.loadFeedSellList()
-        myFeedViewModel.loadFeedBuyList()
-
-        //infoViewModel.clickedGetPost(infoViewModel.postId.value!!)
-
         myFeedViewModel.selectedPostItem.observe(viewLifecycleOwner, EventObserver { postId ->
             infoViewModel.clickedGetPost(postId)
             navigate(R.id.action_myPage_myFeed_to_communityInfoFragment)
         })
 
+        /**
+         * 라이브데이터 관리
+         * */
+        myFeedViewModel.successGive.observe(viewLifecycleOwner, EventObserver{
+            initFeedGiveList()
+        })
+
+        myFeedViewModel.successSell.observe(viewLifecycleOwner, EventObserver{
+            initFeedSellList()
+        })
+
+        myFeedViewModel.successBuy.observe(viewLifecycleOwner, EventObserver{
+            initFeedBuyList()
+        })
+
         myFeedViewModel.selectedTab.observe(viewLifecycleOwner, Observer { tab ->
             when (tab) {
                 MyFeedViewModel.Tab.GIVE -> {
-                    initFeedGiveList()
+                    myFeedViewModel.loadFeedGiveList()
                 }
                 MyFeedViewModel.Tab.SELL -> {
-                    initFeedSellList()
+                    myFeedViewModel.loadFeedSellList()
                 }
                 MyFeedViewModel.Tab.BUY -> {
-                    initFeedBuyList()
+                    myFeedViewModel.loadFeedBuyList()
                 }
             }
         })
@@ -62,7 +76,6 @@ class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_f
                 }
                 R.id.chip_share -> {
                     myFeedViewModel.setSelectedTab(MyFeedViewModel.Tab.GIVE)
-                    Log.d("chip", "give 눌림!")
                 }
                 R.id.chip_buy -> {
                     myFeedViewModel.setSelectedTab(MyFeedViewModel.Tab.BUY)

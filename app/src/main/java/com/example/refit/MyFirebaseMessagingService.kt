@@ -5,8 +5,11 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Build
 import android.util.Log
+import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -44,14 +47,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        val largeIcon = BitmapFactory.decodeResource(resources, R.drawable.logo)
+
         val channelId = "refit"
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.refit)
+            .setSmallIcon(R.drawable.logo_foreground)
             .setContentTitle(title)
             .setContentText(messageBody)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setLargeIcon(largeIcon)
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText(messageBody))
 
         //알림을 표시하기 위해 Manager를 가지고 옴
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -59,11 +67,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(channelId,
                 "refit",
-                NotificationManager.IMPORTANCE_HIGH)
+                NotificationManager.IMPORTANCE_HIGH).apply {
+                enableLights(true)
+                enableVibration(true)
+                lightColor = Color.BLUE
+                vibrationPattern = longArrayOf(100, 200, 300, 400, 500)
+            }
             notificationManager.createNotificationChannel(channel)
         }
 
-        //동일한 알람이 여러번 왔을때 이전 알람을 대체
-        notificationManager.notify(0, notificationBuilder.build())
+        val notificationId = System.currentTimeMillis().toInt()
+        notificationManager.notify(notificationId, notificationBuilder.build())
     }
 }
