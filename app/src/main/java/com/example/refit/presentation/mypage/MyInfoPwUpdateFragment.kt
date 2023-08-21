@@ -8,6 +8,7 @@ import com.example.refit.R
 import com.example.refit.data.model.mypage.PasswordUpdateRequest
 import com.example.refit.databinding.FragmentMyInfoPwUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.DialogUtil.checkPwFailDialog
 import com.example.refit.presentation.common.DialogUtil.checkPwSuccessDialog
 import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
@@ -61,16 +62,13 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
     }
 
     private fun notifyPwIncorrectDialog() {
-        checkPwFailDialog(
-            resources.getString(R.string.pw_incorrect_title),
-            resources.getString(R.string.pw_incorrect_content)
-        ).show(requireActivity().supportFragmentManager, null)
+        CustomSnackBar.make(requireView(), R.layout.custom_snackbar_community_basic, R.anim.anim_show_snack_bar_from_top)
+            .setTitle(resources.getString(R.string.pw_incorrect_title), resources.getString(R.string.pw_incorrect_content)).show()
     }
 
     private fun notifyPwCorrectDialog() {
-        checkPwSuccessDialog(
-            resources.getString(R.string.pw_correct_content)
-        ).show(requireActivity().supportFragmentManager, null)
+        CustomSnackBar.make(requireView(), R.layout.custom_snackbar_community_basic, R.anim.anim_show_snack_bar_from_top)
+            .setTitle(resources.getString(R.string.pw_correct_content), null).show()
     }
 
     override fun onDestroyView() {

@@ -101,9 +101,8 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
     }
 
     private fun notifyPwCorrectDialog() {
-        checkPwSuccessDialog(
-            resources.getString(R.string.my_info_correct_update)
-        ).show(requireActivity().supportFragmentManager, null)
+        CustomSnackBar.make(requireView(), R.layout.custom_snackbar_community_basic, R.anim.anim_show_snack_bar_from_top)
+            .setTitle(resources.getString(R.string.my_info_correct_update), null).show()
     }
 
     override fun onDestroyView() {
