@@ -167,6 +167,9 @@
         <action
             android:id="@+id/action_myPage_to_mySetting"
             app:destination="@id/myPage_mySetting"/>
+        <action
+            android:id="@+id/action_nav_my_page_to_imageFragment"
+            app:destination="@id/imageFragment" />
     </fragment>
     <fragment
         android:id="@+id/myPage_myInfo"
@@ -486,5 +489,14 @@
         <action
             android:id="@+id/action_completedForestFragment_to_forestFragment"
             app:destination="@id/forestFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="com.example.refit.presentation.image.ImageFragment"
+        android:label="fragment_image">
+        <argument
+            android:name="imageUrl"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.refit.R
 import com.example.refit.databinding.FragmentMyPageBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.NavigationUtil.navigate
+import com.example.refit.presentation.findidpassword.FindIdPasswordFragmentDirections
 import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
 import com.example.refit.presentation.mypage.viewmodel.MyViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -40,6 +42,12 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
         // 설정 버튼 클릭시
         binding.myPageBtnSetting.setOnClickListener(){
             navigate(R.id.action_myPage_to_mySetting)
+        }
+
+        // 설정 버튼 클릭시
+        binding.image.setOnClickListener(){
+            val action = MyPageFragmentDirections.actionNavMyPageToImageFragment(vm.myInfoResponse.value!!.imageUrl)
+            Navigation.findNavController(view).navigate(action)
         }
 
         vm.getMyInfo()
