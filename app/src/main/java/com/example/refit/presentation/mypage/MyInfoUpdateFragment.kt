@@ -96,8 +96,6 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
         })
 
         showMyInfoBackPressedDialog()
-
-
     }
 
     override fun onDestroyView() {
