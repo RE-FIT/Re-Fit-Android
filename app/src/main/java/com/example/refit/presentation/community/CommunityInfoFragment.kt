@@ -52,6 +52,12 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
 
         vm.deleteSuccess.observe(viewLifecycleOwner, EventObserver{
             navigateUp()
+
+            CustomSnackBar.make(
+                binding.root,
+                R.layout.custom_snack_bar_basic,
+                R.anim.anim_show_snack_bar_from_bottom
+            ).setTitle("글 삭제가 완료되었습니다", null).show()
         })
 
         Timber.d("[info] onViewCreated")
@@ -164,7 +170,13 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
                     R.layout.custom_snack_bar_basic,
                     R.anim.anim_show_snack_bar_from_bottom
                 )
-                    .setTitle("스크랩을 완료하였습니다!", null).show()
+                    .setTitle("스크랩이 완료되었습니다", null).show()
+            } else {
+                CustomSnackBar.make(
+                    binding.root,
+                    R.layout.custom_snack_bar_basic,
+                    R.anim.anim_show_snack_bar_from_bottom
+                ).setTitle("스크랩이 취소되었습니다", null).show()
             }
             vm.setScrapStatus(toggleStatus)
         }
@@ -254,6 +266,14 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
                 Timber.d("[INFO] 업데이트 상태 변경 알람")
             }
         }
+
+        vmAdd.update.observe(viewLifecycleOwner, EventObserver{
+            CustomSnackBar.make(
+                binding.root,
+                R.layout.custom_snack_bar_basic,
+                R.anim.anim_show_snack_bar_from_bottom
+            ).setTitle("정보 수정이 완료되었습니다", null).show()
+        })
 
        vm.sliderImageUrls.observe(viewLifecycleOwner) {response ->
            if(response != null) {

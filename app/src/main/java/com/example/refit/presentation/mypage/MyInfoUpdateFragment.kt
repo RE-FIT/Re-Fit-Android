@@ -25,8 +25,10 @@ import com.example.refit.R
 import com.example.refit.data.model.mypage.ShowMyInfoResponse
 import com.example.refit.databinding.FragmentMyInfoUpdateBinding
 import com.example.refit.presentation.common.BaseFragment
+import com.example.refit.presentation.common.CustomSnackBar
 import com.example.refit.presentation.common.DialogUtil
 import com.example.refit.presentation.common.DialogUtil.checkNickNameDialog
+import com.example.refit.presentation.common.DialogUtil.checkPwSuccessDialog
 import com.example.refit.presentation.common.DialogUtil.createAlertBasicDialog
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.common.NavigationUtil.navigateUp
@@ -92,9 +94,16 @@ class MyInfoUpdateFragment : BaseFragment<FragmentMyInfoUpdateBinding>(R.layout.
 
         vm.isSuccess.observe(viewLifecycleOwner, EventObserver{
             vm.showMyInfoRetrofit()
+            notifyPwCorrectDialog()
         })
 
         showMyInfoBackPressedDialog()
+    }
+
+    private fun notifyPwCorrectDialog() {
+        checkPwSuccessDialog(
+            resources.getString(R.string.my_info_correct_update)
+        ).show(requireActivity().supportFragmentManager, null)
     }
 
     override fun onDestroyView() {
