@@ -218,6 +218,12 @@
     <string name="forest_dialog_title_require_tree_number">%d그루</string>
     <string name="forest_dialog_confirm_button">확인</string>
 
+    <string name="forest_completed_title_first">%s님 덕에</string>
+    <string name="forest_completed_title_second_left">총 %d그루</string>
+    <string name="forest_completed_title_second_right">나무가 있는 숲이</string>
+    <string name="forest_completed_title_third">완성되었어요!</string>
+
+
     <!--Community-->
     <string name="community_main_toolbar_title">Green Community</string>
     <string name="community_search_option_first">종류</string>

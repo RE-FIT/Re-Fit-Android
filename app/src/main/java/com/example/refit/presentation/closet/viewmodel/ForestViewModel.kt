@@ -52,6 +52,11 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
     val clothId: LiveData<Int>
         get() = _clothId
 
+    private val _clothTargetCnt: MutableLiveData<Int> =
+        MutableLiveData<Int>()
+    val clothTargetCnt: LiveData<Int>
+        get() = _clothTargetCnt
+
     private val _clothItemInfo: MutableLiveData<Event<ResponseRegisteredClothInfo>> =
         MutableLiveData<Event<ResponseRegisteredClothInfo>>()
     val clothItemInfo: LiveData<Event<ResponseRegisteredClothInfo>>
@@ -84,6 +89,7 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
                         if (response.isSuccessful) {
                             //TODO(카카오톡 로그인이 추가되면 옷장이 완성됐을 때 카톡 공유 기능도 추가할 것)
                             _forestInfo.value = Event(response.body()!!)
+                            _clothTargetCnt.value = response.body()!!.targetCnt
                             val stampList = mutableListOf<ForestStamps>()
                             for (id in 1..response.body()!!.targetCnt) {
                                 stampList.add(ForestStamps(id, Random.nextInt(0, 3)))
