@@ -16,7 +16,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:strokeColor="@color/green1"
+        app:strokeColor="@color/red"
         app:strokeWidth="1.5dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="5dp" >
@@ -30,7 +30,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_check_green1_18" />
+                android:src="@drawable/ic_alert_circle_24" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

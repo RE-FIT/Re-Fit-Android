@@ -1,6 +1,8 @@
 package com.example.refit.presentation.mypage
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -32,9 +34,12 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
         binding.lifecycleOwner = this
 
         if (myInfoViewModel.type.value != null) {
-            notifyBlockChangeDialog()
             binding.currentPw.isEnabled = false
             binding.newPw.isEnabled = false
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                notifyBlockChangeDialog()
+            }, 100)
         }
 
         //패스워드 변경 API 호출
@@ -62,7 +67,7 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
     }
 
     private fun notifyPwIncorrectDialog() {
-        CustomSnackBar.make(requireView(), R.layout.custom_snackbar_community_basic, R.anim.anim_show_snack_bar_from_top)
+        CustomSnackBar.make(requireView(), R.layout.custom_snackbar_fail_basic, R.anim.anim_show_snack_bar_from_top)
             .setTitle(resources.getString(R.string.pw_incorrect_title), resources.getString(R.string.pw_incorrect_content)).show()
     }
 
@@ -102,9 +107,7 @@ class MyInfoPwUpdateFragment : BaseFragment<FragmentMyInfoPwUpdateBinding>(R.lay
     }
 
     private fun notifyBlockChangeDialog() {
-        checkPwFailDialog(
-            resources.getString(R.string.block_change_to_pw_title),
-            resources.getString(R.string.block_change_to_pw_content)
-        ).show(requireActivity().supportFragmentManager, null)
+        CustomSnackBar.make(requireView(), R.layout.custom_snackbar_fail_basic, R.anim.anim_show_snack_bar_from_top)
+            .setTitle(resources.getString(R.string.block_change_to_pw_title), resources.getString(R.string.block_change_to_pw_content)).show()
     }
 }
