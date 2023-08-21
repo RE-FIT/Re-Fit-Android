@@ -24,8 +24,8 @@
             type="com.example.refit.presentation.dialog.closet.ClothItemSelectionDialog" />
 
         <variable
-            name="isWornToday"
-            type="Boolean" />
+            name="vm"
+            type="com.example.refit.presentation.closet.viewmodel.ClosetViewModel" />
 
     </data>
 
@@ -64,8 +64,8 @@
             android:backgroundTint="@color/green1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            setButtonBackgroundTintByStatus="@{(isNotCompletedGoal &amp;&amp; !isWornToday) || !isNotCompletedGoal}"
-            android:clickable="@{(isNotCompletedGoal &amp;&amp; !isWornToday) || !isNotCompletedGoal}"
+            setButtonBackgroundTintByStatus="@{(isNotCompletedGoal &amp;&amp; !vm.isClothesWornToday()) || !isNotCompletedGoal}"
+            android:clickable="@{(isNotCompletedGoal &amp;&amp; !vm.isClothesWornToday()) || !isNotCompletedGoal}"
             android:onClick="@{() -> dialog.handleClickMainButton(isNotCompletedGoal)}"
             android:textAppearance="@style/MediumFontKr.14"
             android:visibility="@{isValidGoal ? View.VISIBLE : View.GONE}"

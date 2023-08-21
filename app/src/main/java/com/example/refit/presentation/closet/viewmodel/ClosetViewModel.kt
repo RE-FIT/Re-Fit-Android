@@ -206,11 +206,8 @@ class ClosetViewModel(
 
     fun handleClickItem(clothInfo: ResponseRegisteredClothes) {
         _selectedRegisteredClothItem.value = Event(clothInfo)
-        clothInfo.lastDate?.let {
-            val isWorn = DateUtil.isCurrentDate("YYYY-MM-dd", clothInfo.lastDate)
-            Timber.d("오늘 입은 옷인가? - $isWorn")
-            _isClothesWornToday.value = isWorn
-        }
+        _isClothesWornToday.value = DateUtil.isCurrentDate("YYYY-MM-dd", clothInfo.lastDate)
+        Timber.d("isWordnToday? -> ${_isClothesWornToday.value}")
     }
 
 }

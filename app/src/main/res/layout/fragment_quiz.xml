@@ -42,9 +42,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:cardBackgroundColor="@color/default_dark"
-            app:layout_constraintTop_toBottomOf="@id/tb_forest_quiz_top_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_forest_quiz_top_container"
             app:strokeColor="@color/green1"
             app:strokeWidth="1dp">
 
@@ -66,11 +66,11 @@
             setQuizAnswer="@{vm.quizInfo.answer}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="200dp"
             android:textColor="@color/green1"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="200dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cv_forest_quiz_title"
             tools:text="Q." />
@@ -84,20 +84,20 @@
             app:layout_constraintTop_toBottomOf="@id/tv_forest_quiz_result_status">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_gravity="top"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="top">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_forest_quiz_question"
                     style="@style/MediumFontKr.20"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="6dp"
                     android:layout_marginBottom="20dp"
                     android:paddingStart="40dp"
                     android:paddingEnd="40dp"
                     android:text="@{vm.quizInfo.question}"
-                    android:layout_marginTop="6dp"
                     android:textAlignment="center"
                     android:visibility="@{isRequestAnswer ? View.INVISIBLE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -107,11 +107,11 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_forest_quiz_explanation"
-                    style="@style/MediumFontKr.18"
+                    style="@style/MediumFontKr.20"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="20dp"
                     android:layout_marginTop="6dp"
+                    android:layout_marginBottom="20dp"
                     android:paddingStart="40dp"
                     android:paddingEnd="40dp"
                     android:text="@{vm.quizInfo.explanation}"
