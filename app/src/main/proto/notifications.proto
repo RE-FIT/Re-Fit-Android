@@ -4,7 +4,7 @@ option java_package = "com.example.refit.data.datastore";
 option java_multiple_files = true;
 
 message NotificationsByRoom {
-    repeated string notification_ids = 1;
+    repeated int32 notification_ids = 1;
 }
 
 message Notifications {

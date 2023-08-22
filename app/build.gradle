@@ -118,6 +118,8 @@ dependencies {
 
     //kakao
     implementation "com.kakao.sdk:v2-user:2.15.0"
+
+    implementation("androidx.work:work-runtime-ktx:2.8.0")
 }
 
 protobuf {

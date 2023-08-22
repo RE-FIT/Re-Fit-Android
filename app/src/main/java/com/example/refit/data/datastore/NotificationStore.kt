@@ -2,11 +2,12 @@ package com.example.refit.data.datastore
 
 import androidx.datastore.core.DataStore
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 
 class NotificationStore(private val dataStore: DataStore<Notifications>) {
 
     // 1. NotificationsByRoom에 notification_ids를 추가하는 기능
-    suspend fun addNotificationIdToRoom(roomId: String, notificationId: String) {
+    suspend fun addNotificationIdToRoom(roomId: String, notificationId: Int) {
         dataStore.updateData { currentNotifications ->
             val currentIdsByRoom = currentNotifications.notificationsByRoom[roomId]
             val updatedIdsByRoom = if (currentIdsByRoom != null) {
@@ -27,10 +28,10 @@ class NotificationStore(private val dataStore: DataStore<Notifications>) {
         }
     }
 
-    // 2. Notifications에서 모든 NotificationsByRoom를 조회하는 기능
-    suspend fun getAllNotificationsByRoom(): Map<String, NotificationsByRoom> {
-        val currentNotifications = dataStore.data.first()
-        return currentNotifications.notificationsByRoomMap
+    // 2. Notifications에서 roomId에 해당하는 모든 NotificationsByRoom를 조회하는 기능
+    suspend fun getAllNotificationsByRoom(roomId: String): List<Int>? {
+        val notifications = dataStore.data.firstOrNull() ?: return null
+        return notifications.notificationsByRoom[roomId]?.notificationIdsList
     }
 
     // 3. roomId에 해당하는 Notifications을 삭제하는 기능
