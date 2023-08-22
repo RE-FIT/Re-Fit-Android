@@ -29,11 +29,15 @@ class FindPwViewModel(private val repository: SignUpRepository): ViewModel() {
     val error : LiveData<Event<ResponseError>>
         get() = _error
 
+    private var _isValidShowingProgress = MutableLiveData<Event<Boolean>>()
+    val isValidShowingProgress : LiveData<Event<Boolean>>
+        get() = _isValidShowingProgress
+
     /**
      * 패스워드 찾기
      */
     fun findByPassword(body : FindPasswordRequest) = viewModelScope.launch {
-
+        _isValidShowingProgress.value = Event(true)
         val response = repository.findByPassword(body)
 
         response.enqueue(object : Callback<ResponseBody> {
@@ -49,9 +53,11 @@ class FindPwViewModel(private val repository: SignUpRepository): ViewModel() {
                             jsonObject.getInt("code"), jsonObject.getString("message"))
                     ))
                 }
+                _isValidShowingProgress.value = Event(false)
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.d("ContinueFail", "FAIL")
+                _isValidShowingProgress.value = Event(false)
             }
         })
     }
