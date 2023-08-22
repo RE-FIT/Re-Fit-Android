@@ -2,6 +2,8 @@ package com.example.refit.presentation.mypage
 
 import android.os.Bundle
 import android.util.Log
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -82,6 +84,11 @@ class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_f
                 }
             }
         }
+
+        binding.root.setOnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
+            true
+        }
     }
 
     private fun initFeedGiveList() {
@@ -106,6 +113,38 @@ class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_f
             myFeedViewModel.myFeedBuyList.observe(viewLifecycleOwner) { list ->
                 submitList(list)
             }
+        }
+    }
+
+    private val gestureDetector by lazy {
+        GestureDetector(requireContext(), object : GestureDetector.SimpleOnGestureListener() {
+            override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+                val diffX = e2?.x?.minus(e1!!.x) ?: 0f
+                if (Math.abs(diffX) > 20) { // 이 값은 원하는 스와이프 감도에 따라 조절 가능합니다.
+                    if (diffX > 0) {
+                        onSwipeRight()
+                    } else {
+                        onSwipeLeft()
+                    }
+                }
+                return super.onFling(e1, e2, velocityX, velocityY)
+            }
+        })
+    }
+
+    private fun onSwipeRight() {
+        when (binding.chipGroup.checkedChipId) {
+            R.id.chip_sell -> binding.chipGroup.check(R.id.chip_buy)
+            R.id.chip_share -> binding.chipGroup.check(R.id.chip_sell)
+            R.id.chip_buy -> binding.chipGroup.check(R.id.chip_share)
+        }
+    }
+
+    private fun onSwipeLeft() {
+        when (binding.chipGroup.checkedChipId) {
+            R.id.chip_sell -> binding.chipGroup.check(R.id.chip_share)
+            R.id.chip_share -> binding.chipGroup.check(R.id.chip_buy)
+            R.id.chip_buy -> binding.chipGroup.check(R.id.chip_sell)
         }
     }
 }

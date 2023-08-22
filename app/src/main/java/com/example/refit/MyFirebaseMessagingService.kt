@@ -13,8 +13,18 @@ import android.os.Looper
 import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.WorkRequest
+import androidx.work.workDataOf
+import com.example.refit.data.datastore.NotificationStore
+import com.example.refit.data.workmanager.NotificationWorker
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -36,19 +46,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         title?.let { t ->
             body?.let { b ->
-                showNotification(t, b, roomId)
+                showNotification(t, b)
             }
         }
     }
 
-    private fun showNotification(title: String, messageBody: String, roomId: String?) {
+    private fun showNotification(title: String, messageBody: String) {
 
         //MainActivity를 최상단으로 이동
         val intent = Intent(this, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
 
-        //
         val pendingIntent = PendingIntent.getActivity(
             this, 0, intent,
             PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
@@ -82,7 +91,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
             notificationManager.createNotificationChannel(channel)
         }
-
         val notificationId = System.currentTimeMillis().toInt()
         notificationManager.notify(notificationId, notificationBuilder.build())
     }
