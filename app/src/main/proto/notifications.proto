@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package com.example.refit;
+option java_multiple_files = true;
+
+message NotificationsByRoom {
+    repeated string notification_ids = 1;
+}
+
+message Notifications {
+    map<string, NotificationsByRoom> notifications_by_room = 2;
+}

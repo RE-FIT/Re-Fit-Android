@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
     id("com.google.gms.google-services")
+    id "com.google.protobuf" version "0.9.4"
 }
 
 android {
@@ -95,6 +96,8 @@ dependencies {
 
     // Datastore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation("androidx.datastore:datastore:1.0.0")
+    implementation  "com.google.protobuf:protobuf-javalite:3.24.0"
 
     //Circle ImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
@@ -115,4 +118,20 @@ dependencies {
 
     //kakao
     implementation "com.kakao.sdk:v2-user:2.15.0"
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.24.0"
+    }
+
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
+        }
+    }
 }
