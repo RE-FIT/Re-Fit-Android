@@ -47,7 +47,7 @@
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_sell"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:layout_marginEnd="3dp"
@@ -63,7 +63,7 @@
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_give"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:layout_marginEnd="3dp"
