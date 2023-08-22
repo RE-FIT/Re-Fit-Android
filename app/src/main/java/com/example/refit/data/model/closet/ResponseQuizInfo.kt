@@ -3,6 +3,8 @@ import com.google.gson.annotations.SerializedName
 
 
 data class ResponseQuizInfo(
+    @SerializedName("id")
+    val id: Int,
     @SerializedName("answer")
     val answer: Boolean,
     @SerializedName("category")

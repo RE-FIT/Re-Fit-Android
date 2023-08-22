@@ -19,7 +19,6 @@ class QuizFragment : BaseFragment<FragmentQuizBinding>(R.layout.fragment_quiz) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = forestViewModel
         setStatusBarColor(R.color.default_dark)
-        forestViewModel.getQuiz()
         handleClickToolBarkNavigation()
         handleAnswerRequestStatus()
         handleRequestAnswer()
