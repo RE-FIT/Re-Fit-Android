@@ -12,5 +12,7 @@ data class Chat(
     @SerializedName("time")
     val time: String,
     @SerializedName("isMy")
-    val isMy: Boolean
+    val isMy: Boolean,
+    @SerializedName("notificationId")
+    val notificationId: String
 )

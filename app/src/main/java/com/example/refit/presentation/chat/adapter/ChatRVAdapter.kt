@@ -1,5 +1,8 @@
 package com.example.refit.presentation.chat.adapter
 
+import android.app.NotificationManager
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +15,16 @@ import java.time.ZonedDateTime
 import java.util.Locale
 
 class ChatRVAdapter(private val dataList: MutableList<Chat>,
-                    private val otherImage: String?=""): RecyclerView.Adapter<ChatRVAdapter.DataViewHolder>() {
+                    private val otherImage: String?="", private val context: Context): RecyclerView.Adapter<ChatRVAdapter.DataViewHolder>() {
 
     fun addChat(chat: Chat) {
         this.dataList.add(chat)
         notifyDataSetChanged()
+    }
+
+    fun cancelNotification(notificationId: Int) {
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(notificationId)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
@@ -47,6 +55,8 @@ class ChatRVAdapter(private val dataList: MutableList<Chat>,
 
             // 현재 메시지가 마지막 메시지가 아닌 경우 다음 메시지 가져오기
             val nextData: Chat? = if (adapterPosition < dataList.size - 1) dataList[adapterPosition + 1] else null
+
+//            cancelNotification(data.notificationId.toInt())
 
             if (data.isMy === true) {
                 handleMyMessage(data, nextData)

@@ -38,20 +38,20 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // 알림 내용을 가져옴
         val title = remoteMessage.notification?.title
         val body = remoteMessage.notification?.body
-        var roomId: String? = null
+        var notificationId: String? = null
 
         remoteMessage.data?.let {
-            roomId = it["roomId"]
+            notificationId = it["notificationId"]
         }
 
         title?.let { t ->
             body?.let { b ->
-                showNotification(t, b)
+                showNotification(t, b, notificationId.toString())
             }
         }
     }
 
-    private fun showNotification(title: String, messageBody: String) {
+    private fun showNotification(title: String, messageBody: String, notificationId: String) {
 
         //MainActivity를 최상단으로 이동
         val intent = Intent(this, MainActivity::class.java).apply {
@@ -91,7 +91,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
             notificationManager.createNotificationChannel(channel)
         }
-        val notificationId = System.currentTimeMillis().toInt()
-        notificationManager.notify(notificationId, notificationBuilder.build())
+
+        notificationManager.notify(notificationId.toInt(), notificationBuilder.build())
     }
 }
