@@ -248,4 +248,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
         ).show(requireActivity().supportFragmentManager, null)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.init()
+    }
 }
