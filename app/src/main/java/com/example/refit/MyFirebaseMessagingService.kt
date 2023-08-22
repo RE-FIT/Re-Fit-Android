@@ -8,6 +8,8 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -26,15 +28,20 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // 알림 내용을 가져옴
         val title = remoteMessage.notification?.title
         val body = remoteMessage.notification?.body
+        var roomId: String? = null
+
+        remoteMessage.data?.let {
+            roomId = it["roomId"]
+        }
 
         title?.let { t ->
             body?.let { b ->
-                showNotification(t, b)
+                showNotification(t, b, roomId)
             }
         }
     }
 
-    private fun showNotification(title: String, messageBody: String) {
+    private fun showNotification(title: String, messageBody: String, roomId: String?) {
 
         //MainActivity를 최상단으로 이동
         val intent = Intent(this, MainActivity::class.java).apply {

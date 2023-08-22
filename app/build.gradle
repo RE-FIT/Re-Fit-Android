@@ -103,7 +103,7 @@ dependencies {
     implementation "androidx.core:core-splashscreen:1.0.1"
     
     //socketIo
-    implementation('io.socket:socket.io-client:1.0.1')
+    implementation('io.socket:socket.io-client:2.1.0')
     
     // ViewPager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
