@@ -29,6 +29,10 @@ class CommunityInfoViewModel (
     private val ds: TokenStore
 ): ViewModel(){
 
+    private val _currentImage = MutableLiveData<Int>()
+    val currentImage: LiveData<Int>
+        get() = _currentImage
+
     private val _postId: MutableLiveData<Int> = MutableLiveData<Int>()
     val postId: LiveData<Int>
         get() = _postId
@@ -67,6 +71,10 @@ class CommunityInfoViewModel (
     fun clickedGetPost(postId: Int) {
         _postId.value = postId
         getPost()
+    }
+
+    fun setImage(pos: Int) {
+        _currentImage.postValue(pos)
     }
 
     fun updatePostResponse(response: PostResponse) {

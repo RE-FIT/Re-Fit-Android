@@ -44,6 +44,11 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
     private val vmPr: PostReportViewModel by sharedViewModel()
     private val vmCom: CommunityViewModel by sharedViewModel()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        vm.setImage(0)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vm = vm
@@ -163,6 +168,8 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
             binding.vpCommunityInfoImage.adapter = imageSliderAdapter
             imageSliderAdapter.sliderImageUrls = postResponse.imgUrls
 
+            binding.vpCommunityInfoImage.currentItem = vm.currentImage.value!!
+
             imageSliderAdapter.setOnItemClickListener(object: InfoImageAdapter.OnItemClickListner {
 
                 override fun onItemClick(v: View, data: String, pos: Int) {
@@ -171,6 +178,11 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
                 }
             })
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        vm.setImage(binding.vpCommunityInfoImage.currentItem)
     }
 
     private fun handleFavIconClicked() {
