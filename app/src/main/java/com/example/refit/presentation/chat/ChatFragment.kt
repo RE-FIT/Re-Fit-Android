@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,9 +16,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.refit.BuildConfig
 import com.example.refit.R
 import com.example.refit.data.model.chat.Chat
+import com.example.refit.data.model.chat.ChatRoom
 import com.example.refit.data.model.chat.Trade
 import com.example.refit.databinding.FragmentChatBinding
 import com.example.refit.presentation.chat.adapter.ChatRVAdapter
+import com.example.refit.presentation.chat.adapter.ChatRoomRVAdapter
 import com.example.refit.presentation.chat.viewmodel.ChatViewModel
 import com.example.refit.presentation.chat.viewmodel.TradeViewModel
 import com.example.refit.presentation.common.BaseFragment
@@ -27,6 +30,7 @@ import com.example.refit.presentation.common.DialogUtil.showChatDeletionConfirmD
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
+import com.example.refit.presentation.mypage.MyPageFragmentDirections
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
@@ -79,6 +83,15 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
             binding.rv.adapter = dataRVAdapter
             binding.rv.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+
+            dataRVAdapter.setOnItemClickListener(object: ChatRVAdapter.OnItemClickListner {
+                override fun onItemClick(v: View, data: String, pos: Int) {
+                    if (data != BuildConfig.IMAGE_URL) {
+                        val action = ChatFragmentDirections.actionChatFragmentToImageFragment(data)
+                        Navigation.findNavController(view).navigate(action)
+                    }
+                }
+            })
 
             socket = IO.socket(BuildConfig.SUB_URL)
             socket.connect()
@@ -235,4 +248,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding>(R.layout.fragment_chat) {
         ).show(requireActivity().supportFragmentManager, null)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.init()
+    }
 }
