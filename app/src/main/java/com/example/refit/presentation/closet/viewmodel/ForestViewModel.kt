@@ -19,7 +19,8 @@ import retrofit2.Response
 import timber.log.Timber
 import kotlin.random.Random
 
-class ForestViewModel(private val repository: ClosetRepository, private val dataStore: TokenStore) : ViewModel() {
+class ForestViewModel(private val repository: ClosetRepository, private val dataStore: TokenStore) :
+    ViewModel() {
 
     private val _forestInfo: MutableLiveData<Event<ResponseForestStatusInfo>> =
         MutableLiveData<Event<ResponseForestStatusInfo>>()
@@ -45,6 +46,11 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
         MutableLiveData<Event<Boolean>>()
     val isValidShowingDialog: LiveData<Event<Boolean>>
         get() = _isValidShowingDialog
+
+    private val _isValidShowingCompletedWindow: MutableLiveData<Event<Boolean>> =
+        MutableLiveData<Event<Boolean>>()
+    val isValidShowingCompletedWindow: LiveData<Event<Boolean>>
+        get() = _isValidShowingCompletedWindow
 
     private val _clothId: MutableLiveData<Int> =
         MutableLiveData<Int>()
@@ -76,7 +82,7 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
     fun getForestInfo() {
         viewModelScope.launch {
             try {
-                if(_forestInfo.value  == null) {
+                if (_forestInfo.value == null) {
                     val response = repository.getForestStatusInfo(
                         dataStore.getAccessToken().first(),
                         _clothId.value!!
@@ -89,11 +95,9 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
                             if (response.isSuccessful) {
                                 _forestInfo.value = Event(response.body()!!)
                                 _clothTargetCnt.value = response.body()!!.targetCnt
-                                val stampList = mutableListOf<ForestStamps>()
-                                for (id in 1..response.body()!!.targetCnt) {
-                                    stampList.add(ForestStamps(id, Random.nextInt(0, 3)))
-                                }
-                                _forestStamps.value = Event(stampList.toList())
+                                _forestStamps.value = Event(getStampList(response.body()!!.targetCnt))
+                                _isValidShowingDialog.value = Event(response.body()!!.count < response.body()!!.targetCnt)
+                                _isValidShowingCompletedWindow.value = Event(response.body()!!.count == response.body()!!.targetCnt)
                                 Timber.d("숲 현황 데이터 불러오기 성공 - ${response.body()}")
                             } else {
                                 Timber.d("숲 현황 데이터 불러오기 실패1 - ${response.errorBody()}")
@@ -108,6 +112,8 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
                 } else {
                     _forestInfo.value = Event(_forestInfo.value!!.content)
                     _forestStamps.value = Event(_forestStamps.value!!.content)
+                    stopShowingDialogEver()
+                    stopShowingCompletedForestWindow()
                 }
 
 
@@ -168,8 +174,20 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
         }
     }
 
-    fun stopShowingDialogEver() {
+    private fun stopShowingDialogEver() {
         _isValidShowingDialog.value = Event(false)
+    }
+
+    private fun stopShowingCompletedForestWindow() {
+        _isValidShowingCompletedWindow.value = Event(false)
+    }
+
+    private fun getStampList(targetCount: Int): List<ForestStamps> {
+        val stampList = mutableListOf<ForestStamps>()
+        for (id in 1..targetCount) {
+            stampList.add(ForestStamps(id, Random.nextInt(0, 3)))
+        }
+        return stampList.toList()
     }
 
 }
