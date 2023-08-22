@@ -10,5 +10,7 @@ data class ResponseForestStatusInfo(
     @SerializedName("remainedCnt")
     val remainedCnt: Int,
     @SerializedName("targetCnt")
-    val targetCnt: Int
+    val targetCnt: Int,
+    @SerializedName("questions")
+    val questions: List<ResponseQuizInfo>,
 )

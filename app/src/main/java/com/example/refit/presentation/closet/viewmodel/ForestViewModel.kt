@@ -19,8 +19,7 @@ import retrofit2.Response
 import timber.log.Timber
 import kotlin.random.Random
 
-class ForestViewModel(private val repository: ClosetRepository, private val dataStore: TokenStore) :
-    ViewModel() {
+class ForestViewModel(private val repository: ClosetRepository, private val dataStore: TokenStore) : ViewModel() {
 
     private val _forestInfo: MutableLiveData<Event<ResponseForestStatusInfo>> =
         MutableLiveData<Event<ResponseForestStatusInfo>>()
@@ -77,68 +76,43 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
     fun getForestInfo() {
         viewModelScope.launch {
             try {
-                val response = repository.getForestStatusInfo(
-                    dataStore.getAccessToken().first(),
-                    _clothId.value!!
-                )
-                response.enqueue(object : Callback<ResponseForestStatusInfo> {
-                    override fun onResponse(
-                        call: Call<ResponseForestStatusInfo>,
-                        response: Response<ResponseForestStatusInfo>
-                    ) {
-                        if (response.isSuccessful) {
-                            //TODO(카카오톡 로그인이 추가되면 옷장이 완성됐을 때 카톡 공유 기능도 추가할 것)
-                            _forestInfo.value = Event(response.body()!!)
-                            _clothTargetCnt.value = response.body()!!.targetCnt
-                            val stampList = mutableListOf<ForestStamps>()
-                            for (id in 1..response.body()!!.targetCnt) {
-                                stampList.add(ForestStamps(id, Random.nextInt(0, 3)))
+                if(_forestInfo.value  == null) {
+                    val response = repository.getForestStatusInfo(
+                        dataStore.getAccessToken().first(),
+                        _clothId.value!!
+                    )
+                    response.enqueue(object : Callback<ResponseForestStatusInfo> {
+                        override fun onResponse(
+                            call: Call<ResponseForestStatusInfo>,
+                            response: Response<ResponseForestStatusInfo>
+                        ) {
+                            if (response.isSuccessful) {
+                                _forestInfo.value = Event(response.body()!!)
+                                _clothTargetCnt.value = response.body()!!.targetCnt
+                                val stampList = mutableListOf<ForestStamps>()
+                                for (id in 1..response.body()!!.targetCnt) {
+                                    stampList.add(ForestStamps(id, Random.nextInt(0, 3)))
+                                }
+                                _forestStamps.value = Event(stampList.toList())
+                                Timber.d("숲 현황 데이터 불러오기 성공 - ${response.body()}")
+                            } else {
+                                Timber.d("숲 현황 데이터 불러오기 실패1 - ${response.errorBody()}")
                             }
-                            _forestStamps.value = Event(stampList.toList())
-                            Timber.d("숲 현황 데이터 불러오기 성공 - ${response.body()}")
-                        } else {
-                            Timber.d("숲 현황 데이터 불러오기 실패1 - ${response.errorBody()}")
                         }
-                    }
 
-                    override fun onFailure(call: Call<ResponseForestStatusInfo>, t: Throwable) {
-                        Timber.d("숲 현황 데이터 불러오기 실패2 - $t")
-                    }
+                        override fun onFailure(call: Call<ResponseForestStatusInfo>, t: Throwable) {
+                            Timber.d("숲 현황 데이터 불러오기 실패2 - $t")
+                        }
 
-                })
+                    })
+                } else {
+                    _forestInfo.value = Event(_forestInfo.value!!.content)
+                    _forestStamps.value = Event(_forestStamps.value!!.content)
+                }
+
 
             } catch (e: Throwable) {
                 Timber.d("숲 현황 데이터 불러오기 실패 : $e")
-            }
-        }
-    }
-
-    fun getQuiz() {
-        viewModelScope.launch {
-            try {
-                Timber.d("퀴즈 요청 id - ${_clothId.value}")
-                val response =
-                    repository.getQuizInfo(dataStore.getAccessToken().first(), _clothId.value!!)
-                response.enqueue(object : Callback<ResponseQuizInfo> {
-                    override fun onResponse(
-                        call: Call<ResponseQuizInfo>,
-                        response: Response<ResponseQuizInfo>
-                    ) {
-                        if (response.isSuccessful) {
-                            _quizInfo.value = response.body()
-                            Timber.d("퀴즈 데이터 불러오기 성공 - ${response.body()}")
-                        } else {
-                            Timber.d("퀴즈 데이터 불러오기 실패1 - ${response.errorBody()}")
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponseQuizInfo>, t: Throwable) {
-                        Timber.d("퀴즈 데이터 불러오기 실패2 - $t")
-                    }
-
-                })
-            } catch (e: Throwable) {
-                Timber.d(e)
             }
         }
     }
@@ -175,8 +149,9 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
     }
 
 
-    fun handleClickItem() {
+    fun handleClickItem(requestedQuizInfoId: Int) {
         _isSelectItem.value = Event(true)
+        _quizInfo.value = _forestInfo.value!!.content.questions[requestedQuizInfoId]
     }
 
     fun checkValidationShowingDialog(isSuccessRequest: Boolean, clothId: Int) {

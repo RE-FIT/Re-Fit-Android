@@ -27,7 +27,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> vm.handleClickItem()}"
+            android:onClick="@{() -> vm.handleClickItem(stampInfo.id-1)}"
             android:clickable="@{forestInfo.count &lt; stampInfo.id ? false : true}"
             android:layout_margin="7dp"
             app:layout_constraintBottom_toBottomOf="parent"
