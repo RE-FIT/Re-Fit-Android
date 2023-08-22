@@ -29,6 +29,8 @@ class FindPasswordFragment : BaseFragment<FragmentFindPasswordBinding>(R.layout.
 
         //비밀번호 찾기
         binding.btnFindPw.setOnClickListener(){
+            binding.isValidShowingProgress = true
+            binding.lavFindPasswordLoading.playAnimation()
             val name = binding.findIdEditName.text.toString()
             val id = binding.findPwEditId.text.toString()
             val email = binding.findIdEditEmail.text.toString()
@@ -56,7 +58,15 @@ class FindPasswordFragment : BaseFragment<FragmentFindPasswordBinding>(R.layout.
             Navigation.findNavController(view).navigate(action)
         })
 
+        handleFindPasswordProgressBar()
+    }
 
+    private fun handleFindPasswordProgressBar() {
+        viewModel.isValidShowingProgress.observe(viewLifecycleOwner, EventObserver {isValid ->
+            if(isValid) binding.lavFindPasswordLoading.playAnimation()
+            else binding.lavFindPasswordLoading.cancelAnimation()
+            binding.isValidShowingProgress = isValid
+        })
     }
 
     override fun onDestroyView() {
