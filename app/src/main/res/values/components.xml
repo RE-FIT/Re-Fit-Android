@@ -8,7 +8,7 @@
         <item name="itemIconTint">@color/selector_green1_else_dark1</item>
         <item name="itemActiveIndicatorStyle">@android:color/transparent</item>
         <item name="backgroundTint">@color/white</item>
-        <item name="itemPaddingTop">22dp</item>
+        <item name="itemPaddingTop">14dp</item>
     </style>
 
     <!-- Card View -->
