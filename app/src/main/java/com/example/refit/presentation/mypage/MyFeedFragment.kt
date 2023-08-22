@@ -132,7 +132,7 @@ class MyFeedFragment: BaseFragment<FragmentMyFeedBinding>(R.layout.fragment_my_f
         GestureDetector(requireContext(), object : GestureDetector.SimpleOnGestureListener() {
             override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
                 val diffX = e2?.x?.minus(e1!!.x) ?: 0f
-                if (Math.abs(diffX) > 20) { // 이 값은 원하는 스와이프 감도에 따라 조절 가능합니다.
+                if (Math.abs(diffX) > 100) { // 이 값은 원하는 스와이프 감도에 따라 조절 가능합니다.
                     if (diffX > 0) {
                         onSwipeRight()
                     } else {
