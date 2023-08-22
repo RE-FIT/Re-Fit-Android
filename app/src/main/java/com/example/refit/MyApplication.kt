@@ -1,7 +1,6 @@
 package com.example.refit
 
 import android.app.Application
-import android.util.Log
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import com.example.refit.BuildConfig.NATIVE_APP_KEY
@@ -27,12 +26,6 @@ class MyApplication: Application() {
             androidContext(this@MyApplication)
             modules(networkModule, networkNodeModule, viewModelModule, repositoryModule, dataSourceModule, dataStoreModule)
         }
-
-
-        val configuration = Configuration.Builder()
-            .setWorkerFactory(KoinWorkerFactory(KoinContextHandler.get()))
-            .build()
-        WorkManager.initialize(this, configuration)
 
         KakaoSdk.init(this, NATIVE_APP_KEY)
 

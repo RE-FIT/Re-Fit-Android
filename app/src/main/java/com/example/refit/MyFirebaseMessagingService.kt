@@ -44,26 +44,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             roomId = it["roomId"]
         }
 
-        val notificationId = System.currentTimeMillis().toInt()
-
-        val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .setInputData(
-                workDataOf(
-                    "roomId" to roomId,
-                    "notificationId" to notificationId
-                )
-            )
-            .build()
-        WorkManager.getInstance(this).enqueue(workRequest)
-
         title?.let { t ->
             body?.let { b ->
-                showNotification(t, b, notificationId)
+                showNotification(t, b)
             }
         }
     }
 
-    private fun showNotification(title: String, messageBody: String, notificationId: Int) {
+    private fun showNotification(title: String, messageBody: String) {
 
         //MainActivity를 최상단으로 이동
         val intent = Intent(this, MainActivity::class.java).apply {
@@ -103,6 +91,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
             notificationManager.createNotificationChannel(channel)
         }
+        val notificationId = System.currentTimeMillis().toInt()
         notificationManager.notify(notificationId, notificationBuilder.build())
     }
 }

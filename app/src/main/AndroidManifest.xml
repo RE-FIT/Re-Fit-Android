@@ -22,6 +22,9 @@
             android:authorities="${applicationId}.androidx-startup"
             tools:node="remove">
         </provider>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="refit"/>
         <service
             android:name=".MyFirebaseMessagingService"
             android:exported="false">
