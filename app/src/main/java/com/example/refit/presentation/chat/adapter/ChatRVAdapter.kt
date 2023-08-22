@@ -1,7 +1,7 @@
 package com.example.refit.presentation.chat.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +35,13 @@ class ChatRVAdapter(private val dataList: MutableList<Chat>,
     inner class DataViewHolder(private val binding: ItemChattingBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: Chat) {
+
+            val pos = adapterPosition
+            if (pos != RecyclerView.NO_POSITION) {
+                binding.profile.setOnClickListener {
+                    listner?.onItemClick(it, otherImage!!, pos)
+                }
+            }
 
             resetViews()
 
@@ -125,5 +132,14 @@ class ChatRVAdapter(private val dataList: MutableList<Chat>,
         val hourIn12Format = if (hour > 12) hour - 12 else hour
 
         return String.format(Locale.getDefault(), "%s %02d:%02d", period, hourIn12Format, minute)
+    }
+
+    interface OnItemClickListner {
+        fun onItemClick(v: View, data: String, pos: Int)
+    }
+    private var listner: ChatRVAdapter.OnItemClickListner?= null
+
+    fun setOnItemClickListener(listner: ChatRVAdapter.OnItemClickListner) {
+        this.listner = listner
     }
 }
