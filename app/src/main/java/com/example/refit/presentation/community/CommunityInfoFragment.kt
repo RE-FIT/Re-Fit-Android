@@ -1,6 +1,7 @@
 package com.example.refit.presentation.community
 
 import android.os.Bundle
+import android.util.Log
 
 import android.view.View
 import android.widget.TextView
@@ -8,8 +9,11 @@ import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.navigation.Navigation
 import com.example.refit.R
+import com.example.refit.data.model.chat.ChatRoom
 import com.example.refit.data.model.chat.CreateRoom
 import com.example.refit.databinding.FragmentCommunityInfoBinding
+import com.example.refit.presentation.chat.ChatRoomFragmentDirections
+import com.example.refit.presentation.chat.adapter.ChatRoomRVAdapter
 import com.example.refit.presentation.chat.viewmodel.ChatViewModel
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.CustomSnackBar
@@ -26,6 +30,7 @@ import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import com.example.refit.presentation.community.viewmodel.PostReportViewModel
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.AlertNoIconDialogListener
+import com.example.refit.presentation.mypage.MyPageFragmentDirections
 import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
@@ -46,8 +51,8 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         vm.initAllState()
         CommunityEtcMenuDropdown()
         handleFavIconClicked()
-        observeStatus()
-        initImageList()
+        observeStatus(view)
+        initImageList(view)
         vm.clickedGetPost(vm.postId.value!!)
 
         vm.deleteSuccess.observe(viewLifecycleOwner, EventObserver{
@@ -151,12 +156,20 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         }
     }
 
-    private fun initImageList() {
+    private fun initImageList(view: View) {
         val imageSliderAdapter = InfoImageAdapter(vm)
         binding.vpCommunityInfoImage.adapter = imageSliderAdapter
         vm.postResponse.observe(viewLifecycleOwner) { postResponse ->
             binding.vpCommunityInfoImage.adapter = imageSliderAdapter
             imageSliderAdapter.sliderImageUrls = postResponse.imgUrls
+
+            imageSliderAdapter.setOnItemClickListener(object: InfoImageAdapter.OnItemClickListner {
+
+                override fun onItemClick(v: View, data: String, pos: Int) {
+                    val action = CommunityInfoFragmentDirections.actionCommunityInfoFragmentToImageFragment(data)
+                    Navigation.findNavController(view).navigate(action)
+                }
+            })
         }
     }
 
@@ -249,10 +262,10 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         ).show(requireActivity().supportFragmentManager, null)
     }
 
-    private fun observeStatus() {
+    private fun observeStatus(view: View) {
         vm.postResponse.observe(viewLifecycleOwner) { response ->
             if (response != null) {
-                initImageList()
+                initImageList(view)
                 vm.checkIfAuthor()
                 vm.classifyUserState()
                 vm.setPostDate()
@@ -262,7 +275,7 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         vmAdd.updateStatus.observe(viewLifecycleOwner) {response ->
             if(response != null) {
                 vm.clickedGetPost(vm.postId.value!!)
-                initImageList()
+                initImageList(view)
                 Timber.d("[INFO] 업데이트 상태 변경 알람")
             }
         }
@@ -277,7 +290,7 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
 
        vm.sliderImageUrls.observe(viewLifecycleOwner) {response ->
            if(response != null) {
-               initImageList()
+               initImageList(view)
            }
        }
     }

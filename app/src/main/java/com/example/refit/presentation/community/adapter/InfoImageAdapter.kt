@@ -1,15 +1,12 @@
 package com.example.refit.presentation.community.adapter
 
-import android.R
-import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.refit.databinding.ItemSliderBinding
+import com.example.refit.presentation.chat.adapter.ChatRoomRVAdapter
 import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
 
 
@@ -42,10 +39,28 @@ class InfoImageAdapter (private val vm: CommunityInfoViewModel) :
 
     inner class MatchingListViewHolder(private val binding: ItemSliderBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bindImage(imageUrl: String) {
+
+            val pos = adapterPosition
+            if (pos != RecyclerView.NO_POSITION) {
+                itemView.setOnClickListener {
+                    listner?.onItemClick(itemView, imageUrl, pos)
+                }
+            }
+
             Glide.with(binding.root)
                 .load(imageUrl)
                 .into(binding.communityInfoImageSlider)
         }
+    }
+
+    interface OnItemClickListner {
+        fun onItemClick(v: View, data: String, pos: Int)
+    }
+    private var listner: InfoImageAdapter.OnItemClickListner?= null
+
+    fun setOnItemClickListener(listner: InfoImageAdapter.OnItemClickListner) {
+        this.listner = listner
     }
 }
