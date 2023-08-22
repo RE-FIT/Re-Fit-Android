@@ -63,7 +63,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        val largeIcon = BitmapFactory.decodeResource(resources, R.drawable.logo)
+        val largeIcon = BitmapFactory.decodeResource(resources, R.drawable.logo_foreground)
 
         val channelId = "refit"
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
