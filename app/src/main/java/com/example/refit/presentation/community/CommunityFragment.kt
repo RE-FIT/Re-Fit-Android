@@ -35,8 +35,10 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
         Timber.d("[MAIN] onViewCreated")
         binding.vm = vm
 
-        vm.initStatus()
-        vm.initCommunityList()
+        if (vm.scrollStatus.value != true) {
+            vm.initStatus()
+            vm.initCommunityList()
+        }
 
         initCommunityList()
         initCommunityOptionDropdown()
@@ -48,8 +50,9 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
     override fun onResume() {
         super.onResume()
         Timber.d("[MAIN] onResume")
-        if (recyclerViewState != null) {
+        if (recyclerViewState != null && vm.scrollStatus.value == true) {
             setSavedRecyclerViewState()
+            vm.setScrollStatus(false)
         }
     }
 
