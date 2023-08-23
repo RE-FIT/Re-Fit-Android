@@ -134,12 +134,33 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(R.layout.fragment_sig
     private fun handleBirthDate() {
         binding.etSignUpInputBirth.addTextChangedListener(object :
             SignUpInputTextWatcher(binding.tlSignUpInputBirth) {
-            override fun afterTextChanged(text: Editable?) {
-                super.afterTextChanged(text)
-                signUpViewModel.checkValidationBirth(
-                    "^(?:\\d{4}/\\d{2}/\\d{2}|\\d{8})\$".toRegex(),
-                    text.toString()
-                )
+
+            override fun afterTextChanged(s: Editable?) {
+                s?.let {
+
+                    binding.etSignUpInputBirth.removeTextChangedListener(this)
+
+                    val strippedValue = it.toString().replace("/", "")
+                    when (strippedValue.length) {
+                        in 5..6 -> {
+                            val formattedValue = "${strippedValue.substring(0, 4)}/${strippedValue.substring(4)}"
+                            binding.etSignUpInputBirth.setText(formattedValue)
+                            binding.etSignUpInputBirth.setSelection(formattedValue.length)
+                        }
+                        in 7..8 -> {
+                            val formattedValue = "${strippedValue.substring(0, 4)}/${strippedValue.substring(4, 6)}/${strippedValue.substring(6)}"
+                            binding.etSignUpInputBirth.setText(formattedValue)
+                            binding.etSignUpInputBirth.setSelection(formattedValue.length)
+                        }
+                    }
+
+                    binding.etSignUpInputBirth.addTextChangedListener(this)
+
+                    signUpViewModel.checkValidationBirth(
+                        "^(?:\\d{4}/\\d{2}/\\d{2}|\\d{8})\$".toRegex(),
+                        s.toString()
+                    )
+                }
             }
         })
     }
