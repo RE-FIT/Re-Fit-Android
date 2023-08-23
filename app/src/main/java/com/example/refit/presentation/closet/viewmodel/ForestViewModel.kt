@@ -82,7 +82,7 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
     fun getForestInfo() {
         viewModelScope.launch {
             try {
-                if (_forestInfo.value == null) {
+                if (_forestInfo.value == null || _isValidShowingDialog.value?.content == true) {
                     val response = repository.getForestStatusInfo(
                         dataStore.getAccessToken().first(),
                         _clothId.value!!
@@ -112,8 +112,6 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
                 } else {
                     _forestInfo.value = Event(_forestInfo.value!!.content)
                     _forestStamps.value = Event(_forestStamps.value!!.content)
-                    stopShowingDialogEver()
-                    stopShowingCompletedForestWindow()
                 }
 
 
@@ -174,11 +172,11 @@ class ForestViewModel(private val repository: ClosetRepository, private val data
         }
     }
 
-    private fun stopShowingDialogEver() {
+    fun stopShowingDialogEver() {
         _isValidShowingDialog.value = Event(false)
     }
 
-    private fun stopShowingCompletedForestWindow() {
+    fun stopShowingCompletedForestWindow() {
         _isValidShowingCompletedWindow.value = Event(false)
     }
 
