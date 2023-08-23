@@ -65,6 +65,7 @@ class ForestFragment : BaseFragment<FragmentForestBinding>(R.layout.fragment_for
         forestViewModel.isValidShowingDialog.observe(viewLifecycleOwner, EventObserver {isValid ->
             if(isValid) {
                 DialogUtil.showForestStampDialog(initData).show(childFragmentManager, null)
+                forestViewModel.stopShowingDialogEver()
             }
         })
     }
@@ -73,6 +74,7 @@ class ForestFragment : BaseFragment<FragmentForestBinding>(R.layout.fragment_for
         forestViewModel.isValidShowingCompletedWindow.observe(viewLifecycleOwner, EventObserver { isValid ->
             if(isValid) {
                 navigate(R.id.action_forestFragment_to_completedForestFragment)
+                forestViewModel.stopShowingCompletedForestWindow()
             }
         })
     }
