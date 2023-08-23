@@ -1,11 +1,9 @@
 package com.example.refit.presentation.community.viewmodel
 
-import android.provider.Settings.Global.getString
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.refit.R
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.community.PostResponse
 import com.example.refit.data.repository.community.CommunityRepository
@@ -20,7 +18,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 import java.lang.Exception
-import java.sql.Types.INTEGER
 import java.text.SimpleDateFormat
 import java.util.Locale
 
