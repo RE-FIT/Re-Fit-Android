@@ -2,9 +2,7 @@ package com.example.refit.presentation.community
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
@@ -15,7 +13,6 @@ import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.DropdownMenuManager
 import com.example.refit.presentation.common.NavigationUtil.navigate
 import com.example.refit.presentation.community.adapter.CommunityListAdapter
-import com.example.refit.presentation.community.viewmodel.CommunityAddPostViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityInfoViewModel
 import com.example.refit.presentation.community.viewmodel.CommunitySearchViewModel
 import com.example.refit.presentation.community.viewmodel.CommunityViewModel
@@ -140,10 +137,12 @@ class CommunityFragment : BaseFragment<FragmentCommunityBinding>(R.layout.fragme
     }
 
     private fun saveRecyclerViewState() {
+        Timber.d("[MAIN] Saved 저장")
         recyclerViewState = binding.rvCommunityList.layoutManager!!.onSaveInstanceState()
     }
 
     private fun setSavedRecyclerViewState() {
+        Timber.d("[MAIN] setSaved 실행")
         binding.rvCommunityList.layoutManager!!.onRestoreInstanceState(recyclerViewState)
     }
 

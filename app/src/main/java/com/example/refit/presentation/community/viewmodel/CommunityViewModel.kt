@@ -51,14 +51,9 @@ class CommunityViewModel(
     val isNewChat: LiveData<Boolean>
         get() = _isNewChat
 
-    fun setNewChatIcon(status: Boolean) {
-        _isNewChat.value = status
-    }
-
     fun setScrollStatus(boolean: Boolean) {
         _scrollStatus.value = boolean
     }
-
 
     fun initCommunityList() = viewModelScope.launch {
         val accessToken = ds.getAccessToken().first()
