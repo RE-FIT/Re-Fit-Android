@@ -2,7 +2,6 @@ package com.example.refit.presentation.mypage
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
@@ -11,12 +10,9 @@ import com.example.refit.R
 import com.example.refit.databinding.FragmentMyPageBinding
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.NavigationUtil.navigate
-import com.example.refit.presentation.findidpassword.FindIdPasswordFragmentDirections
-import com.example.refit.presentation.mypage.viewmodel.MyInfoViewModel
+import com.example.refit.presentation.common.WindowUtil.setStatusBarColor
 import com.example.refit.presentation.mypage.viewmodel.MyViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import java.text.SimpleDateFormat
-import java.util.Calendar
 
 class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_page) {
 
@@ -24,7 +20,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setStatusBarColor(R.color.green1)
         // 내 정보 버튼 클릭시
         binding.myPageBtnMyInfo.setOnClickListener(){
             navigate(R.id.action_myPage_to_myInfo)
