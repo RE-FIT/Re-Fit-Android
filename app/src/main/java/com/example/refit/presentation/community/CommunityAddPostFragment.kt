@@ -1,8 +1,6 @@
 package com.example.refit.presentation.community
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -17,12 +15,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.MutableLiveData
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DecodeFormat
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.example.refit.R
 import com.example.refit.databinding.FragmentCommunityAddPostBinding
 import com.example.refit.presentation.common.BaseFragment
@@ -39,7 +31,6 @@ import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 import java.io.File
-import java.io.FileOutputStream
 
 
 class CommunityAddPostFragment :
@@ -51,7 +42,6 @@ class CommunityAddPostFragment :
 
     private var photoUris: List<String>? = null
     private var countImage: Int = 0
-
 
     @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -345,8 +335,6 @@ class CommunityAddPostFragment :
                 for (uriString in it) {
                     val uri = Uri.parse(uriString)
                     val copiedFile = copyFileToInternalStorage(uri)
-                    Timber.d("file URI 값 정상 작동되는지 확인 : $uri ================ $copiedFile")
-
                     copiedFile?.let { file ->
                         if (file.exists()) {
                             imageFiles.add(file)
@@ -357,7 +345,6 @@ class CommunityAddPostFragment :
                 }
             }
 
-            Timber.d("modifyPost : ${vmAdd.isModifyPost.value}\nimagestaus: ${vmAdd.modifyImageStatus.value}")
             if (vmAdd.isModifyPost.value == true) {
                 val imageStatus = vmAdd.modifyImageStatus.value
                 if (imageStatus == false || imageStatus == null) {

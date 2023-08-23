@@ -98,7 +98,8 @@
                         android:textColor="@color/dark2"
                         app:layout_constraintLeft_toRightOf="@+id/tv_community_item_list_title"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

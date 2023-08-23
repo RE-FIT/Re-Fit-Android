@@ -1,15 +1,12 @@
 package com.example.refit.presentation.community.viewmodel
 
-import android.provider.Settings.Global.getString
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.refit.R
 import com.example.refit.data.datastore.TokenStore
 import com.example.refit.data.model.community.BlockDto
 import com.example.refit.data.model.community.Member
-import com.example.refit.data.model.community.PostResponse
 import com.example.refit.data.model.community.ReportedUser
 import com.example.refit.data.repository.community.CommunityRepository
 import kotlinx.coroutines.flow.first

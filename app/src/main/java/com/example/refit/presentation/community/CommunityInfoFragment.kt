@@ -1,7 +1,6 @@
 package com.example.refit.presentation.community
 
 import android.os.Bundle
-import android.util.Log
 
 import android.view.View
 import android.widget.TextView
@@ -9,11 +8,8 @@ import androidx.annotation.ArrayRes
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.navigation.Navigation
 import com.example.refit.R
-import com.example.refit.data.model.chat.ChatRoom
 import com.example.refit.data.model.chat.CreateRoom
 import com.example.refit.databinding.FragmentCommunityInfoBinding
-import com.example.refit.presentation.chat.ChatRoomFragmentDirections
-import com.example.refit.presentation.chat.adapter.ChatRoomRVAdapter
 import com.example.refit.presentation.chat.viewmodel.ChatViewModel
 import com.example.refit.presentation.common.BaseFragment
 import com.example.refit.presentation.common.CustomSnackBar
@@ -30,7 +26,6 @@ import com.example.refit.presentation.community.viewmodel.CommunityViewModel
 import com.example.refit.presentation.community.viewmodel.PostReportViewModel
 import com.example.refit.presentation.dialog.AlertBasicDialogListener
 import com.example.refit.presentation.dialog.AlertNoIconDialogListener
-import com.example.refit.presentation.mypage.MyPageFragmentDirections
 import com.example.refit.util.EventObserver
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
@@ -89,7 +84,6 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
     }
 
     private fun CommunityEtcMenuDropdown() {
-        // TODO 유저 상태에 따라 array 값 다르게 불러와야 함
         binding.cvEtcOverflow.setOnClickListener {
             val listPopupWindow = when (vm.UserStatus.value) {
                 0 -> getPopupMenu( // 작성자 && (판매중 || 나눔중)
@@ -146,7 +140,6 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
                 }
 
                 "이 사용자의 글 보지 않기" -> {
-                    // TODO 사용자 id 불러오기
                     val username = vm.postResponse.value?.author ?: ""
                     vmPr.setUserName(username)
                     hideUserPost(username = username)
@@ -158,7 +151,6 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
                     vm.changePostStatus()
                 }
             }
-            Timber.d(itemDescription)
             popupMenu.dismiss()
         }
     }
