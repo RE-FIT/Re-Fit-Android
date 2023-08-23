@@ -34,7 +34,7 @@
         <variable
             name="requestEmailText"
             type="String" />
-        
+
         <variable
             name="emailCode"
             type="com.example.refit.data.model.signup.ResponseEmailCertification" />
@@ -258,15 +258,15 @@
                     android:id="@+id/lav_sign_up_waiting_email_certification"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:visibility="@{isRequestEmailCode ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@id/btn_sign_up_email_certification"
+                    app:layout_constraintEnd_toEndOf="@id/btn_sign_up_email_certification"
+                    app:layout_constraintStart_toStartOf="@id/btn_sign_up_email_certification"
+                    app:layout_constraintTop_toTopOf="@id/btn_sign_up_email_certification"
+                    app:lottie_autoPlay="false"
                     app:lottie_fileName="email_loading.json"
                     app:lottie_loop="true"
-                    app:lottie_autoPlay="false"
-                    app:lottie_repeatCount="30"
-                    android:visibility="@{isRequestEmailCode ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintStart_toStartOf="@id/btn_sign_up_email_certification"
-                    app:layout_constraintEnd_toEndOf="@id/btn_sign_up_email_certification"
-                    app:layout_constraintTop_toTopOf="@id/btn_sign_up_email_certification"
-                    app:layout_constraintBottom_toBottomOf="@id/btn_sign_up_email_certification"/>
+                    app:lottie_repeatCount="30" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_sign_up_email_certification_code"
@@ -300,8 +300,9 @@
                         style="@style/ThemeOverlay.Design.TextInputEditText.SignUp.Common"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{isRequestEmailCode ? @string/empty : @string/empty}"
-                        android:hint="인증번호를 입력해주세요" />
+                        android:hint="인증번호를 입력해주세요"
+                        android:inputType="number"
+                        android:text="@{isRequestEmailCode ? @string/empty : @string/empty}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -360,11 +361,11 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_sign_up_nickname_certification"
+                    setActivationButtonByStatus="@{isValidNicknameFormat}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/light"
                     android:clickable="@{isValidNicknameFormat}"
-                    setActivationButtonByStatus="@{isValidNicknameFormat}"
                     android:onClick="@{() -> vm.checkNicknameValidation(etSignUpInputNickname.getText().toString())}"
                     android:padding="12dp"
                     android:text="중복확인"
@@ -390,8 +391,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tl_sign_up_input_birth"
                     style="@style/TextInputLayout.SignUp.Common"
-                    handleValidMessage="@{isValidBirth ? @string/empty : null}"
                     handleInvalidMessage="@{etSignUpInputBirth.getText().length()  == 0 || isValidBirth ? null : @string/sign_up_invalid_birth}"
+                    handleValidMessage="@{isValidBirth ? @string/empty : null}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -426,9 +427,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:boxStrokeWidth="@{isValidSex ? 4 : 0}"
                     app:endIconTint="@color/selector_selected_dark2_else_green1"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_sign_up_sex_title">
 
@@ -490,12 +491,12 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_sign_up_complete"
+                    setActivationSignUpButtonByStatus="@{isValidId &amp; isValidPassword &amp; isValidEmail &amp; isValidNickname &amp; isValidBirth &amp; isValidSex &amp; isValidAgree}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:layout_marginBottom="20dp"
                     android:backgroundTint="@color/dark1"
-                    setActivationSignUpButtonByStatus="@{isValidId &amp; isValidPassword &amp; isValidEmail &amp; isValidNickname &amp; isValidBirth &amp; isValidSex &amp; isValidAgree}"
                     android:clickable="@{isValidId &amp; isValidPassword &amp; isValidEmail &amp; isValidNickname &amp; isValidBirth &amp; isValidSex &amp; isValidAgree }"
                     android:text="가입하기"
                     android:textAppearance="@style/RegularFontKr.14"
