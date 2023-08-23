@@ -2,7 +2,6 @@ package com.example.refit.presentation.community.viewmodel
 
 import android.annotation.SuppressLint
 import android.icu.text.DecimalFormat
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -523,22 +522,6 @@ class CommunityAddPostViewModel(
             }
         }
         return text
-    }
-
-    fun gaugeShoesOrAcc(): Boolean {
-        return (postValue[3].value == 4 || postValue[3].value == 5)
-    }
-
-    fun setTextIfShoesOrAcc(): String {
-        if(isFilledValue[4].value == true) {
-            if(postValue[4].value == 4 || postValue[4].value == 5) {
-                _isFilledValue[4].value == true
-                _textIfShoesOrAcc.value = "상세설명 입력"
-            } else {
-                _textIfShoesOrAcc.value = conversionTypeToText(4, postValue[4].value!!)
-            }
-        } else _textIfShoesOrAcc.value = "사이즈를 입력해주세요"
-        return textIfShoesOrAcc.value.toString()
     }
 
     fun getDecimalFormat(number: String): String {

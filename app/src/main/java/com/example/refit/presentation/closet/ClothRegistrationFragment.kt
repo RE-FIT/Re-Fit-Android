@@ -105,10 +105,7 @@ class ClothRegistrationFragment :
     private fun handleClickAddCompleteButton() {
         binding.btnClothRegisterComplete.setOnClickListener {
             if (photoUri != null) {
-                clothAddViewModel.requestRegisteringCloth(
-                    File(FileUtil.convertResizeImage(requireActivity(), photoUri!!)!!),
-                    null
-                )
+                clothAddViewModel.requestRegisteringCloth(File(FileUtil.convertResizeImage(requireActivity(), photoUri!!)!!), null)
             } else {
                 clothAddViewModel.requestRegisteringCloth(null, requestedClothIdForUpdate?.toInt())
             }
@@ -258,6 +255,7 @@ class ClothRegistrationFragment :
                 (binding.cgClothRegisterWearingSeason.getChildAt(clothInfo.season) as Chip).isChecked =
                     true
                 requestedClothIdForUpdate = clothInfo.id
+                Timber.d("옷 등록 페이지 (옷 수정 요청 받음) id : $requestedClothIdForUpdate photoUri : $photoUri")
             })
     }
 

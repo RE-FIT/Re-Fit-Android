@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.refit.R
+import com.example.refit.data.model.closet.ResponseForestStatusInfo
 import com.example.refit.databinding.FragmentForestBinding
 import com.example.refit.presentation.closet.adapter.ForestStampAdapter
 import com.example.refit.presentation.closet.viewmodel.ForestViewModel
@@ -31,14 +32,8 @@ class ForestFragment : BaseFragment<FragmentForestBinding>(R.layout.fragment_for
     private fun handleGetForestInfo() {
         forestViewModel.forestInfo.observe(viewLifecycleOwner, EventObserver {initData ->
             binding.forestInfo = initData
-            if(initData.count < initData.targetCnt) {
-                if(forestViewModel.isValidShowingDialog.value!!.content) {
-                    DialogUtil.showForestStampDialog(initData).show(childFragmentManager, null)
-                    forestViewModel.stopShowingDialogEver()
-                }
-            } else {
-                navigate(R.id.action_forestFragment_to_completedForestFragment)
-            }
+            handleShowingStampDialog(initData)
+            handleShowingCompletedForestWindow()
         })
     }
 
@@ -62,6 +57,22 @@ class ForestFragment : BaseFragment<FragmentForestBinding>(R.layout.fragment_for
         forestViewModel.isSelectItem.observe(viewLifecycleOwner, EventObserver { isSelectItem ->
             if(isSelectItem) {
                 navigate(R.id.action_forestFragment_to_quizFragment)
+            }
+        })
+    }
+
+    private fun handleShowingStampDialog(initData: ResponseForestStatusInfo) {
+        forestViewModel.isValidShowingDialog.observe(viewLifecycleOwner, EventObserver {isValid ->
+            if(isValid) {
+                DialogUtil.showForestStampDialog(initData).show(childFragmentManager, null)
+            }
+        })
+    }
+
+    private fun handleShowingCompletedForestWindow() {
+        forestViewModel.isValidShowingCompletedWindow.observe(viewLifecycleOwner, EventObserver { isValid ->
+            if(isValid) {
+                navigate(R.id.action_forestFragment_to_completedForestFragment)
             }
         })
     }
