@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option java_package = "com.example.refit.data.datastore";
+option java_multiple_files = true;
+
+message NotificationsByRoom {
+    repeated int32 notification_ids = 1;
+}
+
+message Notifications {
+    map<string, NotificationsByRoom> notifications_by_room = 2;
+}

@@ -132,13 +132,18 @@
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tv_community_info_item_title"
-                                style="@style/BoldFontKr.20"
+                                style="@style/BoldFontKr.18"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{vm.postResponse.title}"
                                 android:textColor="@color/green1"
+                                android:text="@{vm.postResponse.title}"
+                                android:layout_marginEnd="10dp"
+                                app:layout_constrainedWidth="true"
+                                app:layout_constraintHorizontal_bias="0"
+                                app:layout_constraintHorizontal_chainStyle="packed"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/tv_community_info_item_username"/>
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tv_community_info_item_username"
@@ -146,12 +151,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom"
-                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="7dp"
                                 android:layout_marginEnd="10dp"
                                 android:text="@{vm.postResponse.author}"
                                 android:textColor="@color/dark2"
-                                app:layout_constraintBottom_toTopOf="@id/tv_community_info_item_datetitme"
                                 app:layout_constraintStart_toEndOf="@id/tv_community_info_item_title"
+                                app:layout_constraintEnd_toStartOf="@id/tb_community_info_fav"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <androidx.appcompat.widget.AppCompatToggleButton

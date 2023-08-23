@@ -1,9 +1,13 @@
 package com.example.refit.presentation.mypage
 
 import android.os.Bundle
+import android.util.Log
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.refit.R
 import com.example.refit.databinding.FragmentScrapBinding
 import com.example.refit.presentation.common.BaseFragment
@@ -60,6 +64,22 @@ class ScrapFragment: BaseFragment<FragmentScrapBinding>(R.layout.fragment_scrap)
                 }
             }
         }
+
+        binding.root.setOnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
+            true
+        }
+
+        binding.rvScrapList.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                gestureDetector.onTouchEvent(e)
+                return false
+            }
+
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
+
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
+        })
     }
 
     private fun initScrapGiveList() {
@@ -76,6 +96,25 @@ class ScrapFragment: BaseFragment<FragmentScrapBinding>(R.layout.fragment_scrap)
             myScrapViewModel.myScrapSellList.observe(viewLifecycleOwner) { list ->
                 submitList(list)
             }
+        }
+    }
+
+    private val gestureDetector by lazy {
+        GestureDetector(requireContext(), object : GestureDetector.SimpleOnGestureListener() {
+            override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+                val diffX = e2?.x?.minus(e1!!.x) ?: 0f
+                if (Math.abs(diffX) > 100) { // 이 값은 원하는 스와이프 감도에 따라 조절 가능합니다.
+                    onSwipe()
+                }
+                return super.onFling(e1, e2, velocityX, velocityY)
+            }
+        })
+    }
+
+    private fun onSwipe() {
+        when (binding.chipGroupSell.checkedChipId) {
+            R.id.chip_sell -> binding.chipGroupSell.check(R.id.chip_give)
+            R.id.chip_give -> binding.chipGroupSell.check(R.id.chip_sell)
         }
     }
 }

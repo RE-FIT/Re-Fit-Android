@@ -1,5 +1,7 @@
 package com.example.refit
 
+import android.app.NotificationManager
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -27,6 +29,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         handleNavigationBarVisibility()
         initBottomNavigationBackground()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        clearAllNotifications()
+    }
+
+    private fun clearAllNotifications() {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancelAll()
     }
 
     private fun getNavController(): NavController {

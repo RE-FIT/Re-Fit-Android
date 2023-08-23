@@ -17,6 +17,9 @@
         android:theme="@style/Theme.ReFit"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="refit"/>
         <service
             android:name=".MyFirebaseMessagingService"
             android:exported="false">

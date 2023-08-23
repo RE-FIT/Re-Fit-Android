@@ -59,8 +59,10 @@ class CommunityInfoFragment : BaseFragment<FragmentCommunityInfoBinding>(R.layou
         observeStatus(view)
         initImageList(view)
         vm.clickedGetPost(vm.postId.value!!)
+        vmCom.setScrollStatus(true)
 
         vm.deleteSuccess.observe(viewLifecycleOwner, EventObserver{
+            vmCom.setScrollStatus(false)
             navigateUp()
 
             CustomSnackBar.make(
