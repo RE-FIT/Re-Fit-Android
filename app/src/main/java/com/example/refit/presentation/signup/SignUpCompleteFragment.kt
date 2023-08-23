@@ -1,7 +1,9 @@
 package com.example.refit.presentation.signup
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.example.refit.MainActivity
 import com.example.refit.R
 import com.example.refit.databinding.FragmentSignUpCompleteBinding
 import com.example.refit.presentation.common.BaseFragment
@@ -17,7 +19,10 @@ class SignUpCompleteFragment : BaseFragment<FragmentSignUpCompleteBinding>(R.lay
         binding.vm = signUpViewModel
 
         binding.btnSignUpCompleteToSignIn.setOnClickListener {
-            navigate(R.id.action_signUpCompleteFragment_to_signInFragment)
+//            navigate(R.id.action_signUpCompleteFragment_to_signInFragment)
+            requireActivity().finish()
+            val restartIntent = Intent(context, MainActivity::class.java)
+            startActivity(restartIntent)
         }
     }
 }
